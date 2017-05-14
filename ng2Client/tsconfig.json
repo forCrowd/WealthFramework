@@ -8,9 +8,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "noImplicitAny": true,
-        "paths": {
-            "environment-settings": [ "app/settings/setup/environment-settings" ]
-        },
+        "paths": { "environment-settings": [ "app/main/settings/setup/environment-settings" ] },
         "removeComments": true,
         "sourceMap": false,
         "suppressImplicitAnyIndexErrors": true,
@@ -20,7 +18,8 @@
         "app"
     ],
     "exclude": [
-        "app/main-aot.ts",
+        "app/boot-aot.ts",
+        "app/main/libs",
         "node_modules"
     ]
 }

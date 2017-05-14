@@ -8,6 +8,7 @@
     using Results;
     using System;
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -283,7 +284,7 @@
 
             await UserManager.SendConfirmationEmailAsync(currentUserId.Value, model.ClientAppUrl, true);
 
-            return Ok(string.Empty);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [AllowAnonymous]
@@ -313,7 +314,7 @@
 
             await UserManager.SendResetPasswordEmailAsync(currentUser.Id, model.ClientAppUrl);
 
-            return Ok(string.Empty);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)

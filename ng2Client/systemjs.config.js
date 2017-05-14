@@ -5,51 +5,51 @@
         map: {
 
             // @angular
-            "@angular/core": "npm:@angular/core/bundles/core.umd.js",
-            "@angular/common": "npm:@angular/common/bundles/common.umd.js",
-            "@angular/compiler": "npm:@angular/compiler/bundles/compiler.umd.js",
-            "@angular/forms": "npm:@angular/forms/bundles/forms.umd.js",
-            "@angular/http": "npm:@angular/http/bundles/http.umd.js",
-            "@angular/platform-browser": "npm:@angular/platform-browser/bundles/platform-browser.umd.js",
-            "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
-            "@angular/router": "npm:@angular/router/bundles/router.umd.js",
+            "@angular/core": "node_modules/@angular/core/bundles/core.umd.js",
+            "@angular/common": "node_modules/@angular/common/bundles/common.umd.js",
+            "@angular/compiler": "node_modules/@angular/compiler/bundles/compiler.umd.js",
+            "@angular/forms": "node_modules/@angular/forms/bundles/forms.umd.js",
+            "@angular/http": "node_modules/@angular/http/bundles/http.umd.js",
+            "@angular/platform-browser": "node_modules/@angular/platform-browser/bundles/platform-browser.umd.js",
+            "@angular/platform-browser-dynamic": "node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
+            "@angular/router": "node_modules/@angular/router/bundles/router.umd.js",
 
             // angular highcharts
-            "angular2-highcharts": "npm:angular2-highcharts",
-            "highcharts": "npm:highcharts/highcharts.src.js",
+            "angular2-highcharts": "node_modules/angular2-highcharts",
+            "highcharts": "node_modules/highcharts/highcharts.src.js",
 
             // angular moment
-            "angular2-moment": "npm:angular2-moment",
-            "moment": "npm:moment/moment.js",
+            "angular2-moment": "node_modules/angular2-moment",
+            "moment": "node_modules/moment/moment.js",
 
             // angular analytics
-            "angulartics2": "npm:angulartics2/dist",
+            "angulartics2": "node_modules/angulartics2/dist",
 
             // angular toaster
-            "angular2-toaster": "npm:angular2-toaster/bundles/angular2-toaster.umd.js",
+            "angular2-toaster": "node_modules/angular2-toaster/bundles/angular2-toaster.umd.js",
 
             // breeze
-            "breeze-client": "npm:breeze-client/breeze.base.debug.js",
-            "breeze-bridge-angular2": "npm:breeze-bridge-angular2/index.js",
-            "breeze.dataService.odata": "npm:breeze-client/breeze.dataService.odata.js",
-            "breeze.modelLibrary.backingStore": "npm:breeze-client/breeze.modelLibrary.backingStore.js",
-            "breeze.uriBuilder.odata": "npm:breeze-client/breeze.uriBuilder.odata.js",
-            "datajs": "npm:datajs/index.js",
+            "breeze-client": "node_modules/breeze-client/breeze.base.debug.js",
+            "breeze-bridge-angular": "node_modules/breeze-bridge-angular/index.js",
+            "breeze.dataService.odata": "node_modules/breeze-client/breeze.dataService.odata.js",
+            "breeze.modelLibrary.backingStore": "node_modules/breeze-client/breeze.modelLibrary.backingStore.js",
+            "breeze.uriBuilder.odata": "node_modules/breeze-client/breeze.uriBuilder.odata.js",
+            "datajs": "node_modules/datajs/index.js",
 
             // rxjs
-            "rxjs": "npm:rxjs",
+            "rxjs": "node_modules/rxjs",
 
             // source-map
-            "source-map": "npm:source-map",
+            "source-map": "node_modules/source-map",
 
             // Traceur (for ES6, which is not there yet)
-            "plugin-traceur": "npm:systemjs-plugin-traceur/plugin-traceur.js",
-            "traceur": "npm:traceur/bin/traceur.js",
-            "traceur-runtime": "npm:traceur/bin/traceur-runtime.js",
+            "plugin-traceur": "node_modules/systemjs-plugin-traceur/plugin-traceur.js",
+            "traceur": "node_modules/traceur/bin/traceur.js",
+            "traceur-runtime": "node_modules/traceur/bin/traceur-runtime.js",
 
             // app
             "app": "app",
-            "environment-settings": "app/settings/local-settings.js"
+            "environment-settings": "app/main/settings/local-settings.js"
         },
         meta: {
             "traceur": {
@@ -79,10 +79,7 @@
             "source-map": { main: "source-map.js" },
 
             // app
-            "app": { main: "main.js", defaultExtension: "js" },
-        },
-        paths: {
-            "npm:": "node_modules/"
+            "app": { main: "boot.js", defaultExtension: "js" },
         },
         transpiler: "plugin-traceur",
         transpilerRuntime: false,

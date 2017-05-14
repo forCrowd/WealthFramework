@@ -1,0 +1,20 @@
+﻿{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "src",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [ "es2016", "dom" ],
+        "moduleResolution": "node",
+        "outDir": "./dist/out-tsc",
+        "paths": {
+            "breeze-client": [ "./libraries/breeze-client" ],
+            "breeze.dataService.odata": [ "./libraries/breeze-client/breeze.dataService.odata.js" ],
+            "breeze.modelLibrary.backingStore": [ "./libraries/breeze-client/breeze.modelLibrary.backingStore.js" ],
+            "breeze.uriBuilder.odata": [ "./libraries/breeze-client/breeze.uriBuilder.odata.js" ]
+            //"environment-settings": [ "app/main/settings/setup/environment-settings" ]
+        },
+        "sourceMap": true,
+        "target": "es5"
+    }
+}

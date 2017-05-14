@@ -4,9 +4,6 @@
 [Bb]in/
 [Oo]bj/
 
-# Chutzpah (necessary?)
-_Chutzpah.*
-
 # NPM packages
 npm-debug.log
 node_modules
@@ -36,20 +33,35 @@ Thumbs.db
 
 ## Project specific rules
 
+# AngularClient
+AngularClient/dist
+AngularClient/out-tsc
+# AngularClient/tmp ?
+
+#AngularClient/e2e/*.js
+#AngularClient/e2e/*.map
+
+AngularClient/src/app-settings/environments/*
+!AngularClient/src/app-settings/environments/environment-settings.ts
+!AngularClient/src/app-settings/environments/Readme.md
+
+# WebApi
+WebApi/App_Data/
+WebApi/Configs/*.config
+
 # ng2Client
 
 ng2Client/app/**/*.js
 ng2Client/app/**/*.map
+!ng2Client/app/main/libs/**/*.js
+!ng2Client/app/main/libs/**/*.map
 
-ng2Client/app/css/app.min.css
-ng2Client/app/fonts
+ng2Client/app/main/settings/local*
+ng2Client/app/main/settings/test*
+ng2Client/app/main/settings/production*
 
-# ng2Client - lib: Contains fixed versions of external .js files (breeze.odata etc.)
-!ng2Client/app/lib/*.js
-
-ng2Client/app/settings/local*
-ng2Client/app/settings/test*
-ng2Client/app/settings/production*
+ng2Client/app/resources/css/app.min.css
+ng2Client/app/resources/fonts
 
 ng2Client/aot
 ng2Client/publish
@@ -65,7 +77,3 @@ ngClient/_system/css/app.css
 ngClient/_system/css/app.min.css
 ngClient/_system/css/lib/*.css
 ngClient/_system/css/fonts/
-
-# WebApi
-WebApi/App_Data/
-WebApi/Configs/*.config

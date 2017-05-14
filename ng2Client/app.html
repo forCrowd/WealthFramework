@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/" />
 
-    <link rel="shortcut icon" href="/favicon.ico?v=0.65.0" />
-    <link rel="stylesheet" href="/app/css/app.min.css?v=0.68.0" />
+    <link rel="shortcut icon" href="favicon.ico?v=0.65.0" />
+    <link rel="stylesheet" href="app/resources/css/app.min.css?v=0.68.0" />
 </head>
 <body>
     <app>
@@ -36,27 +36,17 @@
             }
         </script>
     </app>
-
-    <script>window.module = "aot";</script>
     <!-- build:app-html -->
-    
-    <!-- This block will be replaced with "app.min.js" script during "build" tasks in gulpfile -->
-
-    <!-- Production bundle -->
-    <!--<script async src="/app/app.min.js"></script>-->
-    
-    <!-- Development scripts -->
-    <script src="/app/lib.js"></script>
-    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/systemjs.config.js"></script>
+    <!-- When using "build" tasks in gulpfile, this block will be replated with "aot" block -->
+    <script src="app/lib.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
     <script>
         System.import("app")
             .catch(function (error) {
                 console.error(error);
             });
     </script>
-
     <!-- endbuild -->
 </body>
 </html>
