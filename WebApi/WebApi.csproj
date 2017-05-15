@@ -262,7 +262,7 @@
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app_offline.htm_" />
+    <Content Include="_app_offline.htm" />
     <None Include="Configs\appSettings.config">
       <SubType>Designer</SubType>
     </None>
