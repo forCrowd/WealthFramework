@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.77.1**
+
+* AngularClient - IE9, IE10, IE11 polyfills were enabled
+* WebApi - Minor
+
 **0.77.0**
 
 * AngularClient - New angular-cli based client :)
