@@ -64,11 +64,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
-      <Link>Properties\AssemblyInfo.cs</Link>
+    <Compile Include="..\SolutionItems\Properties\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="AccountControllerTests.cs" />
     <Compile Include="AccountTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

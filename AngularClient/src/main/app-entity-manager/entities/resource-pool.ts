@@ -1,6 +1,8 @@
 ﻿import { EventEmitter } from "@angular/core";
 
+import { Element } from "./element";
 import { EntityBase } from "./entity-base";
+import { User } from "./user";
 import { UserResourcePool } from "./user-resource-pool";
 import { stripInvalidChars } from "../../utils";
 
@@ -13,8 +15,7 @@ export class ResourcePool extends EntityBase {
 
     // Server-side
     Id: number = 0;
-
-    UserId: number = 0;
+    User: User;
 
     get Name(): string {
         return this.fields.name;
@@ -60,9 +61,8 @@ export class ResourcePool extends EntityBase {
     ResourcePoolRateTotal: number = 0; // Computed value - Used in: setOtherUsersResourcePoolRateTotal
     ResourcePoolRateCount: number = 0; // Computed value - Used in: setOtherUsersResourcePoolRateCount
     RatingCount: number = 0; // Computed value - Used in: resource-pool-editor.html
-    User: any;
-    ElementSet: any[];
-    UserResourcePoolSet: any[];
+    ElementSet: Element[];
+    UserResourcePoolSet: UserResourcePool[];
 
     // TODO Move this to field.js?
     displayMultiplierFunctions = true; // In some cases, it's not necessary for the user to change multiplier
@@ -322,7 +322,7 @@ export class ResourcePool extends EntityBase {
 
     resourcePoolRateCount() {
         return this.UseFixedResourcePoolRate ?
-            this.currentUserResourcePool() !== null && this.currentUserResourcePool().UserId === this.UserId ? // If it belongs to current user
+            this.currentUserResourcePool() !== null ? // If it belongs to current user
                 1 :
                 this.otherUsersResourcePoolRateCount() :
             this.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1
@@ -339,7 +339,7 @@ export class ResourcePool extends EntityBase {
 
     resourcePoolRateTotal() {
         return this.UseFixedResourcePoolRate ?
-            this.currentUserResourcePool() !== null && this.currentUserResourcePool().UserId === this.UserId ? // If it belongs to current user
+            this.currentUserResourcePool() !== null ? // If it belongs to current user
                 this.currentUserResourcePoolRate() :
                 this.otherUsersResourcePoolRateTotal() :
             this.otherUsersResourcePoolRateTotal() + this.currentUserResourcePoolRate();

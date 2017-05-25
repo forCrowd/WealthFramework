@@ -13,6 +13,14 @@ export class AppHttp extends Http {
         super(connectionBackend, requestOptions);
     }
 
+    get<T>(url: string, options?: RequestOptionsArgs): Observable<T> {
+        return super.get(url, options)
+            .map<Response, T>((response: Response) => {
+                return this.extractData<T>(response);
+            })
+            .catch((error: any) => this.handleHttpErrors(error));
+    }
+
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
 
         this.isBusy = true;
@@ -42,14 +50,14 @@ export class AppHttp extends Http {
     post<T>(url: string, body: any, options?: RequestOptionsArgs): Observable<T> {
         return super.post(url, body, options)
             .map<Response, T>((response: Response) => {
-                return this.extractData(response);
+                return this.extractData<T>(response);
             })
             .catch((error: any) => this.handleHttpErrors(error));
     }
 
-    private extractData(response: Response): any {
+    private extractData<T>(response: Response): T {
 
-        let body = {};
+        let body = null;
 
         try { body = response.json(); } catch (error) { };
 
@@ -59,13 +67,19 @@ export class AppHttp extends Http {
     private handleHttpErrors(error: any) {
 
         let errorMessage = "";
-        let unhandled = false;
+        let handled = false;
 
         if (error instanceof Response) {
 
-            const body = this.extractData(error);
+            const body = this.extractData<any>(error) || {};
 
             switch (error.status) {
+
+                case 0: { // Server offline
+                    errorMessage = "Server is offline. Please try again later."
+                    handled = true;
+                    break;
+                }
                 case 400: { // Bad request
 
                     // ModelState errors
@@ -87,31 +101,33 @@ export class AppHttp extends Http {
                     // for the moment log "Bad requests with no error message"
                     // TODO: Try to log these on the server itself
                     // coni2k - 13 May '17
-                    if (errorMessage === "") {
-                        unhandled = true;
+                    if (errorMessage !== "") {
+                        handled = true;
                     }
 
                     break;
                 }
                 case 401: { // Unauthorized
                     errorMessage = body.Message || "You are not authorized for this operation.";
+                    handled = true;
                     break;
                 }
                 case 404: { // Not found
                     // TODO: Try to log these on the server itself
                     // coni2k - 13 May '17
-                    unhandled = true;
                     break;
                 }
                 case 409: { // Conflict: Either the key exists in the database, or the record has been updated by another user
                     errorMessage = body.Message
                         || "The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.";
+                    handled = true;
                     break;
                 }
                 case 500: { // Internal server error: Ignore default error message
                     if (body.Message && body.Message !== "An error has occurred.") {
                         errorMessage = body.Message;
                     }
+                    handled = true;
                     break;
                 }
             }
@@ -125,23 +141,20 @@ export class AppHttp extends Http {
         // Display the error message
         this.logger.logError(errorMessage);
 
-        if (!unhandled) {
+        if (handled) {
 
-            // If handled, return
+            // If handled, continue with Observable flow
             return Observable.throw(error);
 
         } else {
 
-            // Else: Let the internal error handler handle it
-            let message = "";
-
+            // Else, let the internal error handler handle it
             if (error instanceof Response) {
-                message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
+                let message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
+                throw new Error(message);
             } else {
-                message = "Unknown http error";
+                throw error;
             }
-
-            throw new Error(message);
         }
     }
 }

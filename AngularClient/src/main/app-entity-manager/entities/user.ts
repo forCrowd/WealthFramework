@@ -1,4 +1,9 @@
 ﻿import { EntityBase } from "./entity-base";
+import { ResourcePool } from "./resource-pool";
+import { UserElementCell } from "./user-element-cell";
+import { UserElementField } from "./user-element-field";
+import { UserResourcePool } from "./user-resource-pool";
+import { UserRole } from "./user-role";
 import { stripInvalidChars } from "../../utils";
 
 export class User extends EntityBase {
@@ -7,7 +12,6 @@ export class User extends EntityBase {
     Id = 0;
     Email = "";
     EmailConfirmed = false;
-    IsAnonymous = false;
     get UserName(): string {
         return this.fields.userName;
     }
@@ -30,16 +34,28 @@ export class User extends EntityBase {
     LockoutEnabled = false;
     LockoutEndDateUtc: any = null;
     Notes = "";
-    CreatedOn = new Date();
-    ModifiedOn = new Date();
-    DeletedOn: any = null;
     Claims: any;
     Logins: any[];
-    Roles: any[];
-    ResourcePoolSet: any[];
-    UserResourcePoolSet: any[];
-    UserElementFieldSet: any[];
-    UserElementCellSet: any[];
+    Roles: UserRole[];
+    ResourcePoolSet: ResourcePool[];
+    UserResourcePoolSet: UserResourcePool[];
+    UserElementFieldSet: UserElementField[];
+    UserElementCellSet: UserElementCell[];
+
+    get userText(): string {
+
+        if (!this.initialized) {
+            return "";
+        }
+
+        let userText = this.UserName;
+
+        if (this.Roles.length > 0) {
+            userText += ` (${this.Roles[0].Role.Name})`;
+        }
+
+        return userText;
+    }
 
     private fields: {
         userName: string

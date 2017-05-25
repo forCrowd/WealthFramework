@@ -16,7 +16,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
     appVersion: string = AppSettings.version;
     currentUser: User = null;
-    hideAnonymousAccountInfoBox: boolean = true;
+    hideGuestAccountInfoBox: boolean = true;
     subscriptions: any[] = [];
     toasterConfig: ToasterConfig = null;
 
@@ -29,28 +29,13 @@ export class AppComponent implements OnDestroy, OnInit {
         this.currentUser = this.accountService.currentUser;
     }
 
-    closeAnonymousAccountInfoBox(): void {
-        this.hideAnonymousAccountInfoBox = true;
+    closeGuestAccountInfoBox(): void {
+        this.hideGuestAccountInfoBox = true;
     }
 
     currentUserChanged(newUser: User) {
         this.currentUser = newUser;
-        this.hideAnonymousAccountInfoBox = true;
-    }
-
-    currentUserText(): string {
-
-        let userText = this.currentUser.UserName;
-
-        if (this.currentUser.IsAnonymous) {
-            userText += " (Guest)";
-        }
-
-        return userText;
-    }
-
-    hideAnonymousAccountInfoIcon(): boolean {
-        return !(this.currentUser === null && this.currentUser.IsAnonymous);
+        this.hideGuestAccountInfoBox = true;
     }
 
     logout(): void {
@@ -97,7 +82,7 @@ export class AppComponent implements OnDestroy, OnInit {
         this.toasterConfig = this.logger.getToasterConfig();
     }
 
-    showAnonymousAccountInfoBox(): void {
-        this.hideAnonymousAccountInfoBox = false;
+    showGuestAccountInfoBox(): void {
+        this.hideGuestAccountInfoBox = false;
     }
 }

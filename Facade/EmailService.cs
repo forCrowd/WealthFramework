@@ -61,7 +61,7 @@
                         // TODO Get rid of this ugliness asap! / coni2k - 04 Jan. '16
                         // This email type is only a notification to the admin
                         var notificationToAdmin = message.Subject == "New external login" ||
-                            message.Subject == "New anonymous login";
+                            message.Subject == "New guest account";
 
                         if (!notificationToAdmin)
                         {

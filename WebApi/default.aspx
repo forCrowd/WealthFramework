@@ -16,7 +16,7 @@
     </p>
     <footer>
         <p>
-            <span><%= Reflection.Assembly.GetAssembly(New forCrowd.WealthEconomy.WebApi.Controllers.Api.WebApiInfo().GetType()).GetName().Version %></span>
+            <span><%= System.Diagnostics.FileVersionInfo.GetVersionInfo(Reflection.Assembly.GetAssembly(New forCrowd.WealthEconomy.WebApi.Controllers.Api.WebApiInfo().GetType()).Location).ProductVersion %></span>
         </p>
         <p>
             <a href="http://forcrowd.org" target="_blank">forCrowd Foundation

@@ -1,5 +1,28 @@
 ### Changelog
 
+**0.78.0**
+
+* General - Roles usage was improved:
+  * User's `IsAnonymous` replaced with `Guest` role.
+  * All user accounts belong to one role now; initial registration starts with `Guest` role. When email address gets confirmed, the account gets converted to `Regular` role.
+* AngularClient - Entity relations were improved
+* AngularClient - Auth Service - `currentUser` retrieval was improved
+* AngularClient - Auth Service - `guestUserName` is being stored in localStorage
+* AngularClient - Auth Service - `updateCurrentUser` was added and it covers all account related breeze entity updates
+If the user refreshes the page, it keep using the same username, which prevents the issue on refreshing "New Resource Pool" page
+* AngularClient - Basic handling for "Server offline" case
+* AngularClient - `AppEntityManager` - `isBusy` for `getMetadata` method
+* AngularClient - `tslib` library & `importHelpers` flag for `tsconfig.json`
+* AngularClient - Microsoft login was disabled due to "access_denied" error:
+https://github.com/aspnet/AspNetKatana/issues/48
+* AngularClient - console.ts was removed. Chrome's latest version is showing timestamps by default.
+* AngularClient - Error handler improvements
+* AngularClient - navbar menu collapse fix
+* AngularClient - Package updates
+* WebApi - AccountController - CurrentUser end points was added
+* WebApi - Package updates
+* Solution - SolutionInfo & AssemblyInfo updates
+
 **0.77.1**
 
 * AngularClient - IE9, IE10, IE11 polyfills were enabled

@@ -55,7 +55,7 @@
         public string Token { get; set; }
     }
 
-    public class RegisterBindingModel : RegisterAnonymousBindingModel
+    public class RegisterBindingModel : RegisterGuestAccountBindingModel
     {
         [Required]
         [DataType(DataType.Password)]
@@ -69,12 +69,7 @@
         public string ClientAppUrl { get; set; }
     }
 
-    public class RegisterWithoutPasswordBindingModel : RegisterAnonymousBindingModel
-    {
-        public string ClientAppUrl { get; set; }
-    }
-
-    public class RegisterAnonymousBindingModel
+    public class RegisterGuestAccountBindingModel
     {
         [Required]
         [UserNameUniqueValidator]

@@ -95,6 +95,7 @@
         public async Task<IHttpActionResult> ConfirmEmail(ConfirmEmailBindingModel model)
         {
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+
             var result = await UserManager.ConfirmEmailAsync(currentUser.Id, model.Token);
             var errorResult = GetErrorResult(result);
 
@@ -104,6 +105,21 @@
             }
 
             return Ok(currentUser);
+        }
+
+        // GET api/Account/CurrentUser
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<User> CurrentUser()
+        {
+            var currentUserId = this.GetCurrentUserId();
+
+            if (currentUserId == null)
+            {
+                return null;
+            }
+
+            return await UserManager.FindByIdAsync(currentUserId.Value);
         }
 
         // GET api/Account/ExternalLogin
@@ -132,8 +148,6 @@
             // coni2k - 16 Jan. '16
             try
             {
-                var content = await GetLoginInfoText();
-
                 var externalLoginInfo = await Authentication.GetExternalLoginInfoAsync();
 
                 // We will switch to local account, sign out from the external
@@ -218,10 +232,7 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            var user = new User(model.UserName, model.Email)
-            {
-                IsAnonymous = false
-            };
+            var user = new User(model.UserName, model.Email);
 
             var result = await UserManager.CreateAsync(user, model.Password, model.ClientAppUrl);
             var errorResult = GetErrorResult(result);
@@ -235,37 +246,13 @@
             return Ok(user);
         }
 
-        // POST api/Account/RegisterWithoutPassword
+        // POST api/Account/RegisterGuestAccount
         [AllowAnonymous]
-        public async Task<IHttpActionResult> RegisterWithoutPassword(RegisterWithoutPasswordBindingModel model)
+        public async Task<IHttpActionResult> RegisterGuestAccount(RegisterGuestAccountBindingModel model)
         {
-            var user = new User(model.UserName, model.Email)
-            {
-                IsAnonymous = false
-            };
+            var user = new User(model.UserName, model.Email);
 
-            var result = await UserManager.CreateAsync(user, string.Empty, model.ClientAppUrl);
-            var errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
-
-            // TODO This should be Created?
-            return Ok(user);
-        }
-
-        // POST api/Account/RegisterAnonymous
-        [AllowAnonymous]
-        public async Task<IHttpActionResult> RegisterAnonymous(RegisterAnonymousBindingModel model)
-        {
-            var user = new User(model.UserName, model.Email)
-            {
-                IsAnonymous = true
-            };
-
-            var result = await UserManager.CreateAnonymousAsync(user);
+            var result = await UserManager.CreateGuestAccountAsync(user);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -307,7 +294,7 @@
         {
             var currentUser = await UserManager.FindByEmailAsync(model.Email);
 
-            if (currentUser == null || currentUser.IsAnonymous)
+            if (currentUser == null)
             {
                 return BadRequest("Incorrect email");
             }
@@ -388,34 +375,6 @@
             }
 
             return null;
-        }
-
-        private async Task<string> GetLoginInfoText()
-        {
-            var loginInfo = await Authentication.GetExternalLoginInfoAsync();
-
-            var text = string.Empty;
-
-            if (loginInfo != null)
-            {
-                text += "loginInfo.DefaultUserName: " + loginInfo.DefaultUserName + " - ";
-                text += "loginInfo.Email: " + loginInfo.Email + " - ";
-                text += "loginInfo.ExternalIdentity.AuthenticationType: " + loginInfo.ExternalIdentity.AuthenticationType + " - ";
-                text += "loginInfo.ExternalIdentity.Claims.Count(): " + loginInfo.ExternalIdentity.Claims.Count() + " - ";
-                foreach (var claim in loginInfo.ExternalIdentity.Claims)
-                {
-                    text += "claim.Type: " + claim.Type + " - ";
-                    text += "claim.Value: " + claim.Value + " - ";
-                }
-                text += "loginInfo.ExternalIdentity.IsAuthenticated: " + loginInfo.ExternalIdentity.IsAuthenticated + " - ";
-                text += "loginInfo.ExternalIdentity.Name: " + loginInfo.ExternalIdentity.Name + " - ";
-                text += "loginInfo.ExternalIdentity.NameClaimType: " + loginInfo.ExternalIdentity.NameClaimType + " - ";
-                text += "loginInfo.ExternalIdentity.RoleClaimType: " + loginInfo.ExternalIdentity.RoleClaimType + " - ";
-                text += "loginInfo.Login.LoginProvider: " + loginInfo.Login.LoginProvider + " - ";
-                text += "loginInfo.Login.ProviderKey: " + loginInfo.Login.ProviderKey + " - ";
-            }
-
-            return text;
         }
 
         #endregion

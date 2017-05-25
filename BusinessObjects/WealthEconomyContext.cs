@@ -133,6 +133,7 @@
         void ProcessChangeTrackerEntries()
         {
             var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
             foreach (var item in entries)
             {
                 var changedOrAddedItem = item.Entity as IEntity;
@@ -141,10 +142,8 @@
                     if (item.State == EntityState.Added)
                     {
                         changedOrAddedItem.CreatedOn = DateTime.UtcNow;
-
-                        // Don't add deleted items
-                        changedOrAddedItem.DeletedOn = null;
                     }
+
                     changedOrAddedItem.ModifiedOn = DateTime.UtcNow;
                 }
             }

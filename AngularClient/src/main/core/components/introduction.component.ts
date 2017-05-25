@@ -22,7 +22,7 @@ export class IntroductionComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
 
-        // TODO Disabled for the moment, since it automatically triggers "anonymous user interacted" / coni2k - 07 Jun. '16
+        // TODO Disabled for the moment, since it automatically triggers "Guest account interacted" / coni2k - 07 Jun. '16
         return;
 
         //this.resourcePoolService.getResourcePoolExpanded(this.upoConfig)

@@ -9,16 +9,12 @@ export class ElementCell extends EntityBase {
 
     // Public - Server-side
     Id: number = 0;
-    ElementFieldId: number = 0;
-    ElementItemId: number = 0;
+    ElementField: ElementField;
+    ElementItem: ElementItem;
     StringValue: string = ""; // Computed value - Used in: resource-pool-editor.html
     NumericValueTotal: number = 0;
     // Computed value - Used in: setOtherUsersNumericValueTotal, setCurrentUserNumericValue
     NumericValueCount: number = 0; // Computed value - Used in: setOtherUsersNumericValueCount
-    SelectedElementItemId: any = null;
-
-    ElementField: ElementField;
-    ElementItem: ElementItem;
     SelectedElementItem: ElementItem;
     UserElementCellSet: UserElementCell[];
 
@@ -103,10 +99,8 @@ export class ElementCell extends EntityBase {
 
     numericValueCount() {
         return this.ElementField.UseFixedValue
-            ? this.currentUserCell() !== null &&
-                this.currentUserCell().UserId === this.ElementField.Element.ResourcePool.UserId
-                ? // If it belongs to current user
-                1
+            ? this.currentUserCell() !== null
+                ? 1
                 : this.otherUsersNumericValueCount()
             : this.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
     }
@@ -130,10 +124,8 @@ export class ElementCell extends EntityBase {
 
     numericValueTotal() {
         return this.ElementField.UseFixedValue
-            ? this.currentUserCell() !== null &&
-                this.currentUserCell().UserId === this.ElementField.Element.ResourcePool.UserId
-                ? // If it belongs to current user
-                this.currentUserNumericValue()
+            ? this.currentUserCell() !== null
+                ? this.currentUserNumericValue()
                 : this.otherUsersNumericValueTotal()
             : this.otherUsersNumericValueTotal() + this.currentUserNumericValue();
     }
