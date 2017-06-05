@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.78.1**
+
+* DataObjects - "Guest" & "Regular" roles were added into initial migration
+
 **0.78.0**
 
 * General - Roles usage was improved:
