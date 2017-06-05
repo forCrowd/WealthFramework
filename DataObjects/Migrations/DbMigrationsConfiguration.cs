@@ -44,6 +44,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
         static void SeedInitialData(WealthEconomyContext context)
         {
+            // Create roles
+            CreateRoles(context);
+
             // Create admin user
             CreateAdminUser(context);
 
@@ -53,34 +56,40 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
         static void CreateAdminUser(WealthEconomyContext context)
         {
-            // Managers & stores & repositories
-            var roleStore = new RoleStore(context);
-            var roleManager = new RoleManager<Role, int>(roleStore);
-
+            // Manager & store
             var userStore = new UserStore(context);
             userStore.AutoSaveChanges = true;
             var userManager = new UserManager<User, int>(userStore);
 
-            // Admin role
-            var adminRoleName = "Administrator";
-            var adminRole = roleManager.FindByName(adminRoleName);
-            if (adminRole == null)
-            {
-                adminRole = new Role(adminRoleName);
-                roleManager.Create(adminRole);
-            }
-
             // Admin user
             var adminUserName = "admin";
             var adminEmail = "admin.wealth@forcrowd.org";
-            var adminUser = userManager.FindByEmail(adminEmail);
-            if (adminUser == null)
-            {
-                adminUser = new User(adminUserName, adminEmail);
-                var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-                userManager.Create(adminUser, adminUserPassword);
-                userManager.AddToRole(adminUser.Id, "Administrator");
-            }
+            var adminUser = new User(adminUserName, adminEmail);
+            var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
+            userManager.Create(adminUser, adminUserPassword);
+            userManager.AddToRole(adminUser.Id, "Administrator");
+
+            // Save
+            context.SaveChanges();
+        }
+
+        static void CreateRoles(WealthEconomyContext context)
+        {
+            // Manager & store
+            var roleStore = new RoleStore(context);
+            var roleManager = new RoleManager<Role, int>(roleStore);
+
+            // Guest role
+            var guestRole = new Role("Guest");
+            roleManager.Create(guestRole);
+
+            // Regular role
+            var regularRole = new Role("Regular");
+            roleManager.Create(regularRole);
+
+            // Admin role
+            var adminRole = new Role("Administrator");
+            roleManager.Create(adminRole);
 
             // Save
             context.SaveChanges();
@@ -97,13 +106,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             // Sample user
             var sampleUserName = "sample";
             var sampleEmail = "sample.wealth@forcrowd.org";
-            var sampleUser = userManager.FindByEmail(sampleEmail);
-            if (sampleUser == null)
-            {
-                sampleUser = new User(sampleUserName, sampleEmail);
-                var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-                userManager.Create(sampleUser, sampleUserPassword);
-            }
+            var sampleUser = new User(sampleUserName, sampleEmail);
+            var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
+            userManager.Create(sampleUser, sampleUserPassword);
+            userManager.AddToRole(sampleUser.Id, "Regular");
 
             // Save
             context.SaveChanges();
