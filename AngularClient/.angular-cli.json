@@ -26,7 +26,11 @@
                 "../node_modules/font-awesome/css/font-awesome.css",
                 "../node_modules/angular2-toaster/toaster.css"
             ],
-            "scripts": [],
+            "scripts": [
+                "../node_modules/jquery/dist/jquery.slim.js",
+                "../node_modules/bootstrap/dist/js/bootstrap.js",
+                "../node_modules/respond.js/dest/respond.src.js"
+            ],
             "environmentSource": "app-settings/environments/environment-settings.ts",
             "environments": {
                 "dev": "app-settings/environments/environment-settings.ts",

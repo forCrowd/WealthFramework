@@ -7,7 +7,9 @@ export class Element extends EntityBase {
 
     // Public - Server-side
     Id: number = 0;
+    ResourcePool: ResourcePool;
     Name: string = "";
+
     get IsMainElement(): boolean {
         return this.fields.IsMainElement;
     }
@@ -32,7 +34,6 @@ export class Element extends EntityBase {
             }
         }
     }
-    ResourcePool: ResourcePool;
     ElementFieldSet: ElementField[];
     ElementItemSet: ElementItem[];
     ParentFieldSet: ElementField[];

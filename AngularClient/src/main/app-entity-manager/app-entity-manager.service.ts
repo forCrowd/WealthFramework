@@ -16,10 +16,12 @@ import { ElementCell } from "./entities/element-cell";
 import { ElementField } from "./entities/element-field";
 import { ElementItem } from "./entities/element-item";
 import { ResourcePool } from "./entities/resource-pool";
+import { Role } from "./entities/role";
 import { User } from "./entities/user";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 import { UserResourcePool } from "./entities/user-resource-pool";
+import { UserRole } from "./entities/user-role";
 import { Logger } from "../logger/logger.module";
 
 @Injectable()
@@ -62,17 +64,17 @@ export class AppEntityManager extends EntityManager {
         // breeze.NamingConvention.camelCase.setAsDefault();
 
         // Metadata store
-        let store = this.metadataStore;
-        store.registerEntityTypeCtor("Element", Element, Element.initializer);
-        store.registerEntityTypeCtor("ElementCell", ElementCell, ElementCell.initializer);
-        store.registerEntityTypeCtor("ElementField", ElementField, ElementField.initializer);
-        store.registerEntityTypeCtor("ElementItem", ElementItem, ElementItem.initializer);
-        store.registerEntityTypeCtor("ResourcePool", ResourcePool, ResourcePool.initializer);
-
-        store.registerEntityTypeCtor("User", User, User.initializer);
-        store.registerEntityTypeCtor("UserElementCell", UserElementCell, UserElementCell.initializer);
-        store.registerEntityTypeCtor("UserElementField", UserElementField, UserElementField.initializer);
-        store.registerEntityTypeCtor("UserResourcePool", UserResourcePool, UserResourcePool.initializer);
+        this.metadataStore.registerEntityTypeCtor("Element", Element, Element.initializer);
+        this.metadataStore.registerEntityTypeCtor("ElementCell", ElementCell, ElementCell.initializer);
+        this.metadataStore.registerEntityTypeCtor("ElementField", ElementField, ElementField.initializer);
+        this.metadataStore.registerEntityTypeCtor("ElementItem", ElementItem, ElementItem.initializer);
+        this.metadataStore.registerEntityTypeCtor("ResourcePool", ResourcePool, ResourcePool.initializer);
+        this.metadataStore.registerEntityTypeCtor("Role", Role, Role.initializer);
+        this.metadataStore.registerEntityTypeCtor("User", User, User.initializer);
+        this.metadataStore.registerEntityTypeCtor("UserRole", UserRole, UserRole.initializer);
+        this.metadataStore.registerEntityTypeCtor("UserElementCell", UserElementCell, UserElementCell.initializer);
+        this.metadataStore.registerEntityTypeCtor("UserElementField", UserElementField, UserElementField.initializer);
+        this.metadataStore.registerEntityTypeCtor("UserResourcePool", UserResourcePool, UserResourcePool.initializer);
     }
 
     executeQueryNew(query: EntityQuery): Observable<QueryResult> {
@@ -102,13 +104,18 @@ export class AppEntityManager extends EntityManager {
 
     getMetadata(): Observable<Object> {
 
-        return this.metadata
-            ? Observable.of(this.metadata)
-            : Observable.fromPromise(this.fetchMetadata())
-                .map((metadata: Object) => {
-                    this.metadata = metadata;
-                    return metadata;
-                });
+        if (this.metadata) {
+            return Observable.of(this.metadata);
+        }
+
+        this.isBusy = true;
+        return Observable.fromPromise(this.fetchMetadata())
+            .map((metadata: Object) => {
+                this.metadata = metadata;
+                return metadata;
+            })
+            .catch((error: any) => this.handleODataErrors(error))
+            .finally(() => { this.isBusy = false; });
     }
 
     getUser(username: string): Observable<User> {
@@ -212,50 +219,64 @@ export class AppEntityManager extends EntityManager {
     private handleODataErrors(error: any) {
 
         let errorMessage = "";
-        let unhandled = false;
+        let handled = false;
 
         // EntityErrors: similar to ModelState errors
         if (error.entityErrors) {
+
             for (var key in error.entityErrors) {
                 if (error.entityErrors.hasOwnProperty(key)) {
                     var entityError = error.entityErrors[key];
                     errorMessage += entityError.errorMessage + "<br />";
                 }
             }
+
+            handled = true;
+
         } else {
 
-            if (error.status) {
+            if (typeof error.status !== "undefined") {
+
                 switch (error.status) {
+
+                    case 0: { // Server offline
+                        errorMessage = "Server is offline. Please try again later.";
+                        handled = true;
+                        break;
+                    }
+
                     case "400": { // Bad request
 
                         errorMessage = error.body.error ? error.body.error.message.value : "";
 
                         // Not sure whether this case is possible but, 
-                        // for the moment log "Bad requests with no error message"
+                        // for the moment log "Bad requests with no error message" (so, handled only if there is error message)
                         // TODO: Try to log these on the server itself
                         // coni2k - 13 May '17
-                        if (errorMessage === "") {
-                            unhandled = true;
+                        if (errorMessage !== "") {
+                            handled = true;
                         }
 
                         break;
                     }
                     case "401": { // Unauthorized
                         errorMessage = "You are not authorized for this operation.";
+                        handled = true;
                         break;
                     }
                     case "404": { // Not found
                         // TODO: Try to log these on the server itself
                         // coni2k - 13 May '17
-                        unhandled = true;
                         break;
                     }
                     case "409": { // Conflict: Either the key exists in the database, or the record has been updated by another user
                         errorMessage = error.body
                             || "The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.";
+                        handled = true;
                         break;
                     }
                     case "500": { // Internal server error
+                        handled = true;
                         break;
                     }
                 }
@@ -270,23 +291,20 @@ export class AppEntityManager extends EntityManager {
         // Display the error message
         this.logger.logError(errorMessage);
 
-        if (!unhandled) {
+        if (handled) {
 
-            // If handled, return
+            // If handled, continue with Observable flow
             return Observable.throw(error);
 
         } else {
 
-            // Else: Let the internal error handler handle it
-            let message = "";
-
+            // Else, let the internal error handler handle it
             if (error.status) {
-                message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
+                let message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
+                throw new Error(message);
             } else {
-                message = "Unknown odata error";
+                throw error;
             }
-
-            throw new Error(message);
         }
     }
 
@@ -294,15 +312,20 @@ export class AppEntityManager extends EntityManager {
 
         let batches: any[] = [];
 
-        // RowVersion fix
-        // TODO How about Deleted state?
-        let modifiedEntities = this.getChanges(null, EntityState.Modified);
-        modifiedEntities.forEach((entity: any) => {
+        // RowVersion fix: breeze only sends modified properties back to server.
+        // However, RowVersion is not getting changed through UI, and the server needs to it make Conflict checks.
+        // So, faking an update as a fix.
+        this.getChanges(null, EntityState.Modified).forEach((entity) => {
             var rowVersion = entity.RowVersion;
             entity.RowVersion = "";
             entity.RowVersion = rowVersion;
         });
-        batches.push(modifiedEntities);
+
+        this.getChanges(null, EntityState.Deleted).forEach((entity) => {
+            var rowVersion = entity.RowVersion;
+            entity.RowVersion = "";
+            entity.RowVersion = rowVersion;
+        });
 
         /* Aaargh! 
         * Web API OData doesn't calculate the proper save order
@@ -336,6 +359,8 @@ export class AppEntityManager extends EntityManager {
         batches.push(this.getChanges("ElementItem", EntityState.Added));
         batches.push(this.getChanges("ElementCell", EntityState.Added));
         batches.push(this.getChanges("UserElementCell", EntityState.Added));
+
+        batches.push(this.getChanges(null, EntityState.Modified));
 
         // batches.push(null); // empty = save all remaining pending changes
 

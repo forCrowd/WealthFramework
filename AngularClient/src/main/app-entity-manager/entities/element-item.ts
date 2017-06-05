@@ -8,9 +8,8 @@ export class ElementItem extends EntityBase {
 
     // Server-side
     Id: number = 0;
-    ElementId: number = 0;
-    Name: string = "";
     Element: Element;
+    Name: string = "";
     ElementCellSet: ElementCell[];
     ParentCellSet: ElementCell[];
 

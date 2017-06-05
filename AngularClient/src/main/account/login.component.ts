@@ -68,7 +68,8 @@ export class LoginComponent implements OnDestroy, OnInit {
      * External (single use token) login
      */
     tryExternalLogin() {
-        if (typeof this.singleUseToken === "undefined") {
+
+        if (!this.singleUseToken) {
             return;
         }
 
@@ -77,8 +78,9 @@ export class LoginComponent implements OnDestroy, OnInit {
                 this.logger.logSuccess("You have been logged in!");
 
                 // First time
-                if (typeof this.init !== "undefined" && this.init) {
+                if (this.init) {
                     this.router.navigate(["/app/account/change-username", { init: true }]);
+
                 } else {
 
                     // Get return url, reset loginReturnUrl and navigate

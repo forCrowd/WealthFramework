@@ -1,6 +1,5 @@
 ﻿import { EventEmitter, Injectable } from "@angular/core";
-import { Headers, Http, RequestOptions } from "@angular/http";
-import { EntityQuery, FetchStrategy } from "breeze-client";
+import { Http } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -42,7 +41,6 @@ export class AccountService {
     changeUserNameUrl: string = "";
     confirmEmailUrl: string = "";
     registerUrl: string = "";
-    registerAnonymousUrl: string = "";
     resendConfirmationEmailUrl: string = "";
     resetPasswordUrl: string = "";
     resetPasswordRequestUrl: string = "";
@@ -84,13 +82,7 @@ export class AccountService {
 
         return this.appHttp.post<User>(this.addPasswordUrl, addPasswordBindingModel)
             .map((updatedUser) => {
-
-                this.currentUser.HasPassword = null;
-
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
+                this.authService.updateCurrentUser(updatedUser);
             });
     }
 
@@ -99,16 +91,8 @@ export class AccountService {
         changeEmailBindingModel.ClientAppUrl = window.location.origin;
 
         return this.appHttp.post<User>(this.changeEmailUrl, changeEmailBindingModel)
-            .map((updatedUser: User) => {
-
-                this.currentUser.Email = updatedUser.Email;
-                this.currentUser.EmailConfirmed = false;
-                this.currentUser.IsAnonymous = false;
-
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
+            .map((updatedUser) => {
+                this.authService.updateCurrentUser(updatedUser);
             });
     }
 
@@ -116,53 +100,35 @@ export class AccountService {
 
         return this.appHttp.post<User>(this.changePasswordUrl, changePasswordBindingModel)
             .map((updatedUser: User) => {
-
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
+                this.authService.updateCurrentUser(updatedUser);
             });
     }
 
     changeUserName(changeUserNameBindingModel: any) {
 
         return this.appHttp.post<User>(this.changeUserNameUrl, changeUserNameBindingModel)
-            .map((updatedUser: User) => {
+            .map((updatedUser) => {
 
                 // Update fetchedUsers list
                 this.appEntityManager.fetchedUsers.splice(this.appEntityManager.fetchedUsers.indexOf(this.currentUser.UserName));
                 this.appEntityManager.fetchedUsers.push(updatedUser.UserName);
 
-                // Update username
-                this.currentUser.UserName = updatedUser.UserName;
-
                 // Update token as well
                 let tokenItem = localStorage.getItem("token");
                 let token = tokenItem ? JSON.parse(tokenItem.toString()) : null;
-                // Todo How about token === null case?
                 token.userName = updatedUser.UserName;
                 localStorage.setItem("token", JSON.stringify(token));
 
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
+                // Update current user
+                this.authService.updateCurrentUser(updatedUser);
             });
     }
 
     confirmEmail(confirmEmailBindingModel: any) {
 
         return this.appHttp.post<User>(this.confirmEmailUrl, confirmEmailBindingModel)
-            .map((updatedUser: User) => {
-
-                this.currentUser.EmailConfirmed = true;
-
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
-
-                return "";
+            .map((updatedUser) => {
+                this.authService.updateCurrentUser(updatedUser);
             });
     }
 
@@ -205,29 +171,19 @@ export class AccountService {
                 this.appEntityManager.fetchedUsers.splice(this.appEntityManager.fetchedUsers.indexOf(this.currentUser.UserName));
                 this.appEntityManager.fetchedUsers.push(updatedUser.UserName);
 
-                // breeze context user entity fix-up!
-                // TODO Try to make this part better, use OData method?
-                this.currentUser.Id = updatedUser.Id;
-                this.currentUser.UserName = updatedUser.UserName;
-                this.currentUser.Email = updatedUser.Email;
-                this.currentUser.IsAnonymous = updatedUser.IsAnonymous;
-                this.currentUser.HasPassword = updatedUser.HasPassword;
-                this.currentUser.SingleUseToken = updatedUser.SingleUseToken;
-
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
+                // Update current user
+                this.authService.updateCurrentUser(updatedUser);
 
                 return this.authService.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
                     .mergeMap((): any => {
 
                         // Save the changes that's been done before the registration
-                        return this.saveChanges().finally(() => {
-                            this.isBusyLocal = false;
-                        });
+                        return this.saveChanges();
                     });
-            });
+            })
+            .finally(() => {
+                this.isBusyLocal = false;
+            });;
     }
 
     resendConfirmationEmail() {
@@ -241,11 +197,7 @@ export class AccountService {
 
         return this.appHttp.post<User>(this.resetPasswordUrl, resetPasswordBindingModel)
             .map((updatedUser: User) => {
-
-                // Sync RowVersion fields
-                this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                this.currentUser.entityAspect.acceptChanges();
+                this.authService.updateCurrentUser(updatedUser);
             });
     }
 
@@ -258,10 +210,13 @@ export class AccountService {
 
     saveChanges(): Observable<Object> {
         this.isBusyLocal = true;
-        return this.authService.ensureAuthenticatedUser().mergeMap(() => {
-            return this.appEntityManager.saveChangesNew().finally(() => {
+
+        return this.authService.ensureAuthenticatedUser()
+            .mergeMap(() => {
+                return this.appEntityManager.saveChangesNew();
+            })
+            .finally(() => {
                 this.isBusyLocal = false;
             });
-        });
     }
 }

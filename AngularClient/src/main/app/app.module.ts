@@ -1,12 +1,11 @@
 // External
-import { APP_INITIALIZER, NgModule } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { MomentModule } from "angular2-moment";
 
 // Internal
 import "../rxjs-extensions";
-import { Console } from "../console";
 
 // Shared modules
 import { AppEntityManagerModule } from "../app-entity-manager/app-entity-manager.module";
@@ -27,12 +26,6 @@ import { UserModule } from "../user/user.module";
 
 // App component
 import { AppComponent } from "./app.component";
-
-export function appInitializer() {
-    return () => {
-        Console.init();
-    };
-}
 
 @NgModule({
     bootstrap: [
@@ -63,12 +56,6 @@ export function appInitializer() {
         UserModule,
     ],
     providers: [
-        // Application initializer
-        {
-            "provide": APP_INITIALIZER,
-            "useFactory": appInitializer,
-            "multi": true,
-        },
         Title
     ]
 })

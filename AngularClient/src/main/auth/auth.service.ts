@@ -1,14 +1,16 @@
 ﻿import { EventEmitter, Injectable } from "@angular/core";
 import { Headers, Http, RequestOptions } from "@angular/http";
-import { EntityQuery, FetchStrategy } from "breeze-client";
+import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
 import { Observable } from "rxjs/Observable";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AppHttp } from "../app-http/app-http.module";
 import { AppEntityManager } from "../app-entity-manager/app-entity-manager.module";
+import { Role } from "../app-entity-manager/entities/role";
 import { User } from "../app-entity-manager/entities/user";
+import { UserRole } from "../app-entity-manager/entities/user-role";
 import { Logger } from "../logger/logger.module";
-import { getUniqueEmail, getUniqueUserName } from "../utils";
+import { getUniqueUserName } from "../utils";
 
 @Injectable()
 export class AuthService {
@@ -26,8 +28,8 @@ export class AuthService {
 
     // Private
     private appHttp: AppHttp;
-    private registerUrl: string = "";
-    private registerAnonymousUrl: string = "";
+    private currentUserUrl: string = "";
+    private registerGuestAccountUrl: string = "";
     private tokenUrl: string = "";
 
     constructor(private appEntityManager: AppEntityManager, http: Http, private logger: Logger) {
@@ -35,8 +37,8 @@ export class AuthService {
         this.appHttp = http as AppHttp;
 
         // Service urls
-        this.registerUrl = AppSettings.serviceAppUrl + "/api/Account/Register";
-        this.registerAnonymousUrl = AppSettings.serviceAppUrl + "/api/Account/RegisterAnonymous";
+        this.currentUserUrl = AppSettings.serviceAppUrl + "/api/Account/CurrentUser";
+        this.registerGuestAccountUrl = AppSettings.serviceAppUrl + "/api/Account/RegisterGuestAccount";
         this.tokenUrl = AppSettings.serviceAppUrl + "/api/Token";
     }
 
@@ -47,33 +49,21 @@ export class AuthService {
 
         } else {
 
-            let registerAnonymousBindingModel = {
+            let registerGuestAccountBindingModel = {
                 UserName: this.currentUser.UserName,
                 Email: this.currentUser.Email
             };
 
-            return this.appHttp.post(this.registerAnonymousUrl, registerAnonymousBindingModel)
+            return this.appHttp.post(this.registerGuestAccountUrl, registerGuestAccountBindingModel)
                 .mergeMap((updatedUser: User) => {
 
                     // Update fetchedUsers list
                     this.appEntityManager.fetchedUsers.splice(this.appEntityManager.fetchedUsers.indexOf(this.currentUser.UserName));
                     this.appEntityManager.fetchedUsers.push(updatedUser.UserName);
 
-                    // breeze context user entity fix-up!
-                    // TODO Try to make this part better, use OData method?
-                    this.currentUser.Id = updatedUser.Id;
-                    this.currentUser.Email = updatedUser.Email;
-                    this.currentUser.UserName = updatedUser.UserName;
-                    this.currentUser.IsAnonymous = updatedUser.IsAnonymous;
-                    this.currentUser.HasPassword = updatedUser.HasPassword;
-                    this.currentUser.SingleUseToken = updatedUser.SingleUseToken;
+                    this.updateCurrentUser(updatedUser);
 
-                    // Sync RowVersion fields
-                    this.appEntityManager.syncRowVersion(this.currentUser, updatedUser);
-
-                    this.currentUser.entityAspect.acceptChanges();
-
-                    return this.getToken("", "", true, updatedUser.SingleUseToken);
+                    return this.getToken("", "", true, this.currentUser.SingleUseToken);
                 });
         }
     }
@@ -98,9 +88,35 @@ export class AuthService {
     }
 
     init(): Observable<void> {
+
+        // Get metadata from the server
         return this.appEntityManager.getMetadata()
             .mergeMap(() => {
+
+                // Set current user
                 return this.setCurrentUser();
+            })
+            .catch((error) => {
+
+                // In case of "Server offline", set a new user to prevent further user related errors and continue
+                if (typeof error.status !== "undefined"
+                    && error.status === 0 &&
+                    !this.currentUser) {
+
+                    // User
+                    this.currentUser = new User();
+
+                    // User role
+                    var userRole = new UserRole();
+                    userRole.User = this.currentUser;
+                    userRole.Role = new Role();
+                    userRole.Role.Name = "Guest";
+                    this.currentUser.Roles = [userRole];
+
+                    return Observable.of(null);
+                } else {
+                    throw error;
+                }
             });
     }
 
@@ -120,17 +136,59 @@ export class AuthService {
         return this.setCurrentUser();
     }
 
+    updateCurrentUser(updatedUser: User) {
+
+        // Remove old user role
+        var oldUserRole = this.currentUser.Roles[0];
+
+        // From its role
+        var oldRole = oldUserRole.Role;
+        oldRole.Users.splice(oldRole.Users.indexOf(oldUserRole), 1);
+
+        // From current user
+        this.currentUser.Roles.splice(this.currentUser.Roles.indexOf(oldUserRole), 1);
+
+        // And set it detached
+        oldUserRole.entityAspect.setDetached();
+
+        // User id fix-up
+        this.currentUser.Id = updatedUser.Id;
+
+        // Update breeze entities
+        this.appEntityManager.createEntity("User", updatedUser, EntityState.Unchanged, MergeStrategy.OverwriteChanges) as User;
+        this.appEntityManager.createEntity("UserRole", updatedUser.Roles[0], EntityState.Unchanged, MergeStrategy.OverwriteChanges);
+    }
+
     // Private methods
-    private createAnonymousUser(): any {
+    private createGuestAccount(): User {
+
+        // Username: Look for it in localStorage first
+        let userName = localStorage.getItem("guestUserName");
+
+        // If there is no guest username, generate a unique username and add it to localStorage
+        // If the user refreshes the page, it can keep using the same username
+        if (!userName) {
+            userName = getUniqueUserName();
+            localStorage.setItem("guestUserName", userName);
+        }
+
+        // Email
+        const email = `${userName}@forcrowd.org`;
+
         let user = this.appEntityManager.createEntity("User", {
-            Email: getUniqueEmail(),
-            UserName: getUniqueUserName(),
-            FirstName: "",
-            MiddleName: "",
-            LastName: "",
-            IsAnonymous: true
-        }) as any;
+            Email: email,
+            UserName: userName
+        }) as User;
         user.entityAspect.acceptChanges();
+
+        // Get guest role
+        let guestRole = this.appEntityManager.getEntities("Role").find((value: Role) => {
+            return value.Name === "Guest";
+        });
+
+        // User role
+        let userRole = this.appEntityManager.createEntity("UserRole", { User: user, Role: guestRole });
+        userRole.entityAspect.acceptChanges();
 
         // Add it to local cache
         this.appEntityManager.fetchedUsers.push(user.UserName);
@@ -142,6 +200,7 @@ export class AuthService {
 
         // Remove token from the session
         if (includelocalStorage) {
+            localStorage.removeItem("guestUserName");
             localStorage.removeItem("token");
         }
 
@@ -152,46 +211,57 @@ export class AuthService {
         this.currentUser = null;
     }
 
-    private setCurrentUser(): Observable<void> {
+    // Ensures Role entities are retrieved
+    private ensureRolesEntities(): Observable<void> {
 
-        let tokenItem = localStorage.getItem("token");
-
-        if (tokenItem === null) {
-
-            this.currentUser = this.createAnonymousUser();
-
-            this.currentUserChanged$.emit(this.currentUser);
+        if (this.appEntityManager.getEntities("Role").length > 0) {
 
             return Observable.of(null);
 
         } else {
 
-            let token = tokenItem ? JSON.parse(tokenItem.toString()) : null;
+            let query = EntityQuery.from("Roles");
 
-            var username = token.userName;
-            var query = EntityQuery
-                .from("Users")
-                .expand("ResourcePoolSet")
-                .where("UserName", "eq", username)
-                .using(FetchStrategy.FromServer);
-
-            return this.appEntityManager.executeQueryNew(query)
-                .map((data: any): void => {
-
-                    // If the response has an entity, use that, otherwise create an anonymous user
-                    if (data.results.length > 0) {
-                        this.currentUser = data.results[0];
-
-                        this.appEntityManager.fetchedUsers.push(this.currentUser.UserName);
-                    } else {
-
-                        localStorage.removeItem("token"); // TODO Invalid token, expired?
-
-                        this.currentUser = this.createAnonymousUser();
-                    }
-
-                    this.currentUserChanged$.emit(this.currentUser);
-                });
+            return this.appEntityManager.executeQueryNew(query) as null;
         }
+    }
+
+    private setCurrentUser(): Observable<void> {
+
+        return this.ensureRolesEntities().mergeMap(() => {
+
+            let tokenItem = localStorage.getItem("token");
+
+            if (tokenItem === null) {
+
+                this.currentUser = this.createGuestAccount();
+
+                this.currentUserChanged$.emit(this.currentUser);
+
+                return Observable.of(null);
+
+            } else {
+
+                return this.appHttp.get<User>(this.currentUserUrl)
+                    .map((currentUser) => {
+
+                        if (currentUser === null) {
+
+                            localStorage.removeItem("token"); // Invalid or expired token
+
+                            this.currentUser = this.createGuestAccount();
+
+                        } else {
+
+                            // Attach user and its role to entity manager
+                            this.currentUser = this.appEntityManager.createEntity("User", currentUser, EntityState.Unchanged) as User;
+                            this.appEntityManager.createEntity("UserRole", currentUser.Roles[0], EntityState.Unchanged);
+
+                        }
+
+                        this.currentUserChanged$.emit(this.currentUser);
+                    });
+            }
+        });
     }
 }

@@ -7,11 +7,8 @@
             <div class="col-md-9">
                 <p class="form-control-static">
                     {{ currentUser.Email }}
-                    <span [hidden]="currentUser.IsAnonymous || currentUser.EmailConfirmed">
-                        (Unconfirmed)
-                    </span>
-                    <span [hidden]="currentUser.IsAnonymous || currentUser.EmailConfirmed">
-                        | <a routerLink="/app/account/confirm-email">Confirm</a>
+                    <span [hidden]="currentUser.EmailConfirmed">
+                        | (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
                     </span>
                     | <a routerLink="/app/account/change-email">Update</a>
                 </p>

@@ -72,6 +72,10 @@
 
             if (result.Succeeded)
             {
+                // Update user's role
+                await base.RemoveFromRoleAsync(userId, "Guest");
+                await base.AddToRoleAsync(userId, "Regular");
+
                 await Store.SaveChangesAsync();
             }
 
@@ -81,7 +85,7 @@
         [Obsolete("Use CreateUser function with string clientAppUrl signature")]
         public override Task<IdentityResult> CreateAsync(User user, string password)
         {
-            return base.CreateAsync(user, password);
+            throw new NotImplementedException("This method is obsolete");
         }
 
         /// <summary>
@@ -113,6 +117,10 @@
 
             if (result.Succeeded)
             {
+                // Add to "Guest" role
+                await Store.AddToRoleAsync(user, "Guest");
+
+                // Save
                 await Store.SaveChangesAsync();
 
                 // Send confirmation email
@@ -144,7 +152,13 @@
 
             if (result.Succeeded)
             {
+                // Add to "Guest" role
+                await Store.AddToRoleAsync(user, "Guest");
+
+                // Add external login
                 await Store.AddLoginAsync(user, userLoginInfo);
+
+                // Save
                 await Store.SaveChangesAsync();
 
                 // Send notification email
@@ -155,11 +169,11 @@
         }
 
         /// <summary>
-        /// Creates an local anonymous account with auto generated email address and without a password
+        /// Creates a guest account with auto generated email address and without a password
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<IdentityResult> CreateAnonymousAsync(User user)
+        public async Task<IdentityResult> CreateGuestAccountAsync(User user)
         {
             // Has password: Determines whether 'Add Password' or 'Change Password' option is available
             user.HasPassword = false;
@@ -172,10 +186,14 @@
 
             if (result.Succeeded)
             {
+                // Add to "Guest" role
+                await Store.AddToRoleAsync(user, "Guest");
+
+                // Save
                 await Store.SaveChangesAsync();
 
                 // Send notification email
-                await SendAnonymousLoginNotificationEmailAsync(user.Id);
+                await SendGuestAccountNotificationEmailAsync(user.Id);
             }
 
             return result;
@@ -196,6 +214,12 @@
         public async Task DeleteUserElementCellAsync(int elementCellId)
         {
             await Store.DeleteUserElementCellAsync(elementCellId);
+            await Store.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserRoleAsync(User user, string roleName)
+        {
+            await Store.RemoveFromRoleAsync(user, roleName);
             await Store.SaveChangesAsync();
         }
 
@@ -241,7 +265,7 @@
             do
             {
                 if (count > 0) userName = emailUsername + count.ToString();
-                user = await Store.FindByNameAsync(userName);
+                user = await base.FindByNameAsync(userName);
                 count++;
             } while (user != null);
 
@@ -342,15 +366,15 @@
             await base.SendEmailAsync(userId, subject, sbBody.ToString());
         }
 
-        public async Task SendAnonymousLoginNotificationEmailAsync(int userId)
+        public async Task SendGuestAccountNotificationEmailAsync(int userId)
         {
-            var subject = "New anonymous login";
+            var subject = "New guest account";
 
             var user = await base.FindByIdAsync(userId);
 
             var sbBody = new StringBuilder();
             sbBody.AppendLine("    <p>");
-            sbBody.AppendLine("        <b>Wealth Economy - New Anonymous Login</b><br />");
+            sbBody.AppendLine("        <b>Wealth Economy - New Guest Account</b><br />");
             sbBody.AppendLine("        <br />");
             sbBody.AppendFormat("        Email: {0}<br />", user.Email);
             sbBody.AppendLine("    </p>");
@@ -385,14 +409,13 @@
         [Obsolete("Use SetEmailAsync function with string clientAppUrl signature")]
         public override Task<IdentityResult> SetEmailAsync(int userId, string email)
         {
-            return base.SetEmailAsync(userId, email);
+            throw new NotImplementedException("This method is obsolete");
         }
 
         public async Task<IdentityResult> SetEmailAsync(int userId, string email, string clientAppUrl)
         {
             var user = await FindByIdAsync(userId);
 
-            user.IsAnonymous = false;
             var result = await base.SetEmailAsync(userId, email);
 
             if (result.Succeeded)

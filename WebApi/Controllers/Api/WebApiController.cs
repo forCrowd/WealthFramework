@@ -1,5 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Controllers.Api
 {
+    using System.Diagnostics;
     using System.Reflection;
     using System.Web.Http;
 
@@ -10,26 +11,19 @@
         [Route("WebApiInfo")]
         public WebApiInfo GetWebApiInfo()
         {
-            var assembly = Assembly.GetAssembly(this.GetType());
-            //var organization = ((AssemblyCompanyAttribute)assembly.GetCustomAttribute(typeof(AssemblyCompanyAttribute))).Company;
-            var version = assembly.GetName().Version;
+            var assembly = Assembly.GetAssembly(GetType());
 
-            var versionText = string.Format("{0}.{1}.{2}",
-                version.Major,
-                version.Minor,
-                version.Build);
+            var version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
 
             return new WebApiInfo()
             {
-                //Organization = organization,
-                Version = versionText
+                Version = version
             };
         }
     }
 
     public class WebApiInfo
     {
-        //public string Organization { get; set; }
         public string Version { get; set; }
     }
 }

@@ -10,8 +10,9 @@ export class ElementField extends EntityBase {
 
     // Server-side
     Id: number = 0;
-    ElementId: number = 0;
+    Element: Element;
     Name: string = "";
+
     get DataType(): ElementFieldDataType {
         return this.fields.dataType;
     }
@@ -49,8 +50,10 @@ export class ElementField extends EntityBase {
             }
         }
     }
-    SelectedElementId: any = null;
+
+    SelectedElement: Element;
     UseFixedValue: boolean = null;
+
     get IndexEnabled(): boolean {
         return this.fields.indexEnabled;
     }
@@ -94,8 +97,6 @@ export class ElementField extends EntityBase {
     SortOrder: number = 0;
     IndexRatingTotal: number = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
     IndexRatingCount: number = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
-    Element: Element;
-    SelectedElement: Element;
     ElementCellSet: ElementCell[];
     UserElementFieldSet: UserElementField[];
 

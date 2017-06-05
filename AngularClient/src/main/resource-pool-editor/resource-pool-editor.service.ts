@@ -391,11 +391,13 @@ export class ResourcePoolEditorService {
 
     saveChanges(): Observable<Object> {
         this.isBusyLocal = true;
-        return this.authService.ensureAuthenticatedUser().mergeMap(() => {
-            return this.appEntityManager.saveChangesNew().finally(() => {
+        return this.authService.ensureAuthenticatedUser()
+            .mergeMap(() => {
+                return this.appEntityManager.saveChangesNew();
+            })
+            .finally(() => {
                 this.isBusyLocal = false;
             });
-        });
     }
 
     // These "updateX" functions were defined in their related entities (user.js).

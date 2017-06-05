@@ -90,7 +90,8 @@
                     ClientSecret = AppSettings.MicrosoftClientSecret,
                     CallbackPath = new PathString("/api/Account/ExternalLoginMicrosoft") // Middleware is going to handle this, no need to implement
                 };
-                microsoftAccountAuthOptions.Scope.Add("wl.emails");
+                microsoftAccountAuthOptions.Scope.Add("openid");
+                microsoftAccountAuthOptions.Scope.Add("email");
                 app.UseMicrosoftAccountAuthentication(microsoftAccountAuthOptions);
             }
         }
