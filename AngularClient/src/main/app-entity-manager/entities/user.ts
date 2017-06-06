@@ -12,6 +12,7 @@ export class User extends EntityBase {
     Id = 0;
     Email = "";
     EmailConfirmed = false;
+    EmailConfirmationSentOn?: Date;
     get UserName(): string {
         return this.fields.userName;
     }

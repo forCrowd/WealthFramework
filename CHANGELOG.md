@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.79.0**
+
+* General - "Email Confirmation Sent On" was added
+* Solution - Package updates
+
 **0.78.1**
 
 * DataObjects - "Guest" & "Regular" roles were added into initial migration

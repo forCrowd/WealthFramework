@@ -267,9 +267,9 @@
         // POST api/Account/ResendConfirmationEmail
         public async Task<IHttpActionResult> ResendConfirmationEmail(ResendConfirmationEmailBindingModel model)
         {
-            var currentUserId = this.GetCurrentUserId();
+            var currentUserId = this.GetCurrentUserId().Value;
 
-            await UserManager.SendConfirmationEmailAsync(currentUserId.Value, model.ClientAppUrl, true);
+            await UserManager.ResendConfirmationEmailAsync(currentUserId, model.ClientAppUrl);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

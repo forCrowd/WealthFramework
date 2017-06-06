@@ -61,6 +61,8 @@
             var user = await base.FindByIdAsync(userId);
 
             user.UserName = userName;
+
+            // Save
             await Store.SaveChangesAsync();
 
             return IdentityResult.Success;
@@ -76,6 +78,7 @@
                 await base.RemoveFromRoleAsync(userId, "Guest");
                 await base.AddToRoleAsync(userId, "Regular");
 
+                // Save
                 await Store.SaveChangesAsync();
             }
 
@@ -120,11 +123,14 @@
                 // Add to "Guest" role
                 await Store.AddToRoleAsync(user, "Guest");
 
-                // Save
+                // Save, so send confirmation email can use user.Id
                 await Store.SaveChangesAsync();
 
                 // Send confirmation email
-                await SendConfirmationEmailAsync(user.Id, clientAppUrl);
+                await SendConfirmationEmailAsync(user, clientAppUrl);
+
+                // Save again
+                await Store.SaveChangesAsync();
             }
 
             return result;
@@ -234,6 +240,8 @@
 
             // Remove token
             entity.SingleUseToken = null;
+
+            // Save
             await Store.SaveChangesAsync();
 
             // Return the user
@@ -291,6 +299,17 @@
             return result;
         }
 
+        public async Task ResendConfirmationEmailAsync(int userId, string clientAppUrl)
+        {
+            var user = await FindByIdAsync(userId);
+
+            // Send confirmation email
+            await SendConfirmationEmailAsync(user, clientAppUrl, true);
+
+            // Save
+            await Store.SaveChangesAsync();
+        }
+
         public override async Task<IdentityResult> ResetPasswordAsync(int userId, string token, string newPassword)
         {
             var result = await base.ResetPasswordAsync(userId, token, newPassword);
@@ -301,34 +320,6 @@
             }
 
             return result;
-        }
-
-        public async Task SendConfirmationEmailAsync(int userId, string clientAppUrl, bool resend = false)
-        {
-            var user = await base.FindByIdAsync(userId);
-
-            var token = await base.GenerateEmailConfirmationTokenAsync(userId);
-            var encodedToken = System.Net.WebUtility.UrlEncode(token);
-            var confirmEmailUrl = string.Format("{0}/app/account/confirm-email;token={1}", clientAppUrl, encodedToken);
-
-            var subject = "Confirm your email";
-            if (resend) subject += " - Resend";
-
-            var sbBody = new StringBuilder();
-            sbBody.AppendLine("    <p>");
-            sbBody.AppendLine("        <b>Wealth Economy - Confirm Your Email</b><br />");
-            sbBody.AppendLine("        <br />");
-            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
-            sbBody.AppendLine("        <br />");
-            sbBody.AppendLine("        Please click the following link to confirm your email address<br />");
-            sbBody.AppendFormat("        <a href='{0}'>Confirm your email address</a>", confirmEmailUrl);
-            sbBody.AppendLine("    </p>");
-            sbBody.AppendLine("    <p>");
-            sbBody.AppendLine("        Thanks,<br />");
-            sbBody.AppendLine("        forCrowd Foundation");
-            sbBody.AppendLine("    </p>");
-
-            await base.SendEmailAsync(userId, subject, sbBody.ToString());
         }
 
         public async Task SendResetPasswordEmailAsync(int userId, string clientAppUrl)
@@ -420,13 +411,44 @@
 
             if (result.Succeeded)
             {
-                await Store.SaveChangesAsync();
-
                 // Send confirmation email
-                await SendConfirmationEmailAsync(userId, clientAppUrl);
+                await SendConfirmationEmailAsync(user, clientAppUrl);
+
+                // Save
+                await Store.SaveChangesAsync();
             }
 
             return result;
+        }
+
+        private async Task SendConfirmationEmailAsync(User user, string clientAppUrl, bool resend = false)
+        {
+            var token = await base.GenerateEmailConfirmationTokenAsync(user.Id);
+            var encodedToken = System.Net.WebUtility.UrlEncode(token);
+            var confirmEmailUrl = string.Format("{0}/app/account/confirm-email;token={1}", clientAppUrl, encodedToken);
+
+            var subject = "Confirm your email";
+            if (resend) subject += " - Resend";
+
+            var sbBody = new StringBuilder();
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        <b>Wealth Economy - Confirm Your Email</b><br />");
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendLine("        Please click the following link to confirm your email address<br />");
+            sbBody.AppendFormat("        <a href='{0}'>Confirm your email address</a>", confirmEmailUrl);
+            sbBody.AppendLine("    </p>");
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        Thanks,<br />");
+            sbBody.AppendLine("        forCrowd Foundation");
+            sbBody.AppendLine("    </p>");
+
+            // Send the email
+            await base.SendEmailAsync(user.Id, subject, sbBody.ToString());
+
+            // Set email confirmation sent on
+            user.EmailConfirmationSentOn = DateTime.UtcNow;
         }
     }
 }
