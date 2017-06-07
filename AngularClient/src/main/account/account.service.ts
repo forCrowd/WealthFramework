@@ -40,7 +40,6 @@ export class AccountService {
     changePasswordUrl: string = "";
     changeUserNameUrl: string = "";
     confirmEmailUrl: string = "";
-    registerUrl: string = "";
     resendConfirmationEmailUrl: string = "";
     resetPasswordUrl: string = "";
     resetPasswordRequestUrl: string = "";
@@ -71,7 +70,6 @@ export class AccountService {
         this.changeUserNameUrl = AppSettings.serviceAppUrl + "/api/Account/ChangeUserName";
         this.confirmEmailUrl = AppSettings.serviceAppUrl + "/api/Account/ConfirmEmail";
         this.externalLoginUrl = AppSettings.serviceAppUrl + "/api/Account/ExternalLogin";
-        this.registerUrl = AppSettings.serviceAppUrl + "/api/Account/Register";
         this.resendConfirmationEmailUrl = AppSettings.serviceAppUrl + "/api/Account/ResendConfirmationEmail";
         this.resetPasswordUrl = AppSettings.serviceAppUrl + "/api/Account/ResetPassword";
         this.resetPasswordRequestUrl = AppSettings.serviceAppUrl + "/api/Account/ResetPasswordRequest";
@@ -112,12 +110,6 @@ export class AccountService {
                 // Update fetchedUsers list
                 this.appEntityManager.fetchedUsers.splice(this.appEntityManager.fetchedUsers.indexOf(this.currentUser.UserName));
                 this.appEntityManager.fetchedUsers.push(updatedUser.UserName);
-
-                // Update token as well
-                let tokenItem = localStorage.getItem("token");
-                let token = tokenItem ? JSON.parse(tokenItem.toString()) : null;
-                token.userName = updatedUser.UserName;
-                localStorage.setItem("token", JSON.stringify(token));
 
                 // Update current user
                 this.authService.updateCurrentUser(updatedUser);
@@ -162,17 +154,8 @@ export class AccountService {
             return Observable.throw(errorMessage);
         }
 
-        registerBindingModel.ClientAppUrl = window.location.origin;
-
-        return this.appHttp.post<User>(this.registerUrl, registerBindingModel, rememberMe)
-            .mergeMap((updatedUser: User): any => {
-
-                // Update fetchedUsers list
-                this.appEntityManager.fetchedUsers.splice(this.appEntityManager.fetchedUsers.indexOf(this.currentUser.UserName));
-                this.appEntityManager.fetchedUsers.push(updatedUser.UserName);
-
-                // Update current user
-                this.authService.updateCurrentUser(updatedUser);
+        return this.authService.register(registerBindingModel)
+            .mergeMap(() => {
 
                 return this.authService.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
                     .mergeMap((): any => {
