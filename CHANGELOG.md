@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.79.1**
+
+* Solution - Register & RegisterGuestAccount methods were merged
+* Solution - Reset other users' values: EmailConfirmationSentOn added
+* Solution - HasPassword field was changed from "Nullable(bool)" to "bool"
+
 **0.79.0**
 
 * General - "Email Confirmation Sent On" was added
