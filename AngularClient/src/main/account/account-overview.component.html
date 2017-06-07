@@ -7,7 +7,7 @@
             <div class="col-md-9">
                 <p class="form-control-static">
                     {{ currentUser.Email }}
-                    <span [hidden]="currentUser.EmailConfirmed">
+                    <span [hidden]="!displayConfirmEmail">
                         | (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
                     </span>
                     | <a routerLink="/app/account/change-email">Update</a>

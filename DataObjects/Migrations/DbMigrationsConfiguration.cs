@@ -7,6 +7,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class DbMigrationsConfiguration : DbMigrationsConfiguration<WealthEconomyContext>
     {
@@ -34,42 +35,38 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 {
                     case "Initial":
                         {
-                            // Initial data
-                            SeedInitialData(context);
+                            Execute_Initial_Updates(context); // Initial data
+                            break;
+                        }
+                    case "0.79.0":
+                        {
+                            Execute_0_79_0_Updates(context);
                             break;
                         }
                 }
             }
         }
 
-        static void SeedInitialData(WealthEconomyContext context)
-        {
-            // Create roles
-            CreateRoles(context);
-
-            // Create admin user
-            CreateAdminUser(context);
-
-            // Create sample user
-            CreateSampleUser(context);
-        }
-
         static void CreateAdminUser(WealthEconomyContext context)
         {
             // Manager & store
             var userStore = new UserStore(context);
-            userStore.AutoSaveChanges = true;
             var userManager = new UserManager<User, int>(userStore);
 
             // Admin user
             var adminUserName = "admin";
             var adminEmail = "admin.wealth@forcrowd.org";
-            var adminUser = new User(adminUserName, adminEmail);
+            var adminUser = new User(adminUserName, adminEmail)
+            {
+                EmailConfirmed = true,
+                EmailConfirmationSentOn = DateTime.UtcNow
+            };
             var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(adminUser, adminUserPassword);
-            userManager.AddToRole(adminUser.Id, "Administrator");
+            context.SaveChanges();
 
-            // Save
+            // Add to "admin" role
+            userManager.AddToRole(adminUser.Id, "Administrator");
             context.SaveChanges();
         }
 
@@ -99,19 +96,23 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
         {
             // Managers & stores & repositories
             var userStore = new UserStore(context);
-            userStore.AutoSaveChanges = true;
             var userManager = new UserManager<User, int>(userStore);
             var resourcePoolRepository = new ResourcePoolRepository(context);
 
             // Sample user
             var sampleUserName = "sample";
             var sampleEmail = "sample.wealth@forcrowd.org";
-            var sampleUser = new User(sampleUserName, sampleEmail);
+            var sampleUser = new User(sampleUserName, sampleEmail)
+            {
+                EmailConfirmed = true,
+                EmailConfirmationSentOn = DateTime.UtcNow
+            };
             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(sampleUser, sampleUserPassword);
-            userManager.AddToRole(sampleUser.Id, "Regular");
+            context.SaveChanges();
 
-            // Save
+            // Add to regular role
+            userManager.AddToRole(sampleUser.Id, "Regular");
             context.SaveChanges();
 
             // Login as (required in order to save the rest of the items)
@@ -159,6 +160,40 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // First save
             context.SaveChanges();
+        }
+
+        static void Execute_0_79_0_Updates(WealthEconomyContext context)
+        {
+            // Manager & store
+            var userStore = new UserStore(context);
+            var userManager = new UserManager<User, int>(userStore);
+
+            // Get all users
+            var allUsers = userManager.Users.AsEnumerable();
+
+            foreach (var user in allUsers)
+            {
+                // If the user's email is confirmed, set EmailConfirmationSentOn to now
+                if (user.EmailConfirmed)
+                {
+                    user.EmailConfirmationSentOn = DateTime.UtcNow;
+                }
+            }
+
+            // Save
+            context.SaveChanges();
+        }
+
+        static void Execute_Initial_Updates(WealthEconomyContext context)
+        {
+            // Create roles
+            CreateRoles(context);
+
+            // Create admin user
+            CreateAdminUser(context);
+
+            // Create sample user
+            CreateSampleUser(context);
         }
     }
 }

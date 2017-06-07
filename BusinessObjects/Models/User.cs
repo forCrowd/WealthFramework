@@ -28,6 +28,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             Email = email;
         }
 
+        public DateTime? EmailConfirmationSentOn { get; set; }
+
         /// <summary>
         /// Determines whether user has a password or not.
         /// Since in most cases the user will have a password, keep only false value, 'null' will be treated as true.

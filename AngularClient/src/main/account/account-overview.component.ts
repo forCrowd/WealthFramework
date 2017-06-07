@@ -13,5 +13,11 @@ export class AccountOverviewComponent {
         return this.accountService.currentUser;
     }
 
+    get displayConfirmEmail(): boolean {
+        return !(this.currentUser.EmailConfirmed
+            || (this.currentUser.Roles[0].Role.Name === 'Guest'
+                && !this.currentUser.EmailConfirmationSentOn));
+    }
+
     constructor(private accountService: AccountService) { }
 }
