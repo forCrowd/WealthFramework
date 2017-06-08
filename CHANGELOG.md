@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.79.2**
+
+* AngularClient - `intl` package was installed to prevent google bot errors
+* Facade - EmailService - "Mailbox unavailable" exceptions are ignored
+
 **0.79.1**
 
 * Solution - Register & RegisterGuestAccount methods were merged

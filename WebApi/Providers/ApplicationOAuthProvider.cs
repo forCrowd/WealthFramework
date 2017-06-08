@@ -81,9 +81,10 @@
         public override async Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
             // Remember me
-            var form = await context.Request.ReadFormAsync();
+            var tokenData = await context.Request.ReadFormAsync();
+
             var rememberMe = false;
-            bool.TryParse(form.Get("rememberMe"), out rememberMe);
+            bool.TryParse(tokenData.Get("rememberMe"), out rememberMe);
             if (rememberMe)
             {
                 context.Properties.ExpiresUtc = DateTime.UtcNow.AddYears(1);

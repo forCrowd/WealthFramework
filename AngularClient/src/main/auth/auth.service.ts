@@ -85,14 +85,9 @@ export class AuthService {
             "&rememberMe=" + rememberMe +
             "&singleUseToken=" + singleUseToken;
 
-        let headers = new Headers({ "Content-Type": "application/json" });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.appHttp.post(this.tokenUrl, tokenData, options)
-            .map((token: any) => {
-
-                // Store the token in localStorage
-                localStorage.setItem("token", JSON.stringify(token));
+        return this.appHttp.post<Object>(this.tokenUrl, tokenData)
+            .map((token) => {
+                localStorage.setItem("token", JSON.stringify(token)); // Store the token in localStorage
             });
     }
 

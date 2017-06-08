@@ -2,6 +2,7 @@
 {
     using Framework;
     using Microsoft.AspNet.Identity;
+    using System;
     using System.Net.Mail;
     using System.Net.Mime;
     using System.Threading.Tasks;
@@ -102,7 +103,22 @@
                 // coni2k - 08 Feb. '16
                 //smtpClient.EnableSsl = AppSettings.EnableSsl;
                 smtpClient.EnableSsl = false;
-                await smtpClient.SendMailAsync(mailMessage);
+
+                try
+                {
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
+                catch (SmtpException ex)
+                {
+                    if (ex.StatusCode == SmtpStatusCode.MailboxUnavailable)
+                    {
+                        // Ignore 'mailbox unavailable' exceptions, at least for the moment
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
             }
         }
    }
