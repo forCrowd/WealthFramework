@@ -33,6 +33,7 @@
             user.SingleUseToken = Guid.NewGuid().ToString();
         }
 
+        // TODO Not in use?
         public async Task DeleteUserResourcePoolAsync(int resourcePoolId)
         {
             var entity = await UserResourcePoolSet.SingleOrDefaultAsync(item => item.ResourcePoolId == resourcePoolId);
@@ -43,6 +44,7 @@
             UserResourcePoolSet.Remove(entity);
         }
 
+        // TODO Not in use?
         public async Task DeleteUserElementFieldAsync(int elementFieldId)
         {
             var entity = await UserElementFieldSet.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
@@ -53,6 +55,7 @@
             UserElementFieldSet.Remove(entity);
         }
 
+        // TODO Not in use?
         public async Task DeleteUserElementCellAsync(int elementCellId)
         {
             var entity = await UserElementCellSet.SingleOrDefaultAsync(item => item.ElementCellId == elementCellId);

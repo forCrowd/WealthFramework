@@ -50,8 +50,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             var userClaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             if (userClaim != null)
             {
-                var userId = 0;
-                int.TryParse(userClaim.Value, out userId);
+                int.TryParse(userClaim.Value, out var userId);
                 // Enumerate all command parameters and assign the correct value in the one we added inside query visitor
                 foreach (DbParameter param in command.Parameters)
                 {

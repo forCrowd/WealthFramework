@@ -1,5 +1,17 @@
 ### Changelog
 
+**0.80.0**
+
+* Update computed fields
+Computed fields were being calculated on each query, which in the long term could affect the performance.
+All of them were converted to regular fields. They can be updated with an end-point that can only be accessed by "admin" role.
+* AngularClient - A basic admin panel was introduced
+* AngularClient - Resource Pool Manager - Save / View functions bug fix
+* BusinessObjects - QueryVisitor - Ignore "UserField" filter if it's "administrator"
+* DataObjects - All migrations were merged into one
+* WebApi - EntityExistsValiator, ConcurrencyValidator and ForbiddenFieldsValidator action filters were introduced
+* WebApi - Entity owner validation was added for all post, patch and delete actions
+
 **0.79.2**
 
 * AngularClient - `intl` package was installed to prevent google bot errors
@@ -62,7 +74,7 @@ https://github.com/aspnet/AspNetKatana/issues/48
 * AngularClient - Refactoring
 * WebApi - `AllowedAnyOrigin` setting was added to `appSettings.config` file
 * ngClient & ng2Client were removed from solution
-* ng2Client - Resource pool editor - Dynamic item sort order based on "Your Ratings" vs. "All Ratings"
+* ng2Client - Resource pool editor - Dynamic item sort order based on "Current User" vs. "All Ratings"
 * ng2Client - angular 4 & other package updates
 * ng2Client - angular 4 router fix
 https://github.com/forCrowd/Labs-Angular4-BreezeJS-AppInit

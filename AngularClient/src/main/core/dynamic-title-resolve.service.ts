@@ -27,7 +27,7 @@ export class DynamicTitleResolve implements Resolve<string> {
             };
 
             return this.resourcePoolService.getResourcePoolExpanded(resourcePoolUniqueKey)
-                .map((resourcePool: any): any => {
+                .map((resourcePool): string => {
 
                     if (resourcePool !== null) {
 
@@ -43,7 +43,7 @@ export class DynamicTitleResolve implements Resolve<string> {
         } else if (username) { // User title
 
             return this.appEntityManager.getUser(username)
-                .map((user: any): string => {
+                .map((user): string => {
 
                     let title = "";
 

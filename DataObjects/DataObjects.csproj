@@ -73,77 +73,17 @@
     <Compile Include="..\SolutionItems\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Generated\Repository.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserElementFieldRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
     <Compile Include="MigrateDatabaseToLatestVersion.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
-    <Compile Include="Generated\RoleRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserClaimRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserLoginRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserRoleRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606141949102_Initial.cs" />
-    <Compile Include="Migrations\201606141949102_Initial.Designer.cs">
-      <DependentUpon>201606141949102_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606141949205_Initial_Manual.cs" />
-    <Compile Include="Migrations\201606141949205_Initial_Manual.Designer.cs">
-      <DependentUpon>201606141949205_Initial_Manual.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705281333459_0.78.0.cs" />
-    <Compile Include="Migrations\201705281333459_0.78.0.Designer.cs">
-      <DependentUpon>201705281333459_0.78.0.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706051947532_0.79.0.cs" />
-    <Compile Include="Migrations\201706051947532_0.79.0.Designer.cs">
-      <DependentUpon>201706051947532_0.79.0.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706072108334_0.79.1.cs" />
-    <Compile Include="Migrations\201706072108334_0.79.1.Designer.cs">
-      <DependentUpon>201706072108334_0.79.1.cs</DependentUpon>
+    <Compile Include="Migrations\201706241311225_V_0_80_0.cs" />
+    <Compile Include="Migrations\201706241311225_V_0_80_0.Designer.cs">
+      <DependentUpon>201706241311225_V_0_80_0.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
     <Compile Include="UserStore.cs" />
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="Generated\ElementCellRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ElementFieldRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ElementItemRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ElementRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ResourcePoolRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserElementCellRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserResourcePoolRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
     <Compile Include="IRepository.cs" />
     <Compile Include="Migrations\DbMigrationsConfiguration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
@@ -151,10 +91,6 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Generated\Repository.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Repository.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -172,22 +108,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606141949102_Initial.resx">
-      <DependentUpon>201606141949102_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606141949205_Initial_Manual.resx">
-      <DependentUpon>201606141949205_Initial_Manual.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705281333459_0.78.0.resx">
-      <DependentUpon>201705281333459_0.78.0.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706051947532_0.79.0.resx">
-      <DependentUpon>201706051947532_0.79.0.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706072108334_0.79.1.resx">
-      <DependentUpon>201706072108334_0.79.1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706241311225_V_0_80_0.resx">
+      <DependentUpon>201706241311225_V_0_80_0.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,6 @@
 ﻿import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs/Subscription";
 
 import { AccountService } from "./account.service";
 import { Logger } from "../logger/logger.module";
@@ -10,15 +11,15 @@ import { Logger } from "../logger/logger.module";
 })
 export class LoginComponent implements OnDestroy, OnInit {
 
-    error: any;
+    error: string;
     get isBusy(): boolean {
         return this.accountService.isBusy;
     }
-    init: any;
+    init: string;
     password = "";
     rememberMe = true;
-    singleUseToken: any;
-    subscriptions: any[] = [];
+    singleUseToken: string;
+    subscriptions: Subscription[] = [];
     username: string;
 
     constructor(private activatedRoute: ActivatedRoute,

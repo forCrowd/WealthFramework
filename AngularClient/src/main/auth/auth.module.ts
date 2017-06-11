@@ -1,7 +1,7 @@
 ﻿import { APP_INITIALIZER, NgModule } from "@angular/core";
 
-import { AuthService } from "./auth.service";
 import { AuthGuard } from "./auth-guard.service";
+import { AuthService } from "./auth.service";
 
 export { AuthGuard, AuthService }
 

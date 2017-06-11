@@ -33,14 +33,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "Initial":
+                    case "V_0_80_0":
                         {
-                            Execute_Initial_Updates(context); // Initial data
-                            break;
-                        }
-                    case "0.79.0":
-                        {
-                            Execute_0_79_0_Updates(context);
+                            Apply_V_0_80_0_Updates(context); // Initial data
                             break;
                         }
                 }
@@ -59,7 +54,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var adminUser = new User(adminUserName, adminEmail)
             {
                 EmailConfirmed = true,
-                EmailConfirmationSentOn = DateTime.UtcNow
+                EmailConfirmationSentOn = DateTime.UtcNow,
+                HasPassword = true
             };
             var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(adminUser, adminUserPassword);
@@ -105,7 +101,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var sampleUser = new User(sampleUserName, sampleEmail)
             {
                 EmailConfirmed = true,
-                EmailConfirmationSentOn = DateTime.UtcNow
+                EmailConfirmationSentOn = DateTime.UtcNow,
+                HasPassword = true
             };
             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(sampleUser, sampleUserPassword);
@@ -116,7 +113,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             context.SaveChanges();
 
             // Login as (required in order to save the rest of the items)
-            Security.LoginAs(sampleUser.Id);
+            Security.LoginAs(sampleUser.Id, "Regular");
 
             // Sample resource pools
             var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);
@@ -129,7 +126,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var totalCostIndexExistingSystemSample = resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser);
             var totalCostIndexNewSystemSample = resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser);
             var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
-            var connect2effectDemo = resourcePoolRepository.CreateConnect2EffectDemo(sampleUser);
 
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
@@ -143,7 +139,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             totalCostIndexExistingSystemSample.Id = 5;
             totalCostIndexNewSystemSample.Id = 6;
             allInOneSample.Id = 7;
-            connect2effectDemo.Id = 8;
 
             // Insert
             resourcePoolRepository.Insert(billionDollarQuestion);
@@ -156,35 +151,12 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRepository.Insert(totalCostIndexExistingSystemSample);
             resourcePoolRepository.Insert(totalCostIndexNewSystemSample);
             resourcePoolRepository.Insert(allInOneSample);
-            resourcePoolRepository.Insert(connect2effectDemo);
 
             // First save
             context.SaveChanges();
         }
 
-        static void Execute_0_79_0_Updates(WealthEconomyContext context)
-        {
-            // Manager & store
-            var userStore = new UserStore(context);
-            var userManager = new UserManager<User, int>(userStore);
-
-            // Get all users
-            var allUsers = userManager.Users.AsEnumerable();
-
-            foreach (var user in allUsers)
-            {
-                // If the user's email is confirmed, set EmailConfirmationSentOn to now
-                if (user.EmailConfirmed)
-                {
-                    user.EmailConfirmationSentOn = DateTime.UtcNow;
-                }
-            }
-
-            // Save
-            context.SaveChanges();
-        }
-
-        static void Execute_Initial_Updates(WealthEconomyContext context)
+        static void Apply_V_0_80_0_Updates(WealthEconomyContext context)
         {
             // Create roles
             CreateRoles(context);

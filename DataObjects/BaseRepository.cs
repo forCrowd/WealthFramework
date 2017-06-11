@@ -58,6 +58,20 @@
             return await dbSet.FindAsync(keyValues);
         }
 
+        public TEntityType FindLive(params object[] keyValues)
+        {
+            var entity = Find(keyValues);
+
+            return entity.DeletedOn.HasValue ? null : entity;
+        }
+
+        public async Task<TEntityType> FindLiveAsync(params object[] keyValues)
+        {
+            var entity = await FindAsync(keyValues);
+
+            return entity.DeletedOn.HasValue ? null : entity;
+        }
+
         public void Insert(TEntityType entity)
         {
             dbSet.Add(entity);

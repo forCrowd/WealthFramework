@@ -21,6 +21,7 @@ import { CoreModule } from "../core/core.module";
 
 // Feature modules
 import { AccountModule } from "../account/account.module";
+import { AdminModule } from "../admin/admin.module";
 import { ResourcePoolModule } from "../resource-pool/resource-pool.module";
 import { UserModule } from "../user/user.module";
 
@@ -52,7 +53,8 @@ import { AppComponent } from "./app.component";
 
         CoreModule,
         AccountModule,
-        ResourcePoolModule,
+        AdminModule,
+        ResourcePoolModule, // Register ResourcePool & User modules as the last ones, because of "catch all" routes
         UserModule,
     ],
     providers: [

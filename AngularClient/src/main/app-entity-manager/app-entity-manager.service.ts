@@ -1,5 +1,5 @@
 ﻿import { ErrorHandler, Injectable } from "@angular/core";
-import { config, EntityManager, EntityQuery, EntityState, FetchStrategy, QueryResult } from "breeze-client";
+import { config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, FetchStrategy, MergeStrategy, QueryOptions, QueryResult } from "breeze-client";
 import { BreezeBridgeAngularModule } from "breeze-bridge-angular";
 import { Observable, ObservableInput } from "rxjs/Observable";
 
@@ -12,6 +12,7 @@ import { AppSettings } from "../../app-settings/app-settings";
 import { AppErrorHandler } from "../app-error-handler/app-error-handler.module";
 import { AuthService } from "../auth/auth.service";
 import { Element } from "./entities/element";
+import { EntityBase } from "./entities/entity-base";
 import { ElementCell } from "./entities/element-cell";
 import { ElementField } from "./entities/element-field";
 import { ElementItem } from "./entities/element-item";
@@ -23,6 +24,11 @@ import { UserElementField } from "./entities/user-element-field";
 import { UserResourcePool } from "./entities/user-resource-pool";
 import { UserRole } from "./entities/user-role";
 import { Logger } from "../logger/logger.module";
+
+export interface IQueryResult<T> {
+    count: number;
+    results: T[];
+}
 
 @Injectable()
 export class AppEntityManager extends EntityManager {
@@ -77,29 +83,17 @@ export class AppEntityManager extends EntityManager {
         this.metadataStore.registerEntityTypeCtor("UserResourcePool", UserResourcePool, UserResourcePool.initializer);
     }
 
-    executeQueryNew(query: EntityQuery): Observable<QueryResult> {
+    executeQueryNew<T>(query: EntityQuery): Observable<IQueryResult<T>> {
         this.isBusy = true;
         return Observable.fromPromise(super.executeQuery(query))
+            .map((response) => {
+                return {
+                    count: response.inlineCount,
+                    results: response.results
+                }
+            })
             .catch((error: any) => this.handleODataErrors(error))
             .finally(() => { this.isBusy = false; });
-    }
-
-    getChanges(entityTypeName?: any, entityState?: any) {
-        entityTypeName = typeof entityTypeName !== "undefined" ? entityTypeName : null;
-        entityState = typeof entityState !== "undefined" ? entityState : null;
-
-        var all = super.getChanges();
-        var changes: any[] = [];
-
-        // Filters
-        all.forEach((change: any) => {
-            if ((entityTypeName === null || change.entityType.shortName === entityTypeName) &&
-                (entityState === null || change.entityAspect.entityState === entityState)) {
-                changes.push(change);
-            }
-        });
-
-        return changes;
     }
 
     getMetadata(): Observable<Object> {
@@ -135,8 +129,8 @@ export class AppEntityManager extends EntityManager {
             query = query.using(FetchStrategy.FromServer);
         }
 
-        return this.executeQueryNew(query)
-            .map((response: any) => {
+        return this.executeQueryNew<User>(query)
+            .map((response) => {
 
                 // If there is no result
                 if (response.results.length === 0) {
@@ -154,11 +148,7 @@ export class AppEntityManager extends EntityManager {
             });
     }
 
-    hasChanges(entityTypeName?: any, entityState?: any): boolean {
-        return this.getChanges(entityTypeName, entityState).length > 0;
-    }
-
-    saveChangesNew(): Observable<Object> {
+    saveChangesNew(): Observable<void> {
 
         this.isBusy = true;
 
@@ -166,7 +156,7 @@ export class AppEntityManager extends EntityManager {
         var count = this.getChanges().length;
         var saveBatches = this.prepareSaveBatches();
 
-        saveBatches.forEach((batch: any) => {
+        saveBatches.forEach((batch) => {
 
             // ignore empty batches (except "null" which means "save everything else")
             if (batch === null || batch.length > 0) {
@@ -193,7 +183,7 @@ export class AppEntityManager extends EntityManager {
     // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically
     // After each update, call this function to sync the entities RowVersion with the server's. Otherwise it'll get Conflict error
     // coni2k - 05 Jan. '16
-    syncRowVersion(managedEntity: any, unmanagedEntity: any) {
+    syncRowVersion(managedEntity: EntityBase, unmanagedEntity: EntityBase) {
         managedEntity.RowVersion = unmanagedEntity.RowVersion;
     }
 
@@ -264,15 +254,22 @@ export class AppEntityManager extends EntityManager {
                         handled = true;
                         break;
                     }
+                    case "403": { // Forbidden
+                        errorMessage = "The operation you attempted to execute is forbidden.";
+                        handled = true;
+                        break;
+                    }
                     case "404": { // Not found
-                        // TODO: Try to log these on the server itself
-                        // coni2k - 13 May '17
+                        // TODO Also log these errors on the server? / coni2k - 13 May '17
+                        errorMessage = "The requested resource does not exist.";
+                        handled = true;
                         break;
                     }
                     case "409": { // Conflict: Either the key exists in the database, or the record has been updated by another user
-                        errorMessage = error.body
+                        errorMessage = error.body.Message
                             || "The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.";
                         handled = true;
+
                         break;
                     }
                     case "500": { // Internal server error
@@ -308,20 +305,21 @@ export class AppEntityManager extends EntityManager {
         }
     }
 
-    private prepareSaveBatches() {
+    private prepareSaveBatches(): Entity[][] {
 
-        let batches: any[] = [];
+        let batches: Entity[][] = [];
 
         // RowVersion fix: breeze only sends modified properties back to server.
         // However, RowVersion is not getting changed through UI, and the server needs to it make Conflict checks.
         // So, faking an update as a fix.
-        this.getChanges(null, EntityState.Modified).forEach((entity) => {
+        this.getEntities(null, EntityState.Modified).forEach((entity: EntityBase) => {
             var rowVersion = entity.RowVersion;
             entity.RowVersion = "";
             entity.RowVersion = rowVersion;
         });
 
-        this.getChanges(null, EntityState.Deleted).forEach((entity) => {
+        // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
+        this.getEntities(null, EntityState.Deleted).forEach((entity: EntityBase) => {
             var rowVersion = entity.RowVersion;
             entity.RowVersion = "";
             entity.RowVersion = rowVersion;
@@ -342,25 +340,25 @@ export class AppEntityManager extends EntityManager {
         * 4. Every other change
         */
 
-        batches.push(this.getChanges("UserElementCell", EntityState.Deleted));
-        batches.push(this.getChanges("ElementCell", EntityState.Deleted));
-        batches.push(this.getChanges("ElementItem", EntityState.Deleted));
-        batches.push(this.getChanges("UserElementField", EntityState.Deleted));
-        batches.push(this.getChanges("ElementField", EntityState.Deleted));
-        batches.push(this.getChanges("Element", EntityState.Deleted));
-        batches.push(this.getChanges("UserResourcePool", EntityState.Deleted));
-        batches.push(this.getChanges("ResourcePool", EntityState.Deleted));
+        batches.push(this.getEntities("UserElementCell", EntityState.Deleted));
+        batches.push(this.getEntities("ElementCell", EntityState.Deleted));
+        batches.push(this.getEntities("ElementItem", EntityState.Deleted));
+        batches.push(this.getEntities("UserElementField", EntityState.Deleted));
+        batches.push(this.getEntities("ElementField", EntityState.Deleted));
+        batches.push(this.getEntities("Element", EntityState.Deleted));
+        batches.push(this.getEntities("UserResourcePool", EntityState.Deleted));
+        batches.push(this.getEntities("ResourcePool", EntityState.Deleted));
 
-        batches.push(this.getChanges("ResourcePool", EntityState.Added));
-        batches.push(this.getChanges("UserResourcePool", EntityState.Added));
-        batches.push(this.getChanges("Element", EntityState.Added));
-        batches.push(this.getChanges("ElementField", EntityState.Added));
-        batches.push(this.getChanges("UserElementField", EntityState.Added));
-        batches.push(this.getChanges("ElementItem", EntityState.Added));
-        batches.push(this.getChanges("ElementCell", EntityState.Added));
-        batches.push(this.getChanges("UserElementCell", EntityState.Added));
+        batches.push(this.getEntities("ResourcePool", EntityState.Added));
+        batches.push(this.getEntities("UserResourcePool", EntityState.Added));
+        batches.push(this.getEntities("Element", EntityState.Added));
+        batches.push(this.getEntities("ElementField", EntityState.Added));
+        batches.push(this.getEntities("UserElementField", EntityState.Added));
+        batches.push(this.getEntities("ElementItem", EntityState.Added));
+        batches.push(this.getEntities("ElementCell", EntityState.Added));
+        batches.push(this.getEntities("UserElementCell", EntityState.Added));
 
-        batches.push(this.getChanges(null, EntityState.Modified));
+        batches.push(this.getEntities(null, EntityState.Modified));
 
         // batches.push(null); // empty = save all remaining pending changes
 

@@ -1,4 +1,4 @@
-console.log("x breeze.base.debug.js");
+console.log("breeze.base.debug.js");
 
 /*
  * Copyright 2012-2016 IdeaBlade, Inc.  All Rights Reserved.  

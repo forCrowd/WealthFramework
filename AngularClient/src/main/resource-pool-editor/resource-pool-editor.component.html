@@ -17,19 +17,22 @@
                                 {{ resourcePool.Name }}
                             </span>
                             <br />
-                            <small>Created by <a routerLink="/{{ resourcePool.User.UserName }}">{{ resourcePool.User.UserName }}</a> on {{ resourcePool.CreatedOn | date }}</small>
+                            <small>Created by <a routerLink="/{{ resourcePool.User.UserName }}">{{ resourcePool.User.UserName }}</a> on {{ resourcePool.CreatedOn | date }}</small><br />
+                            <small>Last modified on {{ resourcePool.ModifiedOn | date: 'medium' }}</small>
                         </p>
-                        <button *ngIf="manageResourcePoolEnabled()" type="button" class="btn btn-link pull-right" (click)="manageResourcePool()">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Manage
-                        </button>
+                        <div class="pull-right">
+                            <button *ngIf="manageResourcePoolEnabled()" type="button" class="btn btn-link" (click)="manageResourcePool()">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Manage
+                            </button>
+                        </div>
                     </div>
                     <hr />
                     <div class="settings">
-                        <div *ngIf="resourcePool.RatingCount > 0" class="btn-group" role="group" aria-label="Rating Options">
-                            <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === ratingMode.YourRatings }">
+                        <div *ngIf="resourcePool.RatingCount > 1" class="btn-group" role="group" aria-label="Rating Options">
+                            <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === RatingMode.CurrentUser }">
                                 Your Ratings
                             </button>
-                            <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === ratingMode.AllUsers }">
+                            <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === RatingMode.AllUsers }">
                                 All Users
                                 <span class="g-ml-10 badge">{{ resourcePool.RatingCount }}</span>
                             </button>
@@ -104,11 +107,11 @@
                                             {{ resourcePool.selectedElement().Name }}
                                         </th>
                                         <!-- Fields -->
-                                        <th *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === 3 || field.DataType === 4 || field.DataType === 11 || field.DataType === 12 }">
-                                            <div *ngIf="field.DataType !== 6">
+                                        <th *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Integer || field.DataType === ElementFieldDataType.Decimal || field.DataType === ElementFieldDataType.DirectIncome || field.DataType === ElementFieldDataType.Multiplier }">
+                                            <div *ngIf="field.DataType !== ElementFieldDataType.Element">
                                                 {{ field.Name }}<span *ngIf="field.IndexEnabled" title="Index" class="infoText">(I)</span>
                                             </div>
-                                            <span *ngIf="field.DataType === 6">
+                                            <span *ngIf="field.DataType === ElementFieldDataType.Element">
                                                 <button (click)="changeSelectedElement(field.SelectedElement)" type="button" class="btn-link" title="Switch to {{ field.Name }} view">{{ field.Name }}</button>
                                             </span>
                                         </th>
@@ -141,21 +144,21 @@
                                             {{ elementItem.Name }}
                                         </td>
                                         <!-- Cells -->
-                                        <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === 3 || elementCell.ElementField.DataType === 4 || elementCell.ElementField.DataType === 11 || elementCell.ElementField.DataType === 12 }">
-                                            <span *ngIf="elementCell.ElementField.DataType === 1">{{ elementCell.StringValue }}</span>
-                                            <div *ngIf="elementCell.ElementField.DataType === 2
-                                        || elementCell.ElementField.DataType === 3
-                                        || elementCell.ElementField.DataType === 4
-                                        || elementCell.ElementField.DataType === 5">
+                                        <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === ElementFieldDataType.Integer || elementCell.ElementField.DataType === ElementFieldDataType.Decimal || elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome || elementCell.ElementField.DataType === ElementFieldDataType.Multiplier }">
+                                            <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String">{{ elementCell.StringValue }}</span>
+                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Boolean
+                                        || elementCell.ElementField.DataType === ElementFieldDataType.Integer
+                                        || elementCell.ElementField.DataType === ElementFieldDataType.Decimal
+                                        || elementCell.ElementField.DataType === ElementFieldDataType.DateTime">
                                                 <div *ngIf="elementCell.ElementField.UseFixedValue">
                                                     {{ elementCell.numericValue() | symbolic }}
                                                 </div>
                                                 <div *ngIf="!elementCell.ElementField.UseFixedValue">
                                                     <div *ngIf="elementCell.ElementField.IndexEnabled">
-                                                        <div [hidden]="resourcePool.RatingMode === ratingMode.YourRatings">
+                                                        <div [hidden]="resourcePool.RatingMode === RatingMode.CurrentUser">
                                                             {{ elementCell.ratingPercentage() | percent }}
                                                         </div>
-                                                        <div [hidden]="resourcePool.RatingMode === ratingMode.AllUsers">
+                                                        <div [hidden]="resourcePool.RatingMode === RatingMode.AllUsers">
                                                             <div class="btn-group" role="group">
                                                                 <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 0, 'btn-default': elementCell.numericValue() !== 0 }">0</button>
                                                                 <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 20)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 20, 'btn-default': elementCell.numericValue() !== 20 }">1</button>
@@ -171,13 +174,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="elementCell.ElementField.DataType === 6">
+                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element">
                                                 {{ elementCell.SelectedElementItem !== null ? elementCell.SelectedElementItem.Name : "N/A" }}
                                             </div>
-                                            <div *ngIf="elementCell.ElementField.DataType === 11">
+                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome">
                                                 {{ elementItem.directIncome() | symbolic }}
                                             </div>
-                                            <div *ngIf="elementCell.ElementField.DataType === 12">
+                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Multiplier">
                                                 {{ elementItem.multiplier() | symbolic }}
                                             </div>
                                         </td>
@@ -207,11 +210,11 @@
                                             &nbsp;
                                         </td>
                                         <!-- Fields -->
-                                        <td *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === 3 || field.DataType === 4 || field.DataType === 11 || field.DataType === 12 }">
-                                            <span *ngIf="field.DataType === 11">
+                                        <td *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Integer || field.DataType === ElementFieldDataType.Decimal || field.DataType === ElementFieldDataType.DirectIncome || field.DataType === ElementFieldDataType.Multiplier }">
+                                            <span *ngIf="field.DataType === ElementFieldDataType.DirectIncome">
                                                 {{ resourcePool.selectedElement().directIncome() | symbolic }}
                                             </span>
-                                            <span *ngIf="field.DataType === 12">
+                                            <span *ngIf="field.DataType === ElementFieldDataType.Multiplier">
                                                 {{ resourcePool.selectedElement().multiplier() | symbolic }}
                                             </span>
                                         </td>
@@ -240,11 +243,11 @@
                                             &nbsp;
                                         </td>
                                         <!-- Fields -->
-                                        <td class="noborder" *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === 3 || field.DataType === 4 || field.DataType === 11 || field.DataType === 12 }">
-                                            <div *ngIf="field.DataType !== 12">
+                                        <td class="noborder" *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Integer || field.DataType === ElementFieldDataType.Decimal || field.DataType === ElementFieldDataType.DirectIncome || field.DataType === ElementFieldDataType.Multiplier }">
+                                            <div *ngIf="field.DataType !== ElementFieldDataType.Multiplier">
                                                 &nbsp;
                                             </div>
-                                            <div *ngIf="field.DataType === 12 && resourcePool.displayMultiplierFunctions">
+                                            <div *ngIf="field.DataType === ElementFieldDataType.Multiplier">
                                                 <div class="btn-group" role="group">
                                                     <button title="Increase {{ resourcePool.selectedElement().multiplierField().Name }}" [disabled]="isBusy" (click)="increaseElementMultiplier(resourcePool.selectedElement())" class="btn btn-default btn-xs">+</button>
                                                     <button title="Decrease {{ resourcePool.selectedElement().multiplierField().Name }}" type="button" [disabled]="isBusy" (click)="decreaseElementMultiplier(resourcePool.selectedElement())" class="btn btn-default btn-xs">-</button>

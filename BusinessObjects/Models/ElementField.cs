@@ -4,9 +4,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    // [ODataControllerAuthorization("Administrator")]
     public class ElementField : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
@@ -55,6 +53,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [StringLength(50)]
         public string Name { get; set; }
 
+        // Can't use Enum itself, OData v3 doesn't allow it:
+        // System.Runtime.Serialization.SerializationException 'forCrowd.WealthEconomy.BusinessObjects.ElementFieldDataType' cannot be serialized using the ODataMediaTypeFormatter.
+        // coni2k - 02 Jul. '17
         [Required]
         public byte DataType { get; set; }
 
@@ -67,17 +68,16 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public bool IndexEnabled { get; set; }
 
+        // See 'DataType' for enum remark
         public byte IndexCalculationType { get; set; }
 
+        // See 'DataType' for enum remark
         public byte IndexSortType { get; set; }
 
         public byte SortOrder { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? IndexRatingTotal { get; private set; }
-        
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int? IndexRatingCount { get; private set; }
+        public decimal IndexRatingTotal { get; set; }
+        public int IndexRatingCount { get; set; }
 
         public virtual Element Element { get; set; }
         public virtual Element SelectedElement { get; set; }
@@ -107,11 +107,19 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementField EnableIndex(ElementFieldIndexCalculationType calculationType, ElementFieldIndexSortType indexSortType)
         {
-            ValidateEnableIndex();
+            if (DataType == (byte)ElementFieldDataType.String
+                || DataType == (byte)ElementFieldDataType.String
+                || DataType == (byte)ElementFieldDataType.String)
+            {
+                throw new InvalidOperationException(string.Format("Index cannot be enabled for this type: {0}", DataType));
+            }
 
             IndexEnabled = true;
             IndexCalculationType = (byte)calculationType;
             IndexSortType = (byte)indexSortType;
+
+            IndexRatingTotal = 50; // Computed field
+            IndexRatingCount = 1; // Computed field
 
             AddUserRating(50);
 
@@ -119,16 +127,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         }
 
         // TODO Where is DisableIndex my dear?! / coni2k - 11 Jun. '16
-
-        void ValidateEnableIndex()
-        {
-            if (DataType == (byte)ElementFieldDataType.String
-                || DataType == (byte)ElementFieldDataType.String
-                || DataType == (byte)ElementFieldDataType.String)
-            {
-                throw new InvalidOperationException(string.Format("Index cannot be enabled for this type: {0}", DataType));
-            }
-        }
 
         public override string ToString()
         {

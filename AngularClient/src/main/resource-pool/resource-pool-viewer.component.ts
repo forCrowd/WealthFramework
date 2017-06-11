@@ -34,7 +34,7 @@ export class ResourcePoolViewerComponent implements OnInit {
 
                 // Title
                 this.resourcePoolService.getResourcePoolExpanded(this.editorConfig)
-                    .subscribe((resourcePool: any) => {
+                    .subscribe((resourcePool) => {
 
                         // Not found, navigate to 404
                         if (resourcePool === null) {

@@ -17,8 +17,7 @@ export class AppHttp extends Http {
         return super.get(url, options)
             .map<Response, T>((response: Response) => {
                 return this.extractData<T>(response);
-            })
-            .catch((error: any) => this.handleHttpErrors(error));
+            });
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
@@ -42,17 +41,18 @@ export class AppHttp extends Http {
             }
         }
 
-        return super.request(url, options).finally(() => {
-            this.isBusy = false;
-        });
+        return super.request(url, options)
+            .catch((error: any) => this.handleHttpErrors(error))
+            .finally(() => {
+                this.isBusy = false;
+            });
     }
 
     post<T>(url: string, body: any, options?: RequestOptionsArgs): Observable<T> {
         return super.post(url, body, options)
             .map<Response, T>((response: Response) => {
                 return this.extractData<T>(response);
-            })
-            .catch((error: any) => this.handleHttpErrors(error));
+            });
     }
 
     private extractData<T>(response: Response): T {
@@ -82,15 +82,29 @@ export class AppHttp extends Http {
                 }
                 case 400: { // Bad request
 
-                    // ModelState errors
-                    if (body.ModelState) {
+                    if (body.ModelState) { // WebApi ModelState errors
+
                         for (let key in body.ModelState) {
                             if (body.ModelState.hasOwnProperty(key)) {
-                                body.ModelState[key].forEach((modelStateItem: any) => {
-                                    errorMessage += modelStateItem + "<br />";
+                                body.ModelState[key].forEach((item: any) => {
+                                    errorMessage += item + "<br />";
                                 });
                             }
                         }
+
+                    } else if (body["odata.error"]) { // OData ModelState errors
+
+                        var errors = body["odata.error"].innererror.message.split("\r\n") as string[];
+
+                        errors.forEach((error) => {
+
+                            error = error.trim();
+
+                            if (error) {
+                                errorMessage += error + "<br />";
+                            }
+                        });
+
                     } else {
                         errorMessage = body.Message
                             || body.error_description // "Token" end point returns an error response with "error_description"
@@ -112,9 +126,15 @@ export class AppHttp extends Http {
                     handled = true;
                     break;
                 }
+                case 403: { // Forbidden
+                    errorMessage = "The operation you attempted to execute is forbidden.";
+                    handled = true;
+                    break;
+                }
                 case 404: { // Not found
-                    // TODO: Try to log these on the server itself
-                    // coni2k - 13 May '17
+                    // TODO Also log these errors on the server? / coni2k - 13 May '17
+                    errorMessage = "The requested resource does not exist.";
+                    handled = true;
                     break;
                 }
                 case 409: { // Conflict: Either the key exists in the database, or the record has been updated by another user

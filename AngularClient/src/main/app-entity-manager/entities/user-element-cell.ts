@@ -10,6 +10,6 @@ export class UserElementCell extends EntityBase {
     StringValue: string = null;
     BooleanValue: boolean = null;
     IntegerValue: number = null;
-    DateTimeValue: any = null;
+    DateTimeValue: Date = null;
     DecimalValue: number = null;
 }

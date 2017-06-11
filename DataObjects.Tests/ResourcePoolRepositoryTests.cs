@@ -18,7 +18,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
 
         public TestContext TestContext { get; set; }
         ResourcePoolRepository resourcePoolRepository;
-        UserResourcePoolRepository userResourcePoolRepository;
 
         [TestInitialize]
         public void Initialize()
@@ -38,7 +37,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
         void CreateNewStore()
         {
             resourcePoolRepository = new ResourcePoolRepository(Context);
-            userResourcePoolRepository = new UserResourcePoolRepository(Context);
         }
 
         void RefreshStore()

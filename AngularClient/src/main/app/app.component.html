@@ -52,6 +52,11 @@
                             Account
                         </button>
                     </li>
+                    <li [hidden]="!currentUser.isAdmin()">
+                        <button (click)="navigate('/app/admin')" type="button" class="btn-link">
+                            Admin
+                        </button>
+                    </li>
                     <li [hidden]="!currentUser.isAuthenticated()">
                         <button (click)="logout()" type="button" class="btn-link">
                             Logout

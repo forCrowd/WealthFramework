@@ -165,7 +165,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('SelectedElement').length > 0 }">
+                    <div class="form-group" *ngIf="elementField.DataType === ElementFieldDataType.Element" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('SelectedElement').length > 0 }">
                         <label for="SelectedElementId" class="control-label col-md-2">Selected Element</label>
                         <div class="col-md-10">
                             <select id="SelectedElementId" name="SelectedElementId" [(ngModel)]="elementField.SelectedElement" class="form-control">
@@ -173,7 +173,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementField.DataType !== elementFieldDataType.String && elementField.DataType !== elementFieldDataType.Element && elementField.DataType !== elementFieldDataType.DirectIncome && elementField.DataType !== elementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementField.DataType !== ElementFieldDataType.String && elementField.DataType !== ElementFieldDataType.Element && elementField.DataType !== ElementFieldDataType.DirectIncome && elementField.DataType !== ElementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }">
                         <label class="control-label col-md-2">Use Fixed Value</label>
                         <div class="col-md-10">
                             <select id="UseFixedValue" name="UseFixedValue" [(ngModel)]="elementField.UseFixedValue" class="form-control" aria-describedby="UseFixedValueHelp">
@@ -187,7 +187,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementField.DataType !== elementFieldDataType.String && elementField.DataType !== elementFieldDataType.Element && elementField.DataType !== elementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexEnabled').length > 0 }">
+                    <div class="form-group" *ngIf="elementField.DataType !== ElementFieldDataType.String && elementField.DataType !== ElementFieldDataType.Element && elementField.DataType !== ElementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexEnabled').length > 0 }">
                         <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
                         <div class="col-md-10">
                             <select id="IndexEnabled" name="IndexEnabled" [(ngModel)]="elementField.IndexEnabled" class="form-control" aria-describedby="IndexEnabledHelp">
@@ -413,13 +413,13 @@
                         <label class="control-label col-md-2">Element Item</label>
                         <p class="form-control-static col-md-10">{{ elementCell.ElementItem.Name }}</p>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('StringValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String" [ngClass]="{ 'has-error': elementCell.entityAspect.getValidationErrors('StringValue').length > 0 }">
                         <label for="StringValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
-                            <input id="StringValue" name="StringValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].StringValue" class="form-control" />
+                            <input id="StringValue" name="StringValue" type="text" [(ngModel)]="elementCell.StringValue" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Boolean" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('BooleanValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Boolean" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('BooleanValue').length > 0 }">
                         <label class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
                             <select id="BooleanValue" name="BooleanValue" [(ngModel)]="elementCell.UserElementCellSet[0].BooleanValue" class="form-control" aria-describedby="BooleanValueHelp">
@@ -429,19 +429,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Integer" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('IntegerValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Integer" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('IntegerValue').length > 0 }">
                         <label for="IntegerValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
                             <input id="IntegerValue" name="IntegerValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].IntegerValue" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Decimal || elementCell.ElementField.DataType === elementFieldDataType.DirectIncome || elementCell.ElementField.DataType === elementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal || elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome || elementCell.ElementField.DataType === ElementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }">
                         <label for="DecimalValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
                             <input id="DecimalValue" name="DecimalValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].DecimalValue" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': elementCell.entityAspect.getValidationErrors('SelectedItem').length > 0 }">
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element" [ngClass]="{ 'has-error': elementCell.entityAspect.getValidationErrors('SelectedItem').length > 0 }">
                         <label for="SelectedElementItemId" class="control-label col-md-2">Selected Item</label>
                         <div class="col-md-10">
                             <select id="SelectedElementItemId" name="SelectedElementItemId" [(ngModel)]="elementCell.SelectedElementItem" class="form-control">

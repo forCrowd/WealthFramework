@@ -77,7 +77,7 @@ export class AuthService {
             });
     }
 
-    getToken(username: string, password: string, rememberMe: boolean, singleUseToken?: any) {
+    getToken(username: string, password: string, rememberMe: boolean, singleUseToken?: string) {
 
         var tokenData = "grant_type=password" +
             "&username=" + username +
@@ -124,7 +124,7 @@ export class AuthService {
             });
     }
 
-    login(username: any, password: any, rememberMe: any, singleUseToken?: any): Observable<void> {
+    login(username: string, password: string, rememberMe: boolean, singleUseToken?: string): Observable<void> {
 
         return this.getToken(username, password, rememberMe, singleUseToken)
             .mergeMap((): Observable<void> => {
@@ -226,7 +226,7 @@ export class AuthService {
 
             let query = EntityQuery.from("Roles");
 
-            return this.appEntityManager.executeQueryNew(query) as null;
+            return this.appEntityManager.executeQueryNew(query).map(() => { });
         }
     }
 

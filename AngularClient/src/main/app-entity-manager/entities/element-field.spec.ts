@@ -1,4 +1,5 @@
-﻿import { ElementFieldDataType } from "./enums";
+﻿import { ElementFieldDataType, ElementFieldIndexSortType } from "./element-field";
+import { RatingMode } from "./resource-pool";
 import { TestHelpers } from "./test-helpers";
 
 // TODO: Check all these tests below one more time
@@ -187,11 +188,11 @@ describe("main/app-entity-manager/entities/element-field", () => {
 
     });
 
-    it('indexRating - RatingMode 1', function () {
+    it('indexRating - RatingMode "Current User"', function () {
 
         // Case 1: Initial
         var decimalField = TestHelpers.getElementField();
-        decimalField.Element.ResourcePool.RatingMode = 1;
+        decimalField.Element.ResourcePool.RatingMode = RatingMode.CurrentUser;
         decimalField.DataType = ElementFieldDataType.Decimal;
 
         expect(decimalField.indexRating()).toBe(50);
@@ -220,12 +221,12 @@ describe("main/app-entity-manager/entities/element-field", () => {
 
     });
 
-    it('indexRating - RatingMode 2', function () {
+    it('indexRating - RatingMode "All Users"', function () {
 
         // Case 1: Initial
 
         var decimalField = TestHelpers.getElementField();
-        decimalField.Element.ResourcePool.RatingMode = 2;
+        decimalField.Element.ResourcePool.RatingMode = RatingMode.AllUsers;
         decimalField.DataType = ElementFieldDataType.Decimal;
 
         expect(decimalField.indexRating()).toBe(50);
@@ -297,14 +298,14 @@ describe("main/app-entity-manager/entities/element-field", () => {
 
         // Case 1: Initial
         var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = 11;
+        decimalField.DataType = ElementFieldDataType.DirectIncome;
         decimalField.IndexEnabled = true;
 
         expect(decimalField.numericValueMultiplied()).toBe(0);
 
         // Case 2: Add the multiplier field and the first item
         var multiplierField = TestHelpers.getElementField();
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         var item1 = TestHelpers.getElementItem(decimalField.Element);
 
@@ -345,15 +346,15 @@ describe("main/app-entity-manager/entities/element-field", () => {
 
         // Case 1: Initial
         var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = 11;
+        decimalField.DataType = ElementFieldDataType.DirectIncome;
         decimalField.IndexEnabled = true;
-        decimalField.IndexSortType = 2;
+        decimalField.IndexSortType = ElementFieldIndexSortType.Lowest;
 
         expect(decimalField.referenceRatingMultiplied()).toBe(0);
 
         // Case 2: Add the multiplier field and the first item
         var multiplierField = TestHelpers.getElementField();
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         var item1 = TestHelpers.getElementItem(decimalField.Element);
 
@@ -384,7 +385,7 @@ describe("main/app-entity-manager/entities/element-field", () => {
         expect(decimalField.referenceRatingMultiplied()).toBe(2250);
 
         // TODO Update / remove cases
-        // TODO field.IndexSortType = 1 case?
+        // TODO field.IndexSortType = ElementFieldIndexSortType.Highest case?
 
     });
 

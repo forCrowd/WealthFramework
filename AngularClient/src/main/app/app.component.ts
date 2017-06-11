@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
+import { Subscription } from "rxjs/Subscription";
 
 import { User } from "../app-entity-manager/entities/user";
-import { AccountService } from "../account/account.module";
+import { AuthService } from "../auth/auth.module";
 import { Angulartics2GoogleAnalytics } from "../core/core.module";
 import { Logger, ToasterConfig } from "../logger/logger.module";
 import { AppSettings } from "../../app-settings/app-settings";
@@ -17,16 +18,16 @@ export class AppComponent implements OnDestroy, OnInit {
     appVersion: string = AppSettings.version;
     currentUser: User = null;
     hideGuestAccountInfoBox: boolean = true;
-    subscriptions: any[] = [];
+    subscriptions: Subscription[] = [];
     toasterConfig: ToasterConfig = null;
 
     constructor(private activatedRoute: ActivatedRoute,
         angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-        private accountService: AccountService,
+        private authService: AuthService,
         private logger: Logger,
         private titleService: Title,
         private router: Router) {
-        this.currentUser = this.accountService.currentUser;
+        this.currentUser = this.authService.currentUser;
     }
 
     closeGuestAccountInfoBox(): void {
@@ -39,7 +40,7 @@ export class AppComponent implements OnDestroy, OnInit {
     }
 
     logout(): void {
-        this.accountService.logout()
+        this.authService.logout()
             .subscribe(() => {
                 this.router.navigate([""]);
             });
@@ -76,7 +77,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
         // Current user
         this.subscriptions.push(
-            this.accountService.currentUserChanged$.subscribe((newUser: User) => this.currentUserChanged(newUser)));
+            this.authService.currentUserChanged$.subscribe((newUser: User) => this.currentUserChanged(newUser)));
 
         // Toaster config
         this.toasterConfig = this.logger.getToasterConfig();

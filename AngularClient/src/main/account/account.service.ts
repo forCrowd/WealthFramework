@@ -132,7 +132,7 @@ export class AccountService {
         return url;
     }
 
-    login(username: any, password: any, rememberMe: any, singleUseToken?: any): Observable<void> {
+    login(username: string, password: string, rememberMe: boolean, singleUseToken?: string): Observable<void> {
         return this.authService.login(username, password, rememberMe, singleUseToken);
     }
 
@@ -140,7 +140,7 @@ export class AccountService {
         return this.authService.logout();
     }
 
-    register(registerBindingModel: any, rememberMe: any): Observable<Object> {
+    register(registerBindingModel: any, rememberMe: boolean): Observable<void> {
 
         this.isBusyLocal = true;
 
@@ -158,7 +158,7 @@ export class AccountService {
             .mergeMap(() => {
 
                 return this.authService.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
-                    .mergeMap((): any => {
+                    .mergeMap(() => {
 
                         // Save the changes that's been done before the registration
                         return this.saveChanges();
@@ -191,7 +191,7 @@ export class AccountService {
         return this.appHttp.post<User>(this.resetPasswordRequestUrl, resetPasswordRequestBindingModel);
     }
 
-    saveChanges(): Observable<Object> {
+    saveChanges(): Observable<void> {
         this.isBusyLocal = true;
 
         return this.authService.ensureAuthenticatedUser()

@@ -23,7 +23,7 @@ export class User extends EntityBase {
             this.fields.userName = newValue;
         }
     }
-    SingleUseToken: any = null;
+    SingleUseToken: string = null;
     HasPassword = false;
     FirstName = "";
     MiddleName = "";
@@ -33,9 +33,9 @@ export class User extends EntityBase {
     TwoFactorEnabled = false;
     AccessFailedCount = 0;
     LockoutEnabled = false;
-    LockoutEndDateUtc: any = null;
+    LockoutEndDateUtc: Date = null;
     Notes = "";
-    Claims: any;
+    Claims: any[];
     Logins: any[];
     Roles: UserRole[];
     ResourcePoolSet: ResourcePool[];
@@ -64,8 +64,8 @@ export class User extends EntityBase {
         userName: ""
     };
 
-    getResourcePoolSetSorted(): any[] {
-        return this.ResourcePoolSet.sort((a: any, b: any) => {
+    getResourcePoolSetSorted(): ResourcePool[] {
+        return this.ResourcePoolSet.sort((a, b) => {
             let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
             if (nameA < nameB) { return -1 };
             if (nameA > nameB) { return 1 };
@@ -74,7 +74,16 @@ export class User extends EntityBase {
     }
 
     // Functions
-    isAuthenticated() {
+    isAuthenticated(): boolean {
         return this.Id > 0;
+    }
+
+    isAdmin(): boolean {
+
+        if (!this.initialized) {
+            return false;
+        }
+
+        return this.Roles[0].Role.Name === "Administrator";
     }
 }

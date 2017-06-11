@@ -1,7 +1,6 @@
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
-    using Extensions;
     using Facade;
     using System.Linq;
     using System.Web.Http;

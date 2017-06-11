@@ -1,7 +1,7 @@
 ﻿import { EventEmitter } from "@angular/core";
 
 import { EntityBase } from "./entity-base";
-import { ElementField } from "./element-field";
+import { ElementField, ElementFieldDataType, ElementFieldIndexCalculationType } from "./element-field";
 import { ElementItem } from "./element-item";
 import { UserElementCell } from "./user-element-cell";
 
@@ -11,10 +11,9 @@ export class ElementCell extends EntityBase {
     Id: number = 0;
     ElementField: ElementField;
     ElementItem: ElementItem;
-    StringValue: string = ""; // Computed value - Used in: resource-pool-editor.html
-    NumericValueTotal: number = 0;
-    // Computed value - Used in: setOtherUsersNumericValueTotal, setCurrentUserNumericValue
-    NumericValueCount: number = 0; // Computed value - Used in: setOtherUsersNumericValueCount
+    StringValue: string = "";
+    NumericValueTotal: number = 0; // Used in: setOtherUsersNumericValueTotal, setCurrentUserNumericValue
+    NumericValueCount: number = 0; // Used in: setOtherUsersNumericValueCount
     SelectedElementItem: ElementItem;
     UserElementCellSet: UserElementCell[];
 
@@ -22,17 +21,17 @@ export class ElementCell extends EntityBase {
 
     private fields: {
         // Client-side
-        currentUserNumericValue: any,
-        otherUsersNumericValueTotal: any,
-        otherUsersNumericValueCount: any,
-        numericValue: any,
-        numericValueMultiplied: any,
-        numericValueMultipliedPercentage: any,
-        passiveRating: any,
-        aggressiveRating: any,
-        rating: any,
-        ratingPercentage: any,
-        indexIncome: any
+        currentUserNumericValue: number,
+        otherUsersNumericValueTotal: number,
+        otherUsersNumericValueCount: number,
+        numericValue: number,
+        numericValueMultiplied: number,
+        numericValueMultipliedPercentage: number,
+        passiveRating: number,
+        aggressiveRating: number,
+        rating: number,
+        ratingPercentage: number,
+        indexIncome: number
     } = {
         // Client-side
         currentUserNumericValue: null,
@@ -204,7 +203,7 @@ export class ElementCell extends EntityBase {
         this.entityAspect.setDeleted();
     }
 
-    removeUserElementCell(updateCache?: any) {
+    removeUserElementCell(updateCache?: boolean) {
         updateCache = typeof updateCache !== "undefined" ? updateCache : true;
 
         var currentUserElementCell = this.currentUserCell();
@@ -219,10 +218,10 @@ export class ElementCell extends EntityBase {
     }
 
     // TODO Currently updateRelated is always "false"?
-    setAggressiveRating(updateRelated: any) {
+    setAggressiveRating(updateRelated: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = 0; // Default value?
+        var value: number = 0; // Default value?
 
         if (this.ElementField.IndexEnabled && this.ElementField.referenceRatingMultiplied() > 0) {
             switch (this.ElementField.IndexSortType) {
@@ -253,16 +252,16 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setCurrentUserNumericValue(updateRelated?: any) {
+    setCurrentUserNumericValue(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any;
-        var userCell: any = this.currentUserCell();
+        var value: number;
+        var userCell = this.currentUserCell();
 
         switch (this.ElementField.DataType) {
             case 2:
                 {
-                    value = userCell !== null ? userCell.BooleanValue : 0;
+                    value = userCell !== null ? userCell.BooleanValue ? 1 : 0 : 0;
                     break;
                 }
             case 3:
@@ -300,12 +299,12 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setIndexIncome(updateRelated?: any) {
+    setIndexIncome(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = 0; // Default value?
+        var value: number = 0; // Default value?
 
-        if (this.ElementField.DataType === 6 && this.SelectedElementItem !== null) {
+        if (this.ElementField.DataType === ElementFieldDataType.Element && this.SelectedElementItem !== null) {
             // item's index income / how many times this item has been selected (used) by higher items
             // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
             value = this.SelectedElementItem.totalResourcePoolIncome() / this.SelectedElementItem.ParentCellSet.length;
@@ -323,10 +322,10 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setNumericValue(updateRelated?: any) {
+    setNumericValue(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any;
+        var value: number;
 
         if (typeof this.ElementField !== "undefined") {
             switch (this.ElementField.Element.ResourcePool.RatingMode) {
@@ -351,7 +350,7 @@ export class ElementCell extends EntityBase {
             // Update related
             if (updateRelated) {
 
-                if (this.ElementField.DataType === 11) {
+                if (this.ElementField.DataType === ElementFieldDataType.DirectIncome) {
                     this.ElementItem.setDirectIncome();
                 }
 
@@ -362,10 +361,10 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setNumericValueMultiplied(updateRelated?: any) {
+    setNumericValueMultiplied(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any;
+        var value: number;
 
         // if (typeof this.ElementField === "undefined" || !this.ElementField.IndexEnabled) {
         if (typeof this.ElementField === "undefined") {
@@ -396,10 +395,10 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setNumericValueMultipliedPercentage(updateRelated: any) {
+    setNumericValueMultipliedPercentage(updateRelated: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = 0;
+        var value: number = 0;
 
         if (this.ElementField.IndexEnabled && this.ElementField.numericValueMultiplied() > 0) {
             value = this.numericValueMultiplied() / this.ElementField.numericValueMultiplied();
@@ -431,12 +430,12 @@ export class ElementCell extends EntityBase {
         // Exclude current user's
         if (this.UserElementCellSet.length > 0) {
 
-            var userValue: any = 0;
+            var userValue: number = 0;
             switch (this.ElementField.DataType) {
                 // TODO Check bool to decimal conversion?
                 case 2:
                     {
-                        userValue = this.UserElementCellSet[0].BooleanValue;
+                        userValue = this.UserElementCellSet[0].BooleanValue ? 1 : 0;
                         break;
                     }
                 case 3:
@@ -465,10 +464,10 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setPassiveRating(updateRelated: any) {
+    setPassiveRating(updateRelated: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = 0;
+        var value: number = 0;
 
         if (this.ElementField.IndexEnabled) {
 
@@ -498,22 +497,22 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setRating(updateRelated: any) {
+    setRating(updateRelated: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = 0;
+        var value: number = 0;
 
         // If there is only one item, then always %100
         if (this.ElementField.ElementCellSet.length === 1) {
             value = 1;
         } else {
             switch (this.ElementField.IndexCalculationType) {
-                case 1: // Aggressive rating
+                case ElementFieldIndexCalculationType.Aggressive:
                     {
                         value = this.aggressiveRating();
                         break;
                     }
-                case 2: // Passive rating
+                case ElementFieldIndexCalculationType.Passive:
                     {
                         value = this.passiveRating();
                         break;
@@ -531,10 +530,10 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setRatingPercentage(updateRelated: any) {
+    setRatingPercentage(updateRelated: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = 0;
+        var value: number = 0;
 
         if (this.ElementField.IndexEnabled && this.ElementField.rating() > 0) {
             value = this.rating() / this.ElementField.rating();
@@ -553,16 +552,11 @@ export class ElementCell extends EntityBase {
     value() {
 
         var value: any = null;
-        //var currentUserCell: any = this.UserElementCellSet.length > 0
-        //    ? this.UserElementCellSet[0]
-        //    : null;
 
         switch (this.ElementField.DataType) {
             case 1:
                 {
-                    if (this.UserElementCellSet.length > 0) {
-                        value = this.UserElementCellSet[0].StringValue;
-                    }
+                    this.StringValue;
                     break;
                 }
             case 2:

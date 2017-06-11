@@ -5,8 +5,13 @@
     using System.Data.Entity;
     using System.Linq;
 
-    public partial class ResourcePoolRepository
+    public class ResourcePoolRepository : BaseRepository<ResourcePool>
     {
+        public ResourcePoolRepository(WealthEconomyContext context)
+            : base(context)
+        {
+        }
+
         #region - Samples -
 
         public ResourcePool CreateBillionDollarQuestion(User user)
@@ -22,8 +27,8 @@
                 addMultiplierField: false,
                 addImportanceIndex: true,
                 numberOfItems: numberOfItems);
-
             resourcePool.InitialValue = 1000000000;
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -115,6 +120,7 @@
                 addImportanceIndex: true,
                 numberOfItems: numberOfItems);
             resourcePool.Key = "Basics New Model";
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -148,6 +154,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Industry element
             var industryElement = resourcePool.AddElement("Industry");
@@ -207,6 +214,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // License element
             var licenseElement = resourcePool.AddElement("License");
@@ -270,6 +278,7 @@
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
             resourcePool.Key = "Knowledge Index Popular Software Licenses";
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -335,12 +344,13 @@
             var resourcePool = CreateDefaultResourcePool(user: user,
                 resourcePoolName: "Total Cost Index - New Model",
                 useFixedResourcePoolRate: true,
-               mainElementName: "Product",
-               addDirectIncomeField: true,
-               addMultiplierField: true,
-               addImportanceIndex: false,
-               numberOfItems: numberOfItems);
+                mainElementName: "Product",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
             resourcePool.Key = "Total Cost Index New Model";
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -375,6 +385,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Industry element
             var industryElement = resourcePool.AddElement("Industry");
@@ -530,90 +541,6 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateConnect2EffectDemo(User user)
-        {
-            const int numberOfItems = 5;
-
-            // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "Connect2Effect Demo",
-                useFixedResourcePoolRate: true,
-                mainElementName: "Project",
-                addDirectIncomeField: false,
-                addMultiplierField: false,
-                addImportanceIndex: false,
-                numberOfItems: numberOfItems);
-
-            resourcePool.InitialValue = 25000;
-
-            // Industry element
-            var goalElement = resourcePool.AddElement("SDG");
-
-            // Fields
-            var goalRatingField = goalElement.AddField("Goal Rating", ElementFieldDataType.Decimal, false);
-            goalRatingField.EnableIndex();
-
-            // Items, cells, user cells
-            var goal1 = goalElement.AddItem("1 No Poverty").AddCell(goalRatingField).ElementItem;
-            var goal2 = goalElement.AddItem("2 Zero Hunger").AddCell(goalRatingField).ElementItem;
-            var goal9 = goalElement.AddItem("9 Industry, Innovation And Infrastructure").AddCell(goalRatingField).ElementItem;
-            var goal10 = goalElement.AddItem("10 Reduced Inequalities").AddCell(goalRatingField).ElementItem;
-            var goal12 = goalElement.AddItem("12 Responsible Consumption").AddCell(goalRatingField).ElementItem;
-
-            // License element
-            var legalEntityElement = resourcePool.AddElement("Legal Entity");
-
-            // Fields
-            var legalEntityRating = legalEntityElement.AddField("Legal Entity Rating", ElementFieldDataType.Decimal, false);
-            legalEntityRating.EnableIndex();
-
-            // Items, cell, user cells
-            var forProfit = legalEntityElement.AddItem("For-profit")
-                .AddCell(legalEntityRating).ElementItem;
-
-            var nonProfit = legalEntityElement.AddItem("Non-profit")
-                .AddCell(legalEntityRating).ElementItem;
-
-            // Main element
-            var mainElement = resourcePool.ElementSet.First();
-            //mainElement.MultiplierField.Name = "Number of Likes";
-
-            var industryField = mainElement.AddField("SDG", ElementFieldDataType.Element);
-            industryField.SelectedElement = goalElement;
-
-            var legalEntityField = mainElement.AddField("Legal Entity", ElementFieldDataType.Element);
-            legalEntityField.SelectedElement = legalEntityElement;
-
-            // Items, cell, user cells
-            var itemIndex = 0;
-            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project A";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal1);
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(nonProfit);
-
-            itemIndex = 1;
-            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project B";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal2);
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(forProfit);
-
-            itemIndex = 2;
-            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project C";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal9);
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(nonProfit);
-
-            itemIndex = 3;
-            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project D";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal10);
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(forProfit);
-
-            itemIndex = 4;
-            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project E";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal12);
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(nonProfit);
-
-            // Return
-            return resourcePool;
-        }
-
         [Obsolete("Not in use")]
         public ResourcePool CreateTotalCostIndexExistingSystemSampleOld(User user)
         {
@@ -628,6 +555,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -656,12 +584,13 @@
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user: user,
                 resourcePoolName: "Total Cost Index - New Model",
-                useFixedResourcePoolRate: true, 
-               mainElementName: "Product",
-               addDirectIncomeField: true,
-               addMultiplierField: true,
-               addImportanceIndex: false,
-               numberOfItems: numberOfItems);
+                useFixedResourcePoolRate: true,
+                mainElementName: "Product",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -699,6 +628,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -737,6 +667,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -770,8 +701,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
-
-            //resourcePool.EnableSubtotals = false;
+            resourcePool.RatingCount = 1; // Computed field
 
             // Fair share element
             var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -822,8 +752,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
-            
-            //resourcePool.EnableSubtotals = false;
+            resourcePool.RatingCount = 1; // Computed field
 
             //// Fair share element
             //var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -905,8 +834,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: 2);
-            
-            //resourcePool.EnableSubtotals = false;
+            resourcePool.RatingCount = 1; // Computed field
 
             //// Fair share element
             //var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -955,7 +883,7 @@
             mainElement.ElementItemSet.Skip(1).First().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField1).SetValue(50M);
             mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField2).SetValue(25M);
-            
+
             // mainElement.ElementItemSet.Skip(1).First().Name = "Organization B";
             // var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             // fairShareField.SelectedElement = fairShareElement;
@@ -985,6 +913,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             //// Fair share element
             //var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -1071,6 +1000,7 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.RatingCount = 1; // Computed field
 
             // Industry element
             var industryElement = resourcePool.AddElement("Industry");
@@ -1132,16 +1062,16 @@
             var mainElement = resourcePool.ElementSet.First();
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            
+
             var industryField = mainElement.AddField("Industry", ElementFieldDataType.Element);
             industryField.SelectedElement = industryElement;
-            
+
             var licenseField = mainElement.AddField("License", ElementFieldDataType.Element);
             licenseField.SelectedElement = licenseElement;
-            
+
             var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             fairShareField.SelectedElement = fairShareElement;
-            
+
             // Resource pool index; use to Sales Price itself
             mainElement.DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
@@ -1383,6 +1313,9 @@
             {
                 resourcePool.UseFixedResourcePoolRate = true;
                 resourcePool.AddUserResourcePool(10);
+
+                resourcePool.ResourcePoolRateTotal = 10; // Computed field
+                resourcePool.ResourcePoolRateCount = 1; // Computed field
             }
 
             // Main element

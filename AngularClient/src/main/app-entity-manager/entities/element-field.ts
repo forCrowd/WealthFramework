@@ -1,10 +1,70 @@
 ﻿import { EventEmitter } from "@angular/core";
 
 import { EntityBase } from "./entity-base";
-import { ElementFieldDataType } from "./enums";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
 import { UserElementField } from "./user-element-field";
+
+export enum ElementFieldDataType {
+    // A field that holds string value.
+    // Use StringValue property to set its value on ElementItem level.
+    String = 1,
+
+    // A field that holds boolean value.
+    // Use BooleanValue property to set its value on ElementItem level.
+    Boolean = 2,
+
+    // A field that holds integer value.
+    // Use IntegerValue property to set its value on ElementItem level.
+    Integer = 3,
+
+    // A field that holds decimal value.
+    // Use DecimalValue property to set its value on ElementItem level.
+    Decimal = 4,
+
+    //// A field that holds DateTime value.
+    //// Use DateTimeValue property to set its value on ElementItem level.
+    DateTime = 5,
+
+    // A field that holds another defined Element object within the resource pool.
+    // Use SelectedElementItem property to set its value on ElementItem level.
+    Element = 6,
+
+    // The field that presents each item's main income (e.g. Sales Price).
+    // Also resource pool amount will be calculated based on this field.
+    // Defined once per Element (at the moment, can be changed to per Resource Pool).
+    // Use DecimalValue property to set its value on ElementItem level.
+    DirectIncome = 11,
+
+    // The multiplier of the resource pool (e.g. Number of sales, number of users).
+    // Defined once per Element (at the moment, can be changed to per Resource Pool).
+    // Use DecimalValue property to set its value on ElementItem level.
+    Multiplier = 12
+}
+
+export enum ElementFieldIndexCalculationType {
+
+    // Default type.
+    // Uses the lowest score as the base (reference) rating in the group, then calculates the difference from that base.
+    // Base rating (lowest) gets 0 from the pool and other items get an amount based on their difference.
+    // Aims to maximize the benefit of the pool.
+    Aggressive = 1,
+
+    // Sums all ratings and calculates the percentages.
+    // All items get an amount, including the lowest scored item.
+    // Good for cases that only use "Resource Pool - Initial Amount" feature.
+    Passive = 2
+};
+
+export enum ElementFieldIndexSortType {
+
+    // Default type.
+    // High rating is better.
+    Highest = 1,
+
+    // Low rating is better.
+    Lowest = 2
+}
 
 export class ElementField extends EntityBase {
 
@@ -62,8 +122,8 @@ export class ElementField extends EntityBase {
             this.fields.indexEnabled = value;
 
             if (this.initialized) {
-                this.IndexCalculationType = value ? 1 : 0;
-                this.IndexSortType = value ? 1 : 0;
+                this.IndexCalculationType = value ? ElementFieldIndexCalculationType.Aggressive : ElementFieldIndexCalculationType.Passive;
+                this.IndexSortType = value ? ElementFieldIndexSortType.Highest : ElementFieldIndexSortType.Lowest;
 
                 this.indexEnabledChanged$.emit(this);
             }
@@ -92,11 +152,11 @@ export class ElementField extends EntityBase {
             //cell.setIndexIncome();
         }
     }
-    IndexCalculationType: number = 0;
-    IndexSortType: number = 0;
+    IndexCalculationType: ElementFieldIndexCalculationType = ElementFieldIndexCalculationType.Aggressive;
+    IndexSortType: ElementFieldIndexSortType = ElementFieldIndexSortType.Highest;
     SortOrder: number = 0;
-    IndexRatingTotal: number = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
-    IndexRatingCount: number = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
+    IndexRatingTotal: number = 0;
+    IndexRatingCount: number = 0;
     ElementCellSet: ElementCell[];
     UserElementFieldSet: UserElementField[];
 
@@ -119,23 +179,23 @@ export class ElementField extends EntityBase {
     private fields: {
         dataType: ElementFieldDataType,
         indexEnabled: boolean,
-        currentUserIndexRating: any,
-        otherUsersIndexRatingTotal: any,
-        otherUsersIndexRatingCount: any,
-        indexRating: any,
-        indexRatingPercentage: any,
-        numericValueMultiplied: any,
-        passiveRating: any,
-        referenceRatingMultiplied: any,
+        currentUserIndexRating: number,
+        otherUsersIndexRatingTotal: number,
+        otherUsersIndexRatingCount: number,
+        indexRating: number,
+        indexRatingPercentage: number,
+        numericValueMultiplied: number,
+        passiveRating: number,
+        referenceRatingMultiplied: number,
         // Aggressive rating formula prevents the organizations with the worst rating to get any income.
         // However, in case all ratings are equal, then no one can get any income from the pool.
         // This flag is used to determine this special case and let all organizations get a same share from the pool.
         // See the usage in aggressiveRating() in elementCell.js
         // TODO Usage of this field is correct?
         referenceRatingAllEqualFlag: boolean,
-        aggressiveRating: any,
-        rating: any,
-        indexIncome: any
+        aggressiveRating: number,
+        rating: number,
+        indexIncome: number
     } = {
         dataType: 1,
         indexEnabled: false,
@@ -287,7 +347,7 @@ export class ElementField extends EntityBase {
 
         // Related cells
         var elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell: any) => {
+        elementCellSet.forEach((elementCell) => {
             elementCell.rejectChanges();
         });
 
@@ -304,11 +364,11 @@ export class ElementField extends EntityBase {
         this.entityAspect.rejectChanges();
     }
 
-    remove(elementField: any) {
+    remove() {
 
         // Related cells
         var elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell: any) => {
+        elementCellSet.forEach((elementCell) => {
             elementCell.remove();
         });
 
@@ -330,7 +390,7 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setCurrentUserIndexRating(updateRelated?: any) {
+    setCurrentUserIndexRating(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.currentUserElementField() !== null ?
@@ -347,7 +407,7 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setIndexIncome(updateRelated?: any) {
+    setIndexIncome(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.Element.totalResourcePoolAmount() * this.indexRatingPercentage();
@@ -361,14 +421,14 @@ export class ElementField extends EntityBase {
 
             // Update related
             if (updateRelated) {
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setIndexIncome();
                 });
             }
         }
     }
 
-    setIndexRating(updateRelated?: any) {
+    setIndexRating(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = 0; // Default value?
@@ -392,7 +452,7 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setIndexRatingPercentage(updateRelated: any) {
+    setIndexRatingPercentage(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = 0; // Default value?
@@ -426,7 +486,7 @@ export class ElementField extends EntityBase {
         if (this.ElementCellSet.length === 0) {
             value = 0; // ?
         } else {
-            this.ElementCellSet.forEach((cell: any) => {
+            this.ElementCellSet.forEach((cell) => {
                 value += cell.numericValueMultiplied();
                 //console.log(this.Name[0] + "-" + cell.ElementItem.Name[0] + " NVMA " + cell.numericValueMultiplied());
             });
@@ -440,35 +500,35 @@ export class ElementField extends EntityBase {
             // Update related?
             if (updateRelated && this.IndexEnabled) {
 
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setNumericValueMultipliedPercentage(false);
                 });
 
                 this.setPassiveRating(false);
 
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setPassiveRating(false);
                 });
 
                 this.setReferenceRatingMultiplied(false);
 
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setAggressiveRating(false);
                 });
 
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setRating(false);
                 });
 
                 this.setRating(false);
 
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setRatingPercentage(false);
                 });
 
                 //this.setIndexIncome(false);
 
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setIndexIncome(false);
                 });
             }
@@ -495,12 +555,12 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setPassiveRating(updateRelated: any) {
+    setPassiveRating(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = 0;
 
-        this.ElementCellSet.forEach((cell: any) => {
+        this.ElementCellSet.forEach((cell) => {
             value += 1 - cell.numericValueMultipliedPercentage();
         });
 
@@ -513,13 +573,13 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setRating(updateRelated: any) {
+    setRating(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = 0; // Default value?
 
         // Validate
-        this.ElementCellSet.forEach((cell: any) => {
+        this.ElementCellSet.forEach((cell) => {
             value += cell.rating();
         });
 
@@ -533,7 +593,7 @@ export class ElementField extends EntityBase {
             if (updateRelated) {
 
                 // Update related
-                this.ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell) => {
                     cell.setRatingPercentage(false);
                 });
 
@@ -542,7 +602,7 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setReferenceRatingAllEqualFlag(value: any) {
+    setReferenceRatingAllEqualFlag(value: boolean) {
 
         if (this.fields.referenceRatingAllEqualFlag !== value) {
             this.fields.referenceRatingAllEqualFlag = value;
@@ -552,10 +612,10 @@ export class ElementField extends EntityBase {
     }
 
     // TODO Currently updateRelated is always "false"?
-    setReferenceRatingMultiplied(updateRelated: any) {
+    setReferenceRatingMultiplied(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any = null;
+        var value: number = null;
         var allEqualFlag = true;
 
         // Validate
@@ -563,7 +623,7 @@ export class ElementField extends EntityBase {
             value = 0; // ?
         } else {
 
-            this.ElementCellSet.forEach((cell: any) => {
+            this.ElementCellSet.forEach((cell) => {
 
                 if (value === null) {
 
@@ -629,7 +689,7 @@ export class ElementField extends EntityBase {
 
             // TODO ?!
 
-            this.ElementCellSet.forEach((cell: any) => {
+            this.ElementCellSet.forEach((cell) => {
                 cell.setAggressiveRating(false);
             });
 

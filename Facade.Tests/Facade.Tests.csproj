@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePoolIndexTest.cs" />
+    <Compile Include="ResourcePoolManagerTests.cs" />
     <Compile Include="ResourcePoolUnitOfWorkTest.cs" />
     <Compile Include="UserResourcePoolUnitOfWorkTest.cs" />
   </ItemGroup>
@@ -92,6 +93,10 @@
     <ProjectReference Include="..\Facade\Facade.csproj">
       <Project>{72eccf0f-6e65-4c20-9b48-abd93b4c3142}</Project>
       <Name>Facade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{1f435477-27e9-405e-b061-a0a9afb63053}</Project>
+      <Name>Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

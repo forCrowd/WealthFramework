@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             ElementCell = elementCell;
         }
 
-        string stringValue = null;
         bool? booleanValue = null;
         int? integerValue = null;
         decimal? decimalValue = null;
@@ -32,19 +31,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Key]
         [Column(Order = 2)]
         public int ElementCellId { get; set; }
-
-        public string StringValue
-        {
-            get { return stringValue; }
-            set
-            {
-                if (stringValue != value)
-                {
-                    ClearValues();
-                    stringValue = value;
-                }
-            }
-        }
 
         public bool? BooleanValue
         {
@@ -107,12 +93,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         // TODO Validations for SetValue() methods?
         // FieldType check for instance?
 
-        internal UserElementCell SetValue(string value)
-        {
-            StringValue = value;
-            return this;
-        }
-
         internal UserElementCell SetValue(bool value)
         {
             BooleanValue = value;
@@ -142,7 +122,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// </summary>
         void ClearValues()
         {
-            stringValue = null;
             booleanValue = null;
             integerValue = null;
             decimalValue = null;

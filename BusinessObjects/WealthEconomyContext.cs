@@ -68,22 +68,22 @@
 
             // Cascade deletes
             modelBuilder.Entity<ElementCell>()
-                .HasRequired<ElementField>(item => item.ElementField)
+                .HasRequired(item => item.ElementField)
                 .WithMany(item => item.ElementCellSet)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserResourcePool>()
-                .HasRequired<User>(item => item.User)
+                .HasRequired(item => item.User)
                 .WithMany(item => item.UserResourcePoolSet)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserElementField>()
-                .HasRequired<User>(item => item.User)
+                .HasRequired(item => item.User)
                 .WithMany(item => item.UserElementFieldSet)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserElementCell>()
-                .HasRequired<User>(item => item.User)
+                .HasRequired(item => item.User)
                 .WithMany(item => item.UserElementCellSet)
                 .WillCascadeOnDelete(false);
         }
@@ -136,12 +136,12 @@
 
             foreach (var item in entries)
             {
-                var changedOrAddedItem = item.Entity as IEntity;
-                if (changedOrAddedItem != null)
+                if (item.Entity is IEntity changedOrAddedItem)
                 {
                     if (item.State == EntityState.Added)
                     {
                         changedOrAddedItem.CreatedOn = DateTime.UtcNow;
+                        changedOrAddedItem.DeletedOn = null;
                     }
 
                     changedOrAddedItem.ModifiedOn = DateTime.UtcNow;
