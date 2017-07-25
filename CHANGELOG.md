@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.79.3**
+
+* AngularClient - Contributors page - SarahSexton
+
 **0.79.2**
 
 * AngularClient - `intl` package was installed to prevent google bot errors
