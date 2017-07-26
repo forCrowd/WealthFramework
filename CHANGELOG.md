@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.79.4**
+
+* SolutionItems - ."UpgradeLog.htm" was added to .gitignore
+
 **0.79.3**
 
 * AngularClient - Contributors page - SarahSexton

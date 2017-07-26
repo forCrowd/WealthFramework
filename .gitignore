@@ -23,6 +23,7 @@ SolutionItems/Scripts/Database/Personal/
 
 # Visual Studio
 .vs/
+UpgradeLog.htm
 
 # WebApiWarmUp script result file
 SolutionItems/Scripts/Build/WebApiWarmUpResult.txt
