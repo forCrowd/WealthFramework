@@ -178,18 +178,21 @@
             return result;
         }
 
+        // TODO Not in use?
         public async Task DeleteUserResourcePoolAsync(int resourcePoolId)
         {
             await Store.DeleteUserResourcePoolAsync(resourcePoolId);
             await Store.SaveChangesAsync();
         }
 
+        // TODO Not in use?
         public async Task DeleteUserElementFieldAsync(int elementFieldId)
         {
             await Store.DeleteUserElementFieldAsync(elementFieldId);
             await Store.SaveChangesAsync();
         }
 
+        // TODO Not in use?
         public async Task DeleteUserElementCellAsync(int elementCellId)
         {
             await Store.DeleteUserElementCellAsync(elementCellId);

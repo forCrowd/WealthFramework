@@ -1,6 +1,7 @@
 ﻿import { ErrorHandler, Injectable } from "@angular/core";
 import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 import { SourceMapConsumer } from "source-map";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -10,7 +11,7 @@ export class AppErrorHandler implements ErrorHandler {
 
     sourceMapCache = {};
     errorCounter = 0;
-    errorLimitResetTimer: any = null;
+    errorLimitResetTimer: Subscription = null;
     get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
     constructor(private http: Http) { }
@@ -56,7 +57,7 @@ export class AppErrorHandler implements ErrorHandler {
             return this.sourceMapCache[url];
         } else {
 
-            const observable = this.http.get(url).mergeMap((response: Response) => {
+            const observable = this.http.get(url).mergeMap((response) => {
 
                 let body = response.text();
                 body = body || "";

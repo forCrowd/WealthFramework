@@ -1,5 +1,7 @@
 ﻿import { Component, EventEmitter, Input, Output } from "@angular/core";
 
+import { Element } from "../app-entity-manager/entities/element";
+import { ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { ResourcePoolEditorService } from "../resource-pool-editor/resource-pool-editor.module";
 
 @Component({
@@ -8,7 +10,7 @@ import { ResourcePoolEditorService } from "../resource-pool-editor/resource-pool
 })
 export class ElementManagerComponent {
 
-    @Input() element: any;
+    @Input() element: Element;
     @Output() cancelled = new EventEmitter();
     @Output() saved = new EventEmitter();
 

@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Threading;
+using System.Security;
+using System.Security.Claims;
 
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
@@ -17,15 +20,24 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             if (!string.IsNullOrEmpty(column))
             {
                 // Check that there is an authenticated user in this context
-                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
+                var principal = Thread.CurrentPrincipal;
+
+                var identity = principal.Identity as ClaimsIdentity;
                 if (identity == null)
                 {
-                    throw new System.Security.SecurityException("Unauthenticated access");
+                    throw new SecurityException("Unauthenticated access");
                 }
-                var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+
+                var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
                 if (userIdclaim == null)
                 {
-                    throw new System.Security.SecurityException("Unauthenticated access");
+                    throw new SecurityException("Unauthenticated access");
+                }
+
+                // If it's admin, then no need to filter
+                if (principal.IsInRole("Administrator"))
+                {
+                    return expression;
                 }
 
                 // Get the current expression binding 

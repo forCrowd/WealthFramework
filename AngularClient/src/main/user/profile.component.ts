@@ -1,6 +1,8 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
+import { ResourcePool } from "../app-entity-manager/entities/resource-pool";
+import { User } from "../app-entity-manager/entities/user";
 import { UserService } from "./user.service";
 
 @Component({
@@ -10,19 +12,19 @@ import { UserService } from "./user.service";
 export class ProfileComponent implements OnInit {
 
     displayMain: boolean = true;
-    selectedResourcePool: any = null;
-    user: any = null;
+    selectedResourcePool: ResourcePool = null;
+    user: User = null;
 
     constructor(private activatedRoute: ActivatedRoute,
         private router: Router,
         private userService: UserService) {
     }
 
-    getResourcePoolLink(resourcePool: any): string {
+    getResourcePoolLink(resourcePool: ResourcePool): string {
         return "/" + resourcePool.User.UserName + "/" + resourcePool.Key;
     }
 
-    manageResourcePool(resourcePool: any): void {
+    manageResourcePool(resourcePool: ResourcePool): void {
         const editLink = this.getResourcePoolLink(resourcePool) + "/edit";
         this.router.navigate([editLink]);
     }
@@ -41,7 +43,7 @@ export class ProfileComponent implements OnInit {
 
                     // If not, then check it against remote
                     this.userService.getUser(username)
-                        .subscribe((user: any) => {
+                        .subscribe((user) => {
 
                             // Not found, navigate to 404
                             if (user === null) {
@@ -56,7 +58,7 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    removeResourcePool(resourcePool: any): void {
+    removeResourcePool(resourcePool: ResourcePool): void {
         resourcePool.remove();
         this.userService.saveChanges().subscribe(() => {
             this.displayMain = true;
@@ -72,7 +74,7 @@ export class ProfileComponent implements OnInit {
         this.displayMain = true;
     }
 
-    modal_display(resourcePool: any) {
+    modal_display(resourcePool: ResourcePool) {
         this.selectedResourcePool = resourcePool;
         this.displayMain = false;
     }

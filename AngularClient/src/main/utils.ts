@@ -1,19 +1,22 @@
 export function getUniqueEmail() {
-    return getUniqueUserName() + "@forcrowd.org";
+    return `${getUniqueUserName()}@forcrowd.org`;
 }
 
 export function getUniqueUserName() {
+    return `guest-${getUniqueValue()}`;
+}
 
-    var now = new Date();
-    var year = now.getFullYear().toString().substring(2);
-    var month = (now.getMonth() + 1).toString();
-    var day = now.getDate().toString();
-    var hour = now.getHours().toString();
-    var minute = now.getMinutes().toString();
-    var second = now.getSeconds().toString();
-    var millisecond = now.getMilliseconds().toString();
+export function getUniqueValue() {
+    const now = new Date();
+    const year = now.getFullYear().toString().substring(2);
+    const month = (now.getMonth() + 1).toString();
+    const day = now.getDate().toString();
+    const hour = now.getHours().toString();
+    const minute = now.getMinutes().toString();
+    const second = now.getSeconds().toString();
+    const millisecond = now.getMilliseconds().toString();
 
-    return "guest-" + year + pad(month) + pad(day) + "-" + pad(hour) + pad(minute) + pad(second) + pad(millisecond);
+    return `${year}${pad(month)}${pad(day)}-${pad(hour)}${pad(minute)}${pad(second)}${pad(millisecond)}`;
 }
 
 export function pad(value: string) {

@@ -83,8 +83,7 @@
             // Remember me
             var tokenData = await context.Request.ReadFormAsync();
 
-            var rememberMe = false;
-            bool.TryParse(tokenData.Get("rememberMe"), out rememberMe);
+            bool.TryParse(tokenData.Get("rememberMe"), out var rememberMe);
             if (rememberMe)
             {
                 context.Properties.ExpiresUtc = DateTime.UtcNow.AddYears(1);

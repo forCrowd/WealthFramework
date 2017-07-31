@@ -1,13 +1,20 @@
 ﻿import { EventEmitter } from "@angular/core";
 
 import { Element } from "./element";
+import { ElementCell } from "./element-cell";
+import { ElementField } from "./element-field";
 import { EntityBase } from "./entity-base";
 import { User } from "./user";
 import { UserResourcePool } from "./user-resource-pool";
 import { stripInvalidChars } from "../../utils";
 
+export interface IUniqueKey {
+    username: string;
+    resourcePoolKey: string;
+}
+
 export enum RatingMode {
-    YourRatings = 1,
+    CurrentUser = 1,
     AllUsers = 2
 }
 
@@ -46,6 +53,9 @@ export class ResourcePool extends EntityBase {
         }
     }
 
+    Description: string;
+    InitialValue: number = 0;
+
     get UseFixedResourcePoolRate(): boolean {
         return this.fields.useFixedResourcePoolRate;
     }
@@ -53,20 +63,19 @@ export class ResourcePool extends EntityBase {
         if (this.fields.useFixedResourcePoolRate !== value) {
             this.fields.useFixedResourcePoolRate = value;
 
-            this.setResourcePoolRate();
+            if (this.initialized) {
+                this.setResourcePoolRate();
+            }
         }
     }
 
-    InitialValue: number = 0;
-    ResourcePoolRateTotal: number = 0; // Computed value - Used in: setOtherUsersResourcePoolRateTotal
-    ResourcePoolRateCount: number = 0; // Computed value - Used in: setOtherUsersResourcePoolRateCount
-    RatingCount: number = 0; // Computed value - Used in: resource-pool-editor.html
+    ResourcePoolRateTotal: number = 0; // Used in: setOtherUsersResourcePoolRateTotal
+    ResourcePoolRateCount: number = 0; // Used in: setOtherUsersResourcePoolRateCount
+    RatingCount: number = 0;
     ElementSet: Element[];
     UserResourcePoolSet: UserResourcePool[];
 
-    // TODO Move this to field.js?
-    displayMultiplierFunctions = true; // In some cases, it's not necessary for the user to change multiplier
-
+    // Client-side
     get RatingMode(): RatingMode {
         return this.fields.ratingMode;
     }
@@ -77,9 +86,9 @@ export class ResourcePool extends EntityBase {
 
             this.setResourcePoolRate();
 
-            this.ElementSet.forEach((element: any) => {
+            this.ElementSet.forEach((element) => {
 
-                element.ElementFieldSet.forEach((field: any) => {
+                element.ElementFieldSet.forEach((field) => {
 
                     // Field calculations
                     if (field.IndexEnabled) {
@@ -87,7 +96,7 @@ export class ResourcePool extends EntityBase {
                     }
 
                     if (!field.UseFixedValue) {
-                        field.ElementCellSet.forEach((cell: any) => {
+                        field.ElementCellSet.forEach((cell) => {
 
                             // Cell calculations
                             switch (field.DataType) {
@@ -111,19 +120,31 @@ export class ResourcePool extends EntityBase {
         }
     }
 
+    get uniqueKey(): IUniqueKey {
+
+        if (!this.initialized) {
+            return null;
+        }
+
+        return {
+            username: this.User.UserName,
+            resourcePoolKey: this.Key
+        };
+    }
+
     ratingModeUpdated: EventEmitter<RatingMode> = new EventEmitter<RatingMode>();
 
     private fields: {
-        currentUserResourcePoolRate: any,
+        currentUserResourcePoolRate: number,
         isAdded: boolean,
         key: string,
         name: string,
-        otherUsersResourcePoolRateTotal: any,
-        otherUsersResourcePoolRateCount: any,
-        ratingMode: any, // Only my ratings vs. All users" ratings
-        resourcePoolRate: any,
-        resourcePoolRatePercentage: any,
-        selectedElement: any,
+        otherUsersResourcePoolRateTotal: number,
+        otherUsersResourcePoolRateCount: number,
+        ratingMode: number, // Only my ratings vs. All users" ratings
+        resourcePoolRate: number,
+        resourcePoolRatePercentage: number,
+        selectedElement: Element,
         useFixedResourcePoolRate: boolean
     } = {
         currentUserResourcePoolRate: null,
@@ -139,87 +160,29 @@ export class ResourcePool extends EntityBase {
         useFixedResourcePoolRate: false
     };
 
-    _init(setComputedFields?: any) {
-        setComputedFields = typeof setComputedFields !== "undefined" ? setComputedFields : false;
-
-        // Set initial values of computed fields
-        if (setComputedFields) {
-
-        // TODO: setComputedFields is never true?
-            console.log("setComputedFields - is this being called at all?");
-
-            var userRatings: any[] = [];
-
-            // ResourcePool
-            this.UserResourcePoolSet.forEach((userResourcePool: any) => {
-                this.ResourcePoolRateTotal += userResourcePool.ResourcePoolRate;
-                this.ResourcePoolRateCount += 1;
-
-                if (userRatings.indexOf(userResourcePool.UserId) === -1) {
-                    userRatings.push(userResourcePool.UserId);
-                }
-            });
-
-            // Fields
-            this.ElementSet.forEach((element: any) => {
-                element.ElementFieldSet.forEach((elementField: any) => {
-                    elementField.UserElementFieldSet.forEach((userElementField: any) => {
-                        elementField.IndexRatingTotal += userElementField.IndexRating;
-                        elementField.IndexRatingCount += 1;
-
-                        if (userRatings.indexOf(userElementField.UserId) === -1) {
-                            userRatings.push(userElementField.UserId);
-                        }
-                    });
-
-                    // Cells
-                    elementField.ElementCellSet.forEach((elementCell: any) => {
-                        elementCell.UserElementCellSet.forEach((userElementCell: any) => {
-                            elementCell.StringValue = ""; // TODO ?
-                            elementCell.NumericValueTotal += userElementCell.DecimalValue; // TODO Correct approach?
-                            elementCell.NumericValueCount += 1;
-
-                            if (elementField.IndexEnabled) {
-                                if (userRatings.indexOf(userElementCell.UserId) === -1) {
-                                    userRatings.push(userElementCell.UserId);
-                                }
-                            }
-                        });
-                    });
-                });
-            });
-
-            // Rating count
-            this.RatingCount = userRatings.length;
-        }
+    _init() {
 
         // Set otherUsers" data
         this.setOtherUsersResourcePoolRateTotal();
         this.setOtherUsersResourcePoolRateCount();
 
         // Elements
-        if (typeof this.ElementSet !== "undefined") {
-            this.ElementSet.forEach((element: any) => {
+        this.ElementSet.forEach((element: Element) => {
 
-                // Fields
-                if (typeof element.ElementFieldSet !== "undefined") {
-                    element.ElementFieldSet.forEach((field: any) => {
+            // Fields
+            element.ElementFieldSet.forEach((field: ElementField) => {
 
-                        field.setOtherUsersIndexRatingTotal();
-                        field.setOtherUsersIndexRatingCount();
+                field.setOtherUsersIndexRatingTotal();
+                field.setOtherUsersIndexRatingCount();
 
-                        // Cells
-                        if (typeof field.ElementCellSet !== "undefined") {
-                            field.ElementCellSet.forEach((cell: any) => {
+                // Cells
+                field.ElementCellSet.forEach((cell: ElementCell) => {
 
-                                cell.setOtherUsersNumericValueTotal();
-                                cell.setOtherUsersNumericValueCount();
-                            });
-                        }
-                    });
-                }
+                    cell.setOtherUsersNumericValueTotal();
+                    cell.setOtherUsersNumericValueCount();
+                });
             });
-        }
+        });
 
         this.updateCache();
     }
@@ -244,8 +207,8 @@ export class ResourcePool extends EntityBase {
             this.selectedElement().elementFieldIndexSet().length > 0;
     }
 
-    mainElement() {
-        var result = this.ElementSet.filter((element: any) => element.IsMainElement);
+    mainElement(): Element {
+        var result = this.ElementSet.filter((element: Element) => element.IsMainElement);
 
         return result.length > 0 ? result[0] : null;
     }
@@ -278,7 +241,7 @@ export class ResourcePool extends EntityBase {
 
         // Related elements
         var elementSet = this.ElementSet.slice();
-        elementSet.forEach((element: any) => {
+        elementSet.forEach((element) => {
             element.remove();
         });
 
@@ -345,7 +308,7 @@ export class ResourcePool extends EntityBase {
             this.otherUsersResourcePoolRateTotal() + this.currentUserResourcePoolRate();
     }
 
-    selectedElement(value?: any) {
+    selectedElement(value?: Element) {
 
         // Set new value
         if (typeof value !== "undefined" && this.fields.selectedElement !== value) {
@@ -360,7 +323,7 @@ export class ResourcePool extends EntityBase {
         return this.fields.selectedElement;
     }
 
-    setCurrentUserResourcePoolRate(updateRelated?: any) {
+    setCurrentUserResourcePoolRate(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.currentUserResourcePool() !== null ?
@@ -398,10 +361,10 @@ export class ResourcePool extends EntityBase {
         }
     }
 
-    setResourcePoolRate(updateRelated?: any) {
+    setResourcePoolRate(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value: any;
+        var value: number;
 
         if (this.UseFixedResourcePoolRate) {
             value = this.resourcePoolRateAverage();
@@ -422,7 +385,7 @@ export class ResourcePool extends EntityBase {
         }
     }
 
-    setResourcePoolRatePercentage(updateRelated?: any) {
+    setResourcePoolRatePercentage(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.resourcePoolRate() === 0
@@ -434,8 +397,8 @@ export class ResourcePool extends EntityBase {
 
             // Update related
             if (updateRelated) {
-                this.ElementSet.forEach((element: any) => {
-                    element.ElementItemSet.forEach((item: any) => {
+                this.ElementSet.forEach((element) => {
+                    element.ElementItemSet.forEach((item) => {
                         item.setResourcePoolAmount();
                     });
                 });
@@ -444,9 +407,9 @@ export class ResourcePool extends EntityBase {
     }
 
     toggleRatingMode() {
-        this.RatingMode = this.RatingMode === RatingMode.YourRatings
+        this.RatingMode = this.RatingMode === RatingMode.CurrentUser
             ? RatingMode.AllUsers
-            : RatingMode.YourRatings;
+            : RatingMode.CurrentUser;
     }
 
     // TODO Most of these functions are related with userService.js - updateX functions
@@ -459,14 +422,14 @@ export class ResourcePool extends EntityBase {
 
         // Elements
         if (typeof this.ElementSet !== "undefined") {
-            this.ElementSet.forEach((element: any) => {
+            this.ElementSet.forEach((element) => {
 
                 // TODO Review this later / coni2k - 24 Nov. '15
                 element.setElementFieldIndexSet();
 
                 // Fields
                 if (typeof element.ElementFieldSet !== "undefined") {
-                    element.ElementFieldSet.forEach((field: any) => {
+                    element.ElementFieldSet.forEach((field) => {
 
                         if (field.IndexEnabled) {
                             // TODO Actually index rating can't be set through resourcePoolEdit page and no need to update this cache
@@ -476,7 +439,7 @@ export class ResourcePool extends EntityBase {
 
                         // Cells
                         if (typeof field.ElementCellSet !== "undefined") {
-                            field.ElementCellSet.forEach((cell: any) => {
+                            field.ElementCellSet.forEach((cell) => {
 
                                 switch (cell.ElementField.DataType) {
                                     case 1: {
@@ -487,11 +450,11 @@ export class ResourcePool extends EntityBase {
                                         // And on top of it, since it changes, breeze thinks that "cell" is modified and tries to send it server
                                         // which results an error. So that's why modified check & acceptChanges parts were added.
                                         // coni2k - 01 Dec. '15
-                                        if (cell.UserElementCellSet.length > 0) {
-                                            isUnchanged = cell.entityAspect.entityState.isUnchanged();
-                                            cell.StringValue = cell.UserElementCellSet[0].StringValue;
-                                            if (isUnchanged) { cell.entityAspect.acceptChanges(); }
-                                        }
+                                        //if (cell.UserElementCellSet.length > 0) {
+                                        //    isUnchanged = cell.entityAspect.entityState.isUnchanged();
+                                        //    cell.StringValue = cell.UserElementCellSet[0].StringValue;
+                                        //    if (isUnchanged) { cell.entityAspect.acceptChanges(); }
+                                        //}
                                         break;
                                     }
                                     case 2:

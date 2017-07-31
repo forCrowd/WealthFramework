@@ -1,12 +1,15 @@
 ﻿import { EventEmitter, Injectable } from "@angular/core";
+import { Http } from "@angular/http";
 import { EntityQuery, FetchStrategy, Predicate, QueryResult } from "breeze-client";
 import { Observable, ObservableInput } from "rxjs/Observable";
 
+import { AppSettings } from "../../app-settings/app-settings";
+import { AppHttp } from "../app-http/app-http.module";
 import { Element } from "../app-entity-manager/entities/element";
 import { ElementCell } from "../app-entity-manager/entities/element-cell";
-import { ElementField } from "../app-entity-manager/entities/element-field";
+import { ElementField, ElementFieldDataType } from "../app-entity-manager/entities/element-field";
 import { ElementItem } from "../app-entity-manager/entities/element-item";
-import { ResourcePool } from "../app-entity-manager/entities/resource-pool";
+import { IUniqueKey, ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { User } from "../app-entity-manager/entities/user";
 import { UserElementCell } from "../app-entity-manager/entities/user-element-cell";
 import { UserElementField } from "../app-entity-manager/entities/user-element-field";
@@ -25,18 +28,22 @@ export class ResourcePoolEditorService {
     }
     elementMultiplierUpdated$: EventEmitter<any> = new EventEmitter<any>();
     elementCellDecimalValueUpdated$: EventEmitter<any> = new EventEmitter<ElementCell>();
-    fetchedList: any[] = [];
+    fetchedList: IUniqueKey[] = [];
     get isBusy(): boolean {
-        return this.appEntityManager.isBusy || this.isBusyLocal;
+        return this.appEntityManager.isBusy || this.appHttp.isBusy || this.isBusyLocal;
     }
+
+    private appHttp: AppHttp;
     private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
 
     //fetchFromServer = true;
 
-    constructor(private appEntityManager: AppEntityManager, private authService: AuthService) {
+    constructor(private appEntityManager: AppEntityManager, private authService: AuthService, http: Http) {
+
+        this.appHttp = http as AppHttp;
 
         // Current user chanhaged
-        this.currentUserChanged$.subscribe((newUser: any) => {
+        this.currentUserChanged$.subscribe(() => {
             this.fetchedList = [];
             //this.fetchFromServer = true;
         });
@@ -48,10 +55,22 @@ export class ResourcePoolEditorService {
 
     createElementCell(initialValues: Object) {
 
-        var elementCell: any = this.appEntityManager.createEntity("ElementCell", initialValues);
+        var elementCell: ElementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
 
         // User element cell
-        if (elementCell.ElementField.DataType !== 6) {
+        if (elementCell.ElementField.DataType !== ElementFieldDataType.String && elementCell.ElementField.DataType !== ElementFieldDataType.Element) {
+
+            switch (elementCell.ElementField.DataType) {
+                case 1: { break; }
+                case 2: { elementCell.NumericValueTotal = 1; break; }
+                case 3: { elementCell.NumericValueTotal = 0; break; }
+                case 4: { elementCell.NumericValueTotal = 50; break; }
+                case 6: { break; }
+                case 11: { elementCell.NumericValueTotal = 100; break; }
+                case 12: { elementCell.NumericValueTotal = 0; break; }
+            }
+            elementCell.NumericValueCount = 1;
+
             this.createUserElementCell(elementCell, null, false);
         }
 
@@ -62,8 +81,12 @@ export class ResourcePoolEditorService {
 
         const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
 
-        // Based on IndexEnabled field, handle UserElementField
-        this.elementField_IndexEnabledChanged(elementField);
+        if (elementField.IndexEnabled) {
+            elementField.IndexRatingTotal = 50; // Computed field
+            elementField.IndexRatingCount = 1; // Computed field
+
+            this.createUserElementField(elementField);
+        }
 
         // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
         // Event handlers
@@ -77,32 +100,32 @@ export class ResourcePoolEditorService {
         return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
     }
 
-    createResourcePoolEmpty() {
+    createResourcePoolEmpty(): ResourcePool {
 
-        var resourcePool: any = this.appEntityManager.createEntity("ResourcePool", {
+        var resourcePool = this.appEntityManager.createEntity("ResourcePool", {
             User: this.authService.currentUser,
             Name: "New CMRP",
             Key: "New-CMRP",
             Description: "Description for CMRP",
             InitialValue: 100,
-            UseFixedResourcePoolRate: true
-        });
+            UseFixedResourcePoolRate: true,
+        }) as ResourcePool;
 
-        this.createUserResourcePool(resourcePool);
+        resourcePool.RatingCount = 1; // Computed field
+        resourcePool.ResourcePoolRateTotal = 10; // Computed field
+        resourcePool.ResourcePoolRateCount = 1; // Computed field
+
+        this.createUserResourcePool(resourcePool, 10);
 
         return resourcePool;
     }
 
-    createResourcePoolBasic(resourcePool?: any) {
+    createResourcePoolBasic(resourcePool: ResourcePool) {
 
-        if (typeof resourcePool === "undefined") {
-            resourcePool = this.createResourcePoolEmpty();
-        }
-
-        var element: any = this.createElement({
+        var element = this.createElement({
             ResourcePool: resourcePool,
             Name: "New element"
-        });
+        }) as Element;
         element.IsMainElement = true;
 
         // Importance field (index)
@@ -115,13 +138,13 @@ export class ResourcePoolEditorService {
             IndexCalculationType: 2,
             IndexSortType: 1,
             SortOrder: 1
-        });
+        }) as ElementField;
 
         // Item 1
         var elementItem1 = this.createElementItem({
             Element: element,
             Name: "New item 1"
-        });
+        }) as ElementItem;
 
         // Cell 1
         this.createElementCell({
@@ -144,12 +167,12 @@ export class ResourcePoolEditorService {
         return resourcePool;
     }
 
-    createUserElementCell(elementCell: any, value: any, updateCache?: any) {
+    createUserElementCell(elementCell: ElementCell, value: any, updateCache?: boolean) {
         updateCache = typeof updateCache !== "undefined" ? updateCache : true;
 
         // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
         var existingKey = [this.authService.currentUser.Id, elementCell.Id];
-        var userElementCell: any = this.appEntityManager.getEntityByKey("UserElementCell", existingKey);
+        var userElementCell = this.appEntityManager.getEntityByKey("UserElementCell", existingKey) as UserElementCell;
 
         if (typeof userElementCell !== "undefined" && userElementCell !== null) {
 
@@ -159,7 +182,7 @@ export class ResourcePoolEditorService {
             }
 
             switch (elementCell.ElementField.DataType) {
-                case 1: { userElementCell.StringValue = value !== null ? value : ""; break; }
+                case 1: { break; }
                 case 2: { userElementCell.BooleanValue = value !== null ? value : false; break; }
                 case 3: { userElementCell.IntegerValue = value !== null ? value : 0; break; }
                 case 4: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
@@ -170,22 +193,22 @@ export class ResourcePoolEditorService {
 
         } else {
 
-            userElementCell = {
+            let userElementCellInitial = {
                 User: this.authService.currentUser,
                 ElementCell: elementCell
-            };
+            } as any;
 
             switch (elementCell.ElementField.DataType) {
-                case 1: { userElementCell.StringValue = value !== null ? value : ""; break; }
-                case 2: { userElementCell.BooleanValue = value !== null ? value : false; break; }
-                case 3: { userElementCell.IntegerValue = value !== null ? value : 0; break; }
-                case 4: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
+                case 1: { break; }
+                case 2: { userElementCellInitial.BooleanValue = value !== null ? value : false; break; }
+                case 3: { userElementCellInitial.IntegerValue = value !== null ? value : 0; break; }
+                case 4: { userElementCellInitial.DecimalValue = value !== null ? value : 50; break; }
                 case 6: { break; }
-                case 11: { userElementCell.DecimalValue = value !== null ? value : 100; break; }
-                case 12: { userElementCell.DecimalValue = value !== null ? value : 0; break; }
+                case 11: { userElementCellInitial.DecimalValue = value !== null ? value : 100; break; }
+                case 12: { userElementCellInitial.DecimalValue = value !== null ? value : 0; break; }
             }
 
-            userElementCell = this.appEntityManager.createEntity("UserElementCell", userElementCell);
+            userElementCell = this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
         }
 
         // Update the cache
@@ -196,12 +219,12 @@ export class ResourcePoolEditorService {
         return userElementCell;
     }
 
-    createUserElementField(elementField: any, rating?: any) {
+    createUserElementField(elementField: ElementField, rating?: number) {
         rating = typeof rating !== "undefined" ? rating : 50;
 
         // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
         var existingKey = [this.authService.currentUser.Id, elementField.Id];
-        var userElementField: any = this.appEntityManager.getEntityByKey("UserElementField", existingKey);
+        var userElementField = this.appEntityManager.getEntityByKey("UserElementField", existingKey) as UserElementField;
 
         if (typeof userElementField !== "undefined" && userElementField !== null) {
 
@@ -214,13 +237,13 @@ export class ResourcePoolEditorService {
 
         } else {
 
-            userElementField = {
+            let userElementFieldInitial = {
                 User: this.authService.currentUser,
                 ElementField: elementField,
                 Rating: rating
             };
 
-            userElementField = this.appEntityManager.createEntity("UserElementField", userElementField);
+            userElementField = this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
         }
 
         // Update the cache
@@ -229,14 +252,13 @@ export class ResourcePoolEditorService {
         return userElementField;
     }
 
-    createUserResourcePool(resourcePool: any, resourcePoolRate?: any) {
-        resourcePoolRate = typeof resourcePoolRate !== "undefined" ? resourcePoolRate : 10;
+    createUserResourcePool(resourcePool: ResourcePool, resourcePoolRate: number) {
 
         // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
         var existingKey = [this.authService.currentUser.Id, resourcePool.Id];
-        var userResourcePool: any = this.appEntityManager.getEntityByKey("UserResourcePool", existingKey);
+        var userResourcePool = this.appEntityManager.getEntityByKey("UserResourcePool", existingKey) as UserResourcePool;
 
-        if (typeof userResourcePool !== "undefined" && userResourcePool !== null) {
+        if (userResourcePool) {
 
             // If it's deleted, restore it
             if (userResourcePool.entityAspect.entityState.isDeleted()) {
@@ -247,13 +269,13 @@ export class ResourcePoolEditorService {
 
         } else {
 
-            userResourcePool = {
+            let userResourcePoolInitial = {
                 User: this.authService.currentUser,
                 ResourcePool: resourcePool,
                 ResourcePoolRate: resourcePoolRate
             };
 
-            userResourcePool = this.appEntityManager.createEntity("UserResourcePool", userResourcePool);
+            userResourcePool = this.appEntityManager.createEntity("UserResourcePool", userResourcePoolInitial) as UserResourcePool;
         }
 
         // Update the cache
@@ -265,13 +287,14 @@ export class ResourcePoolEditorService {
     elementField_DataTypeChanged(elementField: ElementField) {
 
         // Related element cells: Clear old values and set default values if necessary
-        elementField.ElementCellSet.forEach((elementCell: any) => {
+        elementField.ElementCellSet.forEach((elementCell: ElementCell) => {
 
-            elementCell.SelectedElementItemId = null;
+            elementCell.SelectedElementItem = null;
+            elementCell.StringValue = "";
 
             elementCell.removeUserElementCell(false);
 
-            if (elementCell.ElementField.DataType !== 6) {
+            if (elementCell.ElementField.DataType !== ElementFieldDataType.String && elementCell.ElementField.DataType !== ElementFieldDataType.Element) {
                 this.createUserElementCell(elementCell, null, false);
             }
         });
@@ -287,14 +310,21 @@ export class ResourcePoolEditorService {
         }
     }
 
-    getResourcePoolExpanded(resourcePoolUniqueKey: any) {
+    getResourcePoolExpanded(resourcePoolUniqueKey: IUniqueKey, forceRefresh?: boolean) {
+        forceRefresh = forceRefresh || false;
+
+        // If it's forced, remove it from fetched list so it can be retrieved from the server
+        if (forceRefresh) {
+            var keyIndex = this.fetchedList.indexOf(resourcePoolUniqueKey);
+            this.fetchedList.splice(keyIndex, 1);
+        }
 
         // TODO Validations?
 
         var fetchedEarlier = false;
 
         // If it's not newly created, check the fetched list
-        fetchedEarlier = this.fetchedList.some((item: any) => (resourcePoolUniqueKey.username === item.username
+        fetchedEarlier = this.fetchedList.some(item => (resourcePoolUniqueKey.username === item.username // TODO: Equals check?
             && resourcePoolUniqueKey.resourcePoolKey === item.resourcePoolKey));
 
         // Prepare the query
@@ -319,8 +349,8 @@ export class ResourcePoolEditorService {
             query = query.using(FetchStrategy.FromLocalCache);
         }
 
-        return this.appEntityManager.executeQueryNew(query)
-            .map((response: QueryResult): any => {
+        return this.appEntityManager.executeQueryNew<ResourcePool>(query)
+            .map((response): ResourcePool => {
 
                 // If there is no cmrp with this Id, return null
                 if (response.results.length === 0) {
@@ -352,7 +382,7 @@ export class ResourcePoolEditorService {
             });
     }
 
-    getResourcePoolSet(searchKey: any) {
+    getResourcePoolSet(searchKey: string) {
         searchKey = typeof searchKey !== "undefined" ? searchKey : "";
 
         var query = EntityQuery
@@ -375,8 +405,8 @@ export class ResourcePoolEditorService {
         //query = query.using(FetchStrategy.FromLocalCache);
         //}
 
-        return this.appEntityManager.executeQueryNew(query)
-            .map((response: QueryResult) => {
+        return this.appEntityManager.executeQueryNew<ResourcePool>(query)
+            .map((response) => {
                 return response.results;
             });
     }
@@ -385,11 +415,21 @@ export class ResourcePoolEditorService {
         return this.appEntityManager.hasChanges();
     }
 
+    // Currently not in use
+    refreshComputedFields(resourcePool: ResourcePool): Observable<void> {
+
+        var updateComputedFieldsUrl = this.getUpdateComputedFieldsUrl(resourcePool.Id);
+
+        return this.appHttp.post<void>(updateComputedFieldsUrl, null).mergeMap(() => {
+            return this.getResourcePoolExpanded(resourcePool.uniqueKey, true).map(() => {});
+        });
+    }
+
     rejectChanges(): void {
         this.appEntityManager.rejectChanges();
     }
 
-    saveChanges(): Observable<Object> {
+    saveChanges(): Observable<void> {
         this.isBusyLocal = true;
         return this.authService.ensureAuthenticatedUser()
             .mergeMap(() => {
@@ -403,7 +443,7 @@ export class ResourcePoolEditorService {
     // These "updateX" functions were defined in their related entities (user.js).
     // Only because they had to use createEntity() on dataService, it was moved to this service.
     // Try do handle them in a better way, maybe by using broadcast?
-    updateElementCellDecimalValue(elementCell: any, value: number) {
+    updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
 
         var userElementCell = elementCell.currentUserCell();
 
@@ -422,18 +462,18 @@ export class ResourcePoolEditorService {
         this.elementCellDecimalValueUpdated$.emit(elementCell);
     }
 
-    updateElementCellMultiplier(elementCell: any, updateType: any) {
+    updateElementCellMultiplier(elementCell: ElementCell, updateType: string) {
 
         this.updateElementCellMultiplierInternal(elementCell, updateType);
 
         // Update items
-        elementCell.ElementField.Element.ElementItemSet.forEach((item: any) => {
+        elementCell.ElementField.Element.ElementItemSet.forEach((item) => {
             item.setMultiplier();
         });
 
         if (elementCell.ElementField.IndexEnabled) {
             // Update numeric value cells
-            elementCell.ElementField.ElementCellSet.forEach((cell: any) => {
+            elementCell.ElementField.ElementCellSet.forEach((cell) => {
                 cell.setNumericValueMultiplied(false);
             });
 
@@ -442,7 +482,7 @@ export class ResourcePoolEditorService {
         }
     }
 
-    updateElementCellMultiplierInternal(elementCell: any, updateType: any) {
+    updateElementCellMultiplierInternal(elementCell: ElementCell, updateType: string) {
 
         switch (updateType) {
             case "increase":
@@ -472,7 +512,7 @@ export class ResourcePoolEditorService {
         }
     }
 
-    updateElementFieldIndexRatingNew(elementField: any, value: number) {
+    updateElementFieldIndexRatingNew(elementField: ElementField, value: number) {
 
         var userElementField = elementField.currentUserElementField();
 
@@ -490,7 +530,7 @@ export class ResourcePoolEditorService {
         }
     }
 
-    updateElementFieldIndexRating(elementField: any, updateType: any) {
+    updateElementFieldIndexRating(elementField: ElementField, updateType: string) {
 
         switch (updateType) {
             case "increase":
@@ -524,15 +564,15 @@ export class ResourcePoolEditorService {
         }
     }
 
-    updateElementMultiplier(element: any, updateType: any) {
+    updateElementMultiplier(element: Element, updateType: string) {
 
         // Find user element cell
-        element.ElementItemSet.forEach((item: any) => {
+        element.ElementItemSet.forEach((item) => {
 
-            var multiplierCell: any;
+            var multiplierCell: ElementCell;
             for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
                 var elementCell = item.ElementCellSet[cellIndex];
-                if (elementCell.ElementField.DataType === 12) {
+                if (elementCell.ElementField.DataType === ElementFieldDataType.Multiplier) {
                     multiplierCell = elementCell;
                     break;
                 }
@@ -544,15 +584,15 @@ export class ResourcePoolEditorService {
         // Update related
 
         // Update items
-        element.ElementItemSet.forEach((item: any) => {
+        element.ElementItemSet.forEach((item) => {
             item.setMultiplier();
         });
 
-        element.ElementFieldSet.forEach((field: any) => {
+        element.ElementFieldSet.forEach((field) => {
 
             if (field.IndexEnabled) {
                 // Update numeric value cells
-                field.ElementCellSet.forEach((cell: any) => {
+                field.ElementCellSet.forEach((cell) => {
                     cell.setNumericValueMultiplied(false);
                 });
 
@@ -564,7 +604,7 @@ export class ResourcePoolEditorService {
         this.elementMultiplierUpdated$.emit({ element: element, updateType: updateType });
     }
 
-    updateResourcePoolRate(resourcePool: any, updateType: any) {
+    updateResourcePoolRate(resourcePool: ResourcePool, updateType: string) {
 
         switch (updateType) {
             case "increase":
@@ -596,5 +636,9 @@ export class ResourcePoolEditorService {
                 break;
             }
         }
+    }
+
+    private getUpdateComputedFieldsUrl(resourcePoolId: number) {
+        return `${AppSettings.serviceAppUrl}/api/ResourcePoolApi/${resourcePoolId}/UpdateComputedFields`;
     }
 }

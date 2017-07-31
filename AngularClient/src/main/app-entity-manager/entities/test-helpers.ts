@@ -1,12 +1,11 @@
 ﻿import { ResourcePool } from "./resource-pool";
 import { UserResourcePool } from "./user-resource-pool";
 import { Element } from "./element";
-import { ElementField } from "./element-field";
+import { ElementField, ElementFieldDataType } from "./element-field";
 import { UserElementField } from "./user-element-field";
 import { ElementItem } from "./element-item";
 import { ElementCell } from "./element-cell";
 import { UserElementCell } from "./user-element-cell";
-import { ElementFieldDataType } from "./enums";
 
 export class TestHelpers {
 

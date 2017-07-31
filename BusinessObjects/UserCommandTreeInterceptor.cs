@@ -5,6 +5,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Linq;
+using System.Security;
 using System.Security.Claims;
 using System.Threading;
 
@@ -38,14 +39,12 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             }
         }
 
-
         /// <summary>
         /// In case of query command change the query by adding a filtering based on userId 
         /// </summary>
         static bool InterceptQueryCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
-            var queryCommand = interceptionContext.Result as DbQueryCommandTree;
-            if (queryCommand != null)
+            if (interceptionContext.Result is DbQueryCommandTree queryCommand)
             {
                 var newQuery = queryCommand.Query.Accept(new UserQueryVisitor());
                 interceptionContext.Result = new DbQueryCommandTree(
@@ -61,22 +60,21 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         static int GetCurrentUserId()
         {
             // Check that there is an authenticated user in this context
-            var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
+            var identity = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
             if (identity == null)
             {
-                throw new System.Security.SecurityException("Unauthenticated access");
+                throw new SecurityException("Unauthenticated access");
             }
-            var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             if (userIdclaim == null)
             {
-                throw new System.Security.SecurityException("Unauthenticated access");
+                throw new SecurityException("Unauthenticated access");
             }
 
-            var userId = 0;
-            int.TryParse(userIdclaim.Value, out userId);
+            int.TryParse(userIdclaim.Value, out var userId);
             if (userId == 0)
             {
-                throw new System.Security.SecurityException("Unauthenticated access");
+                throw new SecurityException("Unauthenticated access");
             }
 
             return userId;

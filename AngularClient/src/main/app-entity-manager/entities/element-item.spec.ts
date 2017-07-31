@@ -1,4 +1,5 @@
-﻿import { TestHelpers } from "./test-helpers";
+﻿import { ElementFieldDataType } from "./element-field";
+import { TestHelpers } from "./test-helpers";
 
 // TODO: Check all these tests below one more time
 
@@ -24,7 +25,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Field 2
         var field2 = TestHelpers.getElementField(item1.Element);
-        field2.DataType = 4;
+        field2.DataType = ElementFieldDataType.Decimal;
         field2.IndexEnabled = true;
 
         // Cell 2
@@ -47,7 +48,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -71,7 +72,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // Multiplier cell
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item1);
@@ -104,7 +105,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -112,7 +113,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // Multiplier cell
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item1);
@@ -133,7 +134,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -151,7 +152,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -159,7 +160,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // Multiplier cell
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item1);
@@ -180,7 +181,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -198,7 +199,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -206,7 +207,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // Multiplier cell
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item1);
@@ -229,14 +230,14 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Case 2: Add the fields and cells
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
         directIncomeField.IndexEnabled = true;
         directIncomeField.IndexRatingTotal = 100;
         directIncomeField.IndexRatingCount = 1;
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // DirectIncome cell
         var directIncomeCell = TestHelpers.getElementCell(directIncomeField, item1);
@@ -261,7 +262,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
         directIncomeField.IndexEnabled = true;
         directIncomeField.IndexRatingTotal = 100;
         directIncomeField.IndexRatingCount = 1;
@@ -272,7 +273,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // Multiplier cell
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item1);
@@ -293,7 +294,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // DirectIncome field
         var directIncomeField = TestHelpers.getElementField(item1.Element);
-        directIncomeField.DataType = 11;
+        directIncomeField.DataType = ElementFieldDataType.DirectIncome;
         directIncomeField.IndexEnabled = true;
         directIncomeField.IndexRatingTotal = 100;
         directIncomeField.IndexRatingCount = 1;
@@ -304,7 +305,7 @@ describe("main/app-entity-manager/entities/element-item", () => {
 
         // Multiplier field
         var multiplierField = TestHelpers.getElementField(item1.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         // Multiplier cell
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item1);

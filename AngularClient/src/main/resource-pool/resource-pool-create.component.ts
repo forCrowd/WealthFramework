@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
+import { ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { ResourcePoolEditorService } from "../resource-pool-editor/resource-pool-editor.module";
 
 @Component({
@@ -11,8 +12,8 @@ export class ResourcePoolCreateComponent implements OnInit {
 
     get isBusy(): boolean {
         return this.resourcePoolService.isBusy;
-}   ;
-    resourcePool: any = null;
+    };
+    resourcePool: ResourcePool = null;
     template: string = "basic";
     templateApplied: boolean = false; // If save operation fails because of "key | name exists" validation errors, this flag prevents template being applied to resource pool multiple times.
 

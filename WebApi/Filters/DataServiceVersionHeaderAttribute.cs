@@ -1,7 +1,5 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Filters
 {
-    using System.Threading;
-    using System.Threading.Tasks;
     using System.Web.Http.Filters;
 
     // Missing DataServiceVersion header in CORS responses
@@ -10,17 +8,11 @@
     {
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            OnActionExecutedInternal(actionExecutedContext);
+            EnsureDataServiceVersionHeader(actionExecutedContext);
             base.OnActionExecuted(actionExecutedContext);
         }
 
-        public override Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
-        {
-            OnActionExecutedInternal(actionExecutedContext);
-            return base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
-        }
-
-        void OnActionExecutedInternal(HttpActionExecutedContext actionExecutedContext)
+        void EnsureDataServiceVersionHeader(HttpActionExecutedContext actionExecutedContext)
         {
             if (actionExecutedContext.Response != null && actionExecutedContext.Response.Content != null)
             {

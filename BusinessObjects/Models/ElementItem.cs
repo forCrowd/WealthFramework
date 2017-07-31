@@ -7,7 +7,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    // [ODataControllerAuthorization("Administrator")]
     public class ElementItem : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]

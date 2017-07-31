@@ -2,10 +2,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
-    using Results;
+    using forCrowd.WealthEconomy.WebApi.Filters;
+    using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -15,85 +15,83 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     public class ElementFieldController : BaseODataController
     {
         public ElementFieldController()
-		{
-			MainUnitOfWork = new ElementFieldUnitOfWork();		
-		}
+        {
+            MainUnitOfWork = new ElementFieldUnitOfWork();
+        }
 
-		protected ElementFieldUnitOfWork MainUnitOfWork { get; private set; }
+        protected ElementFieldUnitOfWork MainUnitOfWork { get; private set; }
 
         // POST odata/ElementField
-        public async Task<IHttpActionResult> Post(ElementField elementField)
+        public async Task<IHttpActionResult> Post(Delta<ElementField> patch)
         {
-            try
+            var elementField = patch.GetEntity();
+
+            // Don't allow the user to set these fields / coni2k - 29 Jul. '17
+            // TODO Use ForbiddenFieldsValidator?: Currently breeze doesn't allow to post custom (delta) entity
+            // TODO Or use DTO?: Needs a different metadata than the context, which can be overkill
+            elementField.Id = 0;
+            elementField.IndexRatingTotal = 0;
+            elementField.IndexRatingCount = 0;
+            elementField.CreatedOn = DateTime.UtcNow;
+            elementField.ModifiedOn = DateTime.UtcNow;
+            elementField.DeletedOn = null;
+
+            // Owner check: Entity must belong to the current user
+            var userId = await MainUnitOfWork
+                .AllLiveIncluding(item => item.Element.ResourcePool)
+                .Where(item => item.ElementId == elementField.ElementId)
+                .Select(item => item.Element.ResourcePool.UserId)
+                .Distinct()
+                .SingleOrDefaultAsync();
+
+            var currentUserId = User.Identity.GetUserId<int>();
+
+            if (currentUserId != userId)
             {
-                await MainUnitOfWork.InsertAsync(elementField);
+                return StatusCode(HttpStatusCode.Forbidden);
             }
-            catch (DbUpdateException)
-            {
-                if (await MainUnitOfWork.All.AnyAsync(item => item.Id == elementField.Id))
-                {
-					return new UniqueKeyConflictResult(Request, "Id", elementField.Id.ToString());
-                }
-                else throw;
-            }
+
+            await MainUnitOfWork.InsertAsync(elementField);
 
             return Created(elementField);
         }
 
         // PATCH odata/ElementField(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ElementField> patch)
+        [ForbiddenFieldsValidator(nameof(ElementField.Id), nameof(ElementField.ElementId), nameof(ElementField.IndexRatingTotal), nameof(ElementField.IndexRatingCount), nameof(ElementField.CreatedOn), nameof(ElementField.ModifiedOn), nameof(ElementField.DeletedOn))]
+        [EntityExistsValidator(typeof(ElementField))]
+        [ConcurrencyValidator(typeof(ElementField))]
+        public async Task<IHttpActionResult> Patch(int key, Delta<ElementField> patch)
         {
-            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
-            if (elementField == null)
+            var elementField = await MainUnitOfWork.AllLiveIncluding(item => item.Element.ResourcePool).SingleOrDefaultAsync(item => item.Id == key);
+
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != elementField.Element.ResourcePool.UserId)
             {
-                return NotFound();
-            }
-
-            var patchEntity = patch.GetEntity();
-
-            if (patchEntity.RowVersion == null)
-			{
-                throw new InvalidOperationException("RowVersion property of the entity cannot be null");
-			}
-
-            if (!elementField.RowVersion.SequenceEqual(patchEntity.RowVersion))
-            {
-                return Conflict();
+                return StatusCode(HttpStatusCode.Forbidden);
             }
 
             patch.Patch(elementField);
 
-            try
-            {
-                await MainUnitOfWork.UpdateAsync(elementField);
-            }
-            catch (DbUpdateException)
-            {
-                if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
-                {
-                    object keyObject = null;
-                    patch.TryGetPropertyValue("Id", out keyObject);
-
-                    if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
-                    {
-                        return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
-                    }
-                    else throw;
-                }
-                else throw;
-            }
+            await MainUnitOfWork.SaveChangesAsync();
 
             return Ok(elementField);
         }
 
         // DELETE odata/ElementField(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        [EntityExistsValidator(typeof(ElementField))]
+        // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
+        // [ConcurrencyValidator(typeof(ElementField))]
+        public async Task<IHttpActionResult> Delete(int key, Delta<ElementField> patch)
         {
-            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
-            if (elementField == null)
+            var elementField = await MainUnitOfWork.AllLiveIncluding(item => item.Element.ResourcePool).SingleOrDefaultAsync(item => item.Id == key);
+
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != elementField.Element.ResourcePool.UserId)
             {
-                return NotFound();
+                return StatusCode(HttpStatusCode.Forbidden);
             }
 
             await MainUnitOfWork.DeleteAsync(elementField.Id);

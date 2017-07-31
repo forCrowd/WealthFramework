@@ -2,11 +2,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
-    using Results;
+    using forCrowd.WealthEconomy.WebApi.Filters;
+    using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -22,81 +21,68 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         protected UserElementFieldUnitOfWork MainUnitOfWork { get; private set; }
 
         // POST odata/UserElementField
-        public async Task<IHttpActionResult> Post(UserElementField userElementField)
+        public async Task<IHttpActionResult> Post(Delta<UserElementField> patch)
         {
-            try
+            var userElementField = patch.GetEntity();
+
+            // Don't allow the user to set these fields / coni2k - 29 Jul. '17
+            // TODO Use ForbiddenFieldsValidator?: Currently breeze doesn't allow to post custom (delta) entity
+            // TODO Or use DTO?: Needs a different metadata than the context, which can be overkill
+            //userElementField.UserId = 0;
+            userElementField.CreatedOn = DateTime.UtcNow;
+            userElementField.ModifiedOn = DateTime.UtcNow;
+            userElementField.DeletedOn = null;
+
+            // Owner check: Entity must belong to the current user
+            // REMARK UserCommandTreeInterceptor already filters "userId" on EntityFramework level, but that might be removed later on / coni2k - 31 Jul. '17
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != userElementField.UserId)
             {
-                await MainUnitOfWork.InsertAsync(userElementField);
+                return StatusCode(HttpStatusCode.Forbidden);
             }
-            catch (DbUpdateException)
-            {
-                if (await MainUnitOfWork.All.AnyAsync(item => item.ElementFieldId == userElementField.ElementFieldId))
-                {
-                    return new UniqueKeyConflictResult(Request, "ElementFieldId", userElementField.ElementFieldId.ToString());
-                }
-                else throw;
-            }
+
+            await MainUnitOfWork.InsertAsync(userElementField);
 
             return Created(userElementField);
         }
 
-        // PATCH odata/UserElementField(5)
+        // PATCH odata/UserElementField(userId=5,elementFieldId=5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int elementFieldId, Delta<UserElementField> patch)
+        [ForbiddenFieldsValidator(nameof(UserElementField.UserId), nameof(UserElementField.ElementFieldId), nameof(UserElementField.CreatedOn), nameof(UserElementField.ModifiedOn), nameof(UserElementField.DeletedOn))]
+        [EntityExistsValidator(typeof(UserElementField))]
+        [ConcurrencyValidator(typeof(UserElementField))]
+        public async Task<IHttpActionResult> Patch(int userId, int elementFieldId, Delta<UserElementField> patch)
         {
-            var userElementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
-            if (userElementField == null)
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != userId)
             {
-                return NotFound();
+                return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            var patchEntity = patch.GetEntity();
-
-            if (patchEntity.RowVersion == null)
-            {
-                throw new InvalidOperationException("RowVersion property of the entity cannot be null");
-            }
-
-            if (!userElementField.RowVersion.SequenceEqual(patchEntity.RowVersion))
-            {
-                return Conflict();
-            }
-
+            // REMARK UserCommandTreeInterceptor already filters "userId" on EntityFramework level, but that might be removed later on / coni2k - 31 Jul. '17
+            var userElementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.UserId == userId && item.ElementFieldId == elementFieldId);
             patch.Patch(userElementField);
 
-            try
-            {
-                await MainUnitOfWork.UpdateAsync(userElementField);
-            }
-            catch (DbUpdateException)
-            {
-                if (patch.GetChangedPropertyNames().Any(item => item == "ElementFieldId"))
-                {
-                    object elementFieldIdObject = null;
-                    patch.TryGetPropertyValue("ElementFieldId", out elementFieldIdObject);
-
-                    if (elementFieldIdObject != null && await MainUnitOfWork.All.AnyAsync(item => item.ElementFieldId == (int)elementFieldIdObject))
-                    {
-                        return new UniqueKeyConflictResult(Request, "ElementFieldId", elementFieldIdObject.ToString());
-                    }
-                    else throw;
-                }
-                else throw;
-            }
+            await MainUnitOfWork.SaveChangesAsync();
 
             return Ok(userElementField);
         }
 
-        // DELETE odata/UserElementField(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int elementFieldId)
+        // DELETE odata/UserElementField(userId=5,elementFieldId=5)
+        [EntityExistsValidator(typeof(UserElementField))]
+        // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
+        // [ConcurrencyValidator(typeof(UserElementField))]
+        public async Task<IHttpActionResult> Delete(int userId, int elementFieldId, Delta<UserElementField> patch)
         {
-            var userElementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
-            if (userElementField == null)
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != userId)
             {
-                return NotFound();
+                return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await new UserManager().DeleteUserElementFieldAsync(userElementField.ElementFieldId);
+            await MainUnitOfWork.DeleteAsync(userId, elementFieldId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

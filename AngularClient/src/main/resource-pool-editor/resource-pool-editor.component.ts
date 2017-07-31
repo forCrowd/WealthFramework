@@ -1,12 +1,17 @@
 ﻿import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
+import { Subscription } from "rxjs/Subscription";
 import { Options } from "highcharts";
 
+import { Element } from "../app-entity-manager/entities/element";
+import { ElementCell } from "../app-entity-manager/entities/element-cell";
+import { ElementField, ElementFieldDataType } from "../app-entity-manager/entities/element-field";
+import { IUniqueKey, ResourcePool, RatingMode } from "../app-entity-manager/entities/resource-pool";
+import { User } from "../app-entity-manager/entities/user";
 import { ChartConfig, ChartDataItem } from "../ng-chart/ng-chart.module";
 import { ResourcePoolEditorService } from "./resource-pool-editor.service";
-
-import { ResourcePool, RatingMode } from "../app-entity-manager/entities/resource-pool";
 
 @Component({
     selector: "resource-pool-editor",
@@ -15,64 +20,68 @@ import { ResourcePool, RatingMode } from "../app-entity-manager/entities/resourc
 })
 export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
-    constructor(private resourcePoolService: ResourcePoolEditorService,
+    constructor(private resourcePoolEditorService: ResourcePoolEditorService,
         private router: Router) {
     }
 
     @Input() config: any = { resourcePoolKey: "", username: "" };
     chartConfig: ChartConfig = null;
-    currentUser: any = null;
+    currentUser: User = null;
     displayChart: boolean = false;
     displayDescription: boolean = false;
     displayIndexDetails = false;
+    ElementFieldDataType = ElementFieldDataType;
     elementItemsSortField = "name";
     errorMessage: string = "";
     get isBusy(): boolean {
-        return this.resourcePoolService.isBusy;
+        return this.resourcePoolEditorService.isBusy;
     }
-    ratingMode = RatingMode;
+    RatingMode = RatingMode;
     resourcePool: ResourcePool = null;
     resourcePoolKey = "";
+    get resourcePoolUniqueKey(): IUniqueKey {
+        return { username: this.username, resourcePoolKey: this.resourcePoolKey };
+    }
     saveStream = new Subject();
-    subscriptions: any[] = [];
+    subscriptions: Subscription[] = [];
     username = "";
 
-    changeSelectedElement(element: any) {
+    changeSelectedElement(element: Element) {
         this.resourcePool.selectedElement(element);
         this.loadChartData();
     }
 
-    decreaseElementMultiplier(element: any) {
-        this.resourcePoolService.updateElementMultiplier(element, "decrease");
+    decreaseElementMultiplier(element: Element) {
+        this.resourcePoolEditorService.updateElementMultiplier(element, "decrease");
         this.saveStream.next();
     }
 
-    decreaseIndexRating(field: any) {
-        this.resourcePoolService.updateElementFieldIndexRating(field, "decrease");
+    decreaseIndexRating(field: ElementField) {
+        this.resourcePoolEditorService.updateElementFieldIndexRating(field, "decrease");
         this.saveStream.next();
     }
 
     decreaseResourcePoolRate() {
-        this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "decrease");
+        this.resourcePoolEditorService.updateResourcePoolRate(this.resourcePool, "decrease");
         this.saveStream.next();
     }
 
-    increaseElementMultiplier(element: any) {
-        this.resourcePoolService.updateElementMultiplier(element, "increase");
+    increaseElementMultiplier(element: Element) {
+        this.resourcePoolEditorService.updateElementMultiplier(element, "increase");
         this.saveStream.next();
     }
 
-    increaseIndexRating(field: any) {
-        this.resourcePoolService.updateElementFieldIndexRating(field, "increase");
+    increaseIndexRating(field: ElementField) {
+        this.resourcePoolEditorService.updateElementFieldIndexRating(field, "increase");
         this.saveStream.next();
     }
 
     increaseResourcePoolRate() {
-        this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "increase");
+        this.resourcePoolEditorService.updateResourcePoolRate(this.resourcePool, "increase");
         this.saveStream.next();
     }
 
-    initialize(username: any, resourcePoolKey: any, user: any) {
+    initialize(username: string, resourcePoolKey: string, user: User) {
 
         // If there is no change, no need to continue
         if (this.username === username && this.resourcePoolKey === resourcePoolKey && this.currentUser === user) {
@@ -92,10 +101,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
             return;
         }
 
-        var resourcePoolUniqueKey = { username: this.username, resourcePoolKey: this.resourcePoolKey };
-
         // Get resource pool
-        this.resourcePoolService.getResourcePoolExpanded(resourcePoolUniqueKey)
+        this.resourcePoolEditorService.getResourcePoolExpanded(this.resourcePoolUniqueKey)
             .subscribe((resourcePool: ResourcePool) => {
 
                 if (typeof resourcePool === "undefined" || resourcePool === null) {
@@ -145,7 +152,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
                 }
                 const data: ChartDataItem[] = [];
 
-                element.ElementItemSet.forEach((elementItem: any) => {
+                element.ElementItemSet.forEach((elementItem) => {
                     data.push(new ChartDataItem(elementItem.Name,
                         elementItem.totalIncome(),
                         elementItem.totalIncomeUpdated$));
@@ -161,8 +168,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
                 };
                 const data: ChartDataItem[] = [];
 
-                element.ElementItemSet.forEach((elementItem: any) => {
-                    elementItem.ElementCellSet.forEach((elementCell: any) => {
+                element.ElementItemSet.forEach((elementItem) => {
+                    elementItem.ElementCellSet.forEach((elementCell) => {
                         if (elementCell.ElementField.IndexEnabled) {
                             data.push(new ChartDataItem(elementCell.ElementItem.Name,
                                 +elementCell.numericValue().toFixed(2),
@@ -184,7 +191,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
             const data: ChartDataItem[] = [];
 
             element.elementFieldIndexSet()
-                .forEach((elementFieldIndex: any) => {
+                .forEach((elementFieldIndex) => {
                     data.push(new ChartDataItem(elementFieldIndex.Name,
                         +elementFieldIndex.indexRating().toFixed(2),
                         elementFieldIndex.indexRatingUpdated$));
@@ -216,28 +223,38 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
         // Delayed save operation
         this.saveStream.debounceTime(1500)
-            .mergeMap(() => this.resourcePoolService.saveChanges()).subscribe();
+            .mergeMap(() => this.resourcePoolEditorService.saveChanges()).subscribe();
 
         // Event handlers
         this.subscriptions.push(
-            this.resourcePoolService.currentUserChanged$.subscribe((newUser: any) =>
-                this.initialize(this.username, this.resourcePoolKey, newUser)));
+            this.resourcePoolEditorService.currentUserChanged$.subscribe((newUser) =>
+                this.initialize(this.username, this.resourcePoolKey, newUser))
+        );
 
-        this.initialize(username, resourcePoolKey, this.resourcePoolService.currentUser);
+        // Refresh resource pool timer
+        const refreshResourcePool = 1000 * 60 * 30;
+
+        this.subscriptions.push(
+            Observable.timer(refreshResourcePool, refreshResourcePool).mergeMap(() => {
+                return this.resourcePoolEditorService.getResourcePoolExpanded(this.resourcePool.uniqueKey, true);
+            }).subscribe()
+        );
+
+        this.initialize(username, resourcePoolKey, this.resourcePoolEditorService.currentUser);
     }
 
-    resetElementMultiplier(element: any) {
-        this.resourcePoolService.updateElementMultiplier(element, "reset");
+    resetElementMultiplier(element: Element) {
+        this.resourcePoolEditorService.updateElementMultiplier(element, "reset");
         this.saveStream.next();
     }
 
-    resetIndexRating(field: any) {
-        this.resourcePoolService.updateElementFieldIndexRating(field, "reset");
+    resetIndexRating(field: ElementField) {
+        this.resourcePoolEditorService.updateElementFieldIndexRating(field, "reset");
         this.saveStream.next();
     }
 
     resetResourcePoolRate() {
-        this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "reset");
+        this.resourcePoolEditorService.updateResourcePoolRate(this.resourcePool, "reset");
         this.saveStream.next();
     }
 
@@ -251,13 +268,13 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.loadChartData();
     }
 
-    updateElementCellDecimalValue(cell: any, value: number) {
-        this.resourcePoolService.updateElementCellDecimalValue(cell, value);
+    updateElementCellDecimalValue(cell: ElementCell, value: number) {
+        this.resourcePoolEditorService.updateElementCellDecimalValue(cell, value);
         this.saveStream.next();
     }
 
     updateElementItemsSortField(): void {
-        this.elementItemsSortField = this.resourcePool.RatingMode === RatingMode.YourRatings
+        this.elementItemsSortField = this.resourcePool.RatingMode === RatingMode.CurrentUser
             ? "name"
             : "totalIncome";
     }

@@ -23,6 +23,7 @@
                     AllowedLogicalOperators.Or,
                 AllowedQueryOptions = AllowedQueryOptions.Expand |
                     AllowedQueryOptions.Filter |
+                    AllowedQueryOptions.InlineCount |
                     AllowedQueryOptions.OrderBy |
                     AllowedQueryOptions.Skip |
                     AllowedQueryOptions.Top,
@@ -30,6 +31,7 @@
                 MaxNodeCount = 20,
                 PageSize = 100                
             };
+
             config.AddODataQueryFilter(odataFilter);
 
             // Add the CompositeKeyRoutingConvention

@@ -1,4 +1,5 @@
-﻿import { ElementFieldDataType } from "./enums";
+﻿import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "./element-field";
+import { RatingMode } from "./resource-pool";
 import { TestHelpers } from "./test-helpers";
 
 // TODO: Check all these tests below one more time
@@ -223,7 +224,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         var field = TestHelpers.getElementField();
         field.DataType = ElementFieldDataType.Decimal;
 
-        // Arrange & act - Case 1: RatingMode 1 (Default)
+        // Arrange & act - Case 1: 'Current User' (Default)
         var cell = TestHelpers.getElementCell(field);
         cell.NumericValueTotal = 75;
         cell.NumericValueCount = 3;
@@ -231,8 +232,8 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         // Assert
         expect(cell.numericValue()).toBe(cell.currentUserNumericValue());
 
-        // Act -  Cast 2: RatingMode 2 & also cache case
-        cell.ElementField.Element.ResourcePool.RatingMode = 2;
+        // Act -  Cast 2: RatingMode 'All Users' & also cache case
+        cell.ElementField.Element.ResourcePool.RatingMode = RatingMode.AllUsers;
 
         // Assert
         expect(cell.numericValue()).toBe(cell.numericValueAverage());
@@ -258,7 +259,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         var item = cell.ElementItem;
 
         var multiplierField = TestHelpers.getElementField(item.Element);
-        multiplierField.DataType = 12;
+        multiplierField.DataType = ElementFieldDataType.Multiplier;
 
         var multiplierCell = TestHelpers.getElementCell(multiplierField, item);
 
@@ -331,7 +332,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         var field = cell.ElementField;
         field.DataType = ElementFieldDataType.Decimal;
         field.IndexEnabled = true;
-        field.IndexSortType = 2;
+        field.IndexSortType = ElementFieldIndexSortType.Lowest;
 
         expect(cell.aggressiveRating()).toBe(1);
     });
@@ -343,7 +344,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         var field = cell1.ElementField;
         field.DataType = ElementFieldDataType.Decimal;
         field.IndexEnabled = true;
-        field.IndexSortType = 2;
+        field.IndexSortType = ElementFieldIndexSortType.Lowest;
 
         var userCell1 = TestHelpers.getUserElementCell(cell1);
         userCell1.DecimalValue = 55;
@@ -363,7 +364,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
 
         var field = cell.ElementField;
         field.DataType = ElementFieldDataType.Decimal;
-        field.IndexSortType = 1;
+        field.IndexSortType = ElementFieldIndexSortType.Highest;
         field.IndexEnabled = true;
 
         expect(cell.aggressiveRating()).toBe(0);
@@ -375,7 +376,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
 
         var field = cell1.ElementField;
         field.DataType = ElementFieldDataType.Decimal;
-        field.IndexSortType = 1;
+        field.IndexSortType = ElementFieldIndexSortType.Highest;
         field.IndexEnabled = true;
 
         var userCell1 = TestHelpers.getUserElementCell(cell1);
@@ -399,8 +400,8 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         var field = cell1.ElementField;
         field.DataType = ElementFieldDataType.Decimal;
         field.IndexEnabled = true;
-        field.IndexCalculationType = 1;
-        field.IndexSortType = 2;
+        field.IndexCalculationType = ElementFieldIndexCalculationType.Aggressive;
+        field.IndexSortType = ElementFieldIndexSortType.Lowest;
 
         var userCell1 = TestHelpers.getUserElementCell(cell1);
         userCell1.DecimalValue = 55;
@@ -420,7 +421,7 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         cell1.NumericValueTotal = 55;
 
         var field = cell1.ElementField;
-        field.DataType = 11; // DirectIncome field type
+        field.DataType = ElementFieldDataType.DirectIncome;
         field.IndexEnabled = true;
 
         var item2 = TestHelpers.getElementItem(field.Element);
@@ -430,5 +431,4 @@ describe("main/app-entity-manager/entities/element-cell", () => {
         expect(cell1.indexIncome()).toBe(field.indexIncome() * cell1.ratingPercentage());
         expect(cell2.indexIncome()).toBe(field.indexIncome() * cell2.ratingPercentage());
     });
-
 });

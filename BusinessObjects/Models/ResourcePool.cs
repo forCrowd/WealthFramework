@@ -6,7 +6,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
@@ -60,18 +59,10 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public bool UseFixedResourcePoolRate { get; set; }
 
-        // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
-        // by manually editing migration file which is not necessary at the moment / coni2k - 03 Aug. '15
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? ResourcePoolRateTotal { get; private set; }
+        public decimal ResourcePoolRateTotal { get; set; }
+        public int ResourcePoolRateCount { get; set; }
 
-        // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
-        // by manually editing migration file which is not necessary at the moment / coni2k - 03 Aug. '15
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int? ResourcePoolRateCount { get; private set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int? RatingCount { get; private set; }
+        public int RatingCount { get; set; }
 
         public virtual User User { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }

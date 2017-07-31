@@ -7,7 +7,7 @@ namespace forCrowd.WealthEconomy.Framework.Exceptions
     /// The exception that is thrown when a null reference, default or empty value is passed to a method that does not accept it as a valid argument.
     /// REMARK: When this exception occurs within Update-Database operation of Entity Framework migrations,
     /// it fails to load it and display 'Type is not resolved for member 'forCrowd.WealthEconomy.Framework.ArgumentNullOrDefaultException ...' message.
-    /// TODO Probably this exception needs to be installed to GAC to resolved this issue?
+    /// TODO Probably this exception needs to be installed to GAC to resolve this issue?
     /// </summary>
     [Serializable]
     public class ArgumentNullOrDefaultException : ArgumentNullException, ISerializable

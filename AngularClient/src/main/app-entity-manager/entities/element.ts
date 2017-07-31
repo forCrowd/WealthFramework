@@ -1,6 +1,6 @@
 ﻿import { EntityBase } from "./entity-base";
 import { ResourcePool } from "./resource-pool";
-import { ElementField } from "./element-field";
+import { ElementField, ElementFieldDataType } from "./element-field";
 import { ElementItem } from "./element-item";
 
 export class Element extends EntityBase {
@@ -22,7 +22,7 @@ export class Element extends EntityBase {
 
                 // Main element check: If there is another element that its IsMainElement flag is true, make it false
                 if (value) {
-                    this.ResourcePool.ElementSet.forEach((element: any) => {
+                    this.ResourcePool.ElementSet.forEach((element) => {
                         if (element !== this && element.IsMainElement) {
                             element.IsMainElement = false;
                         }
@@ -43,13 +43,13 @@ export class Element extends EntityBase {
         IsMainElement: boolean,
 
         // Client-side
-        parent: any,
-        familyTree: any,
-        elementFieldIndexSet: any,
-        indexRating: any,
-        directIncomeField: any,
-        multiplierField: any,
-        totalResourcePoolAmount: any
+        parent: Element,
+        familyTree: Element[],
+        elementFieldIndexSet: ElementField[],
+        indexRating: number,
+        directIncomeField: ElementField,
+        multiplierField: ElementField,
+        totalResourcePoolAmount: number
     } = {
         // Server-side
         IsMainElement: false,
@@ -91,14 +91,14 @@ export class Element extends EntityBase {
         // TODO Check totalIncome notes
 
         var value = 0;
-        this.ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item) => {
             value += item.directIncomeIncludingResourcePoolAmount();
         });
 
         return value;
     }
 
-    elementFieldIndexSet() {
+    elementFieldIndexSet(): ElementField[] {
         if (this.fields.elementFieldIndexSet === null) {
             this.setElementFieldIndexSet();
         }
@@ -121,21 +121,21 @@ export class Element extends EntityBase {
         return (this.ElementFieldSet.length > 4) || this.elementFieldIndexSet().length > 2;
     }
 
-    getElementFieldIndexSet(element: any) {
+    getElementFieldIndexSet(element: Element) {
 
         var sortedElementFieldSet = element.getElementFieldSetSorted();
-        var indexSet: any[] = [];
+        var indexSet: ElementField[] = [];
 
         // Validate
-        sortedElementFieldSet.forEach((field: any) => {
+        sortedElementFieldSet.forEach((field) => {
             if (field.IndexEnabled) {
                 indexSet.push(field);
             }
 
-            if (field.DataType === 6 && field.SelectedElement !== null) {
+            if (field.DataType === ElementFieldDataType.Element && field.SelectedElement !== null) {
                 var childIndexSet = this.getElementFieldIndexSet(field.SelectedElement);
 
-                childIndexSet.forEach((childIndex: any) => {
+                childIndexSet.forEach((childIndex) => {
                     indexSet.push(childIndex);
                 });
             }
@@ -144,14 +144,14 @@ export class Element extends EntityBase {
         return indexSet;
     }
 
-    getElementFieldSetSorted(): any[] {
-        return this.ElementFieldSet.sort((a: any, b: any) => a.SortOrder - b.SortOrder);
+    getElementFieldSetSorted(): ElementField[] {
+        return this.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
     }
 
-    getElementItemSet(sort?: string): any[] {
+    getElementItemSet(sort?: string): ElementItem[] {
         sort = typeof sort !== "undefined" ? sort : "";
 
-        return this.ElementItemSet.sort((a: any, b: any) => {
+        return this.ElementItemSet.sort((a, b) => {
             switch (sort) {
                 case "totalIncome": {
                     return b.totalIncome() - a.totalIncome();
@@ -181,7 +181,7 @@ export class Element extends EntityBase {
         // TODO Check totalIncome notes
 
         var value = 0;
-        this.ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item) => {
             value += item.multiplier();
         });
 
@@ -221,13 +221,13 @@ export class Element extends EntityBase {
 
         // Related items
         var elementItemSet = this.ElementItemSet.slice();
-        elementItemSet.forEach((elementItem: any) => {
+        elementItemSet.forEach((elementItem) => {
             elementItem.remove();
         });
 
         // Related fields
         var elementFieldSet = this.ElementFieldSet.slice();
-        elementFieldSet.forEach((elementField: any) => {
+        elementFieldSet.forEach((elementField) => {
             elementField.remove();
         });
 
@@ -239,7 +239,7 @@ export class Element extends EntityBase {
         // TODO Check totalIncome notes
 
         var value = 0;
-        this.ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item) => {
             value += item.resourcePoolAmount();
         });
 
@@ -247,7 +247,7 @@ export class Element extends EntityBase {
     }
 
     setDirectIncomeField() {
-        var result = this.ElementFieldSet.filter((field: any) => field.DataType === 11);
+        var result = this.ElementFieldSet.filter((field) => field.DataType === ElementFieldDataType.DirectIncome);
 
         if (result.length > 0) {
             this.fields.directIncomeField = result[0];
@@ -262,7 +262,7 @@ export class Element extends EntityBase {
 
         this.fields.familyTree = [];
 
-        var element = this;
+        var element = this as Element; // TODO: ?
         while (element !== null) {
             this.fields.familyTree.unshift(element);
             element = element.parent();
@@ -271,13 +271,13 @@ export class Element extends EntityBase {
         // TODO At the moment it's only upwards, later include children?
     }
 
-    setIndexRating(updateRelated?: any) {
+    setIndexRating(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var indexSet = this.elementFieldIndexSet();
 
         var value = 0;
-        indexSet.forEach((index: any) => {
+        indexSet.forEach((index) => {
             value += index.indexRating();
         });
 
@@ -286,7 +286,7 @@ export class Element extends EntityBase {
 
             // Update related
             if (updateRelated) {
-                this.elementFieldIndexSet().forEach((index: any) => {
+                this.elementFieldIndexSet().forEach((index) => {
                     index.setIndexRatingPercentage();
                 });
             }
@@ -294,7 +294,7 @@ export class Element extends EntityBase {
     }
 
     setMultiplierField() {
-        var result = this.ElementFieldSet.filter((field: any) => field.DataType === 12);
+        var result = this.ElementFieldSet.filter((field) => field.DataType === ElementFieldDataType.Multiplier);
 
         if (result.length > 0) {
             this.fields.multiplierField = result[0];
@@ -312,7 +312,7 @@ export class Element extends EntityBase {
         // TODO Check totalIncome notes
 
         var value = 0;
-        this.ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item) => {
             value += item.totalDirectIncome();
         });
 
@@ -324,7 +324,7 @@ export class Element extends EntityBase {
         // TODO Check totalIncome notes
 
         var value = 0;
-        this.ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item) => {
             value += item.totalDirectIncomeIncludingResourcePoolAmount();
         });
 
@@ -336,7 +336,7 @@ export class Element extends EntityBase {
         // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?
 
         var value = 0;
-        this.ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item) => {
             value += item.totalIncome();
         });
 
@@ -360,13 +360,13 @@ export class Element extends EntityBase {
 
         // TODO Check totalIncome notes
 
-        var value: any;
+        var value: number;
 
         if (this === this.ResourcePool.mainElement()) {
 
             value = this.ResourcePool.InitialValue;
 
-            this.ElementItemSet.forEach((item: any) => {
+            this.ElementItemSet.forEach((item) => {
                 value += item.totalResourcePoolAmount();
             });
 
@@ -383,9 +383,9 @@ export class Element extends EntityBase {
 
             //console.log("TRPA-B " + value.toFixed(2));
 
-            this.elementFieldIndexSet().forEach((field: any) => {
+            this.elementFieldIndexSet().forEach((field) => {
                 // TODO How about this check?
-                // if (field.DataType === 11) { - 
+                // if (field.DataType === ElementFieldDataType.DirectIncome) { -
                 field.setIndexIncome();
                 // }
             });

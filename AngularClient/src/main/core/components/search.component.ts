@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
 
+import { ResourcePool } from "../../app-entity-manager/entities/resource-pool";
 import { ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
 
 @Component({
@@ -9,12 +9,11 @@ import { ResourcePoolEditorService } from "../../resource-pool-editor/resource-p
 })
 export class SearchComponent {
 
-    resourcePoolSet: any[] = [];
+    resourcePoolSet: ResourcePool[] = [];
     searchKey = "";
     showResults = false;
 
-    constructor(private resourcePoolService: ResourcePoolEditorService,
-        private router: Router) {
+    constructor(private resourcePoolService: ResourcePoolEditorService) {
     }
 
     searchKeyChange(value: string) {
@@ -26,7 +25,7 @@ export class SearchComponent {
         }
 
         this.resourcePoolService.getResourcePoolSet(this.searchKey)
-            .subscribe((results: any) => {
+            .subscribe((results: ResourcePool[]) => {
                 this.resourcePoolSet = results;
                 this.showResults = true;
             });

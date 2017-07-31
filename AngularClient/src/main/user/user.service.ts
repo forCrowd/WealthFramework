@@ -20,7 +20,7 @@ export class UserService {
         return this.appEntityManager.getUser(userName);
     }
 
-    saveChanges(): Observable<Object> {
+    saveChanges(): Observable<void> {
         return this.authService.ensureAuthenticatedUser().mergeMap(() => {
             return this.appEntityManager.saveChangesNew();
         });

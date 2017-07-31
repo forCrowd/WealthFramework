@@ -3,6 +3,7 @@
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
+import { ElementFieldDataType } from "./element-field";
 
 export class ElementItem extends EntityBase {
 
@@ -13,18 +14,18 @@ export class ElementItem extends EntityBase {
     ElementCellSet: ElementCell[];
     ParentCellSet: ElementCell[];
 
-    totalIncomeUpdated$: EventEmitter<any> = new EventEmitter<any>();
+    totalIncomeUpdated$ = new EventEmitter<number>();
 
     private fields: {
         // Client-side
-        elementCellIndexSet: any,
-        directIncome: any,
-        multiplier: any,
-        totalDirectIncome: any,
-        resourcePoolAmount: any,
+        elementCellIndexSet: ElementCell[],
+        directIncome: number,
+        multiplier: number,
+        totalDirectIncome: number,
+        resourcePoolAmount: number,
         totalIncome: number,
-        totalResourcePoolAmount: any,
-        totalResourcePoolIncome: any
+        totalResourcePoolAmount: number,
+        totalResourcePoolIncome: number
     } = {
         // Client-side
         elementCellIndexSet: null,
@@ -58,14 +59,14 @@ export class ElementItem extends EntityBase {
         return this.fields.elementCellIndexSet;
     }
 
-    elementCell(field: string): any {
+    elementCell(fieldName: string): ElementCell {
 
-        var cell: any = null;
+        var cell: ElementCell = null;
 
         for (var elementCellIndex = 0; elementCellIndex < this.ElementCellSet.length; elementCellIndex++) {
             cell = this.ElementCellSet[elementCellIndex];
 
-            if (cell.ElementField.Name === field) {
+            if (cell.ElementField.Name === fieldName) {
                 break;
             }
         }
@@ -73,18 +74,18 @@ export class ElementItem extends EntityBase {
         return cell;
     }
 
-    getElementCellIndexSet(elementItem: any) {
+    getElementCellIndexSet(elementItem: ElementItem) {
 
-        var indexSet: any[] = [];
+        var indexSet: ElementCell[] = [];
         var sortedElementCellSet = elementItem.getElementCellSetSorted();
 
-        sortedElementCellSet.forEach((cell: any) => {
+        sortedElementCellSet.forEach((cell) => {
 
             if (cell.ElementField.IndexEnabled) {
                 indexSet.push(cell);
             }
 
-            if (cell.ElementField.DataType === 6 && cell.SelectedElementItem !== null) {
+            if (cell.ElementField.DataType === ElementFieldDataType.Element && cell.SelectedElementItem !== null) {
                 var childIndexSet = this.getElementCellIndexSet(cell.SelectedElementItem);
 
                 if (childIndexSet.length > 0) {
@@ -96,8 +97,8 @@ export class ElementItem extends EntityBase {
         return indexSet;
     }
 
-    getElementCellSetSorted(): any[] {
-        return this.ElementCellSet.sort((a: any, b: any) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
+    getElementCellSetSorted(): ElementCell[] {
+        return this.ElementCellSet.sort((a, b) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
     }
 
     incomeStatus() {
@@ -128,7 +129,7 @@ export class ElementItem extends EntityBase {
 
         // Related cells
         var elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell: any) => {
+        elementCellSet.forEach((elementCell) => {
             elementCell.rejectChanges();
         });
 
@@ -139,7 +140,7 @@ export class ElementItem extends EntityBase {
 
         // Related cells
         var elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell: any) => {
+        elementCellSet.forEach((elementCell) => {
             elementCell.remove();
         });
 
@@ -159,15 +160,15 @@ export class ElementItem extends EntityBase {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         // First, find direct income cell
-        var directIncomeCell: any = null;
+        var directIncomeCell: ElementCell = null;
 
-        var result = this.ElementCellSet.filter((elementCell: any) => elementCell.ElementField.DataType === 11);
+        var result = this.ElementCellSet.filter((elementCell) => elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome);
 
         if (result.length > 0) {
             directIncomeCell = result[0];
         }
 
-        var value: any;
+        var value: number;
         if (directIncomeCell === null) {
             value = 0;
         } else {
@@ -193,9 +194,9 @@ export class ElementItem extends EntityBase {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         // First, find the multiplier cell
-        var multiplierCell: any = null;
+        var multiplierCell: ElementCell = null;
 
-        var result = this.ElementCellSet.filter((elementCell: any) => elementCell.ElementField.DataType === 12);
+        var result = this.ElementCellSet.filter((elementCell) => elementCell.ElementField.DataType === ElementFieldDataType.Multiplier);
 
         if (result.length > 0) {
             multiplierCell = result[0];
@@ -227,7 +228,7 @@ export class ElementItem extends EntityBase {
         }
     }
 
-    setResourcePoolAmount(updateRelated?: any) {
+    setResourcePoolAmount(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.directIncome() * this.Element.ResourcePool.resourcePoolRatePercentage();
@@ -242,7 +243,7 @@ export class ElementItem extends EntityBase {
         }
     }
 
-    setTotalDirectIncome(updateRelated?: any) {
+    setTotalDirectIncome(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.directIncome() * this.multiplier();
@@ -257,7 +258,7 @@ export class ElementItem extends EntityBase {
         }
     }
 
-    setTotalResourcePoolAmount(updateRelated?: any) {
+    setTotalResourcePoolAmount(updateRelated?: boolean) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.resourcePoolAmount() * this.multiplier();
@@ -312,7 +313,7 @@ export class ElementItem extends EntityBase {
 
         var value = 0;
 
-        this.ElementCellSet.forEach((cell: any) => {
+        this.ElementCellSet.forEach((cell) => {
             value += cell.indexIncome();
         });
 
@@ -321,7 +322,7 @@ export class ElementItem extends EntityBase {
 
             // Update related
             // TODO Is this correct? It looks like it didn't affect anything?
-            this.ParentCellSet.forEach((parentCell: any) => {
+            this.ParentCellSet.forEach((parentCell) => {
                 parentCell.setIndexIncome();
             });
         }

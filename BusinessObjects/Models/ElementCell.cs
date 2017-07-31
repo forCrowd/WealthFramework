@@ -6,7 +6,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    // [ODataControllerAuthorization("Administrator")]
     public class ElementCell : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
@@ -33,18 +32,10 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Index("UX_ElementCell_ElementFieldId_ElementItemId", 2, IsUnique = true)]
         public int ElementItemId { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string StringValue { get; private set; }
+        public string StringValue { get; set; }
 
-        // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
-        // by manually editing migration file which is not necessary at the moment / coni2k - 03 Aug. '15
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? NumericValueTotal { get; private set; }
-
-        // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
-        // by manually editing migration file which is not necessary at the moment / coni2k - 03 Aug. '15
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int? NumericValueCount { get; private set; }
+        public decimal NumericValueTotal { get; set; }
+        public int NumericValueCount { get; set; }
 
         /// <summary>
         /// In case this cell's field type is Element, this is the selected item for this cell.
@@ -66,47 +57,51 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementCell SetValue(string value)
         {
-            SetValueHelper(ElementFieldDataType.String, null);
-            GetUserCell().SetValue(value);
+            SetValueHelper(ElementFieldDataType.String);
+            StringValue = value;
             return this;
         }
 
         public ElementCell SetValue(bool value)
         {
-            SetValueHelper(ElementFieldDataType.Boolean, null);
+            SetValueHelper(ElementFieldDataType.Boolean);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(int value)
         {
-            SetValueHelper(ElementFieldDataType.Integer, null);
+            SetValueHelper(ElementFieldDataType.Integer);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(decimal value)
         {
-            SetValueHelper(ElementFieldDataType.Decimal, null);
+            SetValueHelper(ElementFieldDataType.Decimal);
             GetUserCell().SetValue(value);
+
+            NumericValueTotal = value; // Computed fields
+            NumericValueCount = 1; // Computed fields
+
             return this;
         }
 
         public ElementCell SetValue(DateTime value)
         {
-            SetValueHelper(ElementFieldDataType.DateTime, null);
+            SetValueHelper(ElementFieldDataType.DateTime);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(ElementItem value)
         {
-            SetValueHelper(ElementFieldDataType.Element, null);
+            SetValueHelper(ElementFieldDataType.Element);
             SelectedElementItem = value;
             return this;
         }
 
-        void SetValueHelper(ElementFieldDataType valueType, User user)
+        void SetValueHelper(ElementFieldDataType valueType)
         {
             // Validations
 
@@ -119,24 +114,17 @@ namespace forCrowd.WealthEconomy.BusinessObjects
                 && !(fieldType == ElementFieldDataType.DirectIncome
                 || fieldType == ElementFieldDataType.Multiplier
                     && valueType == ElementFieldDataType.Decimal))
+            {
                 throw new InvalidOperationException(string.Format("Invalid value, field and value types don't match - Field type: {0}, Value type: {1}",
                     fieldType,
                     valueType));
-
-            // b. FixedValue
-            //FixedValueValidation(user);
+            }
 
             // Clear, if FixedValue
             var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
+
             if (fixedValue)
                 ClearFixedValues();
-        }
-
-        void FixedValueValidation(User user)
-        {
-            var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
-            if (!fixedValue && user == null)
-                throw new InvalidOperationException("Value can't be set without user parameter when FixedValue is false");
         }
 
         void ClearFixedValues()

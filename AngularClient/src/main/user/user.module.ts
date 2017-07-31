@@ -1,7 +1,7 @@
 ﻿import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { MomentModule } from "angular2-moment";
 import { RouterModule, Routes } from "@angular/router";
+import { MomentModule } from "angular2-moment";
 
 import { ProfileComponent } from "./profile.component";
 import { UserService } from "./user.service";

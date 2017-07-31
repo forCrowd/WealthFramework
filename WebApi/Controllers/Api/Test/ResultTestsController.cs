@@ -1,6 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Controllers.Api.Test
 {
     using System;
+    using System.Net;
     using System.Web.Http;
 
     /// <summary>
@@ -53,18 +54,25 @@
             return BadRequest(ModelState);
         }
 
+        [Route("NoContentResult")]
+        [HttpGet]
+        public IHttpActionResult GetNoContentResult()
+        {
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [Route("NoContentResult")]
+        [HttpPost]
+        public IHttpActionResult PostNoContentResult()
+        {
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         [Route("NotFoundResult")]
         [HttpPost]
         public IHttpActionResult NotFoundResultResult()
         {
             return NotFound();
-        }
-
-        [Route("OkResult")]
-        [HttpGet]
-        public IHttpActionResult GetOkResult()
-        {
-            return Ok();
         }
 
         [Route("OkResult")]
@@ -76,9 +84,9 @@
 
         [Route("OkResult")]
         [HttpPost]
-        public IHttpActionResult OkResult()
+        public IHttpActionResult PostOkResult([FromBody] OkResultModel model)
         {
-            return Ok("test");
+            return Ok(model.message);
         }
 
         [Route("UnauthorizedResult")]
@@ -87,5 +95,10 @@
         {
             return Unauthorized();
         }
+    }
+
+    public class OkResultModel
+    {
+        public string message = "";
     }
 }

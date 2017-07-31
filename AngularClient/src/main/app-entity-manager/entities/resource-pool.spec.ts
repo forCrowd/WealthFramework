@@ -57,14 +57,14 @@ describe("main/app-entity-manager/entities/resource-pool", () => {
         expect(resourcePool.RatingMode).toBe(RatingMode.AllUsers);
     });
 
-    it("toggleRatingMode: RatingMode should be 'Your Ratings' after second call", () => {
+    it("toggleRatingMode: RatingMode should be 'Current User' after second call", () => {
 
         var resourcePool = TestHelpers.getResourcePool();
 
         resourcePool.toggleRatingMode();
         resourcePool.toggleRatingMode();
 
-        expect(resourcePool.RatingMode).toBe(RatingMode.YourRatings);
+        expect(resourcePool.RatingMode).toBe(RatingMode.CurrentUser);
     });
 
     // TODO: Check all these tests below one more time

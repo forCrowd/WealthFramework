@@ -1,8 +1,8 @@
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
-    using Extensions;
     using Facade;
+    using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Http;
 
@@ -20,22 +20,13 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         public IQueryable<User> Get()
         {
             var list = MainUnitOfWork.AllLive;
-            var isAdmin = this.GetCurrentUserIsAdmin();
 
-            // If it's admin, move along!
-            if (!isAdmin)
+            // TODO Handle this by intercepting the query either on OData or EF level
+            // Currently it queries the database twice / coni2k - 20 Feb. '17
+            var currentUserId = User.Identity.GetUserId<int>();
+            foreach (var item in list.Where(item => item.Id != currentUserId))
             {
-                // TODO Terrible way to filter the info in both ResourcePool & User controllers, but for the moment.. / coni2k - 20 Feb. '17
-                var currentUserId = this.GetCurrentUserId();
-
-                foreach (var item in list)
-                {
-                    // If the current user is anonymous, or this record doesn't belong to it, hide the details
-                    if (currentUserId == null || currentUserId.Value != item.Id)
-                    {
-                        item.ResetValues();
-                    }
-                }
+                item.ResetValues();
             }
 
             return list;

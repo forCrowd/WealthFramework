@@ -1,7 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Controllers.Api
 {
     using BusinessObjects;
-    using Extensions;
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin.Security;
     using Models;
@@ -31,7 +30,9 @@
         // POST api/Account/AddPassword
         public async Task<IHttpActionResult> AddPassword(AddPasswordBindingModel model)
         {
-            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var currentUserId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(currentUserId);
+
             var result = await UserManager.AddPasswordAsync(currentUser.Id, model.Password);
             var errorResult = GetErrorResult(result);
 
@@ -47,7 +48,9 @@
         public async Task<IHttpActionResult> ChangeEmail(ChangeEmailBindingModel model)
         {
             // Get the user
-            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var currentUserId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(currentUserId);
+
             var result = await UserManager.SetEmailAsync(currentUser.Id, model.Email, model.ClientAppUrl);
             var errorResult = GetErrorResult(result);
 
@@ -62,7 +65,9 @@
         // POST api/Account/ChangePassword
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
-            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var currentUserId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(currentUserId);
+
             var result = await UserManager.ChangePasswordAsync(currentUser.Id, model.CurrentPassword, model.NewPassword);
             var errorResult = GetErrorResult(result);
 
@@ -78,7 +83,9 @@
         public async Task<IHttpActionResult> ChangeUserName(ChangeUserNameBindingModel model)
         {
             // Get the user
-            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var currentUserId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(currentUserId);
+
             var result = await UserManager.ChangeUserName(currentUser.Id, model.UserName);
             var errorResult = GetErrorResult(result);
 
@@ -93,7 +100,8 @@
         // POST api/Account/ConfirmEmail
         public async Task<IHttpActionResult> ConfirmEmail(ConfirmEmailBindingModel model)
         {
-            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var currentUserId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(currentUserId);
 
             var result = await UserManager.ConfirmEmailAsync(currentUser.Id, model.Token);
             var errorResult = GetErrorResult(result);
@@ -111,14 +119,14 @@
         [AllowAnonymous]
         public async Task<User> CurrentUser()
         {
-            var currentUserId = this.GetCurrentUserId();
-
-            if (currentUserId == null)
+            if (!User.Identity.IsAuthenticated)
             {
                 return null;
             }
 
-            return await UserManager.FindByIdAsync(currentUserId.Value);
+            var currentUserId = User.Identity.GetUserId<int>();
+
+            return await UserManager.FindByIdAsync(currentUserId);
         }
 
         // GET api/Account/ExternalLogin
@@ -248,7 +256,7 @@
         // POST api/Account/ResendConfirmationEmail
         public async Task<IHttpActionResult> ResendConfirmationEmail(ResendConfirmationEmailBindingModel model)
         {
-            var currentUserId = this.GetCurrentUserId().Value;
+            var currentUserId = User.Identity.GetUserId<int>();
 
             await UserManager.ResendConfirmationEmailAsync(currentUserId, model.ClientAppUrl);
 

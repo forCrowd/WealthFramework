@@ -1,8 +1,9 @@
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
-    using Extensions;
     using Facade;
+    using forCrowd.WealthEconomy.WebApi.Filters;
+    using Microsoft.AspNet.Identity;
     using Results;
     using System;
     using System.Data.Entity;
@@ -15,57 +16,68 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ResourcePoolController : BaseODataController
     {
-        public ResourcePoolController()
-        {
-            MainUnitOfWork = new ResourcePoolUnitOfWork();
-        }
+        ResourcePoolManager _resourcePoolManager;
 
-        protected ResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
+        public ResourcePoolController() : base()
+        {
+            _resourcePoolManager = new ResourcePoolManager();
+        }
 
         // GET odata/ResourcePool
         [AllowAnonymous]
         public IQueryable<ResourcePool> Get()
         {
-            var list = MainUnitOfWork.AllLive.Include(resourcePool => resourcePool.User);
-            var isAdmin = this.GetCurrentUserIsAdmin();
+            var list = _resourcePoolManager.AllLive
+                .Include(resourcePool => resourcePool.User);
 
-            // If it's admin, move along!
-            if (!isAdmin)
+            // TODO Handle this by intercepting the query either on OData or EF level
+            // Currently it queries the database twice / coni2k - 20 Feb. '17
+            var currentUserId = User.Identity.GetUserId<int>();
+            foreach (var item in list.Where(item => item.UserId != currentUserId))
             {
-                // TODO Terrible way to filter the info in both ResourcePool & User controllers, but for the moment.. / coni2k - 20 Feb. '17
-                var currentUserId = this.GetCurrentUserId();
-
-                foreach (var item in list)
-                {
-                    // If the current user is anonymous, or this record doesn't belong to it, hide the details
-                    if (currentUserId == null || currentUserId.Value != item.UserId)
-                    {
-                        item.User.ResetValues();
-                    }
-                }
+                item.User.ResetValues();
             }
 
             return list;
         }
 
         // POST odata/ResourcePool
-        public async Task<IHttpActionResult> Post(ResourcePool resourcePool)
+        public async Task<IHttpActionResult> Post(Delta<ResourcePool> patch)
         {
+            var resourcePool = patch.GetEntity();
+
+            // Don't allow the user to set these fields / coni2k - 29 Jul. '17
+            // TODO Use ForbiddenFieldsValidator?: Currently breeze doesn't allow to post custom (delta) entity
+            // TODO Or use DTO?: Needs a different metadata than the context, which can be overkill
+            resourcePool.Id = 0;
+            //resourcePool.UserId = 0;
+            resourcePool.RatingCount = 0;
+            resourcePool.ResourcePoolRateTotal = 0;
+            resourcePool.ResourcePoolRateCount = 0;
+            resourcePool.CreatedOn = DateTime.UtcNow;
+            resourcePool.ModifiedOn = DateTime.UtcNow;
+            resourcePool.DeletedOn = null;
+
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != resourcePool.UserId)
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
             try
             {
-                await MainUnitOfWork.InsertAsync(resourcePool);
+                await _resourcePoolManager.InsertAsync(resourcePool);
             }
             catch (DbUpdateException)
             {
                 // Unique key exception
-                if (await MainUnitOfWork.All.AnyAsync(item => item.UserId == resourcePool.UserId && item.Key == resourcePool.Key))
+                if (await _resourcePoolManager.All.AnyAsync(item => item.Key == resourcePool.Key))
                 {
-                    return new UniqueKeyConflictResult(Request, "Key", resourcePool.Key);
+                    return new UniqueKeyConflictResult(Request, nameof(ResourcePool.Key), resourcePool.Key);
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return Created(resourcePool);
@@ -73,85 +85,65 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/ResourcePool(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
+        [ForbiddenFieldsValidator(nameof(ResourcePool.Id), nameof(ResourcePool.UserId), nameof(ResourcePool.RatingCount), nameof(ResourcePool.ResourcePoolRateTotal), nameof(ResourcePool.ResourcePoolRateCount), nameof(ResourcePool.CreatedOn), nameof(ResourcePool.ModifiedOn), nameof(ResourcePool.DeletedOn))]
+        [EntityExistsValidator(typeof(ResourcePool))]
+        [ConcurrencyValidator(typeof(ResourcePool))]
+        public async Task<IHttpActionResult> Patch(int key, Delta<ResourcePool> patch)
         {
+            var resourcePool = await _resourcePoolManager.GetByIdAsync(key, true);
+
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+            if (currentUserId != resourcePool.UserId)
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            patch.Patch(resourcePool);
+
             try
             {
-                var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
-                if (resourcePool == null)
-                {
-                    return NotFound();
-                }
-
-                var patchEntity = patch.GetEntity();
-
-                if (patchEntity.RowVersion == null)
-                {
-                    throw new InvalidOperationException("RowVersion property of the entity cannot be null");
-                }
-
-                if (!resourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
-                {
-                    return Conflict();
-                }
-
-                patch.Patch(resourcePool);
-
-                try
-                {
-                    await MainUnitOfWork.UpdateAsync(resourcePool);
-                }
-                catch (DbUpdateException)
-                {
-                    if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
-                    {
-                        object keyObject = null;
-                        patch.TryGetPropertyValue("Id", out keyObject);
-
-                        if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
-                        {
-                            return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
-                        }
-                        else throw;
-                    }
-                    else throw;
-                }
-
-                return Ok(resourcePool);
-
+                await _resourcePoolManager.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
                 // Unique key exception
-                if (patch.GetChangedPropertyNames().Any(item => item == "Key"))
+                if (!patch.GetChangedPropertyNames().Any(item => item == "Key"))
+                    throw;
+
+                patch.TryGetPropertyValue("Key", out object resourcePoolKey);
+
+                if (resourcePoolKey == null)
+                    throw;
+
+                if (await _resourcePoolManager.All.AnyAsync(item => item.Key == resourcePoolKey.ToString()))
                 {
-                    object resourcePoolKey = null;
-                    patch.TryGetPropertyValue("Key", out resourcePoolKey);
-
-                    var userId = this.GetCurrentUserId();
-                    if (!userId.HasValue)
-                        throw new HttpResponseException(HttpStatusCode.Unauthorized);
-
-                    if (resourcePoolKey != null && await MainUnitOfWork.All.AnyAsync(item => item.UserId == userId.Value && item.Key == resourcePoolKey.ToString()))
-                    {
-                        return new UniqueKeyConflictResult(Request, "Key", resourcePoolKey.ToString());
-                    }
-                    else throw;
+                    return new UniqueKeyConflictResult(Request, "Key", resourcePoolKey.ToString());
                 }
-                else throw;
+
+                throw;
             }
+
+            return Ok(resourcePool);
         }
 
         // DELETE odata/ResourcePool(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        [EntityExistsValidator(typeof(ResourcePool))]
+        // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
+        // [ConcurrencyValidator(typeof(ResourcePool))]
+        public async Task<IHttpActionResult> Delete(int key, Delta<ResourcePool> patch)
         {
-            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
-            if (resourcePool == null)
+            var resourcePool = await _resourcePoolManager.GetByIdAsync(key, true);
+
+            // Owner check: Entity must belong to the current user
+            var currentUserId = User.Identity.GetUserId<int>();
+
+            if (currentUserId != resourcePool.UserId)
             {
-                return NotFound();
+                return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.DeleteAsync(resourcePool.Id);
+            await _resourcePoolManager.DeleteAsync(resourcePool.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs/Subscription";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
         return this.accountService.isBusy;
     }
     rememberMe = true;
-    subscriptions: any[] = [];
+    subscriptions: Subscription[] = [];
 
     constructor(private accountService: AccountService, private logger: Logger, private router: Router) {
     }

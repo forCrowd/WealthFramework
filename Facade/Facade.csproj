@@ -87,6 +87,7 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourcePoolManager.cs" />
     <Compile Include="RoleManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="BaseUnitOfWork.cs" />
@@ -115,7 +116,6 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
-    <Compile Include="ResourcePoolUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
