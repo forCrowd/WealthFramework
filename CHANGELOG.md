@@ -12,6 +12,14 @@ All of them were converted to regular fields. They can be updated with an end-po
 * WebApi - EntityExistsValiator, ConcurrencyValidator and ForbiddenFieldsValidator action filters were introduced
 * WebApi - Entity owner validation was added for all post, patch and delete actions
 
+**0.79.4**
+
+* SolutionItems - ."UpgradeLog.htm" was added to .gitignore
+
+**0.79.3**
+
+* AngularClient - Contributors page - SarahSexton
+
 **0.79.2**
 
 * AngularClient - `intl` package was installed to prevent google bot errors
