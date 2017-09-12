@@ -1,8 +1,8 @@
 ### Changelog
 
-**0.80.1**
+**0.80.2**
 
-* AngularClient - Contributors page - melkor54248
+* AngularClient - Contributors page - JoseASotoV
 
 **0.80.0**
 
