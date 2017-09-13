@@ -44,7 +44,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// </summary>
         static bool InterceptQueryCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
-            if (interceptionContext.Result is DbQueryCommandTree queryCommand)
+            var queryCommand = interceptionContext.Result as DbQueryCommandTree;
+            if (queryCommand != null)
             {
                 var newQuery = queryCommand.Query.Accept(new UserQueryVisitor());
                 interceptionContext.Result = new DbQueryCommandTree(

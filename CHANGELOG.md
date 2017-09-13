@@ -2,7 +2,11 @@
 
 **0.80.3**
 
-* BusinessObjects - Appveyor build fix
+* BusinessObjects - Appveyor build fix #2 - coni2k
+
+**0.80.3**
+
+* BusinessObjects - Appveyor build fix - coni2k
 
 **0.80.2**
 
