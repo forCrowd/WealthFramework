@@ -4,6 +4,10 @@
 
 * AngularClient - Contributors page - JoseASotoV
 
+**0.80.1**
+
+* AngularClient - Contributors page - melkor54248
+
 **0.80.0**
 
 * Update computed fields

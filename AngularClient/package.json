@@ -2,7 +2,7 @@
     "name": "forcrowd-wealtheconomy-angularclient",
     "description": "Experimental ideas on improving how the economy works",
     "author": "Stichting forCrowd",
-    "version": "0.80.1",
+    "version": "0.80.2",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
