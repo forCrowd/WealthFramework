@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.80.3**
+
+* BusinessObjects - Appveyor build fix
+
 **0.80.2**
 
 * AngularClient - Contributors page - JoseASotoV

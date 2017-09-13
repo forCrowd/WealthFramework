@@ -71,7 +71,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
                 throw new SecurityException("Unauthenticated access");
             }
 
-            int.TryParse(userIdclaim.Value, out var userId);
+            int userId;
+            int.TryParse(userIdclaim.Value, out userId);
             if (userId == 0)
             {
                 throw new SecurityException("Unauthenticated access");
