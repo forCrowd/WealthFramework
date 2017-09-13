@@ -1,6 +1,10 @@
 ### Changelog
 
-**0.80.3**
+**0.80.5**
+
+* BusinessObjects - Appveyor build fix #3 - coni2k
+
+**0.80.4**
 
 * BusinessObjects - Appveyor build fix #2 - coni2k
 
