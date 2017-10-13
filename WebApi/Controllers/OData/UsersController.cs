@@ -2,6 +2,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
+    using forCrowd.WealthEconomy.DataObjects;
     using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Http;
@@ -10,16 +11,19 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     {
         public UsersController()
         {
-            MainUnitOfWork = new UserUnitOfWork();
+            var dbContext = new WealthEconomyContext();
+            var appUserStore = new AppUserStore(dbContext);
+            var appRoleStore = new AppRoleStore(dbContext);
+            _userManager = new AppUserManager(appUserStore, appRoleStore);
         }
 
-        protected UserUnitOfWork MainUnitOfWork { get; private set; }
+        AppUserManager _userManager = null;
 
         // GET odata/Users
         [AllowAnonymous]
         public IQueryable<User> Get()
         {
-            var list = MainUnitOfWork.AllLive;
+            var list = _userManager.GetUserSet();
 
             // TODO Handle this by intercepting the query either on OData or EF level
             // Currently it queries the database twice / coni2k - 20 Feb. '17

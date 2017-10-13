@@ -13,12 +13,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class UserResourcePoolController : BaseODataController
     {
-        public UserResourcePoolController()
-        {
-            MainUnitOfWork = new UserResourcePoolUnitOfWork();
-        }
-
-        protected UserResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
+        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
         // POST odata/UserResourcePool
         public async Task<IHttpActionResult> Post(Delta<UserResourcePool> patch)
@@ -41,7 +36,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.InsertAsync(userResourcePool);
+            await _resourcePoolManager.AddUserResourcePoolAsync(userResourcePool);
 
             return Created(userResourcePool);
         }
@@ -61,10 +56,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             // REMARK UserCommandTreeInterceptor already filters "userId" on EntityFramework level, but that might be removed later on / coni2k - 31 Jul. '17
-            var userResourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.UserId == userId && item.ResourcePoolId == resourcePoolId);
+            var userResourcePool = await _resourcePoolManager.GetUserResourcePoolSet(userId, resourcePoolId).SingleOrDefaultAsync();
             patch.Patch(userResourcePool);
 
-            await MainUnitOfWork.SaveChangesAsync();
+            await _resourcePoolManager.SaveChangesAsync();
 
             return Ok(userResourcePool);
         }
@@ -82,7 +77,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.DeleteAsync(userId, resourcePoolId);
+            await _resourcePoolManager.DeleteUserResourcePoolAsync(userId, resourcePoolId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

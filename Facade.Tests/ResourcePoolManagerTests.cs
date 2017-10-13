@@ -20,7 +20,7 @@
 
             using (var manager = new ResourcePoolManager())
             {
-                var list = manager.AllLive.Where(item => item.Id == 29).AsEnumerable();
+                var list = manager.GetResourcePoolSet(29).AsEnumerable();
 
                 await manager.UpdateComputedFieldsAsync(list.First().Id);
             }
@@ -37,7 +37,7 @@
 
             using (var manager = new ResourcePoolManager())
             {
-                var list = manager.AllLive.Where(item => item.Id == 17).AsEnumerable();
+                var list = manager.GetResourcePoolSet(17).AsEnumerable();
 
                 await manager.UpdateComputedFieldsAsync(list.First().Id);
             }

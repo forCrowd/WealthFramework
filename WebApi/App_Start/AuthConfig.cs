@@ -26,7 +26,7 @@
             // Configure the db context and user manager to use a single instance per request
             // TODO Is this correct to make DbContext accessible from Web application?
             app.CreatePerOwinContext(WealthEconomyContext.Create);
-            app.CreatePerOwinContext<UserManager>(CreateUserManager);
+            app.CreatePerOwinContext<AppUserManager>(CreateUserManager);
 
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
@@ -96,9 +96,13 @@
             }
         }
 
-        public static UserManager CreateUserManager(IdentityFactoryOptions<UserManager> options, IOwinContext context)
+        public static AppUserManager CreateUserManager(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
         {
-            var manager = new UserManager(new UserStore(context.Get<WealthEconomyContext>()));
+            var dbContext = context.Get<WealthEconomyContext>();
+            var appUserStore = new AppUserStore(dbContext);
+            var appRoleStore = new AppRoleStore(dbContext);
+
+            var manager = new AppUserManager(appUserStore, appRoleStore);
             // Configure validation logic for userNames
             manager.UserValidator = new UserValidator<User, int>(manager)
             {

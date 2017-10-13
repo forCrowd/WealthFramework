@@ -1,6 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Controllers.Api
 {
     using Facade;
+    using System.Data.Entity;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -8,9 +9,9 @@
     [RoutePrefix("api/ResourcePoolApi")]
     public class ResourcePoolApiController : BaseApiController
     {
-        IResourcePoolManager _resourcePoolManager;
+        ResourcePoolManager _resourcePoolManager;
 
-        protected IResourcePoolManager ResourcePoolManager
+        protected ResourcePoolManager ResourcePoolManager
         {
             get
             {
@@ -27,7 +28,7 @@
         [Route("{resourcePoolId}/UpdateComputedFields")]
         public async Task<IHttpActionResult> UpdateComputedFields(int resourcePoolId)
         {
-            var resourcePool = await ResourcePoolManager.GetByIdAsync(resourcePoolId);
+            var resourcePool = await ResourcePoolManager.GetResourcePoolSet(resourcePoolId).SingleOrDefaultAsync();
 
             if (resourcePool == null)
             {

@@ -14,12 +14,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ElementItemController : BaseODataController
     {
-        public ElementItemController()
-        {
-            MainUnitOfWork = new ElementItemUnitOfWork();
-        }
-
-        protected ElementItemUnitOfWork MainUnitOfWork { get; private set; }
+        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
         // POST odata/ElementItem
         public async Task<IHttpActionResult> Post(Delta<ElementItem> patch)
@@ -35,10 +30,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             elementItem.DeletedOn = null;
 
             // Owner check: Entity must belong to the current user
-            var userId = await MainUnitOfWork
-                .AllLiveIncluding(item => item.Element.ResourcePool)
-                .Where(item => item.ElementId == elementItem.ElementId)
-                .Select(item => item.Element.ResourcePool.UserId)
+            var userId = await _resourcePoolManager
+                .GetElementSet(elementItem.ElementId, true, item => item.ResourcePool)
+                .Select(item => item.ResourcePool.UserId)
                 .Distinct()
                 .SingleOrDefaultAsync();
 
@@ -49,7 +43,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.InsertAsync(elementItem);
+            await _resourcePoolManager.AddElementItemAsync(elementItem);
 
             return Created(elementItem);
         }
@@ -61,7 +55,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [ConcurrencyValidator(typeof(ElementItem))]
         public async Task<IHttpActionResult> Patch(int key, Delta<ElementItem> patch)
         {
-            var elementItem = await MainUnitOfWork.AllLiveIncluding(item => item.Element.ResourcePool).SingleOrDefaultAsync(item => item.Id == key);
+            var elementItem = await _resourcePoolManager.GetElementItemSet(key, true, item => item.Element.ResourcePool).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
@@ -72,7 +66,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             patch.Patch(elementItem);
 
-            await MainUnitOfWork.SaveChangesAsync();
+            await _resourcePoolManager.SaveChangesAsync();
 
             return Ok(elementItem);
         }
@@ -83,7 +77,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // [ConcurrencyValidator(typeof(ElementItem))]
         public async Task<IHttpActionResult> Delete(int key, Delta<ElementItem> patch)
         {
-            var elementItem = await MainUnitOfWork.AllLiveIncluding(item => item.Element.ResourcePool).SingleOrDefaultAsync(item => item.Id == key);
+            var elementItem = await _resourcePoolManager.GetElementItemSet(key, true, item => item.Element.ResourcePool).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
@@ -92,7 +86,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.DeleteAsync(elementItem.Id);
+            await _resourcePoolManager.DeleteElementItemAsync(elementItem.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

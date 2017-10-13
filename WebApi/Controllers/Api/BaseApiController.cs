@@ -10,22 +10,22 @@
     [RequireHttps]
     public abstract class BaseApiController : ApiController
     {
-        private UserManager _userManager;
+        private AppUserManager _userManager;
 
         public BaseApiController()
         {
         }
 
-        public BaseApiController(UserManager userManager)
+        public BaseApiController(AppUserManager userManager)
         {
             UserManager = userManager;
         }
 
-        public UserManager UserManager
+        public AppUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
             }
             private set
             {
