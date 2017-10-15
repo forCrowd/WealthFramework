@@ -6,11 +6,8 @@ import { Component } from "@angular/core";
 })
 export class ContributorsComponent {
 
-    constructor() {
-    }
-
     getExperienceYears(year: number): string {
-        let totalYears = new Date().getUTCFullYear() - year;
+        const totalYears = new Date().getUTCFullYear() - year;
         return totalYears.toString() + "+";
     }
 

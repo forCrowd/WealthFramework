@@ -1,4 +1,5 @@
 ﻿using forCrowd.WealthEconomy.BusinessObjects;
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
 using forCrowd.WealthEconomy.DataObjects;
 using Microsoft.Data.Edm;
 

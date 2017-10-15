@@ -1,5 +1,6 @@
 ﻿using forCrowd.WealthEconomy.BusinessObjects;
 using System;
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
 
 namespace forCrowd.WealthEconomy.DataObjects.Tests
 {

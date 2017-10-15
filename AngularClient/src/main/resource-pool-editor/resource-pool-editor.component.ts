@@ -8,10 +8,14 @@ import { Options } from "highcharts";
 import { Element } from "../app-entity-manager/entities/element";
 import { ElementCell } from "../app-entity-manager/entities/element-cell";
 import { ElementField, ElementFieldDataType } from "../app-entity-manager/entities/element-field";
-import { IUniqueKey, ResourcePool, RatingMode } from "../app-entity-manager/entities/resource-pool";
+import { IUniqueKey, RatingMode, ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { User } from "../app-entity-manager/entities/user";
 import { ChartConfig, ChartDataItem } from "../ng-chart/ng-chart.module";
 import { ResourcePoolEditorService } from "./resource-pool-editor.service";
+
+export interface IConfig {
+    resourcePoolUniqueKey: IUniqueKey
+};
 
 @Component({
     selector: "resource-pool-editor",
@@ -24,7 +28,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         private router: Router) {
     }
 
-    @Input() config: any = { resourcePoolKey: "", username: "" };
+    @Input()
+    config: IConfig = { resourcePoolUniqueKey: { resourcePoolKey: "", username: "" } };
     chartConfig: ChartConfig = null;
     currentUser: User = null;
     displayChart: boolean = false;
@@ -43,17 +48,23 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         return { username: this.username, resourcePoolKey: this.resourcePoolKey };
     }
     saveStream = new Subject();
+    get selectedElement(): Element {
+        return this.fields.selectedElement;
+    }
+    set selectedElement(value: Element) {
+        if (this.fields.selectedElement !== value) {
+            this.fields.selectedElement = value;
+
+            this.loadChartData();
+        }
+    }
     subscriptions: Subscription[] = [];
     username = "";
 
-    changeSelectedElement(element: Element) {
-        this.resourcePool.selectedElement(element);
-        this.loadChartData();
-    }
-
-    decreaseElementMultiplier(element: Element) {
-        this.resourcePoolEditorService.updateElementMultiplier(element, "decrease");
-        this.saveStream.next();
+    private fields: {
+        selectedElement: Element,
+    } = {
+        selectedElement: null,
     }
 
     decreaseIndexRating(field: ElementField) {
@@ -61,23 +72,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.saveStream.next();
     }
 
-    decreaseResourcePoolRate() {
-        this.resourcePoolEditorService.updateResourcePoolRate(this.resourcePool, "decrease");
-        this.saveStream.next();
-    }
-
-    increaseElementMultiplier(element: Element) {
-        this.resourcePoolEditorService.updateElementMultiplier(element, "increase");
-        this.saveStream.next();
-    }
-
     increaseIndexRating(field: ElementField) {
         this.resourcePoolEditorService.updateElementFieldIndexRating(field, "increase");
-        this.saveStream.next();
-    }
-
-    increaseResourcePoolRate() {
-        this.resourcePoolEditorService.updateResourcePoolRate(this.resourcePool, "increase");
         this.saveStream.next();
     }
 
@@ -105,7 +101,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.resourcePoolEditorService.getResourcePoolExpanded(this.resourcePoolUniqueKey)
             .subscribe((resourcePool: ResourcePool) => {
 
-                if (typeof resourcePool === "undefined" || resourcePool === null) {
+                if (!resourcePool) {
                     this.errorMessage = "Invalid CMRP";
                     return;
                 }
@@ -117,17 +113,18 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
                 // TODO: Unsubscribe?
                 this.resourcePool.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
 
-                if (this.resourcePool.selectedElement() !== null) {
-                    this.loadChartData();
-                }
+                // Selected element
+                this.selectedElement = this.resourcePool.mainElement();
+
+                this.loadChartData();
             });
     }
 
     loadChartData() {
 
-        // Current element
-        var element = this.resourcePool.selectedElement();
-        if (element === null) {
+        const element = this.selectedElement;
+
+        if (!element) {
             return;
         }
 
@@ -140,8 +137,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
             // TODO Check this rule?
 
-            if (element === element.ResourcePool.mainElement() &&
-                (element.totalIncome() > 0 || element.directIncomeField() !== null)) {
+            if (element === element.ResourcePool.mainElement() && element.income() > 0) {
 
                 const options: Options = {
                     title: { text: element.Name },
@@ -152,10 +148,10 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
                 }
                 const data: ChartDataItem[] = [];
 
-                element.ElementItemSet.forEach((elementItem) => {
+                element.ElementItemSet.forEach(elementItem => {
                     data.push(new ChartDataItem(elementItem.Name,
-                        elementItem.totalIncome(),
-                        elementItem.totalIncomeUpdated$));
+                        elementItem.income(),
+                        elementItem.incomeUpdated$));
                 });
 
                 this.chartConfig = new ChartConfig(options, data);
@@ -168,8 +164,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
                 };
                 const data: ChartDataItem[] = [];
 
-                element.ElementItemSet.forEach((elementItem) => {
-                    elementItem.ElementCellSet.forEach((elementCell) => {
+                element.ElementItemSet.forEach(elementItem => {
+                    elementItem.ElementCellSet.forEach(elementCell => {
                         if (elementCell.ElementField.IndexEnabled) {
                             data.push(new ChartDataItem(elementCell.ElementItem.Name,
                                 +elementCell.numericValue().toFixed(2),
@@ -190,11 +186,11 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
             const data: ChartDataItem[] = [];
 
-            element.elementFieldIndexSet()
-                .forEach((elementFieldIndex) => {
-                    data.push(new ChartDataItem(elementFieldIndex.Name,
-                        +elementFieldIndex.indexRating().toFixed(2),
-                        elementFieldIndex.indexRatingUpdated$));
+            element.elementFieldSet()
+                .forEach(field => {
+                    data.push(new ChartDataItem(field.Name,
+                        +field.indexRating().toFixed(2),
+                        field.indexRatingUpdated$));
                 });
 
             this.chartConfig = new ChartConfig(options, data);
@@ -202,7 +198,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     }
 
     manageResourcePool(): void {
-        const editLink = "/" + this.config.username + "/" + this.config.resourcePoolKey + "/edit";
+        const editLink = `/${this.config.resourcePoolUniqueKey.username}/${this.config.resourcePoolUniqueKey.resourcePoolKey}/edit`;
         this.router.navigate([editLink]);
     }
 
@@ -218,8 +214,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
 
-        var username = typeof this.config.username === "undefined" ? "" : this.config.username;
-        var resourcePoolKey = typeof this.config.resourcePoolKey === "undefined" ? "" : this.config.resourcePoolKey;
+        const username = typeof this.config.resourcePoolUniqueKey.username === "undefined" ? "" : this.config.resourcePoolUniqueKey.username;
+        const resourcePoolKey = typeof this.config.resourcePoolUniqueKey.resourcePoolKey === "undefined" ? "" : this.config.resourcePoolUniqueKey.resourcePoolKey;
 
         // Delayed save operation
         this.saveStream.debounceTime(1500)
@@ -243,18 +239,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.initialize(username, resourcePoolKey, this.resourcePoolEditorService.currentUser);
     }
 
-    resetElementMultiplier(element: Element) {
-        this.resourcePoolEditorService.updateElementMultiplier(element, "reset");
-        this.saveStream.next();
-    }
-
     resetIndexRating(field: ElementField) {
         this.resourcePoolEditorService.updateElementFieldIndexRating(field, "reset");
-        this.saveStream.next();
-    }
-
-    resetResourcePoolRate() {
-        this.resourcePoolEditorService.updateResourcePoolRate(this.resourcePool, "reset");
         this.saveStream.next();
     }
 
@@ -276,6 +262,6 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     updateElementItemsSortField(): void {
         this.elementItemsSortField = this.resourcePool.RatingMode === RatingMode.CurrentUser
             ? "name"
-            : "totalIncome";
+            : "income";
     }
 }

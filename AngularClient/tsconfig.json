@@ -8,12 +8,6 @@
         "lib": [ "es2016", "dom" ],
         "moduleResolution": "node",
         "outDir": "./dist/out-tsc",
-        "paths": {
-            "breeze-client": [ "./libraries/breeze-client" ],
-            "breeze.dataService.odata": [ "./libraries/breeze-client/breeze.dataService.odata.js" ],
-            "breeze.modelLibrary.backingStore": [ "./libraries/breeze-client/breeze.modelLibrary.backingStore.js" ],
-            "breeze.uriBuilder.odata": [ "./libraries/breeze-client/breeze.uriBuilder.odata.js" ]
-        },
         "sourceMap": true,
         "target": "es5"
     }

@@ -1,7 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using Validation;
 
     // Models used as parameters to AccountController actions.
 

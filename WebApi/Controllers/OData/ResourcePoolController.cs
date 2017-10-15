@@ -1,8 +1,10 @@
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
-    using forCrowd.WealthEconomy.WebApi.Filters;
+    using Filters;
     using Microsoft.AspNet.Identity;
     using Results;
     using System;
@@ -16,9 +18,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ResourcePoolController : BaseODataController
     {
-        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
-
-        public ResourcePoolController() : base() { }
+        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
         // GET odata/ResourcePool
         [AllowAnonymous]
@@ -48,8 +48,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             resourcePool.Id = 0;
             //resourcePool.UserId = 0;
             resourcePool.RatingCount = 0;
-            resourcePool.ResourcePoolRateTotal = 0;
-            resourcePool.ResourcePoolRateCount = 0;
             resourcePool.CreatedOn = DateTime.UtcNow;
             resourcePool.ModifiedOn = DateTime.UtcNow;
             resourcePool.DeletedOn = null;
@@ -81,7 +79,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/ResourcePool(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        [ForbiddenFieldsValidator(nameof(ResourcePool.Id), nameof(ResourcePool.UserId), nameof(ResourcePool.RatingCount), nameof(ResourcePool.ResourcePoolRateTotal), nameof(ResourcePool.ResourcePoolRateCount), nameof(ResourcePool.CreatedOn), nameof(ResourcePool.ModifiedOn), nameof(ResourcePool.DeletedOn))]
+        [ForbiddenFieldsValidator(nameof(ResourcePool.Id), nameof(ResourcePool.UserId), nameof(ResourcePool.RatingCount), nameof(ResourcePool.CreatedOn), nameof(ResourcePool.ModifiedOn), nameof(ResourcePool.DeletedOn))]
         [EntityExistsValidator(typeof(ResourcePool))]
         [ConcurrencyValidator(typeof(ResourcePool))]
         public async Task<IHttpActionResult> Patch(int key, Delta<ResourcePool> patch)
@@ -104,10 +102,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             catch (DbUpdateException)
             {
                 // Unique key exception
-                if (!patch.GetChangedPropertyNames().Any(item => item == "Key"))
+                if (patch.GetChangedPropertyNames().All(item => item != "Key"))
                     throw;
 
-                patch.TryGetPropertyValue("Key", out object resourcePoolKey);
+                patch.TryGetPropertyValue("Key", out var resourcePoolKey);
 
                 if (resourcePoolKey == null)
                     throw;
@@ -127,7 +125,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [EntityExistsValidator(typeof(ResourcePool))]
         // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
         // [ConcurrencyValidator(typeof(ResourcePool))]
-        public async Task<IHttpActionResult> Delete(int key, Delta<ResourcePool> patch)
+        public async Task<IHttpActionResult> Delete(int key)
         {
             var resourcePool = await _resourcePoolManager.GetResourcePoolSet(key).SingleOrDefaultAsync();
 

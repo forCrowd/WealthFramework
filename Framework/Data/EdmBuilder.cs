@@ -97,6 +97,7 @@ namespace Microsoft.Data.Edm
         ///     batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer)
         ///     );
         /// ]]>
+        /// </example>
         public static IEdmModel GetEdm<T>(this T dbContext) where T : DbContext
         {
             if (dbContext == null)
@@ -108,29 +109,27 @@ namespace Microsoft.Data.Edm
             var internalContext = dbContext
                 .GetType()
                 .GetProperty(INTERNALCONTEXT, BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(dbContext);
+                ?.GetValue(dbContext);
 
             // Is code first model?
-            var isCodeFirst = internalContext
-                .GetType()
-                .GetProperty(CODEFIRSTMODEL)
-                .GetValue(internalContext) != null;
+            var isCodeFirst = internalContext?.GetType()
+                .GetProperty(CODEFIRSTMODEL)?.GetValue(internalContext) != null;
 
             // Return the result based on the dbcontext type
             return isCodeFirst
-                ? GetCodeFirstEdm<T>(dbContext)
-                : GetModelFirstEdm<T>(dbContext);
+                ? GetCodeFirstEdm(dbContext)
+                : GetModelFirstEdm(dbContext);
         }
 
         /// <summary>
         /// Builds an Entity Data Model (EDM) from an
         /// existing <see cref="DbContext"/> created using Code-First.
-        /// Use <see cref="GetModelFirstEdm"/> for a Model-First DbContext.
+        /// Use <see cref="GetModelFirstEdm{T}"/> for a Model-First DbContext.
         /// </summary>
         /// <typeparam name="T">Type of the source <see cref="DbContext"/></typeparam>
         /// <param name="dbContext">Concrete <see cref="DbContext"/> to use for EDM generation.</param>
         /// <returns>An XML <see cref="IEdmModel"/>.</returns>
-        static IEdmModel GetCodeFirstEdm<T>(this T dbContext) where T : DbContext
+        private static IEdmModel GetCodeFirstEdm<T>(this T dbContext) where T : DbContext
         {
             using (var stream = new MemoryStream())
             {
@@ -144,7 +143,7 @@ namespace Microsoft.Data.Edm
                 // Add readonly properties
                 // This way of adding new properties actually work, but these properties are not necessary anymore
                 // So keep them as a sample
-                var edmx = System.Xml.Linq.XDocument.Load(stream);
+                var edmx = XDocument.Load(stream);
                 RemoveProperty(edmx, "User", "SecurityStamp");
                 RemoveProperty(edmx, "User", "PasswordHash");
                 //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
@@ -173,8 +172,10 @@ namespace Microsoft.Data.Edm
             }
         }
 
-        static void AddReadonlyProperty(XDocument edmx, string entityName, string propertyName, string type, bool nullable)
+        private static void AddReadonlyProperty(XDocument edmx, string entityName, string propertyName, string type, bool nullable)
         {
+            if (edmx.Root == null) return;
+
             var entities = edmx
                 .Root
                 .Elements().First()
@@ -186,14 +187,16 @@ namespace Microsoft.Data.Edm
 
             var property = new XElement("{http://schemas.microsoft.com/ado/2009/11/edm}Property");
             property.Add(new XAttribute("Name", propertyName));
-            property.Add(new XAttribute("Type", string.Format("Edm.{0}", type)));
+            property.Add(new XAttribute("Type", $"Edm.{type}"));
             if (!nullable)
                 property.Add(new XAttribute("Nullable", "false"));
             element.Add(property);
         }
 
-        static void RemoveProperty(XDocument edmx, string entityName, string propertyName)
+        private static void RemoveProperty(XDocument edmx, string entityName, string propertyName)
         {
+            if (edmx.Root == null) return;
+
             var entities = edmx
                 .Root
                 .Elements().First()
@@ -208,7 +211,7 @@ namespace Microsoft.Data.Edm
 
         /// <summary>
         /// Builds an Entity Data Model (EDM) from a <see cref="DbContext"/> created using Model-First. 
-        /// Use <see cref="GetCodeFirstEdm"/> for a Code-First DbContext.
+        /// Use <see cref="GetCodeFirstEdm{T}"/> for a Code-First DbContext.
         /// </summary>
         /// <typeparam name="T">Type of the source <see cref="DbContext"/></typeparam>
         /// <param name="dbContext">Concrete <see cref="DbContext"/> to use for EDM generation.</param>
@@ -219,7 +222,7 @@ namespace Microsoft.Data.Edm
         /// https://gist.github.com/dariusclay/8673940
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-        static IEdmModel GetModelFirstEdm<T>(this T dbContext) where T : DbContext
+        private static IEdmModel GetModelFirstEdm<T>(this T dbContext) where T : DbContext
         {
             using (var csdlStream = GetCsdlStreamFromMetadata(dbContext))
             {
@@ -237,7 +240,7 @@ namespace Microsoft.Data.Edm
             }
         }
 
-        static Stream GetCsdlStreamFromMetadata(IObjectContextAdapter context)
+        private static Stream GetCsdlStreamFromMetadata(IObjectContextAdapter context)
         {
             // Get connection string builder
             var connectionStringBuilder = new EntityConnectionStringBuilder(context.ObjectContext.Connection.ConnectionString);
@@ -256,12 +259,12 @@ namespace Microsoft.Data.Edm
         }
 
         // Property name in InternalContext class
-        const string CODEFIRSTMODEL = "CodeFirstModel";
+        private const string CODEFIRSTMODEL = "CodeFirstModel";
 
         // Property name in DbContext class
-        const string INTERNALCONTEXT = "InternalContext";
+        private const string INTERNALCONTEXT = "InternalContext";
 
         // Pattern to find conceptual model name in connecting string metadata
-        const string METADATACSDLPATTERN = "((\\w+\\.)+csdl)";
+        private const string METADATACSDLPATTERN = "((\\w+\\.)+csdl)";
     }
 }

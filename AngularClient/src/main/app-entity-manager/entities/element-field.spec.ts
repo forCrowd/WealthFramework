@@ -1,430 +1,141 @@
-﻿import { ElementFieldDataType, ElementFieldIndexSortType } from "./element-field";
-import { RatingMode } from "./resource-pool";
+﻿import { ElementFieldDataType } from "./element-field";
 import { TestHelpers } from "./test-helpers";
 
 // TODO: Check all these tests below one more time
 
 describe("main/app-entity-manager/entities/element-field", () => {
 
-    it('userElementField', function () {
+    it("currentUserIndexRating", () => {
 
         // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
-
-        expect(decimalField.currentUserElementField()).toBe(null);
-
-        // Case 2: Add user element field
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-
-        expect(decimalField.currentUserElementField()).toBe(userDecimalField);
-
-        // TODO Update / remove cases
-
-    });
-
-    it('currentUserIndexRating', function () {
-
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
+        const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal);
 
         expect(decimalField.currentUserIndexRating()).toBe(50);
 
         // Case 2: Add user element field
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 25;
-
-        // TODO Manually update?!
-        decimalField.setCurrentUserIndexRating();
+        TestHelpers.createUserElementField(decimalField, 25);
 
         expect(decimalField.currentUserIndexRating()).toBe(25);
 
         // TODO Update / remove cases
-
     });
 
-    it('otherUsersIndexRatingTotal', function () {
+    it("otherUsersIndexRatingTotal & otherUsersIndexRatingCount - Initial", () => {
 
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
+        var field = TestHelpers.createElementField();
 
-        expect(decimalField.otherUsersIndexRatingTotal()).toBe(0);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingTotal = 25;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingTotal();
-
-        expect(decimalField.otherUsersIndexRatingTotal()).toBe(25);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingTotal();
-
-        expect(decimalField.otherUsersIndexRatingTotal()).toBe(15);
-
-        // TODO Update / remove cases
-
+        expect(field.otherUsersIndexRatingTotal).toBe(0);
+        expect(field.otherUsersIndexRatingCount).toBe(0);
     });
 
-    it('otherUsersIndexRatingCount', function () {
+    it("otherUsersIndexRatingTotal & otherUsersIndexRatingCount - Without user rating", () => {
 
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
+        var field = TestHelpers.createElementField(null, null, 25, 3);
 
-        expect(decimalField.otherUsersIndexRatingCount()).toBe(0);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingCount = 3;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingCount();
-
-        expect(decimalField.otherUsersIndexRatingCount()).toBe(3);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingCount();
-
-        expect(decimalField.otherUsersIndexRatingCount()).toBe(2);
-
-        // TODO Update / remove cases
-
+        expect(field.otherUsersIndexRatingTotal).toBe(25);
+        expect(field.otherUsersIndexRatingCount).toBe(3);
     });
 
-    it('indexRatingTotal', function () {
+    it("otherUsersIndexRatingTotal & otherUsersIndexRatingCount - With user rating", () => {
 
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
+        var field = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, 25, 3, 10);
 
-        expect(decimalField.indexRatingTotal()).toBe(50);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingTotal = 25;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingTotal();
-
-        expect(decimalField.indexRatingTotal()).toBe(75);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        // TODO Manually update?!
-        decimalField.setCurrentUserIndexRating();
-
-        expect(decimalField.indexRatingTotal()).toBe(35);
-
-        // TODO Update / remove cases
-
+        expect(field.otherUsersIndexRatingTotal).toBe(15);
+        expect(field.otherUsersIndexRatingCount).toBe(2);
     });
 
-    it('indexRatingCount', function () {
+    it("income", () => {
 
         // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
+        const decimalField1 = TestHelpers.createElementField(null, ElementFieldDataType.Decimal);
+        decimalField1.Element.ResourcePool.InitialValue = 50;
 
-        expect(decimalField.indexRatingCount()).toBe(1);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingCount = 3;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingCount();
-
-        expect(decimalField.indexRatingCount()).toBe(4);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        expect(decimalField.indexRatingCount()).toBe(4);
-
-        // TODO Update / remove cases
-
-    });
-
-    it('indexRatingAverage', function () {
-
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.Decimal;
-
-        expect(decimalField.indexRatingAverage()).toBe(50);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingTotal = 75;
-        decimalField.IndexRatingCount = 3;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingTotal();
-        decimalField.setOtherUsersIndexRatingCount();
-
-        expect(decimalField.indexRatingAverage()).toBe(125 / 4);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        // TODO Manually update?!
-        decimalField.setCurrentUserIndexRating();
-
-        expect(decimalField.indexRatingAverage()).toBe(85 / 4);
-
-        // TODO Update / remove cases
-
-    });
-
-    it('indexRating - RatingMode "Current User"', function () {
-
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.Element.ResourcePool.RatingMode = RatingMode.CurrentUser;
-        decimalField.DataType = ElementFieldDataType.Decimal;
-
-        expect(decimalField.indexRating()).toBe(50);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingTotal = 75;
-        decimalField.IndexRatingCount = 3;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingTotal();
-        decimalField.setOtherUsersIndexRatingCount();
-
-        expect(decimalField.indexRating()).toBe(50);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        // TODO Manually update?!
-        decimalField.setCurrentUserIndexRating();
-        decimalField.setIndexRating();
-
-        expect(decimalField.indexRating()).toBe(10);
-
-        // TODO Update / remove cases
-
-    });
-
-    it('indexRating - RatingMode "All Users"', function () {
-
-        // Case 1: Initial
-
-        var decimalField = TestHelpers.getElementField();
-        decimalField.Element.ResourcePool.RatingMode = RatingMode.AllUsers;
-        decimalField.DataType = ElementFieldDataType.Decimal;
-
-        expect(decimalField.indexRating()).toBe(50);
-
-        // Case 2: Without user rating
-        decimalField.IndexRatingTotal = 75;
-        decimalField.IndexRatingCount = 3;
-
-        // TODO Manually update?!
-        decimalField.setOtherUsersIndexRatingTotal();
-        decimalField.setOtherUsersIndexRatingCount();
-        decimalField.setIndexRating();
-
-        expect(decimalField.indexRating()).toBe(125 / 4);
-
-        // Case 3: With user rating
-        var userDecimalField = TestHelpers.getUserElementField(decimalField);
-        userDecimalField.Rating = 10;
-
-        // TODO Manually update?!
-        decimalField.setCurrentUserIndexRating();
-        decimalField.setIndexRating();
-
-        expect(decimalField.indexRating()).toBe(85 / 4);
-
-        // TODO Update / remove cases
-
-    });
-
-    it('indexRatingPercentage', function () {
-
-        // Case 1: Initial
-        var decimalField1 = TestHelpers.getElementField();
-        decimalField1.DataType = ElementFieldDataType.Decimal;
-        decimalField1.IndexEnabled = true;
-
-        expect(decimalField1.indexRatingPercentage()).toBe(1);
+        expect(decimalField1.income()).toBe(50);
 
         // Case 2: With ratings
-        var userDecimalField1 = TestHelpers.getUserElementField(decimalField1);
-        userDecimalField1.Rating = 25;
+        TestHelpers.createUserElementField(decimalField1, 25);
 
-        // TODO Manually update?!
-        decimalField1.setCurrentUserIndexRating();
-        decimalField1.setIndexRating();
+        expect(decimalField1.income()).toBe(50);
+
+        // Case 3: Second index
+        const decimalField2 = TestHelpers.createElementField(decimalField1.Element, ElementFieldDataType.Decimal);
+
+        TestHelpers.createUserElementField(decimalField2, 75);
+
+        expect(decimalField1.income()).toBe(50 * 0.25);
+        expect(decimalField2.income()).toBe(50 * 0.75);
+
+    });
+
+    it("indexRatingTotal", () => {
+
+        const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, 25);
+
+        expect(decimalField.indexRatingTotal()).toBe(50 + 25);
+    });
+
+    it("indexRatingCount", () => {
+
+        const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, null, 3);
+
+        expect(decimalField.indexRatingCount()).toBe(3 + 1);
+    });
+
+    it("indexRatingAverage", () => {
+
+        const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, 75 , 3);
+
+        expect(decimalField.indexRatingAverage()).toBe((75 + 50) / (3 + 1));
+    });
+
+    it("indexRating - Toggle RatingMode", () => {
+
+        const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, 75, 3);
+
+        expect(decimalField.indexRating()).toBe(decimalField.currentUserIndexRating());
+
+        // Toggle (switch to All Users')
+        decimalField.Element.ResourcePool.toggleRatingMode();
+
+        expect(decimalField.indexRating()).toBe(decimalField.indexRatingAverage());
+    });
+
+    it("indexRatingPercentage", () => {
+
+        // Case 1: One index
+        const decimalField1 = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, null, null, 25);
 
         expect(decimalField1.indexRatingPercentage()).toBe(1);
 
-        // Case 3: Second index
-        var decimalField2 = TestHelpers.getElementField(decimalField1.Element);
-        decimalField2.DataType = ElementFieldDataType.Decimal;
-        decimalField2.IndexEnabled = true;
-
-        var userDecimalField2 = TestHelpers.getUserElementField(decimalField2);
-        userDecimalField2.Rating = 75;
-
-        // TODO Manually update?!
-        decimalField1.Element.setElementFieldIndexSet();
-        decimalField2.setIndexRating();
+        // Case 2: Two indexes
+        const decimalField2 = TestHelpers.createElementField(decimalField1.Element, ElementFieldDataType.Decimal, null, null, 75);
 
         expect(decimalField1.indexRatingPercentage()).toBe(0.25);
         expect(decimalField2.indexRatingPercentage()).toBe(0.75);
-
-        // TODO Update / remove cases
-
     });
 
-    it('numericValueMultiplied', function () {
+    it("numericValue", () => {
 
         // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.DirectIncome;
-        decimalField.IndexEnabled = true;
+        const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal);
 
-        expect(decimalField.numericValueMultiplied()).toBe(0);
+        expect(decimalField.numericValue()).toBe(0);
 
-        // Case 2: Add the multiplier field and the first item
-        var multiplierField = TestHelpers.getElementField();
-        multiplierField.DataType = ElementFieldDataType.Multiplier;
+        // Case 2: Add fields
+        const item1 = TestHelpers.createElementItem(decimalField.Element);
 
-        var item1 = TestHelpers.getElementItem(decimalField.Element);
+        TestHelpers.createElementCell(decimalField, item1, null, null, 5);
 
-        var decimalCell1 = TestHelpers.getElementCell(decimalField, item1);
-        decimalCell1.NumericValueTotal = 50;
-
-        var multiplierCell1 = TestHelpers.getElementCell(multiplierField, item1);
-
-        var userMultiplierCell1 = TestHelpers.getUserElementCell(multiplierCell1);
-        userMultiplierCell1.DecimalValue = 5;
-
-        // TODO Manually update?!
-        decimalField.setNumericValueMultiplied();
-
-        expect(decimalField.numericValueMultiplied()).toBe(250);
+        expect(decimalField.numericValue()).toBe(5);
 
         // Case 3: Add the second item
-        var item2 = TestHelpers.getElementItem(decimalField.Element);
+        const item2 = TestHelpers.createElementItem(decimalField.Element);
 
-        var decimalCell2 = TestHelpers.getElementCell(decimalField, item2);
-        decimalCell2.NumericValueTotal = 150;
+        TestHelpers.createElementCell(decimalField, item2, null, null, 10);
 
-        var multiplierCell2 = TestHelpers.getElementCell(multiplierField, item2);
-
-        var userMultiplierCell2 = TestHelpers.getUserElementCell(multiplierCell2);
-        userMultiplierCell2.DecimalValue = 15;
-
-        // TODO Manually update?!
-        decimalField.setNumericValueMultiplied();
-
-        expect(decimalField.numericValueMultiplied()).toBe(2500);
+        expect(decimalField.numericValue()).toBe(15);
 
         // TODO Update / remove cases
 
     });
-
-    it('referenceRatingMultiplied', function () {
-
-        // Case 1: Initial
-        var decimalField = TestHelpers.getElementField();
-        decimalField.DataType = ElementFieldDataType.DirectIncome;
-        decimalField.IndexEnabled = true;
-        decimalField.IndexSortType = ElementFieldIndexSortType.Lowest;
-
-        expect(decimalField.referenceRatingMultiplied()).toBe(0);
-
-        // Case 2: Add the multiplier field and the first item
-        var multiplierField = TestHelpers.getElementField();
-        multiplierField.DataType = ElementFieldDataType.Multiplier;
-
-        var item1 = TestHelpers.getElementItem(decimalField.Element);
-
-        var decimalCell1 = TestHelpers.getElementCell(decimalField, item1);
-        decimalCell1.NumericValueTotal = 50;
-
-        var multiplierCell1 = TestHelpers.getElementCell(multiplierField, item1);
-
-        var userMultiplierCell1 = TestHelpers.getUserElementCell(multiplierCell1);
-        userMultiplierCell1.DecimalValue = 5;
-
-        decimalCell1.setNumericValueMultiplied();
-        expect(decimalField.referenceRatingMultiplied()).toBe(250);
-
-        // Case 3: Add the second item
-        var item2 = TestHelpers.getElementItem(decimalField.Element);
-
-        var decimalCell2 = TestHelpers.getElementCell(decimalField, item2);
-        decimalCell2.NumericValueTotal = 150;
-
-        var multiplierCell2 = TestHelpers.getElementCell(multiplierField, item2);
-
-        var userMultiplierCell2 = TestHelpers.getUserElementCell(multiplierCell2);
-        userMultiplierCell2.DecimalValue = 15;
-
-        decimalCell1.setNumericValueMultiplied();
-        decimalCell2.setNumericValueMultiplied();
-        expect(decimalField.referenceRatingMultiplied()).toBe(2250);
-
-        // TODO Update / remove cases
-        // TODO field.IndexSortType = ElementFieldIndexSortType.Highest case?
-
-    });
-
-    it('indexIncome', function () {
-
-        // Case 1: Initial
-
-        var decimalField1 = TestHelpers.getElementField();
-        decimalField1.Element.ResourcePool.InitialValue = 50;
-        decimalField1.DataType = ElementFieldDataType.Decimal;
-        decimalField1.IndexEnabled = true;
-
-        expect(decimalField1.indexIncome()).toBe(50);
-
-        // Case 2: With ratings
-        var userDecimalField1 = TestHelpers.getUserElementField(decimalField1);
-        userDecimalField1.Rating = 25;
-
-        // TODO Manually update?!
-        decimalField1.setCurrentUserIndexRating();
-        decimalField1.setIndexRating();
-
-        expect(decimalField1.indexIncome()).toBe(50);
-
-        // Case 3: Second index
-        var decimalField2 = TestHelpers.getElementField(decimalField1.Element);
-        decimalField2.DataType = ElementFieldDataType.Decimal;
-        decimalField2.IndexEnabled = true;
-
-        var userDecimalField2 = TestHelpers.getUserElementField(decimalField2);
-        userDecimalField2.Rating = 75;
-
-        // TODO Manually update?!
-        decimalField1.Element.setElementFieldIndexSet();
-        decimalField2.setIndexRating();
-
-        expect(decimalField1.indexIncome()).toBe(50 * 0.25);
-        expect(decimalField2.indexIncome()).toBe(50 * 0.75);
-
-    });
-
 });

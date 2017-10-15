@@ -15,7 +15,7 @@ import { AppSettings } from "../../app-settings/app-settings";
 })
 export class AppComponent implements OnDestroy, OnInit {
 
-    appVersion: string = AppSettings.version;
+    appVersion = AppSettings.version;
     currentUser: User = null;
     hideGuestAccountInfoBox: boolean = true;
     subscriptions: Subscription[] = [];
@@ -71,7 +71,7 @@ export class AppComponent implements OnDestroy, OnInit {
             .mergeMap(route => route.data)
             .subscribe((data: any) => {
                 if (data.title) {
-                    this.titleService.setTitle("Wealth Economy - " + data.title);
+                    this.titleService.setTitle(`Wealth Economy - ${data.title}`);
                 }
             });
 

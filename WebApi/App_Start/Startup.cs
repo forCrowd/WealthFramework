@@ -5,7 +5,7 @@ namespace forCrowd.WealthEconomy.WebApi
     using Owin;
     using System.Web.Http;
 
-    public partial class Startup
+    public class Startup
     {
         // IMPORTANT REMARK!
         // Configuration order is important

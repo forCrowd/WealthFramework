@@ -18,28 +18,28 @@ namespace forCrowd.WealthEconomy.Framework.Tests
         [TestMethod]
         public void String_Default_ShouldBeTrue()
         {
-            string test = default(string); // null
+            var test = default(string); // null
             Assert.IsTrue(test.IsNullOrDefault());
         }
 
         [TestMethod]
         public void String_Empty_ShouldBeTrue()
         {
-            string test = string.Empty;
+            var test = string.Empty;
             Assert.IsTrue(test.IsNullOrDefault());            
         }
 
         [TestMethod]
         public void String_Whitespace_ShouldBeTrue()
         {
-            string test = " ";
+            var test = " ";
             Assert.IsTrue(test.IsNullOrDefault());
         }
 
         [TestMethod]
         public void String_HasValue_ShouldBeFalse()
         {
-            string test = "test";
+            var test = "test";
             Assert.IsTrue(!test.IsNullOrDefault());
         }
 
@@ -53,7 +53,7 @@ namespace forCrowd.WealthEconomy.Framework.Tests
         [TestMethod]
         public void NullableInt_Default_ShouldBeTrue()
         {
-            int? test = default(int?); // null
+            var test = default(int?); // null
             Assert.IsTrue(test.IsNullOrDefault());
         }
 
@@ -74,21 +74,21 @@ namespace forCrowd.WealthEconomy.Framework.Tests
         [TestMethod]
         public void Int_0_ShouldBeTrue()
         {
-            int test = 0;
+            var test = 0;
             Assert.IsTrue(test.IsNullOrDefault());
         }
 
         [TestMethod]
         public void Int_Default_ShouldBeTrue()
         {
-            int test = default(int); // 0
+            var test = default(int); // 0
             Assert.IsTrue(test.IsNullOrDefault());
         }
 
         [TestMethod]
         public void Int_HasValue_ShouldBeFalse()
         {
-            int test = 1;
+            var test = 1;
             Assert.IsTrue(!test.IsNullOrDefault());
         }
 
@@ -102,7 +102,7 @@ namespace forCrowd.WealthEconomy.Framework.Tests
         [TestMethod]
         public void Object_HasValue_ShouldBeFalse()
         {
-            Object test = new Object();
+            var test = new Object();
             Assert.IsTrue(!test.IsNullOrDefault());
         }
 

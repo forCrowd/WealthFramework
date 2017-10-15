@@ -4,12 +4,14 @@ import { FormsModule } from "@angular/forms";
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { MomentModule } from "angular2-moment";
 
+import { AdminModule } from "../main/admin/admin.module";
 import { AppEntityManagerModule } from "../main/app-entity-manager/app-entity-manager.module";
 import { AppErrorHandlerModule } from "../main/app-error-handler/app-error-handler.module";
 import { AppHttpModule } from "../main/app-http/app-http.module";
 import { AuthModule } from "../main/auth/auth.module";
 import { LoggerModule } from "../main/logger/logger.module";
 import { NgChartModule } from "../main/ng-chart/ng-chart.module";
+import { ResourcePoolEditorModule } from "../main/resource-pool-editor/resource-pool-editor.module";
 
 import { AppRouterModule } from "./app-router.module";
 import { AppComponent } from "./app.component";
@@ -23,8 +25,8 @@ import { ODataElementItemComponent } from "./odata-element-item.component";
 import { ODataResourcePoolComponent } from "./odata-resource-pool.component";
 import { ODataUserElementCellComponent } from "./odata-user-element-cell.component";
 import { ODataUserElementFieldComponent } from "./odata-user-element-field.component";
-import { ODataUserResourcePoolComponent } from "./odata-user-resource-pool.component";
 import { ODataUserComponent } from "./odata-user.component";
+import { ResourcePoolTesterComponent } from "./resource-pool-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
 @NgModule({
@@ -43,8 +45,8 @@ import { WebApiComponent } from "./web-api.component";
         ODataResourcePoolComponent,
         ODataUserElementCellComponent,
         ODataUserElementFieldComponent,
-        ODataUserResourcePoolComponent,
         ODataUserComponent,
+        ResourcePoolTesterComponent,
         WebApiComponent
     ],
     imports: [
@@ -60,6 +62,8 @@ import { WebApiComponent } from "./web-api.component";
         AppEntityManagerModule,
         AuthModule,
         NgChartModule,
+        ResourcePoolEditorModule,
+        AdminModule,
 
         AppRouterModule
     ],

@@ -23,7 +23,7 @@ export function appInitializer(authService: AuthService) {
             "multi": true,
         },
         AuthGuard,
-        AuthService,
+        AuthService
     ]
 })
 export class AuthModule { }

@@ -78,13 +78,12 @@ export class ODataResourcePoolComponent {
 
     private create(userId: number): Observable<Response> {
 
-        var resourcePool = {
+        const resourcePool = {
             UserId: userId,
-            Name: "New CMRP " + getUniqueValue(),
-            Key: "New-CMRP-" + getUniqueValue(),
+            Name: `New CMRP ${getUniqueValue()}`,
+            Key: `New-CMRP-${getUniqueValue()}`,
             Description: "Description for CMRP",
-            InitialValue: "100",
-            UseFixedResourcePoolRate: true
+            InitialValue: "100"
         };
 
         const url = `${AppSettings.serviceAppUrl}/odata/ResourcePool`;
@@ -134,7 +133,7 @@ export class ODataResourcePoolComponent {
         return this.get(userId).mergeMap((resourcePool) => {
 
             var body = {
-                Name: "Updated CMRP " + getUniqueValue(),
+                Name: `Updated CMRP ${getUniqueValue()}`,
                 RowVersion: resourcePool.RowVersion
             };
 

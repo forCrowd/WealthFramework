@@ -1,8 +1,9 @@
 ﻿import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
-import { ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
+import { IResourcePoolEditorConfig, ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
 
 @Component({
     selector: "knowledge-index",
@@ -10,7 +11,8 @@ import { ResourcePoolEditorService } from "../../resource-pool-editor/resource-p
 })
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 
-    knowledgeIndexConfig: any = { username: "sample", resourcePoolKey: "Knowledge-Index-Sample" };
+    knowledgeIndexConfig: IResourcePoolEditorConfig = { resourcePoolUniqueKey: { username: "sample", resourcePoolKey: "Knowledge-Index-Sample" } };
+
     newModelChartConfig: ChartConfig = new ChartConfig({
         chart: {
             type: "column",
@@ -25,6 +27,7 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
         }
     },
         [new ChartDataItem("Global Knowledge Database", 0, new EventEmitter<number>())]);
+
     oldModelChartConfig: ChartConfig = new ChartConfig({
         chart: {
             type: "column",
@@ -43,8 +46,9 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
         new ChartDataItem("Christina's Secret", 0, new EventEmitter<number>()),
         new ChartDataItem("Nuka Cola Company", 0, new EventEmitter<number>())
         ]);
-    popularSoftwareLicensesConfig: any = { username: "sample", resourcePoolKey: "Knowledge-Index-Popular-Software-Licenses" };
-    subscriptions: any[] = [];
+
+    popularSoftwareLicensesConfig: IResourcePoolEditorConfig = { resourcePoolUniqueKey: { username: "sample", resourcePoolKey: "Knowledge-Index-Popular-Software-Licenses" } };
+    subscriptions: Subscription[] = [];
 
     constructor(private resourcePoolService: ResourcePoolEditorService) {
     }
@@ -57,7 +61,7 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
 
-        let timer = Observable.timer(10000, 1000);
+        const timer = Observable.timer(10000, 1000);
         this.subscriptions.push(
             timer.subscribe(() => {
                 this.refreshPage();

@@ -1,0 +1,67 @@
+{
+  "_from": "breeze-bridge-angular@4.0.1",
+  "_id": "breeze-bridge-angular@4.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-hrqGTcbwV0dFi3OoFPbKk2C762o=",
+  "_location": "/breeze-bridge-angular",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "breeze-bridge-angular@4.0.1",
+    "name": "breeze-bridge-angular",
+    "escapedName": "breeze-bridge-angular",
+    "rawSpec": "4.0.1",
+    "saveSpec": null,
+    "fetchSpec": "4.0.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/breeze-bridge-angular/-/breeze-bridge-angular-4.0.1.tgz",
+  "_shasum": "86ba864dc6f05747458b73a814f6ca9360bbeb6a",
+  "_spec": "breeze-bridge-angular@4.0.1",
+  "_where": "C:\\Data\\Github\\coni2k\\WealthEconomy\\AngularClient",
+  "author": {
+    "name": "Marcel Good"
+  },
+  "bugs": {
+    "url": "https://github.com/Breeze/breeze.bridge.angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A bridge that configures Breeze and Angular to work together.",
+  "devDependencies": {
+    "@angular/compiler-cli": ">= 2.0.0",
+    "@angular/platform-server": ">= 2.0.0",
+    "gulp": ">= 3.9.1",
+    "gulp-changed": ">= 1.3.0",
+    "gulp-clean": ">= 0.3.2",
+    "gulp-rename": ">= 1.2.2",
+    "gulp-shell": ">= 0.5.2",
+    "typescript": ">= 2.2.1"
+  },
+  "homepage": "https://github.com/Breeze/breeze.bridge.angular#readme",
+  "keywords": [
+    "breeze",
+    "angular",
+    "bridge"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "breeze-bridge-angular",
+  "peerDependencies": {
+    "@angular/compiler": ">= 2.0.0",
+    "@angular/core": ">= 2.0.0",
+    "@angular/http": ">= 2.0.0",
+    "breeze-client": ">= 1.6.3",
+    "rxjs": ">= 5.2.0",
+    "zone.js": ">= 0.8.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Breeze/breeze.bridge.angular.git"
+  },
+  "types": "index.d.ts",
+  "version": "4.0.1"
+}

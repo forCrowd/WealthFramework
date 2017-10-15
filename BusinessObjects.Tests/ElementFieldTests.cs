@@ -1,4 +1,4 @@
-﻿using System;
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace forCrowd.WealthEconomy.BusinessObjects.Tests
@@ -13,16 +13,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.String);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NewElementWithInvalidConstructor_Exception()
-        {
-            var user = new User("User", "user@email.com");
-            new ResourcePool(user, "CMRP")
-            .AddElement("Element")
-            .AddField("Field", ElementFieldDataType.Boolean);
         }
     }
 

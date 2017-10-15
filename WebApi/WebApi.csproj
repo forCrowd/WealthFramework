@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -233,7 +234,6 @@
     <Compile Include="Controllers\OData\UsersController.cs" />
     <Compile Include="Controllers\OData\UserElementCellController.cs" />
     <Compile Include="Controllers\OData\UserElementFieldController.cs" />
-    <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
     <Compile Include="Filters\EntityExistsValidatorAttribute.cs" />

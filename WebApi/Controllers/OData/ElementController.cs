@@ -1,8 +1,10 @@
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
-    using forCrowd.WealthEconomy.WebApi.Filters;
+    using Filters;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;
@@ -14,7 +16,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ElementController : BaseODataController
     {
-        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
+        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
         // POST odata/Element
         public async Task<IHttpActionResult> Post(Delta<Element> patch)
@@ -81,7 +83,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [EntityExistsValidator(typeof(Element))]
         // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
         // [ConcurrencyValidator(typeof(Element))]
-        public async Task<IHttpActionResult> Delete(int key, Delta<Element> patch)
+        public async Task<IHttpActionResult> Delete(int key)
         {
             var element = await _resourcePoolManager
                 .GetElementSet(key, true, item => item.ResourcePool)

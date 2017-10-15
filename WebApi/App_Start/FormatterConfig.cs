@@ -3,7 +3,7 @@
     using Newtonsoft.Json;
     using System.Net.Http.Formatting;
 
-    public class FormatterConfig
+    public static class FormatterConfig
     {
         public static void RegisterFormatters(MediaTypeFormatterCollection formatters)
         {

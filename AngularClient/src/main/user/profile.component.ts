@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
     }
 
     getResourcePoolLink(resourcePool: ResourcePool): string {
-        return "/" + resourcePool.User.UserName + "/" + resourcePool.Key;
+        return `/${resourcePool.User.UserName}/${resourcePool.Key}`;
     }
 
     manageResourcePool(resourcePool: ResourcePool): void {
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
         // Params
         this.activatedRoute.params.subscribe(
             (param: any) => {
-                let username = param.username;
+                const username = param.username;
 
                 // If profile user equals to current (authenticated) user
                 if (username === this.userService.currentUser.UserName) {
@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
 
                             // Not found, navigate to 404
                             if (user === null) {
-                                var url = window.location.href.replace(window.location.origin, "");
+                                const url = window.location.href.replace(window.location.origin, "");
                                 this.router.navigate(["/app/not-found", { url: url }]);
                                 return;
                             }

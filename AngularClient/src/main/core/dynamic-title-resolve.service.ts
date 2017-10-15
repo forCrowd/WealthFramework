@@ -3,6 +3,7 @@ import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 
 import { AppEntityManager } from "../app-entity-manager/app-entity-manager.module";
+import { IUniqueKey } from "../app-entity-manager/entities/resource-pool";
 import { ResourcePoolEditorService } from "../resource-pool-editor/resource-pool-editor.module";
 
 @Injectable()
@@ -12,16 +13,16 @@ export class DynamicTitleResolve implements Resolve<string> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<string> {
 
-        let username = route.params["username"];
-        let resourcePoolKey = route.params["resourcePoolKey"];
-        let lastUrl = route.url[route.url.length - 1];
+        const username = route.params["username"];
+        const resourcePoolKey = route.params["resourcePoolKey"];
+        const lastUrl = route.url[route.url.length - 1];
 
         if (username && resourcePoolKey) { // Resource pool title
 
             let title = "";
 
             // Resource pool unique key
-            let resourcePoolUniqueKey = {
+            const resourcePoolUniqueKey: IUniqueKey = {
                 username: username,
                 resourcePoolKey: resourcePoolKey
             };

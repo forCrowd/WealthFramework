@@ -16,7 +16,7 @@ export class SymbolicPipe implements PipeTransform {
             return null;
         }
 
-        let number: number = +value;
+        let number = +value;
         let symbol: string = "";
         let result: string = "";
 

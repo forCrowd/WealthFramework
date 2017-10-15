@@ -16,8 +16,8 @@ import { BrowserModule } from "@angular/platform-browser";
             </p>
             <hr />
             <p>
-                <button type='button' (click)='consoleLog()'>console log</button>
-                <button type='button' (click)='error()'>error</button>
+                <button type="button" (click)="consoleLog()">console log</button>
+                <button type="button" (click)="error()">error</button>
             </p>
         </div>
     </div>
@@ -43,7 +43,7 @@ export class AppComponent {
         HttpModule
     ],
     declarations: [
-        AppComponent,
+        AppComponent
     ],
     bootstrap: [
         AppComponent

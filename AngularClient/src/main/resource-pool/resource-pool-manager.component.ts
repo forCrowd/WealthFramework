@@ -3,13 +3,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Element } from "../app-entity-manager/entities/element";
 import { ElementCell } from "../app-entity-manager/entities/element-cell";
-import { ElementField, ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "../app-entity-manager/entities/element-field";
+import { ElementField, ElementFieldDataType } from "../app-entity-manager/entities/element-field";
 import { ElementItem } from "../app-entity-manager/entities/element-item";
 import { IUniqueKey, ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { User } from "../app-entity-manager/entities/user";
-import { UserElementCell } from "../app-entity-manager/entities/user-element-cell";
-import { UserElementField } from "../app-entity-manager/entities/user-element-field";
-import { UserResourcePool } from "../app-entity-manager/entities/user-resource-pool";
 import { ResourcePoolEditorService } from "../resource-pool-editor/resource-pool-editor.module";
 import { Logger } from "../logger/logger.module";
 
@@ -27,8 +24,6 @@ export class ResourcePoolManagerComponent implements OnInit {
     elementCell: ElementCell = null;
     elementField: ElementField = null;
     ElementFieldDataType = ElementFieldDataType;
-    ElementFieldIndexCalculationType = ElementFieldIndexCalculationType;
-    ElementFieldIndexSortType = ElementFieldIndexSortType;
     elementItem: ElementItem = null;
     isElementCellEdit = false;
     isElementFieldEdit = false;
@@ -56,11 +51,11 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     addElementField() {
 
-        var selectedElement = this.resourcePool.ElementSet[0];
+        const selectedElement = this.resourcePool.ElementSet[0];
 
         // A temp fix for default value of "SortOrder"
         // Later handle "SortOrder" by UI, not by asking
-        var sortOrder = selectedElement.ElementFieldSet.length + 1;
+        const sortOrder = selectedElement.ElementFieldSet.length + 1;
 
         this.elementField = this.resourcePoolService.createElementField({
             Element: selectedElement,
@@ -102,7 +97,7 @@ export class ResourcePoolManagerComponent implements OnInit {
 
         this.resourcePool.entityAspect.rejectChanges();
 
-        var command = "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
+        const command = `/${this.resourcePool.User.UserName}/${this.resourcePool.Key}`;
         this.router.navigate([command]);
     }
 
@@ -141,11 +136,11 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     elementCellSet() {
 
-        var elementItems = this.elementItemSet();
+        const elementItems = this.elementItemSet();
 
         var list: ElementCell[] = [];
-        elementItems.forEach((elementItem) => {
-            elementItem.ElementCellSet.forEach((elementCell) => {
+        elementItems.forEach(elementItem => {
+            elementItem.ElementCellSet.forEach(elementCell => {
                 list.push(elementCell);
             });
         });
@@ -154,9 +149,9 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     elementFieldSet() {
         var list: ElementField[] = [];
-        this.resourcePool.ElementSet.forEach((element) => {
-            element.ElementFieldSet.forEach((elementField) => {
-                list.push(elementField);
+        this.resourcePool.ElementSet.forEach(element => {
+            element.ElementFieldSet.forEach(field => {
+                list.push(field);
             });
         });
         return list;
@@ -164,9 +159,9 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     elementItemSet() {
         var list: ElementItem[] = [];
-        this.resourcePool.ElementSet.forEach((element) => {
-            element.ElementItemSet.forEach((elementItem) => {
-                list.push(elementItem);
+        this.resourcePool.ElementSet.forEach(element => {
+            element.ElementItemSet.forEach(item => {
+                list.push(item);
             });
         });
         return list;
@@ -174,25 +169,17 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     getElementFieldDataTypeFiltered() {
 
-        let filtered: any[] = [];
+        const filtered: any[] = [];
 
-        for (var key in this.ElementFieldDataType) {
+        for (let key in this.ElementFieldDataType) {
             if (this.ElementFieldDataType.hasOwnProperty(key)) {
 
                 if (!isNaN(+key)) {
                     continue;
                 }
 
-                // These types can be added only once at the moment
-                if (key === "DirectIncome" || key === "Multiplier") {
-                    var exists = this.elementField.Element.ElementFieldSet
-                        .some((field) => this.ElementFieldDataType[key] === field.DataType.toString());
-
-                    if (!exists) {
-                        filtered.push({ name: key, value: this.ElementFieldDataType[key] });
-                    }
-                } else if (key === "Element") {
-                    // Element type can only be added if there are more than one element in the pool
+                // Element type can only be added if there are more than one element in the pool
+                if (key === "Element") {
                     if (this.elementField.Element.ResourcePool.ElementSet.length > 1) {
                         filtered.push({ name: key, value: this.ElementFieldDataType[key] });
                     }
@@ -205,47 +192,13 @@ export class ResourcePoolManagerComponent implements OnInit {
         return filtered;
     }
 
-    getElementFieldIndexCalculationTypeFiltered(): any[] {
-
-        let filtered: any[] = [];
-
-        for (let key in this.ElementFieldIndexCalculationType) {
-            if (this.ElementFieldIndexCalculationType.hasOwnProperty(key)) {
-                if (!isNaN(+key)) {
-                    continue;
-                }
-
-                filtered.push({ name: key, value: this.ElementFieldIndexCalculationType[key] });
-            }
-        }
-
-        return filtered;
-    }
-
-    getElementFieldIndexSortTypeFiltered(): any[] {
-
-        let filtered: any[] = [];
-
-        for (let key in this.ElementFieldIndexSortType) {
-            if (this.ElementFieldIndexSortType.hasOwnProperty(key)) {
-                if (!isNaN(+key)) {
-                    continue;
-                }
-
-                filtered.push({ name: key, value: this.ElementFieldIndexSortType[key] });
-            }
-        }
-
-        return filtered;
-    }
-
     ngOnInit(): void {
 
         this.activatedRoute.params.subscribe(
             (params: any) => {
 
-                let username = params.username;
-                let resourcePoolKey = params.resourcePoolKey;
+                const username = params.username;
+                const resourcePoolKey = params.resourcePoolKey;
 
                 var resourcePoolUniqueKey: IUniqueKey = { username: username, resourcePoolKey: resourcePoolKey };
 
@@ -254,7 +207,7 @@ export class ResourcePoolManagerComponent implements OnInit {
 
                         // Not found, navigate to 404
                         if (resourcePool === null) {
-                            let url = window.location.href.replace(window.location.origin, "");
+                            const url = window.location.href.replace(window.location.origin, "");
                             this.router.navigate(["/app/not-found", { url: url }]);
                             return;
                         }
@@ -286,10 +239,6 @@ export class ResourcePoolManagerComponent implements OnInit {
     saveElementCell() {
         this.resourcePoolService.saveChanges()
             .subscribe(() => {
-
-                // TODO Try to move this to a better place?
-                this.resourcePool.updateCache();
-
                 this.isElementCellEdit = false;
                 this.elementCell = null;
             });
@@ -299,7 +248,7 @@ export class ResourcePoolManagerComponent implements OnInit {
 
         // Related cells
         if (this.elementField.ElementCellSet.length === 0) {
-            this.elementField.Element.ElementItemSet.forEach((elementItem) => {
+            this.elementField.Element.ElementItemSet.forEach(elementItem => {
                 this.resourcePoolService.createElementCell({
                     ElementField: this.elementField,
                     ElementItem: elementItem
@@ -309,10 +258,6 @@ export class ResourcePoolManagerComponent implements OnInit {
 
         this.resourcePoolService.saveChanges()
             .subscribe(() => {
-
-                // TODO Try to move this to a better place?
-                this.resourcePool.updateCache();
-
                 this.isElementFieldEdit = false;
                 this.elementField = null;
             });
@@ -322,7 +267,7 @@ export class ResourcePoolManagerComponent implements OnInit {
 
         // Related cells
         if (this.elementItem.ElementCellSet.length === 0) {
-            this.elementItem.Element.ElementFieldSet.forEach((elementField) => {
+            this.elementItem.Element.ElementFieldSet.forEach(elementField => {
                 this.resourcePoolService.createElementCell({
                     ElementField: elementField,
                     ElementItem: this.elementItem
@@ -332,10 +277,6 @@ export class ResourcePoolManagerComponent implements OnInit {
 
         this.resourcePoolService.saveChanges()
             .subscribe(() => {
-
-                // TODO Try to move this to a better place?
-                this.resourcePool.updateCache();
-
                 this.isElementItemEdit = false;
                 this.elementItem = null;
             });
@@ -344,13 +285,10 @@ export class ResourcePoolManagerComponent implements OnInit {
     saveResourcePool() {
         this.resourcePoolService.saveChanges()
             .subscribe(() => {
-                // TODO Try to move this to a better place?
-                this.resourcePool.updateCache();
 
                 this.logger.logSuccess("Your changes have been saved!");
 
                 var command = `/${this.resourcePool.User.UserName}/${this.resourcePool.Key}/edit`;
-
                 this.router.navigate([command]);
             });
     }
@@ -362,12 +300,11 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     submitDisabled(entity: string) {
 
-        let hasValidationErrors: boolean;
+        let hasValidationErrors = false;
 
         switch (entity) {
             case "resourcePool": {
-                hasValidationErrors = (this.resourcePool.entityAspect.getValidationErrors().length
-                    + (this.resourcePool.UserResourcePoolSet.length > 0 ? this.resourcePool.UserResourcePoolSet[0].entityAspect.getValidationErrors().length : 0)) > 0;
+                hasValidationErrors = this.resourcePool.entityAspect.getValidationErrors().length > 0;
                 break;
             }
             case "elementField": {
@@ -440,7 +377,7 @@ export class ResourcePoolManagerComponent implements OnInit {
             resourcePoolKey = this.resourcePool.Key;
         }
 
-        var command = "/" + this.resourcePool.User.UserName + "/" + resourcePoolKey;
+        const command = `/${this.resourcePool.User.UserName}/${resourcePoolKey}`;
 
         this.router.navigate([command]);
     }

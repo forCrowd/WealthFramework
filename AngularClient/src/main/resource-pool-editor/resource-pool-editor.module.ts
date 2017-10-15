@@ -4,11 +4,11 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import { NgChartModule } from "../ng-chart/ng-chart.module";
-import { ResourcePoolEditorComponent } from "./resource-pool-editor.component";
+import { IConfig as IResourcePoolEditorConfig, ResourcePoolEditorComponent } from "./resource-pool-editor.component";
 import { ResourcePoolEditorService } from "./resource-pool-editor.service";
 import { SymbolicPipe } from "./symbolic.pipe";
 
-export { ResourcePoolEditorService }
+export { IResourcePoolEditorConfig, ResourcePoolEditorService }
 
 @NgModule({
     declarations: [

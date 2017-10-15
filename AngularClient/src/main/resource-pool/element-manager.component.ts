@@ -1,7 +1,6 @@
 ﻿import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 import { Element } from "../app-entity-manager/entities/element";
-import { ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { ResourcePoolEditorService } from "../resource-pool-editor/resource-pool-editor.module";
 
 @Component({
@@ -27,10 +26,6 @@ export class ElementManagerComponent {
 
     saveElement() {
         this.resourcePoolService.saveChanges().subscribe(() => {
-
-            // TODO Try to move this to a better place?
-            this.element.ResourcePool.updateCache();
-
             this.saved.emit();
         });
     }

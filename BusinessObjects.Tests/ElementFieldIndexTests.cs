@@ -1,6 +1,7 @@
 ﻿using System;
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using forCrowd.WealthEconomy.Framework.Exceptions;
+using forCrowd.WealthEconomy.Framework;
 
 namespace forCrowd.WealthEconomy.BusinessObjects.Tests
 {
@@ -13,8 +14,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             var user = new User("User", "user@email.com");
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
-                .AddField("Field", ElementFieldDataType.Boolean, true)
-                .EnableIndex(ElementFieldIndexSortType.HighestToLowest);
+                .AddField("Field", ElementFieldDataType.Decimal, true)
+                .EnableIndex();
         }
 
         [TestMethod]
@@ -25,7 +26,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.String)
-                .EnableIndex(ElementFieldIndexSortType.HighestToLowest);
+                .EnableIndex();
         }
 
         [TestMethod]
@@ -36,7 +37,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.String)
-                .EnableIndex(ElementFieldIndexSortType.HighestToLowest);
+                .EnableIndex();
         }
     }
 }

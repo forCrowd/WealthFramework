@@ -36,14 +36,14 @@ export class AppErrorHandler implements ErrorHandler {
 
             this.getSourceMappedStackTrace(error).subscribe((stack: string) => {
 
-                let model = {
+                const model = {
                     Name: error.name,
                     Message: error.message,
                     Url: window.location.href,
                     Stack: stack || ""
                 };
 
-                let errorHandlerUrl = AppSettings.serviceAppUrl + "/api/Exception/Record";
+                const errorHandlerUrl = AppSettings.serviceAppUrl + "/api/Exception/Record";
 
                 this.http.post(errorHandlerUrl, model).subscribe();
             });
@@ -103,7 +103,10 @@ export class AppErrorHandler implements ErrorHandler {
                     var match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
 
                     if (match) {
-                        var prefix = match[1], url = match[2], line = match[3], col = match[4];
+                        var prefix = match[1];
+                        const url = match[2];
+                        var line = match[3],
+                            col = match[4];
 
                         return this.getMapForScript(url).map((map: any) => {
 
@@ -116,21 +119,13 @@ export class AppErrorHandler implements ErrorHandler {
                             pos.source = pos.source.substring(0, 3) === "../"
                                 ? pos.source.substring(2)
                                 : pos.source.charAt(0) !== "/"
-                                    ? "/app/" + pos.source
+                                    ? `/app/${pos.source}`
                                     : pos.source;
 
                             var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
                             mangledName = (mangledName && mangledName[2]) || "";
 
-                            return "    at "
-                                + (pos.name ? pos.name : mangledName)
-                                + " "
-                                + window.location.origin
-                                + pos.source
-                                + ":"
-                                + pos.line
-                                + ":"
-                                + pos.column;
+                            return `    at ${pos.name ? pos.name : mangledName} ${window.location.origin}${pos.source}:${pos.line}:${pos.column}`;
 
                         }).catch((error: any): any => {
                             return stackLine;

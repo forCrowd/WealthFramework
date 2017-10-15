@@ -32,7 +32,7 @@ const accountRoutes: Routes = [
     { path: "app/account/confirm-email", component: ConfirmEmailComponent, canActivate: [AuthGuard], data: { title: "Confirm Email" } },
     { path: "app/account/login", component: LoginComponent, data: { title: "Login" } },
     { path: "app/account/register", component: RegisterComponent, data: { title: "Register" } },
-    { path: "app/account/reset-password", component: ResetPasswordComponent, canDeactivate: [CanDeactivateGuard], data: { title: "Reset Password" } },
+    { path: "app/account/reset-password", component: ResetPasswordComponent, canDeactivate: [CanDeactivateGuard], data: { title: "Reset Password" } }
 ];
 
 @NgModule({
@@ -46,7 +46,7 @@ const accountRoutes: Routes = [
         LoginComponent,
         RegisterComponent,
         ResetPasswordComponent,
-        SocialLoginsComponent,
+        SocialLoginsComponent
     ],
     exports: [
         RouterModule

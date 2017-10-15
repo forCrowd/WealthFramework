@@ -75,7 +75,7 @@ export class ODataElementItemComponent {
 
             var elementItem = {
                 ElementId: element.Id,
-                Name: "New item " + getUniqueValue()
+                Name: `New item ${getUniqueValue()}`
             };
 
             const url = `${AppSettings.serviceAppUrl}/odata/ElementItem`;
@@ -140,7 +140,7 @@ export class ODataElementItemComponent {
             var elementItem = element.ElementItemSet[0];
 
             var body = {
-                Name: "Updated item " + getUniqueValue(),
+                Name: `Updated item ${getUniqueValue()}`,
                 RowVersion: elementItem.RowVersion
             };
 

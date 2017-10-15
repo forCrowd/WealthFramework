@@ -43,7 +43,7 @@ const coreRoutes: Routes = [
     { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 
     /* Backward compatibility */
-    { path: "_system/content/contributors", redirectTo: "app/contributors", pathMatch: "full" },
+    { path: "_system/content/contributors", redirectTo: "app/contributors", pathMatch: "full" }
 ];
 
 export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {

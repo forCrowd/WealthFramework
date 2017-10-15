@@ -12,9 +12,9 @@
     {
         public UniqueKeyConflictResult(HttpRequestMessage request, string field, string value)
         {
-            Request = request ?? throw new ArgumentNullException("request");
-            Field = field ?? throw new ArgumentNullException("field");
-            Value = value ?? throw new ArgumentNullException("value");
+            Request = request ?? throw new ArgumentNullException(nameof(request));
+            Field = field ?? throw new ArgumentNullException(nameof(field));
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public HttpRequestMessage Request { get; private set; }
@@ -30,7 +30,7 @@
         {
             var response = Request.CreateResponse(HttpStatusCode.Conflict);
 
-            var message = string.Format("{0} '{1}' already exists", Field, Value);
+            var message = $"{Field} '{Value}' already exists";
 
             var responseObject = JObject.FromObject(new {
                 Message = message

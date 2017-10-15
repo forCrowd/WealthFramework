@@ -4,7 +4,7 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.ExceptionHandling;
 
-    public class ServiceConfig
+    public static class ServiceConfig
     {
         public static void RegisterServices(ServicesContainer services)
         {

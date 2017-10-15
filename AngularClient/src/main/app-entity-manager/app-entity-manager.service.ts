@@ -1,16 +1,15 @@
 ﻿import { ErrorHandler, Injectable } from "@angular/core";
-import { config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, FetchStrategy, MergeStrategy, QueryOptions, QueryResult } from "breeze-client";
-import { BreezeBridgeAngularModule } from "breeze-bridge-angular";
-import { Observable, ObservableInput } from "rxjs/Observable";
+import { config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, FetchStrategy, MergeStrategySymbol } from "../../libraries/breeze-client";
+import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular";
+import { Observable } from "rxjs/Observable";
 
-import "breeze.dataService.odata";
-import "breeze.modelLibrary.backingStore";
-import "breeze.uriBuilder.odata";
+import "../../libraries/breeze-client/breeze.dataService.odata";
+import "../../libraries/breeze-client/breeze.modelLibrary.backingStore";
+import "../../libraries/breeze-client/breeze.uriBuilder.odata";
 import "datajs";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AppErrorHandler } from "../app-error-handler/app-error-handler.module";
-import { AuthService } from "../auth/auth.service";
 import { Element } from "./entities/element";
 import { EntityBase } from "./entities/entity-base";
 import { ElementCell } from "./entities/element-cell";
@@ -21,7 +20,6 @@ import { Role } from "./entities/role";
 import { User } from "./entities/user";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
-import { UserResourcePool } from "./entities/user-resource-pool";
 import { UserRole } from "./entities/user-role";
 import { Logger } from "../logger/logger.module";
 
@@ -49,18 +47,18 @@ export class AppEntityManager extends EntityManager {
         config.initializeAdapterInstance("uriBuilder", "odata");
 
         // Use Web API OData to query and save
-        let adapter = config.initializeAdapterInstance("dataService", "webApiOData", true) as any;
+        const adapter = config.initializeAdapterInstance("dataService", "webApiOData", true) as any;
         adapter.getRoutePrefix = this.getRoutePrefix_Microsoft_AspNet_WebApi_OData_5_3_x;
 
         // OData authorization interceptor
-        let oldClient = (window as any).OData.defaultHttpClient;
+        const oldClient = (window as any).OData.defaultHttpClient;
 
-        let newClient = {
+        const newClient = {
             request(request: any, success: Function, error: Function) {
                 request.headers = request.headers || {};
-                let tokenItem = localStorage.getItem("token");
-                let token = tokenItem ? JSON.parse(tokenItem.toString()) : null;
-                request.headers.Authorization = token !== null ? "Bearer " + token.access_token : "";
+                const tokenItem = localStorage.getItem("token");
+                const token = tokenItem ? JSON.parse(tokenItem.toString()) : null;
+                request.headers.Authorization = token ? `Bearer ${token.access_token}` : "";
                 return oldClient.request(request, success, error);
             }
         };
@@ -70,23 +68,33 @@ export class AppEntityManager extends EntityManager {
         // breeze.NamingConvention.camelCase.setAsDefault();
 
         // Metadata store
-        this.metadataStore.registerEntityTypeCtor("Element", Element, Element.initializer);
-        this.metadataStore.registerEntityTypeCtor("ElementCell", ElementCell, ElementCell.initializer);
-        this.metadataStore.registerEntityTypeCtor("ElementField", ElementField, ElementField.initializer);
-        this.metadataStore.registerEntityTypeCtor("ElementItem", ElementItem, ElementItem.initializer);
-        this.metadataStore.registerEntityTypeCtor("ResourcePool", ResourcePool, ResourcePool.initializer);
-        this.metadataStore.registerEntityTypeCtor("Role", Role, Role.initializer);
-        this.metadataStore.registerEntityTypeCtor("User", User, User.initializer);
-        this.metadataStore.registerEntityTypeCtor("UserRole", UserRole, UserRole.initializer);
-        this.metadataStore.registerEntityTypeCtor("UserElementCell", UserElementCell, UserElementCell.initializer);
-        this.metadataStore.registerEntityTypeCtor("UserElementField", UserElementField, UserElementField.initializer);
-        this.metadataStore.registerEntityTypeCtor("UserResourcePool", UserResourcePool, UserResourcePool.initializer);
+        this.metadataStore.registerEntityTypeCtor("Element", Element);
+        this.metadataStore.registerEntityTypeCtor("ElementCell", ElementCell);
+        this.metadataStore.registerEntityTypeCtor("ElementField", ElementField);
+        this.metadataStore.registerEntityTypeCtor("ElementItem", ElementItem);
+        this.metadataStore.registerEntityTypeCtor("ResourcePool", ResourcePool);
+        this.metadataStore.registerEntityTypeCtor("Role", Role);
+        this.metadataStore.registerEntityTypeCtor("User", User);
+        this.metadataStore.registerEntityTypeCtor("UserRole", UserRole);
+        this.metadataStore.registerEntityTypeCtor("UserElementCell", UserElementCell);
+        this.metadataStore.registerEntityTypeCtor("UserElementField", UserElementField);
+    }
+
+    createEntityNew(typeName: string, config?: {}, entityState?: EntityStateSymbol, mergeStrategy?: MergeStrategySymbol): EntityBase {
+        const entity = super.createEntity(typeName, config, entityState, mergeStrategy) as EntityBase;
+        entity.initialize();
+        return entity;
     }
 
     executeQueryNew<T>(query: EntityQuery): Observable<IQueryResult<T>> {
         this.isBusy = true;
         return Observable.fromPromise(super.executeQuery(query))
             .map((response) => {
+
+                response.results.forEach((result: EntityBase) => {
+                    result.initialize();
+                });
+
                 return {
                     count: response.inlineCount,
                     results: response.results
@@ -115,7 +123,7 @@ export class AppEntityManager extends EntityManager {
     getUser(username: string): Observable<User> {
 
         // Already fetched, then query locally
-        let alreadyFetched = this.fetchedUsers.indexOf(username) > -1;
+        const alreadyFetched = this.fetchedUsers.indexOf(username) > -1;
 
         let query = EntityQuery
             .from("Users")
@@ -154,9 +162,9 @@ export class AppEntityManager extends EntityManager {
 
         var promise: any = null;
         var count = this.getChanges().length;
-        var saveBatches = this.prepareSaveBatches();
+        const saveBatches = this.prepareSaveBatches();
 
-        saveBatches.forEach((batch) => {
+        saveBatches.forEach(batch => {
 
             // ignore empty batches (except "null" which means "save everything else")
             if (batch === null || batch.length > 0) {
@@ -174,7 +182,7 @@ export class AppEntityManager extends EntityManager {
 
         return Observable.fromPromise(promise)
             .map(() => {
-                this.logger.logSuccess("Saved " + count + " change(s)", false);
+                this.logger.logSuccess(`Saved ${count} change(s)`, false);
             })
             .catch((error: any) => this.handleODataErrors(error))
             .finally(() => { this.isBusy = false; });
@@ -191,13 +199,13 @@ export class AppEntityManager extends EntityManager {
     private getRoutePrefix_Microsoft_AspNet_WebApi_OData_5_3_x(dataService: any) {
 
         // Copied from breeze.debug and modified for Web API OData v.5.3.1.
-        var parser = document.createElement("a");
+        const parser = document.createElement("a");
         parser.href = dataService.serviceName;
 
         // THE CHANGE FOR 5.3.1: Add "/" prefix to pathname
-        var prefix = parser.pathname;
+        let prefix = parser.pathname;
         if (prefix[0] !== "/") {
-            prefix = "/" + prefix;
+            prefix = `/${prefix}`;
         } // add leading "/"  (only in IE)
         if (prefix.substr(-1) !== "/") {
             prefix += "/";
@@ -214,9 +222,9 @@ export class AppEntityManager extends EntityManager {
         // EntityErrors: similar to ModelState errors
         if (error.entityErrors) {
 
-            for (var key in error.entityErrors) {
+            for (let key in error.entityErrors) {
                 if (error.entityErrors.hasOwnProperty(key)) {
-                    var entityError = error.entityErrors[key];
+                    const entityError = error.entityErrors[key];
                     errorMessage += entityError.errorMessage + "<br />";
                 }
             }
@@ -297,7 +305,7 @@ export class AppEntityManager extends EntityManager {
 
             // Else, let the internal error handler handle it
             if (error.status) {
-                let message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
+                const message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
                 throw new Error(message);
             } else {
                 throw error;
@@ -307,7 +315,7 @@ export class AppEntityManager extends EntityManager {
 
     private prepareSaveBatches(): Entity[][] {
 
-        let batches: Entity[][] = [];
+        const batches: Entity[][] = [];
 
         // RowVersion fix: breeze only sends modified properties back to server.
         // However, RowVersion is not getting changed through UI, and the server needs to it make Conflict checks.
@@ -346,11 +354,9 @@ export class AppEntityManager extends EntityManager {
         batches.push(this.getEntities("UserElementField", EntityState.Deleted));
         batches.push(this.getEntities("ElementField", EntityState.Deleted));
         batches.push(this.getEntities("Element", EntityState.Deleted));
-        batches.push(this.getEntities("UserResourcePool", EntityState.Deleted));
         batches.push(this.getEntities("ResourcePool", EntityState.Deleted));
 
         batches.push(this.getEntities("ResourcePool", EntityState.Added));
-        batches.push(this.getEntities("UserResourcePool", EntityState.Added));
         batches.push(this.getEntities("Element", EntityState.Added));
         batches.push(this.getEntities("ElementField", EntityState.Added));
         batches.push(this.getEntities("UserElementField", EntityState.Added));

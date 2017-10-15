@@ -55,16 +55,13 @@
     <div class="col-md-12">
         <ul>
             <li>
-                By using <code>+</code> button increase <strong>Number of Sales</strong>, initially all organizations will have same <strong>Total Income</strong>.
-            </li>
-            <li>
                 Click on <code>Industry</code> link below and rate each item based on their importance.
             </li>
             <li>
-                Click on <code>Organization</code> in breadcrumb links to navigate back to initial view and see the difference in Total Income.
+                Click on <code>Organization</code> in breadcrumb links to navigate back to initial view and see the difference in Income.
             </li>
         </ul>
-        <resource-pool-editor [config]="{ username: 'sample', resourcePoolKey: 'Priority-Index-Sample' }"></resource-pool-editor>
+        <resource-pool-editor [config]="{ resourcePoolUniqueKey: { username: 'sample', resourcePoolKey: 'Priority-Index-Sample' } }"></resource-pool-editor>
         <p>
             This example should be enough as it is to demonstrate the idea how we could control and allocate our resources.
             However, in order to understand the real impact of this index, we should be able to compare the results of this example with the actual one.

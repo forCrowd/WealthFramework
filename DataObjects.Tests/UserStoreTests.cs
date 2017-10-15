@@ -4,7 +4,7 @@ using System;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Data.Entity;
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
 
 namespace forCrowd.WealthEconomy.DataObjects.Tests
 {
@@ -14,7 +14,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
         #region - Variables & Initialize & Cleanup -
 
         public TestContext TestContext { get; set; }
-        AppUserStore userStore;
+        private AppUserStore userStore;
 
         [TestInitialize]
         public void Initialize()
@@ -32,15 +32,14 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             userStore.Dispose();
         }
 
-        void CreateNewUserStore()
+        private void CreateNewUserStore()
         {
-            userStore = new AppUserStore(Context);
-            userStore.AutoSaveChanges = false;
+            userStore = new AppUserStore(Context) { AutoSaveChanges = false };
         }
 
-        void RefreshUserStore()
+        private void RefreshUserStore()
         {
-            base.InitializeContext();
+            InitializeContext();
             CreateNewUserStore();
         }
 
@@ -72,13 +71,16 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             catch (Exception ex)
             {
                 var entityException = (DbEntityValidationException)ex.InnerException;
-                var errors = entityException.EntityValidationErrors;
-                var error = errors.First();
-                var validationError = error.ValidationErrors.First();
+                if (entityException != null)
+                {
+                    var errors = entityException.EntityValidationErrors;
+                    var error = errors.First();
+                    var validationError = error.ValidationErrors.First();
 
-                // Assert
-                Assert.IsTrue(validationError.PropertyName == "UserName");
-                Assert.IsTrue(validationError.ErrorMessage == "The UserName field is required.");
+                    // Assert
+                    Assert.IsTrue(validationError.PropertyName == "UserName");
+                    Assert.IsTrue(validationError.ErrorMessage == "The UserName field is required.");
+                }
             }
         }
 
@@ -150,14 +152,14 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             Assert.IsTrue(isInRole);
         }
 
-        User GenerateUser()
+        private User GenerateUser()
         {
-            var userName = string.Format("user_{0:yyyyMMdd_HHmmssfff}", DateTime.Now);
-            var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@forcrowd.org", DateTime.Now);
+            var userName = $"user_{DateTime.Now:yyyyMMdd_HHmmssfff}";
+            var email = $"user_{DateTime.Now:yyyyMMdd_HHmmssfff}@forcrowd.org";
             return new User(userName, email);
         }
 
-        async Task<User> CreateUserAsync()
+        private async Task<User> CreateUserAsync()
         {
             var user = GenerateUser();
 

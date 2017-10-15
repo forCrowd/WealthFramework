@@ -76,12 +76,9 @@
     <Compile Include="ElementFieldTests.cs" />
     <Compile Include="ElementFieldIndexTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserTests.cs" />
     <Compile Include="UserElementCellTests.cs" />
-    <Compile Include="UserResourcePoolTests.cs" />
     <Compile Include="UserElementFieldIndexTests.cs" />
     <Compile Include="ElementTests.cs" />
-    <Compile Include="ResourcePoolTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">

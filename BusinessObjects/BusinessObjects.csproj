@@ -63,29 +63,25 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Models\ElementFieldIndexCalculationType.cs" />
-    <Compile Include="Models\ElementFieldIndexSortType.cs" />
-    <Compile Include="Models\ElementFieldDataType.cs" />
-    <Compile Include="Models\ElementField.cs" />
-    <Compile Include="Models\ElementCell.cs" />
-    <Compile Include="Models\UserElementField.cs" />
-    <Compile Include="Models\UserLogin.cs" />
-    <Compile Include="Models\UserClaim.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\UserRole.cs" />
-    <Compile Include="Models\UserElementCell.cs" />
+    <Compile Include="Entities\ElementField.cs" />
+    <Compile Include="Entities\ElementCell.cs" />
+    <Compile Include="Entities\UserElementField.cs" />
+    <Compile Include="Entities\UserLogin.cs" />
+    <Compile Include="Entities\UserClaim.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\UserRole.cs" />
+    <Compile Include="Entities\UserElementCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAwareAttribute.cs" />
     <Compile Include="UserCommandInterceptor.cs" />
     <Compile Include="UserCommandTreeInterceptor.cs" />
     <Compile Include="UserQueryVisitor.cs" />
-    <Compile Include="Models\ElementItem.cs" />
-    <Compile Include="Models\Element.cs" />
-    <Compile Include="Models\ResourcePool.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserResourcePool.cs" />
+    <Compile Include="Entities\ElementItem.cs" />
+    <Compile Include="Entities\Element.cs" />
+    <Compile Include="Entities\ResourcePool.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="WealthEconomyContext.cs" />
+    <Compile Include="Entities\WealthEconomyContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -1,8 +1,6 @@
 namespace forCrowd.WealthEconomy.DataObjects.Migrations
 {
-    using System;
     using System.Collections.Generic;
-    using System.Data.Entity.Infrastructure.Annotations;
     using System.Data.Entity.Migrations;
     
     public partial class V_0_80_0 : DbMigration

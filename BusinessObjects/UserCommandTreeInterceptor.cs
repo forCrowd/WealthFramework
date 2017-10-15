@@ -42,7 +42,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// <summary>
         /// In case of query command change the query by adding a filtering based on userId 
         /// </summary>
-        static bool InterceptQueryCommand(DbCommandTreeInterceptionContext interceptionContext)
+        private static bool InterceptQueryCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
             var queryCommand = interceptionContext.Result as DbQueryCommandTree;
             if (queryCommand != null)
@@ -58,7 +58,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             return false;
         }
 
-        static int GetCurrentUserId()
+        private static int GetCurrentUserId()
         {
             // Check that there is an authenticated user in this context
             var identity = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
@@ -85,7 +85,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// <summary>
         /// In case of an insert command we always assign the correct value to the userId
         /// </summary>
-        static bool InterceptInsertCommand(DbCommandTreeInterceptionContext interceptionContext)
+        private static bool InterceptInsertCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
             var insertCommand = interceptionContext.Result as DbInsertCommandTree;
             if (insertCommand != null)
@@ -136,7 +136,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// <summary>
         /// In case of an update command we always filter based on the userId
         /// </summary>
-        static bool InterceptUpdate(DbCommandTreeInterceptionContext interceptionContext)
+        private static bool InterceptUpdate(DbCommandTreeInterceptionContext interceptionContext)
         {
             var updateCommand = interceptionContext.Result as DbUpdateCommandTree;
             if (updateCommand != null)
@@ -188,7 +188,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// <summary>
         /// In case of a delete command we always filter based on the userId
         /// </summary>
-        static void InterceptDeleteCommand(DbCommandTreeInterceptionContext interceptionContext)
+        private static void InterceptDeleteCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
             var deleteCommand = interceptionContext.Result as DbDeleteCommandTree;
             if (deleteCommand != null)

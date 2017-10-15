@@ -9,8 +9,8 @@
 
     public class ForbiddenFieldsValidatorAttribute : ActionFilterAttribute
     {
-        string[] _forbiddenFields;
-        const string PATCHKEY = "PATCH";
+        private readonly string[] _forbiddenFields;
+        private const string PATCHKEY = "PATCH";
 
         public ForbiddenFieldsValidatorAttribute(params string[] fields)
         {
@@ -23,7 +23,7 @@
             base.OnActionExecuting(actionContext);
         }
 
-        void Validate(HttpActionContext actionContext)
+        private void Validate(HttpActionContext actionContext)
         {
             var patch = actionContext.ActionArguments.SingleOrDefault(arg => arg.Key.ToUpperInvariant() == PATCHKEY).Value as Delta;
 
@@ -34,7 +34,7 @@
                 return;
             }
 
-            if (patch.GetChangedPropertyNames().Intersect(_forbiddenFields).Count() > 0)
+            if (patch.GetChangedPropertyNames().Intersect(_forbiddenFields).Any())
             {
                 actionContext.ModelState.AddModelError("Forbidden fields", string.Join(", ", _forbiddenFields));
                 actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden, actionContext.ModelState);

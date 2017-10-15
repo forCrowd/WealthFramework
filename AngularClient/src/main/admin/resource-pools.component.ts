@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 
 import { ResourcePool } from "../app-entity-manager/entities/resource-pool";
 import { AdminService } from "./admin.service";

@@ -12,9 +12,9 @@
             base.OnActionExecuted(actionExecutedContext);
         }
 
-        void EnsureDataServiceVersionHeader(HttpActionExecutedContext actionExecutedContext)
+        private void EnsureDataServiceVersionHeader(HttpActionExecutedContext actionExecutedContext)
         {
-            if (actionExecutedContext.Response != null && actionExecutedContext.Response.Content != null)
+            if (actionExecutedContext.Response?.Content != null)
             {
                 var headers = actionExecutedContext.Response.Content.Headers;
 

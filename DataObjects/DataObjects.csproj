@@ -79,6 +79,12 @@
     <Compile Include="Migrations\201706241311225_V_0_80_0.Designer.cs">
       <DependentUpon>201706241311225_V_0_80_0.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710151741258_V_0_82_0.cs" />
+    <Compile Include="Migrations\201710151741258_V_0_82_0.Designer.cs">
+      <DependentUpon>201710151741258_V_0_82_0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\V_0_82_0_Updates.cs" />
+    <Compile Include="Migrations\V_0_80_0_Updates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppRoleStore.cs" />
     <Compile Include="AppUserStore.cs" />
@@ -107,6 +113,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201706241311225_V_0_80_0.resx">
       <DependentUpon>201706241311225_V_0_80_0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710151741258_V_0_82_0.resx">
+      <DependentUpon>201710151741258_V_0_82_0.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

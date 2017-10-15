@@ -1,5 +1,4 @@
 ﻿import { ResourcePool } from "./resource-pool";
-import { UserResourcePool } from "./user-resource-pool";
 import { Element } from "./element";
 import { ElementField, ElementFieldDataType } from "./element-field";
 import { UserElementField } from "./user-element-field";
@@ -9,122 +8,166 @@ import { UserElementCell } from "./user-element-cell";
 
 export class TestHelpers {
 
-    static getElement(resourcePool?: ResourcePool): Element {
+    static createElement(resourcePool?: ResourcePool): Element {
 
         if (!resourcePool) {
-            resourcePool = TestHelpers.getResourcePool();
+            resourcePool = TestHelpers.createResourcePool();
         }
 
         // Element
-        var element = new Element();
+        const element = new Element();
         element.ResourcePool = resourcePool;
         element.IsMainElement = true;
         element.ElementFieldSet = [];
         element.ElementItemSet = [];
         element.ParentFieldSet = [];
-        element.initialized = true;
 
         // Cross relation
         resourcePool.ElementSet.push(element);
 
+        element.initialize();
+
         return element;
     }
 
-    static getElementCell(elementField?: ElementField, elementItem?: ElementItem): ElementCell {
+    static createElementCell(elementField?: ElementField, elementItem?: ElementItem, numericValueTotal?: number, numericValueCount?: number, userCellDecimalValue?: number): ElementCell {
 
         if (!elementField) {
-            var element = elementItem ? elementItem.Element : null;
-            elementField = TestHelpers.getElementField(element);
+            const element = elementItem ? elementItem.Element : null;
+            elementField = TestHelpers.createElementField(element);
         }
 
         if (!elementItem) {
-            elementItem = TestHelpers.getElementItem(elementField.Element);
+            elementItem = TestHelpers.createElementItem(elementField.Element);
         }
 
         // Element cell
-        var elementCell = new ElementCell();
+        const elementCell = new ElementCell();
         elementCell.ElementField = elementField;
         elementCell.ElementItem = elementItem;
         elementCell.UserElementCellSet = [];
-        elementCell.initialized = true;
+
+        if (numericValueTotal) {
+            elementCell.NumericValueTotal = numericValueTotal;
+        }
+
+        if (numericValueCount) {
+            elementCell.NumericValueCount = numericValueCount;
+        }
 
         // Cross relation
         elementField.ElementCellSet.push(elementCell);
         elementItem.ElementCellSet.push(elementCell);
 
+        // User cell
+        if (userCellDecimalValue) {
+            TestHelpers.createUserElementCell(elementCell, userCellDecimalValue);
+        }
+
+        elementCell.initialize();
+
         return elementCell;
     }
 
-    static getElementField(element?: Element): ElementField {
+    static createElementField(element?: Element, dataType?: ElementFieldDataType, indexRatingTotal?: number, indexRatingCount?: number, userElementFieldRating?: number): ElementField {
 
         if (!element) {
-            var resourcePool = TestHelpers.getResourcePool();
-            element = TestHelpers.getElement(resourcePool);
+            const resourcePool = TestHelpers.createResourcePool();
+            element = TestHelpers.createElement(resourcePool);
         }
 
         // Element field
-        var elementField = new ElementField();
+        const elementField = new ElementField();
         elementField.Element = element;
+        elementField.IndexEnabled = true;
         elementField.ElementCellSet = [];
         elementField.UserElementFieldSet = [];
-        elementField.initialized = true;
+
+        if (dataType) {
+            elementField.DataType = dataType;
+        }
+
+        if (indexRatingTotal) {
+            elementField.IndexRatingTotal = indexRatingTotal;
+        }
+
+        if (indexRatingCount) {
+            elementField.IndexRatingCount = indexRatingCount;
+        }
 
         // Cross relation
         element.ElementFieldSet.push(elementField);
 
+        // User element field
+        if (userElementFieldRating) {
+            TestHelpers.createUserElementField(elementField, userElementFieldRating);
+        }
+
+        elementField.initialize();
+
         return elementField;
     }
 
-    static getElementItem(element?: Element): ElementItem {
+    static createElementItem(element?: Element): ElementItem {
 
         if (!element) {
-            var resourcePool = TestHelpers.getResourcePool();
-            element = TestHelpers.getElement(resourcePool);
+            const resourcePool = TestHelpers.createResourcePool();
+            element = TestHelpers.createElement(resourcePool);
         }
 
         // Element item
-        var elementItem = new ElementItem();
+        const elementItem = new ElementItem();
         elementItem.Element = element;
         elementItem.ElementCellSet = [];
         elementItem.ParentCellSet = [];
-        elementItem.initialized = true;
 
         // Cross relation
         element.ElementItemSet.push(elementItem);
 
+        elementItem.initialize();
+
         return elementItem;
     }
 
-    static getResourcePool(): ResourcePool {
-        var resourcePool = new ResourcePool();
-        resourcePool.UserResourcePoolSet = [];
+    static createResourcePool(): ResourcePool {
+        const resourcePool = new ResourcePool();
         resourcePool.ElementSet = [];
-        resourcePool.initialized = true;
+        resourcePool.initialize();
         return resourcePool;
     }
 
-    static getUserElementCell(elementCell: ElementCell): UserElementCell {
+    static createUserElementCell(elementCell: ElementCell, decimalValue?: number): UserElementCell {
 
         // User element cell
-        var userElementCell = new UserElementCell();
+        const userElementCell = new UserElementCell();
         userElementCell.ElementCell = elementCell;
-        userElementCell.initialized = true;
+
+        if (decimalValue) {
+            userElementCell.DecimalValue = decimalValue;
+        }
 
         // Cross relation
         elementCell.UserElementCellSet.push(userElementCell);
 
+        userElementCell.initialize();
+
         return userElementCell;
     }
 
-    static getUserElementField(elementField: ElementField): UserElementField {
+    static createUserElementField(elementField: ElementField, rating?: number): UserElementField {
 
         // User element field
-        var userElementField = new UserElementField();
+        const userElementField = new UserElementField();
         userElementField.ElementField = elementField;
-        userElementField.initialized = true;
+
+        if (rating) {
+            userElementField.Rating = rating;
+        }
 
         // Cross relation
         elementField.UserElementFieldSet.push(userElementField);
+
+        userElementField.initialize();
 
         return userElementField;
     }

@@ -3,7 +3,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
 [![Join the chat at https://gitter.im/forCrowd/WealthEconomy](https://badges.gitter.im/forCrowd/WealthEconomy.svg)](https://gitter.im/forCrowd/WealthEconomy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Experimental ideas on improving how the economy works
+Experimental ideas on increasing sustainability and productivity
 
 ## Current Stack
 

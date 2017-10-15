@@ -9,19 +9,9 @@
     [RoutePrefix("api/ResourcePoolApi")]
     public class ResourcePoolApiController : BaseApiController
     {
-        ResourcePoolManager _resourcePoolManager;
+        private ResourcePoolManager _resourcePoolManager;
 
-        protected ResourcePoolManager ResourcePoolManager
-        {
-            get
-            {
-                if (_resourcePoolManager == null)
-                {
-                    _resourcePoolManager = new ResourcePoolManager();
-                }
-                return _resourcePoolManager;
-            }
-        }
+        protected ResourcePoolManager ResourcePoolManager => _resourcePoolManager ?? (_resourcePoolManager = new ResourcePoolManager());
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]

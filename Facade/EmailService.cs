@@ -2,7 +2,6 @@
 {
     using Framework;
     using Microsoft.AspNet.Identity;
-    using System;
     using System.Net.Mail;
     using System.Net.Mime;
     using System.Threading.Tasks;
@@ -116,7 +115,7 @@
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }

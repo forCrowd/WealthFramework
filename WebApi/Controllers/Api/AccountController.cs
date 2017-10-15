@@ -1,4 +1,6 @@
-﻿namespace forCrowd.WealthEconomy.WebApi.Controllers.Api
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
+namespace forCrowd.WealthEconomy.WebApi.Controllers.Api
 {
     using BusinessObjects;
     using Microsoft.AspNet.Identity;
@@ -135,7 +137,7 @@
         public IHttpActionResult ExternalLogin(string provider, string clientReturnUrl)
         {
             // Request a redirect to the external login provider
-            var callBackUrl = string.Format("/api/Account/ExternalLoginCallback?clientReturnUrl={0}", clientReturnUrl);
+            var callBackUrl = $"/api/Account/ExternalLoginCallback?clientReturnUrl={clientReturnUrl}";
             return new ChallengeResult(Request, provider, callBackUrl);
         }
 
@@ -147,7 +149,7 @@
             // Error message from the provider, pass it on
             if (!string.IsNullOrWhiteSpace(error))
             {
-                return Redirect(string.Format("{0};error={1}", clientReturnUrl, error));
+                return Redirect($"{clientReturnUrl};error={error}");
             }
 
             // Since this method MUST return RedirectResult, cover the whole block with try & catch,
@@ -155,16 +157,16 @@
             // coni2k - 16 Jan. '16
             try
             {
-                var externalLoginInfo = await Authentication.GetExternalLoginInfoAsync();
+                var externalLoginInfo = await Request.GetOwinContext().Authentication.GetExternalLoginInfoAsync();
 
                 // We will switch to local account, sign out from the external
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                Request.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
 
                 // Validate external login info
                 if (externalLoginInfo == null)
                 {
                     // User canceled the operation?
-                    return Redirect(string.Format("{0};error={1}", clientReturnUrl, "Login failed, please try again"));
+                    return Redirect($"{clientReturnUrl};error=Login failed, please try again");
                 }
 
                 // Validate email
@@ -172,7 +174,8 @@
                 if (string.IsNullOrWhiteSpace(email))
                 {
                     // User didn't give permission for email address
-                    return Redirect(string.Format("{0};error={1}", clientReturnUrl, "Login failed, please give permission to access your email address"));
+                    return Redirect(
+                        $"{clientReturnUrl};error=Login failed, please give permission to access your email address");
                 }
 
                 var user = await UserManager.FindAsync(externalLoginInfo.Login);
@@ -193,11 +196,11 @@
                         var errorMessage = GetErrorMessage(result);
                         if (errorMessage != null)
                         {
-                            return Redirect(string.Format("{0};error={1}", clientReturnUrl, errorMessage));
+                            return Redirect($"{clientReturnUrl};error={errorMessage}");
                         }
 
                         // init=true: to let the client knows that this account is newly created (first login from this external login)
-                        clientReturnUrl = string.Format("{0};init=true", clientReturnUrl);
+                        clientReturnUrl = $"{clientReturnUrl};init=true";
                     }
                     else // There is a user with this email: Link accounts
                     {
@@ -206,7 +209,7 @@
                         var errorMessage = GetErrorMessage(result);
                         if (errorMessage != null)
                         {
-                            return Redirect(string.Format("{0};error={1}", clientReturnUrl, errorMessage));
+                            return Redirect($"{clientReturnUrl};error={errorMessage}");
                         }
                     }
                 }
@@ -222,7 +225,7 @@
                 }
 
                 // Redirect
-                return Redirect(string.Format("{0};token={1}", clientReturnUrl, user.SingleUseToken));
+                return Redirect($"{clientReturnUrl};token={user.SingleUseToken}");
             }
             catch (Exception ex)
             {
@@ -231,7 +234,7 @@
                 logger.Log(ex, Request, "AccountController.ExternalLoginCallback");
 
                 // Redirect the user back to the client
-                return Redirect(string.Format("{0};error={1}", clientReturnUrl, "Login failed, please try again later"));
+                return Redirect($"{clientReturnUrl};error=Login failed, please try again later");
             }
         }
 
@@ -305,11 +308,6 @@
 
         #region Helpers
 
-        private IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
-
         /// <summary>
         /// String version of GetErrorResult for ExternalLoginCallback function
         /// </summary>
@@ -348,7 +346,7 @@
             {
                 if (result.Errors != null)
                 {
-                    foreach (string error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("Errors", error);
                     }

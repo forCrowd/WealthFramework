@@ -24,10 +24,10 @@ const resourcePoolRoutes: Routes = [
         ElementManagerComponent,
         ResourcePoolCreateComponent,
         ResourcePoolManagerComponent,
-        ResourcePoolViewerComponent,
+        ResourcePoolViewerComponent
     ],
     exports: [
-        RouterModule,
+        RouterModule
     ],
     imports: [
         CommonModule,

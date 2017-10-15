@@ -45,23 +45,6 @@
                         <span id="InitialValueHelp" class="help-block">Initial amount in the pool.</span>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': resourcePool.UserResourcePoolSet[0].entityAspect.getValidationErrors('ResourcePoolRate').length > 0 }">
-                    <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate (%)</label>
-                    <div class="col-md-10">
-                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" [(ngModel)]="resourcePool.UserResourcePoolSet[0].ResourcePoolRate" class="form-control" aria-describedby="ResourcePoolRateHelp" />
-                        <span id="ResourcePoolRateHelp" class="help-block">Determines the size of the pool based on Total Income of the organizations.</span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': resourcePool.entityAspect.getValidationErrors('UseFixedResourcePoolRate').length > 0 }">
-                    <label class="control-label col-md-2">Use Fixed Resource Pool Rate</label>
-                    <div class="col-md-10">
-                        <select id="UseFixedResourcePoolRate" name="UseFixedResourcePoolRate" [(ngModel)]="resourcePool.UseFixedResourcePoolRate" class="form-control" aria-describedby="UseFixedResourcePoolRateHelp">
-                            <option value="true">True</option>
-                            <option value="false" selected="selected">False</option>
-                        </select>
-                        <span id="UseFixedResourcePoolRateHelp" class="help-block">Determines whether the other users can set their own 'Resource Pool Rate' values or only use a fixed value that has been set above.</span>
-                    </div>
-                </div>
                 <div class="form-group hide">
                     <div class="col-md-10">
                         <input id="RowVersion" name="RowVersion" [(ngModel)]="resourcePool.RowVersion" type="hidden">
@@ -173,21 +156,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementField.DataType !== ElementFieldDataType.String && elementField.DataType !== ElementFieldDataType.Element && elementField.DataType !== ElementFieldDataType.DirectIncome && elementField.DataType !== ElementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementField.DataType === ElementFieldDataType.Decimal" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }">
                         <label class="control-label col-md-2">Use Fixed Value</label>
                         <div class="col-md-10">
                             <select id="UseFixedValue" name="UseFixedValue" [(ngModel)]="elementField.UseFixedValue" class="form-control" aria-describedby="UseFixedValueHelp">
-                                <option value=""></option>
                                 <option value="true">True</option>
-                                <option value="false">False</option>
+                                <option value="false" selected="selected">False</option>
                             </select>
                             <span id="UseFixedValueHelp" class="help-block">
-                                Determines whether the other users can set their own values for this field or only use a fixed value that will be set in Cells tab.<br />
-                                e.g. 'Sales Price' field should use a fixed value and 'Rating' field should be set by all users.
+                                Determines whether the values of this field will contain static data or will be set by users.<br />
+                                e.g. 'Product Price' field should use a fixed value and 'Rating' field should be set by all users.
                             </span>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementField.DataType !== ElementFieldDataType.String && elementField.DataType !== ElementFieldDataType.Element && elementField.DataType !== ElementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexEnabled').length > 0 }">
+                    <div class="form-group" *ngIf="elementField.DataType !== ElementFieldDataType.String && elementField.DataType !== ElementFieldDataType.Element" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexEnabled').length > 0 }">
                         <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
                         <div class="col-md-10">
                             <select id="IndexEnabled" name="IndexEnabled" [(ngModel)]="elementField.IndexEnabled" class="form-control" aria-describedby="IndexEnabledHelp">
@@ -197,34 +179,6 @@
                             <span id="IndexEnabledHelp" class="help-block">
                                 Determines whether the values of this field will be used for calculating an income from the pool.
                                 e.g. Should be 'true' for 'Rating' field.
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group" *ngIf="elementField.IndexEnabled" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexCalculationType').length > 0 }">
-                        <label for="IndexCalculationType" class="control-label col-md-2">Index Calculation Type</label>
-                        <div class="col-md-10">
-                            <select id="IndexCalculationType" name="IndexCalculationType" [(ngModel)]="elementField.IndexCalculationType" class="form-control" aria-describedby="IndexCalculationTypeHelp">
-                                <option *ngFor="let item of getElementFieldIndexCalculationTypeFiltered()" [value]="item.value">{{ item.name }}</option>
-                            </select>
-                            <span id="IndexCalculationTypeHelp" class="help-block">
-                                Aggressive (Default): Uses the lowest score as the base (reference) rating in the group, then calculates the difference from that base.<br />
-                                Base rating (lowest) gets 0 from the pool and other items get an amount based on their difference.<br />
-                                Aims to maximize the benefit of the pool.<br />
-                                <br />
-                                Passive: Sums all ratings and calculates the percentages.<br />
-                                All items get an amount, including the lowest scored item.<br />
-                                Good for cases that only use 'Resource Pool - Initial Amount' feature.<br />
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group" *ngIf="elementField.IndexEnabled" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexSortType').length > 0 }">
-                        <label for="IndexSortType" class="control-label col-md-2">Index Sort Type</label>
-                        <div class="col-md-10">
-                            <select id="IndexSortType" name="IndexSortType" [(ngModel)]="elementField.IndexSortType" class="form-control" aria-describedby="IndexSortTypeHelp">
-                                <option *ngFor="let item of getElementFieldIndexSortTypeFiltered()" [value]="item.value">{{ item.name }}</option>
-                            </select>
-                            <span id="IndexSortTypeHelp" class="help-block">
-                                Determines whether the higher values will receive more from the pool, or the lower values.
                             </span>
                         </div>
                     </div>
@@ -419,23 +373,7 @@
                             <input id="StringValue" name="StringValue" type="text" [(ngModel)]="elementCell.StringValue" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Boolean" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('BooleanValue').length > 0 }">
-                        <label class="control-label col-md-2">Value</label>
-                        <div class="col-md-10">
-                            <select id="BooleanValue" name="BooleanValue" [(ngModel)]="elementCell.UserElementCellSet[0].BooleanValue" class="form-control" aria-describedby="BooleanValueHelp">
-                                <option value=""></option>
-                                <option value="true">True</option>
-                                <option value="false">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Integer" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('IntegerValue').length > 0 }">
-                        <label for="IntegerValue" class="control-label col-md-2">Value</label>
-                        <div class="col-md-10">
-                            <input id="IntegerValue" name="IntegerValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].IntegerValue" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal || elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome || elementCell.ElementField.DataType === ElementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }">
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }">
                         <label for="DecimalValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
                             <input id="DecimalValue" name="DecimalValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].DecimalValue" class="form-control" />
@@ -505,7 +443,15 @@
                             {{ elementCell.ElementItem.Name }}
                         </td>
                         <td>
-                            {{ elementCell.value() }}
+                            <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String">
+                                {{ elementCell.StringValue }}
+                            </span>
+                            <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal">
+                                {{ elementCell.UserElementCellSet[0] ? elementCell.UserElementCellSet[0].DecimalValue : "N/A" }}
+                            </span>
+                            <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element">
+                                {{ elementCell.SelectedElementItem ? elementCell.SelectedElementItem.Name : "N/A" }}
+                            </span>
                         </td>
                         <td>
                             <button (click)="editElementCell(elementCell)" type="button" class="btn btn-link">

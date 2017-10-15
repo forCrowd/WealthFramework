@@ -1,8 +1,10 @@
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
-    using forCrowd.WealthEconomy.DataObjects;
+    using DataObjects;
     using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Http;
@@ -17,7 +19,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             _userManager = new AppUserManager(appUserStore, appRoleStore);
         }
 
-        AppUserManager _userManager = null;
+        private readonly AppUserManager _userManager;
 
         // GET odata/Users
         [AllowAnonymous]

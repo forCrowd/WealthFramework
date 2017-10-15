@@ -2,7 +2,7 @@
 {
     using System.Web.Http.Filters;
 
-    public class FilterConfig
+    public static class FilterConfig
     {
         public static void RegisterFilters(HttpFilterCollection filters)
         {

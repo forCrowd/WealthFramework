@@ -1,4 +1,4 @@
-﻿using System;
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace forCrowd.WealthEconomy.BusinessObjects.Tests

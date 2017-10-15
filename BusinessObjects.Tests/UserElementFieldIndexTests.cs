@@ -1,4 +1,4 @@
-﻿using System;
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace forCrowd.WealthEconomy.BusinessObjects.Tests
@@ -13,10 +13,10 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
 
             var resourcePool = new ResourcePool(user, "CMRP");
             
-            var newIndex = resourcePool
+            resourcePool
                 .AddElement("Element")
-                .AddField("Field", ElementFieldDataType.Boolean, true)
-                .EnableIndex(ElementFieldIndexSortType.HighestToLowest)
+                .AddField("Field", ElementFieldDataType.Decimal, true)
+                .EnableIndex()
                 .AddUserRating(0);
         }
     }

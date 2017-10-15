@@ -29,7 +29,7 @@
         [HttpPost]
         public IHttpActionResult ConflictResult()
         {
-            return this.Conflict();
+            return Conflict();
         }
 
         [Route("ExceptionResult")]

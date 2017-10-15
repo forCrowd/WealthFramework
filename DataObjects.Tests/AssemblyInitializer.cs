@@ -1,5 +1,4 @@
-﻿using forCrowd.WealthEconomy.BusinessObjects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace forCrowd.WealthEconomy.DataObjects.Tests
 {

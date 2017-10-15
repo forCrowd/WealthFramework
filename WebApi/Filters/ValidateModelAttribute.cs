@@ -13,7 +13,7 @@
             base.OnActionExecuting(actionContext);
         }
 
-        void OnActionExecutingInternal(HttpActionContext actionContext)
+        private void OnActionExecutingInternal(HttpActionContext actionContext)
         {
             if (!actionContext.ModelState.IsValid)
             {

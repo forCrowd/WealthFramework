@@ -125,7 +125,7 @@ export class AccountService {
     }
 
     getExternalLoginUrl(provider: string) {
-        let url = this.externalLoginUrl
+        const url = this.externalLoginUrl
             + "?provider="
             + provider + "&clientReturnUrl="
             + window.location.origin + "/app/account/login";
@@ -145,11 +145,11 @@ export class AccountService {
         this.isBusyLocal = true;
 
         // Validate: Don't allow to set a username that is in "restrict usernames" list
-        var username = registerBindingModel.UserName.toLowerCase();
-        var restrictUsername = this.restrictUserNames.indexOf(username) > -1;
+        const username = registerBindingModel.UserName.toLowerCase();
+        const restrictUsername = this.restrictUserNames.indexOf(username) > -1;
 
         if (restrictUsername) {
-            var errorMessage = "Username is already taken";
+            const errorMessage = "Username is already taken";
             this.logger.logError(errorMessage);
             return Observable.throw(errorMessage);
         }
@@ -166,7 +166,7 @@ export class AccountService {
             })
             .finally(() => {
                 this.isBusyLocal = false;
-            });;
+            });
     }
 
     resendConfirmationEmail() {

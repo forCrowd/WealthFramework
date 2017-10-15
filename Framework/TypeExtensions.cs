@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace forCrowd.WealthEconomy.Framework
 {
@@ -28,7 +26,7 @@ namespace forCrowd.WealthEconomy.Framework
             if (self is string)
                 return string.IsNullOrWhiteSpace(self.ToString());
             else
-                return object.Equals(self, default(T));
+                return Equals(self, default(T));
         }
 
         /// <summary>

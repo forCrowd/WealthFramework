@@ -1,6 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.DataObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects;
+    using BusinessObjects;
     using System;
     using System.Data.Entity;
     using System.Linq;
@@ -8,13 +8,13 @@
 
     public static class DbSetExtensions
     {
-        public static IQueryable<TEntity> GetAll<TEntity>(this DbSet<TEntity> dbSet, bool live = true, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntity
+        public static IQueryable<TEntity> GetAll<TEntity>(this DbSet<TEntity> dbSet, bool liveFilter = true, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntity
         {
             // Base
             var query = dbSet.AsQueryable();
 
             // Live?
-            if (live)
+            if (liveFilter)
             {
                 query = query.Where(entity => !entity.DeletedOn.HasValue);
             }

@@ -2,7 +2,6 @@
 import { ResourcePool } from "./resource-pool";
 import { UserElementCell } from "./user-element-cell";
 import { UserElementField } from "./user-element-field";
-import { UserResourcePool } from "./user-resource-pool";
 import { UserRole } from "./user-role";
 import { stripInvalidChars } from "../../utils";
 
@@ -12,17 +11,18 @@ export class User extends EntityBase {
     Id = 0;
     Email = "";
     EmailConfirmed = false;
-    EmailConfirmationSentOn?: Date;
+    EmailConfirmationSentOn: Date | null;
     get UserName(): string {
         return this.fields.userName;
     }
     set UserName(value: string) {
-        var newValue = stripInvalidChars(value);
+        const newValue = stripInvalidChars(value);
 
         if (this.fields.userName !== newValue) {
             this.fields.userName = newValue;
         }
     }
+
     SingleUseToken: string = null;
     HasPassword = false;
     FirstName = "";
@@ -39,7 +39,6 @@ export class User extends EntityBase {
     Logins: any[];
     Roles: UserRole[];
     ResourcePoolSet: ResourcePool[];
-    UserResourcePoolSet: UserResourcePool[];
     UserElementFieldSet: UserElementField[];
     UserElementCellSet: UserElementCell[];
 
@@ -66,7 +65,8 @@ export class User extends EntityBase {
 
     getResourcePoolSetSorted(): ResourcePool[] {
         return this.ResourcePoolSet.sort((a, b) => {
-            let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
+            const nameA = a.Name.toLowerCase();
+            const nameB = b.Name.toLowerCase();
             if (nameA < nameB) { return -1 };
             if (nameA > nameB) { return 1 };
             return 0;

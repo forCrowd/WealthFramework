@@ -55,7 +55,7 @@ import { AppComponent } from "./app.component";
         AccountModule,
         AdminModule,
         ResourcePoolModule, // Register ResourcePool & User modules as the last ones, because of "catch all" routes
-        UserModule,
+        UserModule
     ],
     providers: [
         Title

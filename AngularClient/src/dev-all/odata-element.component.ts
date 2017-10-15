@@ -76,7 +76,7 @@ export class ODataElementComponent {
 
                 var element = {
                     ResourcePoolId: resourcePool.Id,
-                    Name: "New element " + getUniqueValue(),
+                    Name: `New element ${getUniqueValue()}`,
                     IsMainElement: false
                 };
 
@@ -136,7 +136,7 @@ export class ODataElementComponent {
             var element = resourcePool.ElementSet[0];
 
             var body = {
-                Name: "Updated element " + getUniqueValue(),
+                Name: `Updated element ${getUniqueValue()}`,
                 RowVersion: element.RowVersion
             };
 
