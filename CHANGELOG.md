@@ -5,6 +5,26 @@
 * Facade - Refactoring
 * WebApi - Owner check bug fix
 
+**0.80.5**
+
+* BusinessObjects - Appveyor build fix #3 - coni2k
+
+**0.80.4**
+
+* BusinessObjects - Appveyor build fix #2 - coni2k
+
+**0.80.3**
+
+* BusinessObjects - Appveyor build fix - coni2k
+
+**0.80.2**
+
+* AngularClient - Contributors page - JoseASotoV
+
+**0.80.1**
+
+* AngularClient - Contributors page - melkor54248
+
 **0.80.0**
 
 * Update computed fields

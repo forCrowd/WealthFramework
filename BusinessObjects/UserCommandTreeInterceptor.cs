@@ -44,7 +44,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// </summary>
         static bool InterceptQueryCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
-            if (interceptionContext.Result is DbQueryCommandTree queryCommand)
+            var queryCommand = interceptionContext.Result as DbQueryCommandTree;
+            if (queryCommand != null)
             {
                 var newQuery = queryCommand.Query.Accept(new UserQueryVisitor());
                 interceptionContext.Result = new DbQueryCommandTree(
@@ -71,7 +72,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
                 throw new SecurityException("Unauthenticated access");
             }
 
-            int.TryParse(userIdclaim.Value, out var userId);
+            int userId;
+            int.TryParse(userIdclaim.Value, out userId);
             if (userId == 0)
             {
                 throw new SecurityException("Unauthenticated access");

@@ -136,7 +136,8 @@
 
             foreach (var item in entries)
             {
-                if (item.Entity is IEntity changedOrAddedItem)
+                var changedOrAddedItem = item.Entity as IEntity;
+                if (changedOrAddedItem != null)
                 {
                     if (item.State == EntityState.Added)
                     {
