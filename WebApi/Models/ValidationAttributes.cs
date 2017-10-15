@@ -10,7 +10,7 @@
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var manager = HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
             var userName = value.ToString();
             var user = Task.Run(() => manager.FindByNameAsync(userName)).Result;
 
@@ -25,7 +25,7 @@
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var manager = HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
             var email = value.ToString();
             var task = Task.Run(() => manager.FindByEmailAsync(email));
             var user = task.Result;

@@ -2,6 +2,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
+    using forCrowd.WealthEconomy.DataObjects;
     using System.Linq;
     using System.Web.Http;
 
@@ -9,16 +10,19 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     {
         public RolesController()
         {
-            MainUnitOfWork = new RoleUnitOfWork();
+            var dbContext = new WealthEconomyContext();
+            var appUserStore = new AppUserStore(dbContext);
+            var appRoleStore = new AppRoleStore(dbContext);
+            _userManager = new AppUserManager(appUserStore, appRoleStore);
         }
 
-        protected RoleUnitOfWork MainUnitOfWork { get; private set; }
+        AppUserManager _userManager = null;
 
         // GET odata/Roles
         [AllowAnonymous]
         public IQueryable<Role> Get()
         {
-            return MainUnitOfWork.AllLive;
+            return _userManager.GetRoleSet();
         }
     }
 }

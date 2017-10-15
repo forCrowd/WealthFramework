@@ -2,99 +2,247 @@
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.DataObjects;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Threading.Tasks;
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
-    public interface IResourcePoolManager
+    public class ResourcePoolManager : IDisposable
     {
-        IQueryable<ResourcePool> All { get; }
-        IQueryable<ResourcePool> AllLive { get; }
-
-        Task<int> DeleteAsync(int resourcePoolId);
-        Task<ResourcePool> GetByIdAsync(int resourcePoolId, bool live = true, params Expression<Func<ResourcePool, object>>[] includeProperties);
-        Task<int> InsertAsync(ResourcePool entity);
-        Task<int> SaveChangesAsync();
-        Task UpdateComputedFieldsAsync(int resourcePoolId);
-    }
-
-    public class ResourcePoolManager : IResourcePoolManager, IDisposable
-    {
-        public IQueryable<ResourcePool> All { get { return ResourcePoolStore; } }
-        public IQueryable<ResourcePool> AllLive { get { return ResourcePoolStore.Where(entity => !entity.DeletedOn.HasValue); } }
-
+        // Fields
+        WealthEconomyContext _context = new WealthEconomyContext();
         bool disposed = false;
-        WealthEconomyContext Context { get; set; }
-        BaseRepository<ElementCell> ElementCellStore { get; set; }
-        BaseRepository<ElementField> ElementFieldStore { get; set; }
-        DbSet<ResourcePool> ResourcePoolStore { get; set; }
-        BaseRepository<UserElementCell> UserElementCellStore { get; set; }
-        BaseRepository<UserElementField> UserElementFieldStore { get; set; }
-        BaseRepository<UserResourcePool> UserResourcePoolStore { get; set; }
+        DbSet<ElementCell> _elementCellStore = null;
+        DbSet<ElementField> _elementFieldStore = null;
+        DbSet<ElementItem> _elementItemStore = null;
+        DbSet<Element> _elementStore = null;
+        DbSet<ResourcePool> _resourcePoolStore = null;
+        DbSet<UserElementCell> _userElementCellStore = null;
+        DbSet<UserElementField> _userElementFieldStore = null;
+        DbSet<UserResourcePool> _userResourcePoolStore = null;
 
         public ResourcePoolManager()
         {
-            Context = new WealthEconomyContext();
-            ElementCellStore = new BaseRepository<ElementCell>(Context);
-            ElementFieldStore = new BaseRepository<ElementField>(Context);
-            ResourcePoolStore = Context.Set<ResourcePool>();
-            UserElementCellStore = new BaseRepository<UserElementCell>(Context);
-            UserElementFieldStore = new BaseRepository<UserElementField>(Context);
-            UserResourcePoolStore = new BaseRepository<UserResourcePool>(Context);
+            _elementStore = _context.Set<Element>();
+            _elementCellStore = _context.Set<ElementCell>();
+            _elementFieldStore = _context.Set<ElementField>();
+            _elementItemStore = _context.Set<ElementItem>();
+            _resourcePoolStore = _context.Set<ResourcePool>();
+            _userElementCellStore = _context.Set<UserElementCell>();
+            _userElementFieldStore = _context.Set<UserElementField>();
+            _userResourcePoolStore = _context.Set<UserResourcePool>();
         }
 
-        public async Task<int> DeleteAsync(int resourcePoolId)
+        public async Task<int> AddElementAsync(Element entity)
         {
-            var resourcePool = await GetByIdAsync(resourcePoolId);
-
-            if (resourcePool == null)
-            {
-                return 0;
-            }
-
-            ResourcePoolStore.Remove(resourcePool);
-
-            return await Context.SaveChangesAsync();
+            _elementStore.Add(entity);
+            return await _context.SaveChangesAsync();
         }
 
-        public async Task<ResourcePool> GetByIdAsync(int resourcePoolId, bool live = true, params Expression<Func<ResourcePool, object>>[] includeProperties)
+        public async Task<int> AddElementCellAsync(ElementCell entity)
         {
-            // Main query
-            var query = ResourcePoolStore.AsQueryable().Where(entity => entity.Id == resourcePoolId);
-
-            // Filter deleted records
-            if (live)
-            {
-                query = query.Where(entity => !entity.DeletedOn.HasValue);
-            }
-
-            // Include properties
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-
-            // Return
-            return await query.SingleOrDefaultAsync();
+            _elementCellStore.Add(entity);
+            return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> InsertAsync(ResourcePool entity)
+        public async Task<int> AddElementFieldAsync(ElementField entity)
         {
-            ResourcePoolStore.Add(entity);
-            return await Context.SaveChangesAsync();
+            _elementFieldStore.Add(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> AddElementItemAsync(ElementItem entity)
+        {
+            _elementItemStore.Add(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> AddResourcePoolAsync(ResourcePool entity)
+        {
+            _resourcePoolStore.Add(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> AddUserElementCellAsync(UserElementCell entity)
+        {
+            _userElementCellStore.Add(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> AddUserElementFieldAsync(UserElementField entity)
+        {
+            _userElementFieldStore.Add(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> AddUserResourcePoolAsync(UserResourcePool entity)
+        {
+            _userResourcePoolStore.Add(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteElementAsync(int elementId)
+        {
+            var entity = await GetElementSet(elementId).SingleOrDefaultAsync();
+            _elementStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteElementCellAsync(int elementCellId)
+        {
+            var entity = await GetElementCellSet(elementCellId).SingleOrDefaultAsync();
+            _elementCellStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteElementFieldAsync(int elementFieldId)
+        {
+            var entity = await GetElementFieldSet(elementFieldId).SingleOrDefaultAsync();
+            _elementFieldStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteElementItemAsync(int elementItemId)
+        {
+            var entity = await GetElementItemSet(elementItemId).SingleOrDefaultAsync();
+            _elementItemStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteResourcePoolAsync(int resourcePoolId)
+        {
+            var entity = await GetResourcePoolSet(resourcePoolId).SingleOrDefaultAsync();
+            _resourcePoolStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteUserElementCellAsync(int userId, int elementCellId)
+        {
+            var entity = await GetUserElementCellSet(userId, elementCellId).SingleOrDefaultAsync();
+            _userElementCellStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteUserElementFieldAsync(int userId, int elementFieldId)
+        {
+            var entity = await GetUserElementFieldSet(userId, elementFieldId).SingleOrDefaultAsync();
+            _userElementFieldStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteUserResourcePoolAsync(int userId, int resourcePoolId)
+        {
+            var entity = await GetUserResourcePoolSet(userId, resourcePoolId).SingleOrDefaultAsync();
+            _userResourcePoolStore.Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        public IQueryable<Element> GetElementSet(int? elementId, bool live = true, params Expression<Func<Element, object>>[] includeProperties)
+        {
+            var query = _elementStore.GetAll(live, includeProperties);
+
+            if (elementId.HasValue)
+            {
+                query = query.Where(entity => entity.Id == elementId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<ElementCell> GetElementCellSet(int? elementCellId, bool live = true, params Expression<Func<ElementCell, object>>[] includeProperties)
+        {
+            var query = _elementCellStore.GetAll(live, includeProperties);
+
+            if (elementCellId.HasValue)
+            {
+                query = query.Where(entity => entity.Id == elementCellId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<ElementField> GetElementFieldSet(int? elementFieldId, bool live = true, params Expression<Func<ElementField, object>>[] includeProperties)
+        {
+            var query = _elementFieldStore.GetAll(live, includeProperties);
+
+            if (elementFieldId.HasValue)
+            {
+                query = query.Where(entity => entity.Id == elementFieldId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<ElementItem> GetElementItemSet(int? elementItemId, bool live = true, params Expression<Func<ElementItem, object>>[] includeProperties)
+        {
+            var query = _elementItemStore.GetAll(live, includeProperties);
+
+            if (elementItemId.HasValue)
+            {
+                query = query.Where(entity => entity.Id == elementItemId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<ResourcePool> GetResourcePoolSet(int? resourcePoolId = null, bool live = true, params Expression<Func<ResourcePool, object>>[] includeProperties)
+        {
+            var query = _resourcePoolStore.GetAll(live, includeProperties);
+
+            if (resourcePoolId.HasValue)
+            {
+                query = query.Where(entity => entity.Id == resourcePoolId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<UserElementCell> GetUserElementCellSet(int? userId = null, int? elementCellId = null, bool live = true, params Expression<Func<UserElementCell, object>>[] includeProperties)
+        {
+            var query = _userElementCellStore.GetAll(live, includeProperties);
+
+            if (userId.HasValue && elementCellId.HasValue)
+            {
+                query = query.Where(entity => entity.UserId == userId && entity.ElementCellId == elementCellId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<UserElementField> GetUserElementFieldSet(int? userId = null, int? elementFieldId = null, bool live = true, params Expression<Func<UserElementField, object>>[] includeProperties)
+        {
+            var query = _userElementFieldStore.GetAll(live, includeProperties);
+
+            if (userId.HasValue && elementFieldId.HasValue)
+            {
+                query = query.Where(entity => entity.UserId == userId && entity.ElementFieldId == elementFieldId.Value);
+            }
+
+            return query;
+        }
+
+        public IQueryable<UserResourcePool> GetUserResourcePoolSet(int? userId = null, int? resourcePoolId = null, bool live = true, params Expression<Func<UserResourcePool, object>>[] includeProperties)
+        {
+            var query = _userResourcePoolStore.GetAll(live, includeProperties);
+
+            if (userId.HasValue && resourcePoolId.HasValue)
+            {
+                query = query.Where(entity => entity.UserId == userId && entity.ResourcePoolId == resourcePoolId.Value);
+            }
+
+            return query;
         }
 
         public async Task<int> SaveChangesAsync()
         {
-            return await Context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public async Task UpdateComputedFieldsAsync(int resourcePoolId)
         {
-            var resourcePool = await GetByIdAsync(resourcePoolId);
+            var resourcePool = await GetResourcePoolSet(resourcePoolId, true, entity => entity.UserResourcePoolSet).SingleOrDefaultAsync();
 
             if (resourcePool == null)
             {
@@ -114,7 +262,12 @@
 
         void UpdateElementCellComputedFields(ResourcePool resourcePool)
         {
-            var list = ElementCellStore.AllLiveIncluding(cell => cell.ElementField, cell => cell.UserElementCellSet)
+            var query = _elementCellStore
+                .Where(entity => !entity.DeletedOn.HasValue)
+                .Include(cell => cell.ElementField)
+                .Include(cell => cell.UserElementCellSet);
+
+            var list = query
                 .Where(cell => cell.ElementField.Element.ResourcePool.Id == resourcePool.Id
                     && (cell.ElementField.DataType == (byte)ElementFieldDataType.Boolean
                     || cell.ElementField.DataType == (byte)ElementFieldDataType.Integer
@@ -142,7 +295,11 @@
 
         void UpdateElementFieldComputedFields(ResourcePool resourcePool)
         {
-            var list = ElementFieldStore.AllLiveIncluding(field => field.UserElementFieldSet)
+            var query = _elementFieldStore
+                .Where(entity => !entity.DeletedOn.HasValue)
+                .Include(field => field.UserElementFieldSet);
+
+            var list = query
                 .Where(field => field.Element.ResourcePool.Id == resourcePool.Id
                     && field.IndexEnabled)
                 .AsEnumerable();
@@ -157,17 +314,17 @@
         void UpdateResourcePoolComputedFields(ResourcePool resourcePool)
         {
             // Rating count
-            var userCellQuery = UserElementCellStore.AllLive
+            var userCellQuery = _userElementCellStore.Where(entity => !entity.DeletedOn.HasValue)
                 .Where(item => item.ElementCell.ElementField.IndexEnabled
                     && item.ElementCell.ElementField.Element.ResourcePool.Id == resourcePool.Id)
                 .Select(item => item.User);
 
-            var userFieldQuery = UserElementFieldStore.AllLive
+            var userFieldQuery = _userElementFieldStore.Where(entity => !entity.DeletedOn.HasValue)
                 .Where(item => item.ElementField.IndexEnabled
                     && item.ElementField.Element.ResourcePool.Id == resourcePool.Id)
                 .Select(item => item.User);
 
-            var userResourcePoolQuery = UserResourcePoolStore.AllLive
+            var userResourcePoolQuery = _userResourcePoolStore.Where(entity => !entity.DeletedOn.HasValue)
                 .Where(item => !item.ResourcePool.UseFixedResourcePoolRate
                     && item.ResourcePool.Id == resourcePool.Id)
                 .Select(item => item.User);
@@ -179,15 +336,8 @@
             resourcePool.RatingCount = ratingCount;
 
             // Resource pool rate
-            var list = AllLive.Include(item => item.UserResourcePoolSet)
-                .Where(item => item.Id == resourcePool.Id)
-                .AsEnumerable();
-
-            foreach (var item in list)
-            {
-                item.ResourcePoolRateTotal = item.UserResourcePoolSet.Sum(userResourcePool => userResourcePool.ResourcePoolRate);
-                item.ResourcePoolRateCount = item.UserResourcePoolSet.Count();
-            };
+            resourcePool.ResourcePoolRateTotal = resourcePool.UserResourcePoolSet.Sum(userResourcePool => userResourcePool.ResourcePoolRate);
+            resourcePool.ResourcePoolRateCount = resourcePool.UserResourcePoolSet.Count();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -197,7 +347,7 @@
 
             if (disposing)
             {
-                Context.Dispose();
+                _context.Dispose();
             }
 
             disposed = true;

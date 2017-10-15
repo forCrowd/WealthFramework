@@ -74,10 +74,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourcePoolIndexTest.cs" />
     <Compile Include="ResourcePoolManagerTests.cs" />
-    <Compile Include="ResourcePoolUnitOfWorkTest.cs" />
-    <Compile Include="UserResourcePoolUnitOfWorkTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -16,19 +16,15 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ResourcePoolController : BaseODataController
     {
-        ResourcePoolManager _resourcePoolManager;
+        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
-        public ResourcePoolController() : base()
-        {
-            _resourcePoolManager = new ResourcePoolManager();
-        }
+        public ResourcePoolController() : base() { }
 
         // GET odata/ResourcePool
         [AllowAnonymous]
         public IQueryable<ResourcePool> Get()
         {
-            var list = _resourcePoolManager.AllLive
-                .Include(resourcePool => resourcePool.User);
+            var list = _resourcePoolManager.GetResourcePoolSet(null, true, resourcePool => resourcePool.User);
 
             // TODO Handle this by intercepting the query either on OData or EF level
             // Currently it queries the database twice / coni2k - 20 Feb. '17
@@ -67,12 +63,12 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             try
             {
-                await _resourcePoolManager.InsertAsync(resourcePool);
+                await _resourcePoolManager.AddResourcePoolAsync(resourcePool);
             }
             catch (DbUpdateException)
             {
                 // Unique key exception
-                if (await _resourcePoolManager.All.AnyAsync(item => item.Key == resourcePool.Key))
+                if (await _resourcePoolManager.GetResourcePoolSet(null, false).AnyAsync(item => item.Key == resourcePool.Key))
                 {
                     return new UniqueKeyConflictResult(Request, nameof(ResourcePool.Key), resourcePool.Key);
                 }
@@ -90,7 +86,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [ConcurrencyValidator(typeof(ResourcePool))]
         public async Task<IHttpActionResult> Patch(int key, Delta<ResourcePool> patch)
         {
-            var resourcePool = await _resourcePoolManager.GetByIdAsync(key, true);
+            var resourcePool = await _resourcePoolManager.GetResourcePoolSet(key).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
@@ -116,7 +112,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 if (resourcePoolKey == null)
                     throw;
 
-                if (await _resourcePoolManager.All.AnyAsync(item => item.Key == resourcePoolKey.ToString()))
+                if (await _resourcePoolManager.GetResourcePoolSet(null, false).AnyAsync(item => item.Key == resourcePoolKey.ToString()))
                 {
                     return new UniqueKeyConflictResult(Request, "Key", resourcePoolKey.ToString());
                 }
@@ -133,7 +129,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // [ConcurrencyValidator(typeof(ResourcePool))]
         public async Task<IHttpActionResult> Delete(int key, Delta<ResourcePool> patch)
         {
-            var resourcePool = await _resourcePoolManager.GetByIdAsync(key, true);
+            var resourcePool = await _resourcePoolManager.GetResourcePoolSet(key).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
@@ -143,7 +139,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.DeleteAsync(resourcePool.Id);
+            await _resourcePoolManager.DeleteResourcePoolAsync(resourcePool.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

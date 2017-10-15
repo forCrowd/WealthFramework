@@ -14,7 +14,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
         #region - Variables & Initialize & Cleanup -
 
         public TestContext TestContext { get; set; }
-        UserStore userStore;
+        AppUserStore userStore;
 
         [TestInitialize]
         public void Initialize()
@@ -34,7 +34,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
 
         void CreateNewUserStore()
         {
-            userStore = new UserStore(Context);
+            userStore = new AppUserStore(Context);
             userStore.AutoSaveChanges = false;
         }
 

@@ -13,12 +13,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class UserElementCellController : BaseODataController
     {
-        public UserElementCellController()
-        {
-            MainUnitOfWork = new UserElementCellUnitOfWork();
-        }
-
-        protected UserElementCellUnitOfWork MainUnitOfWork { get; private set; }
+        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
         // POST odata/UserElementCell
         public async Task<IHttpActionResult> Post(Delta<UserElementCell> patch)
@@ -41,7 +36,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.InsertAsync(userElementCell);
+            // TODO Fixed cell check: Is it allowed to add UserElementCell for that cell?
+
+            await _resourcePoolManager.AddUserElementCellAsync(userElementCell);
 
             return Created(userElementCell);
         }
@@ -61,10 +58,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             // REMARK UserCommandTreeInterceptor already filters "userId" on EntityFramework level, but that might be removed later on / coni2k - 31 Jul. '17
-            var userElementCell = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.UserId == userId && item.ElementCellId == elementCellId);
+            var userElementCell = await _resourcePoolManager.GetUserElementCellSet(userId, elementCellId).SingleOrDefaultAsync();
             patch.Patch(userElementCell);
 
-            await MainUnitOfWork.SaveChangesAsync();
+            await _resourcePoolManager.SaveChangesAsync();
 
             return Ok(userElementCell);
         }
@@ -82,7 +79,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await MainUnitOfWork.DeleteAsync(userId, elementCellId);
+            await _resourcePoolManager.DeleteUserElementCellAsync(userId, elementCellId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

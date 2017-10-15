@@ -31,7 +31,7 @@
             var singleUseToken = form.Get("singleUseToken");
 
             User user = null;
-            var userManager = context.OwinContext.GetUserManager<UserManager>();
+            var userManager = context.OwinContext.GetUserManager<AppUserManager>();
 
             // Single use token case
             if (string.IsNullOrWhiteSpace(userName) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(singleUseToken))

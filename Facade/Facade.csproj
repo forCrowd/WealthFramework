@@ -66,55 +66,9 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="EmailService.cs" />
-    <Compile Include="Generated\RoleUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UnitOfWork.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserClaimUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserElementFieldUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserLoginUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserRoleUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePoolManager.cs" />
-    <Compile Include="RoleManager.cs" />
-    <Compile Include="UserManager.cs" />
-    <Compile Include="BaseUnitOfWork.cs" />
-    <Compile Include="Generated\ElementCellUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ElementFieldUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ElementItemUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ElementUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ResourcePoolUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserElementCellUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserResourcePoolUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
+    <Compile Include="AppUserManager.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,10 +88,6 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Generated\UnitOfWork.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UnitOfWork.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

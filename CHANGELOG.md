@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.81.0**
+
+* Facade - Refactoring
+* WebApi - Owner check bug fix
+
 **0.80.5**
 
 * BusinessObjects - Appveyor build fix #3 - coni2k
@@ -29,7 +34,7 @@ All of them were converted to regular fields. They can be updated with an end-po
 * AngularClient - Resource Pool Manager - Save / View functions bug fix
 * BusinessObjects - QueryVisitor - Ignore "UserField" filter if it's "administrator"
 * DataObjects - All migrations were merged into one
-* WebApi - EntityExistsValiator, ConcurrencyValidator and ForbiddenFieldsValidator action filters were introduced
+* WebApi - EntityExistsValidator, ConcurrencyValidator and ForbiddenFieldsValidator action filters were introduced
 * WebApi - Entity owner validation was added for all post, patch and delete actions
 
 **0.79.4**
