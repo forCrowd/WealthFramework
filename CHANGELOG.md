@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.81.1**
+
+* AngularClient - Contributors page - akshitbhalla
+
 **0.81.0**
 
 * Facade - Refactoring

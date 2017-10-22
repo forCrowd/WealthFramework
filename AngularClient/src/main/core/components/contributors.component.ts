@@ -9,9 +9,15 @@ export class ContributorsComponent {
     constructor() {
     }
 
-    getExperienceYears(year: number): string {
-        let totalYears = new Date().getUTCFullYear() - year;
-        return totalYears.toString() + "+";
+    getExperienceYears(beginYear: number): string {
+        var beginYearValue = Number(beginYear);
+
+        if (beginYearValue === 0) {
+            return `-`;
+        }
+
+        let totalYears = new Date().getUTCFullYear() - beginYearValue;
+        return `${totalYears}+`;
     }
 
     getJoinedOnDate(day: any, month: any, year: any): Date {
