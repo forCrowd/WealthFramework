@@ -26,6 +26,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 resourcePool.InitialValue = 100;
             }
 
+            // Save
+            context.SaveChanges();
+
             // 2. Remove obsolete records
             var obsoleteUserCells = userCellStore
                 .GetAll(false)
@@ -38,6 +41,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             userCellStore.RemoveRange(obsoleteUserCells);
 
+            // Save
+            context.SaveChanges();
+
             var obsoleteCells = cellStore.GetAll(false)
                 .Where(cell => cell.ElementField.DataType == 2
                 || cell.ElementField.DataType == 3
@@ -47,6 +53,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 .AsEnumerable();
 
             cellStore.RemoveRange(obsoleteCells);
+
+            // Save
+            context.SaveChanges();
 
             var obsoleteFields = fieldStore.GetAll(false)
                 .Where(field => field.DataType == 2
