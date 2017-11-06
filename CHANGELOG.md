@@ -11,6 +11,14 @@
  * ResourcePoolTester page was introduced
  * Package updates & "breeze-client" reference fix
 
+**0.81.2**
+
+* AngularClient - Contributors page - ryanklee
+
+**0.81.1**
+
+* AngularClient - Contributors page - akshitbhalla
+
 **0.81.0**
 
 * DataObjects, Facade, WebApi - Refactoring

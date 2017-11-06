@@ -8,10 +8,10 @@ export class ContributorsComponent {
 
     getExperienceYears(year: number): string {
         const totalYears = new Date().getUTCFullYear() - year;
-        return totalYears.toString() + "+";
+        return `${totalYears}+`;
     }
 
-    getJoinedOnDate(day: any, month: any, year: any): Date {
+    getJoinedOnDate(day: number, month: number, year: number): Date {
         return new Date(year, month - 1, day);
     }
 }
