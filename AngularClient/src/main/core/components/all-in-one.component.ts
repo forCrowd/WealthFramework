@@ -1,7 +1,7 @@
 ﻿import { Component } from "@angular/core";
 
 import { ElementCell } from "../../app-entity-manager/entities/element-cell";
-import { ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
+import { IResourcePoolEditorConfig, ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
 
 @Component({
     selector: "all-in-one",
@@ -9,7 +9,7 @@ import { ResourcePoolEditorService } from "../../resource-pool-editor/resource-p
 })
 export class AllInOneComponent {
 
-    allInOneConfig: any = { username: "sample", resourcePoolKey: "All-in-One" };
+    allInOneConfig: IResourcePoolEditorConfig = { resourcePoolUniqueKey: { username: "sample", resourcePoolKey: "All-in-One" } };
     syncFlag: boolean = true;
 
     constructor(private resourcePoolService: ResourcePoolEditorService) {
@@ -27,7 +27,7 @@ export class AllInOneComponent {
                 || elementCell.ElementField.Element.ResourcePool.Key === "Knowledge-Index-Sample")
             && this.syncFlag) {
 
-            this.resourcePoolService.getResourcePoolExpanded(this.allInOneConfig)
+            this.resourcePoolService.getResourcePoolExpanded(this.allInOneConfig.resourcePoolUniqueKey)
                 .subscribe((resourcePool: any): void => {
 
                     if (!resourcePool) {
@@ -35,18 +35,18 @@ export class AllInOneComponent {
                     }
 
                     // Elements
-                    for (var elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
-                        var element = resourcePool.ElementSet[elementIndex];
+                    for (let elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
+                        const element = resourcePool.ElementSet[elementIndex];
                         if (element.Name === elementCell.ElementField.Element.Name) {
 
                             // Element fields
-                            for (var elementFieldIndex = 0; elementFieldIndex < element.ElementFieldSet.length; elementFieldIndex++) {
-                                var elementField = element.ElementFieldSet[elementFieldIndex];
+                            for (let elementFieldIndex = 0; elementFieldIndex < element.ElementFieldSet.length; elementFieldIndex++) {
+                                const elementField = element.ElementFieldSet[elementFieldIndex];
                                 if (elementField.Name === elementCell.ElementField.Name) {
 
                                     // Element cells
-                                    for (var elementCellIndex = 0; elementCellIndex < elementField.ElementCellSet.length; elementCellIndex++) {
-                                        var cell = elementField.ElementCellSet[elementCellIndex];
+                                    for (let elementCellIndex = 0; elementCellIndex < elementField.ElementCellSet.length; elementCellIndex++) {
+                                        const cell = elementField.ElementCellSet[elementCellIndex];
 
                                         if (cell.ElementItem.Name === elementCell.ElementItem.Name) {
                                             this.resourcePoolService.updateElementCellDecimalValue(cell, elementCell.numericValue());

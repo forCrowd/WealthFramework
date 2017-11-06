@@ -7,10 +7,10 @@
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    factory(require("../breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
     // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+      define(["../breeze-client"], factory);
   }
 }(function (breeze, global) {
   "use strict";

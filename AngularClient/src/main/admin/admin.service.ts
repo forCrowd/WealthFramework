@@ -1,6 +1,6 @@
-﻿import { EventEmitter, Injectable } from "@angular/core";
+﻿import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
-import { EntityQuery, FetchStrategy, Predicate, QueryResult } from "breeze-client";
+import { EntityQuery } from "../../libraries/breeze-client";
 import { Observable } from "rxjs/Observable";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -34,7 +34,7 @@ export class AdminService {
     getResourcePoolSet(onlyCount?: boolean) {
         onlyCount = onlyCount || false;
 
-        var query = EntityQuery.from("ResourcePool");
+        let query = EntityQuery.from("ResourcePool");
 
         if (onlyCount) {
             query = query.take(0).inlineCount(true);
@@ -48,7 +48,7 @@ export class AdminService {
 
     getUserCount() {
 
-        var query = EntityQuery
+        const query = EntityQuery
             .from("Users")
             .take(0)
             .inlineCount(true);
@@ -73,7 +73,7 @@ export class AdminService {
 
     updateComputedFields(resourcePool: ResourcePool): Observable<void> {
 
-        var url = `${AppSettings.serviceAppUrl}/api/ResourcePoolApi/${resourcePool.Id}/UpdateComputedFields`;
+        const url = `${AppSettings.serviceAppUrl}/api/ResourcePoolApi/${resourcePool.Id}/UpdateComputedFields`;
 
         return this.appHttp.post<void>(url, null);
     }

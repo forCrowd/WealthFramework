@@ -12,7 +12,7 @@ namespace forCrowd.WealthEconomy.WebApi.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@forcrowd.org", DateTime.Now);
+            var email = $"user_{DateTime.Now:yyyyMMdd_HHmmssfff}@forcrowd.org";
             var password = "Password@123";
             var registerResult = Register(email, password);
 
@@ -36,7 +36,7 @@ namespace forCrowd.WealthEconomy.WebApi.Tests
             Console.WriteLine(GetCurrentUser(token["access_token"]));
         }
 
-        string Register(string email, string password)
+        private string Register(string email, string password)
         {
             var registerModel = new
             {
@@ -54,7 +54,7 @@ namespace forCrowd.WealthEconomy.WebApi.Tests
             }
         }
 
-        string GetToken(string email, string password)
+        private string GetToken(string email, string password)
         {
             var pairs = new List<KeyValuePair<string, string>>
                         {
@@ -71,7 +71,7 @@ namespace forCrowd.WealthEconomy.WebApi.Tests
             }
         }
 
-        Dictionary<string, string> GetTokenDictionary(
+        private Dictionary<string, string> GetTokenDictionary(
             string userName, string password)
         {
             var pairs = new List<KeyValuePair<string, string>>
@@ -89,14 +89,14 @@ namespace forCrowd.WealthEconomy.WebApi.Tests
                 var result = response.Content.ReadAsStringAsync().Result;
 
                 // Deserialize the JSON into a Dictionary<string, string>
-                Dictionary<string, string> tokenDictionary =
+                var tokenDictionary =
                     JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
                 return tokenDictionary;
             }
         }
 
         [Obsolete("Account UserInfo is not in use anymore")]
-        static string GetCurrentUser(string token)
+        private static string GetCurrentUser(string token)
         {
             using (var client = new HttpClient())
             {

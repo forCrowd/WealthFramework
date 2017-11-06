@@ -1,8 +1,10 @@
+using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
-    using forCrowd.WealthEconomy.WebApi.Filters;
+    using Filters;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;
@@ -13,7 +15,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class UserElementFieldController : BaseODataController
     {
-        ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
+        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
 
         // POST odata/UserElementField
         public async Task<IHttpActionResult> Post(Delta<UserElementField> patch)
@@ -68,7 +70,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [EntityExistsValidator(typeof(UserElementField))]
         // TODO breeze doesn't support this at the moment / coni2k - 31 Jul. '17
         // [ConcurrencyValidator(typeof(UserElementField))]
-        public async Task<IHttpActionResult> Delete(int userId, int elementFieldId, Delta<UserElementField> patch)
+        public async Task<IHttpActionResult> Delete(int userId, int elementFieldId)
         {
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();

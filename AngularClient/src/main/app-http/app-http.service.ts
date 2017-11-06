@@ -24,10 +24,10 @@ export class AppHttp extends Http {
 
         this.isBusy = true;
 
-        let tokenItem = localStorage.getItem("token");
+        const tokenItem = localStorage.getItem("token");
 
         if (tokenItem) {
-            let token = JSON.parse(tokenItem.toString());
+            const token = JSON.parse(tokenItem.toString());
             if (typeof url === "string") { // meaning we have to add the token to the options, not in url
 
                 if (!options) {
@@ -76,7 +76,7 @@ export class AppHttp extends Http {
             switch (error.status) {
 
                 case 0: { // Server offline
-                    errorMessage = "Server is offline. Please try again later."
+                    errorMessage = "Server is offline. Please try again later.";
                     handled = true;
                     break;
                 }
@@ -86,7 +86,7 @@ export class AppHttp extends Http {
 
                         for (let key in body.ModelState) {
                             if (body.ModelState.hasOwnProperty(key)) {
-                                body.ModelState[key].forEach((item: any) => {
+                                body.ModelState[key].forEach(item => {
                                     errorMessage += item + "<br />";
                                 });
                             }
@@ -94,9 +94,9 @@ export class AppHttp extends Http {
 
                     } else if (body["odata.error"]) { // OData ModelState errors
 
-                        var errors = body["odata.error"].innererror.message.split("\r\n") as string[];
+                        const errors = body["odata.error"].innererror.message.split("\r\n") as string[];
 
-                        errors.forEach((error) => {
+                        errors.forEach(error => {
 
                             error = error.trim();
 
@@ -170,7 +170,7 @@ export class AppHttp extends Http {
 
             // Else, let the internal error handler handle it
             if (error instanceof Response) {
-                let message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
+                const message = `status: ${error.status} - statusText: ${error.statusText} - url: ${error.url}`;
                 throw new Error(message);
             } else {
                 throw error;

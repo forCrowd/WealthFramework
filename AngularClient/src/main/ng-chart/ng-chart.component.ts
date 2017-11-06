@@ -1,5 +1,4 @@
 ﻿import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { ChartObject } from "highcharts";
@@ -28,7 +27,7 @@ export class NgChartComponent implements OnInit {
 
         this.init();
     }
-    container: Container = new Container();
+    container = new Container();
     displayChart: boolean = false;
 
     private fields: {
@@ -96,7 +95,7 @@ class Container implements OnDestroy {
         // Convert config.data to config.options.series, and subscribe to updated$ events for further changes
         if (this._config.options.chart.type === "column") {
 
-            this._config.data.forEach((dataItem) => {
+            this._config.data.forEach(dataItem => {
 
                 const columnChartItem = new ColumnChartItem(dataItem.name, dataItem.value, +this._config.options.series.length);
                 this._config.options.series.push(columnChartItem.chartItem);
@@ -114,7 +113,7 @@ class Container implements OnDestroy {
 
         } else if (this._config.options.chart.type === "pie") {
 
-            this._config.data.forEach((dataItem) => {
+            this._config.data.forEach(dataItem => {
 
                 const pieChartItem = new PieChartItem(dataItem.name, dataItem.value, +this._config.options.series[0].data.length);
                 (this._config.options.series[0].data as Object[]).push(pieChartItem.chartItem);

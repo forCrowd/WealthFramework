@@ -36,11 +36,10 @@ export class Logger {
         return this.logIt(message, showToast, "warning", ...optionalParams);
     }
 
-    private logIt(message: string, showToast?: boolean, toastType?: string, ...optionalParams: any[]): void {
-        showToast = typeof showToast === "undefined" ? true : showToast;
-        toastType = typeof toastType === "undefined" ? "log" : toastType;
+    private logIt(message: string, showToast: boolean = true, toastType: string = "log", ...optionalParams: any[]): void {
 
         let write: Function;
+
         switch (toastType) {
             case "error": write = console.error; break;
             case "info": write = console.info; break;

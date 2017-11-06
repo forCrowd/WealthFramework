@@ -14,11 +14,11 @@ export class GoogleAnalyticsService {
         window["GoogleAnalyticsObject"] = "ga";
         window["ga"] = window["ga"] || this.ga;
         window["ga"].l = new Date().getTime();
-        let script = document.createElement("script");
+        const script = document.createElement("script");
         script.async = true;
         script.src = "https://www.google-analytics.com/analytics.js";
 
-        let firstElement = document.getElementsByTagName("script")[0];
+        const firstElement = document.getElementsByTagName("script")[0];
         firstElement.parentNode.insertBefore(script, firstElement);
 
         this.ga("create", AppSettings.analyticsTrackingCode, AppSettings.analyticsDomainName);

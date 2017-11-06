@@ -7,7 +7,7 @@ export { Logger, ToasterConfig }
 
 @NgModule({
     imports: [
-        ToasterModule,
+        ToasterModule
     ],
     providers: [
         Logger

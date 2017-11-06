@@ -2,9 +2,8 @@
  * This file has been copied from the following example;
  * http://aspnet.codeplex.com/SourceControl/changeset/view/9cb7243bd9fe3b2df484bf2409af943f39533588#Samples/WebApi/ODataCompositeKeySample/ReadMe.txt
  * */
-namespace forCrowd.WealthEconomy.WebApi.RoutingConventions
+namespace forCrowd.WealthEconomy.WebApi.Conventions
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http.Controllers;
     using System.Web.Http.OData.Routing;
@@ -23,24 +22,26 @@ namespace forCrowd.WealthEconomy.WebApi.RoutingConventions
                 var routeValues = controllerContext.RouteData.Values;
                 if (routeValues.ContainsKey(ODataRouteConstants.Key))
                 {
-                    var keyRaw = routeValues[ODataRouteConstants.Key] as string;
-                    IEnumerable<string> compoundKeyPairs = keyRaw.Split(',');
-                    if (compoundKeyPairs == null || !compoundKeyPairs.Any())
+                    if (routeValues[ODataRouteConstants.Key] is string keyRaw)
                     {
-                        return action;
-                    }
-
-                    foreach (var compoundKeyPair in compoundKeyPairs)
-                    {
-                        string[] pair = compoundKeyPair.Split('=');
-                        if (pair == null || pair.Length != 2)
+                        var compoundKeyPairs = keyRaw.Split(',');
+                        if (!compoundKeyPairs.Any())
                         {
-                            continue;
+                            return action;
                         }
-                        var keyName = pair[0].Trim();
-                        var keyValue = pair[1].Trim();
 
-                        routeValues.Add(keyName, keyValue);
+                        foreach (var compoundKeyPair in compoundKeyPairs)
+                        {
+                            var pair = compoundKeyPair.Split('=');
+                            if (pair.Length != 2)
+                            {
+                                continue;
+                            }
+                            var keyName = pair[0].Trim();
+                            var keyValue = pair[1].Trim();
+
+                            routeValues.Add(keyName, keyValue);
+                        }
                     }
                 }
             }

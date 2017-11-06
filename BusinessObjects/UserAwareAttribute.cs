@@ -7,7 +7,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     /// <summary>
     /// Attribute used to mark all entities which should be filtered based on userId
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class UserAwareAttribute : Attribute
     {
         public const string UserAnnotation = "UserAnnotation";
@@ -19,19 +19,18 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         {
             if (string.IsNullOrEmpty(columnName))
             {
-                throw new ArgumentNullException("columnName");
+                throw new ArgumentNullException(nameof(columnName));
             }
             ColumnName = columnName;
         }
 
         public static string GetUserColumnName(EdmType type)
         {
-            MetadataProperty annotation =
+            var annotation =
                 type.MetadataProperties.SingleOrDefault(
-                    p => p.Name.EndsWith(string.Format("customannotation:{0}", UserAnnotation)));
+                    p => p.Name.EndsWith($"customannotation:{UserAnnotation}"));
 
-            return annotation == null ? null : (string)annotation.Value;
+            return (string) annotation?.Value;
         }
-
     }
 }

@@ -2,7 +2,7 @@
 {
     using System.Web.Http;
 
-    public class RouteConfig
+    public static class RouteConfig
     {
         public static void RegisterRoutes(HttpConfiguration config)
         {

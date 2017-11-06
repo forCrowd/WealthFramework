@@ -1,4 +1,4 @@
-﻿using System;
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace forCrowd.WealthEconomy.BusinessObjects.Tests
@@ -14,7 +14,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             var newElement = new ResourcePool(newUser, "CMRP")
                 .AddElement("Element");
 
-            var newField = newElement.AddField("Field", ElementFieldDataType.Integer, false);
+            var newField = newElement.AddField("Field", ElementFieldDataType.Decimal, false);
 
             newElement
                 .AddItem("Item")

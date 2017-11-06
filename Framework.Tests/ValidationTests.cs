@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using forCrowd.WealthEconomy.Framework.Exceptions;
 
 namespace forCrowd.WealthEconomy.Framework.Tests
 {
@@ -8,45 +7,24 @@ namespace forCrowd.WealthEconomy.Framework.Tests
     public class ValidationTests
     {
         [TestMethod]
-        public void String_Null_ShouldFail()
-        {
-            string test = null;
-            Validate(test);
-        }
-
-        [TestMethod]
-        public void String_Default_ShouldFail()
-        {
-            string test = default(string); // null
-            Validate(test);
-        }
-
-        [TestMethod]
         public void String_Empty_ShouldFail()
         {
-            string test = string.Empty;
+            var test = string.Empty;
             Validate(test);
         }
 
         [TestMethod]
         public void String_Whitespace_ShouldFail()
         {
-            string test = " ";
+            var test = " ";
             Validate(test);
         }
 
         [TestMethod]
         public void String_HasValue_ShouldPass()
         {
-            string test = "test";
+            var test = "test";
             Validate(test, false);
-        }
-
-        [TestMethod]
-        public void NullableInt_Null_ShouldFail()
-        {
-            int? test = null;
-            Validate(test);
         }
 
         [TestMethod]
@@ -73,44 +51,37 @@ namespace forCrowd.WealthEconomy.Framework.Tests
         [TestMethod]
         public void Int_0_ShouldFail()
         {
-            int test = 0;
+            var test = 0;
             Validate(test);
         }
 
         [TestMethod]
         public void Int_Default_ShouldFail()
         {
-            int test = default(int); // 0
+            var test = default(int); // 0
             Validate(test);
         }
 
         [TestMethod]
         public void Int_HasValue_ShouldPass()
         {
-            int test = 1;
+            var test = 1;
             Validate(test, false);
-        }
-
-        [TestMethod]
-        public void Object_Null_ShouldFail()
-        {
-            Object test = null;
-            Validate(test);
         }
 
         [TestMethod]
         public void Object_HasValue_ShouldPass()
         {
-            Object test = new Object();
+            var test = new Object();
             Validate(test, false);
         }
 
         // For classes and structs, except nullables
-        void Validate<T>(T test, bool isNullOrDefault = true)
+        private void Validate<T>(T test, bool isNullOrDefault = true)
         {
             try
             {
-                forCrowd.WealthEconomy.Framework.Validations.ArgumentNullOrDefault(test, "test");
+                Validations.ArgumentNullOrDefault(test, nameof(test));
 
                 if (isNullOrDefault)
                     Assert.Fail();
@@ -125,11 +96,11 @@ namespace forCrowd.WealthEconomy.Framework.Tests
         }
 
         // For nullables
-        void Validate<T>(T? test, bool isNullOrDefault = true) where T : struct
+        private void Validate<T>(T? test, bool isNullOrDefault = true) where T : struct
         {
             try
             {
-                forCrowd.WealthEconomy.Framework.Validations.ArgumentNullOrDefault(test, "test");
+                Validations.ArgumentNullOrDefault(test, nameof(test));
 
                 if (isNullOrDefault)
                     Assert.Fail();

@@ -22,14 +22,11 @@ export class Element extends EntityBase {
 
                 // Main element check: If there is another element that its IsMainElement flag is true, make it false
                 if (value) {
-                    this.ResourcePool.ElementSet.forEach((element) => {
+                    this.ResourcePool.ElementSet.forEach(element => {
                         if (element !== this && element.IsMainElement) {
                             element.IsMainElement = false;
                         }
                     });
-
-                    // Update selectedElement of resourcePool
-                    this.ResourcePool.selectedElement(this);
                 }
             }
         }
@@ -45,11 +42,8 @@ export class Element extends EntityBase {
         // Client-side
         parent: Element,
         familyTree: Element[],
-        elementFieldIndexSet: ElementField[],
         indexRating: number,
-        directIncomeField: ElementField,
-        multiplierField: ElementField,
-        totalResourcePoolAmount: number
+        income: number,
     } = {
         // Server-side
         IsMainElement: false,
@@ -57,52 +51,12 @@ export class Element extends EntityBase {
         // Client-side
         parent: null,
         familyTree: null,
-        elementFieldIndexSet: null,
-        indexRating: null,
-        directIncomeField: null,
-        multiplierField: null,
-        totalResourcePoolAmount: null
+        indexRating: 0,
+        income: 0
     };
 
-    directIncome() {
-
-        // TODO Check totalIncome notes
-
-        var value = 0;
-        this.ElementItemSet.forEach((item: ElementItem) => {
-            value += item.directIncome();
-        });
-
-        return value;
-    }
-
-    directIncomeField() {
-
-        // TODO In case of add / remove fields?
-        if (this.fields.directIncomeField === null) {
-            this.setDirectIncomeField();
-        }
-
-        return this.fields.directIncomeField;
-    }
-
-    directIncomeIncludingResourcePoolAmount() {
-
-        // TODO Check totalIncome notes
-
-        var value = 0;
-        this.ElementItemSet.forEach((item) => {
-            value += item.directIncomeIncludingResourcePoolAmount();
-        });
-
-        return value;
-    }
-
-    elementFieldIndexSet(): ElementField[] {
-        if (this.fields.elementFieldIndexSet === null) {
-            this.setElementFieldIndexSet();
-        }
-        return this.fields.elementFieldIndexSet;
+    elementFieldSet(indexEnabledFilter: boolean = true): ElementField[] {
+        return this.getElementFieldSet(this, indexEnabledFilter);
     }
 
     familyTree() {
@@ -115,50 +69,22 @@ export class Element extends EntityBase {
         return this.fields.familyTree;
     }
 
-    // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
-    // TODO Obsolete for the moment!
-    fullSize() {
-        return (this.ElementFieldSet.length > 4) || this.elementFieldIndexSet().length > 2;
-    }
-
-    getElementFieldIndexSet(element: Element) {
-
-        var sortedElementFieldSet = element.getElementFieldSetSorted();
-        var indexSet: ElementField[] = [];
-
-        // Validate
-        sortedElementFieldSet.forEach((field) => {
-            if (field.IndexEnabled) {
-                indexSet.push(field);
-            }
-
-            if (field.DataType === ElementFieldDataType.Element && field.SelectedElement !== null) {
-                var childIndexSet = this.getElementFieldIndexSet(field.SelectedElement);
-
-                childIndexSet.forEach((childIndex) => {
-                    indexSet.push(childIndex);
-                });
-            }
-        });
-
-        return indexSet;
-    }
-
     getElementFieldSetSorted(): ElementField[] {
         return this.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
     }
 
-    getElementItemSet(sort?: string): ElementItem[] {
-        sort = typeof sort !== "undefined" ? sort : "";
+    getElementItemSet(sort: string = "name"): ElementItem[] {
 
         return this.ElementItemSet.sort((a, b) => {
+
             switch (sort) {
-                case "totalIncome": {
-                    return b.totalIncome() - a.totalIncome();
-                }
-                case "name":
+                case "income":
                 default: {
-                    let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
+                    return b.income() - a.income();
+                }
+                case "name": {
+                    const nameA = a.Name.toLowerCase();
+                    const nameB = b.Name.toLowerCase();
                     if (nameA < nameB) return -1;
                     if (nameA > nameB) return 1;
                     return 0;
@@ -167,35 +93,28 @@ export class Element extends EntityBase {
         });
     }
 
+    income() {
+        return this.fields.income;
+    }
+
     indexRating() {
-
-        if (this.fields.indexRating === null) {
-            this.setIndexRating(false);
-        }
-
         return this.fields.indexRating;
     }
 
-    multiplier() {
+    initialize(): boolean {
+        if (!super.initialize()) return false;
 
-        // TODO Check totalIncome notes
-
-        var value = 0;
-        this.ElementItemSet.forEach((item) => {
-            value += item.multiplier();
+        // Fields
+        this.ElementFieldSet.forEach(field => {
+            field.initialize();
         });
 
-        return value;
-    }
+        // Items
+        this.ElementItemSet.forEach(item => {
+            item.initialize();
+        });
 
-    multiplierField() {
-
-        // TODO In case of add / remove field?
-        if (this.fields.multiplierField === null) {
-            this.setMultiplierField();
-        }
-
-        return this.fields.multiplierField;
+        return true;
     }
 
     parent() {
@@ -214,56 +133,27 @@ export class Element extends EntityBase {
 
     remove() {
 
-        // Remove from selectedElement
-        if (this.ResourcePool.selectedElement() === this) {
-            this.ResourcePool.selectedElement(null);
-        }
-
         // Related items
-        var elementItemSet = this.ElementItemSet.slice();
-        elementItemSet.forEach((elementItem) => {
+        const elementItemSet = this.ElementItemSet.slice();
+        elementItemSet.forEach(elementItem => {
             elementItem.remove();
         });
 
         // Related fields
-        var elementFieldSet = this.ElementFieldSet.slice();
-        elementFieldSet.forEach((elementField) => {
+        const elementFieldSet = this.ElementFieldSet.slice();
+        elementFieldSet.forEach(elementField => {
             elementField.remove();
         });
 
         this.entityAspect.setDeleted();
     }
 
-    resourcePoolAmount() {
-
-        // TODO Check totalIncome notes
-
-        var value = 0;
-        this.ElementItemSet.forEach((item) => {
-            value += item.resourcePoolAmount();
-        });
-
-        return value;
-    }
-
-    setDirectIncomeField() {
-        var result = this.ElementFieldSet.filter((field) => field.DataType === ElementFieldDataType.DirectIncome);
-
-        if (result.length > 0) {
-            this.fields.directIncomeField = result[0];
-        }
-    }
-
-    setElementFieldIndexSet() {
-        this.fields.elementFieldIndexSet = this.getElementFieldIndexSet(this);
-    }
-
     setFamilyTree() {
 
         this.fields.familyTree = [];
 
-        var element = this as Element; // TODO: ?
-        while (element !== null) {
+        let element = this as Element; // TODO: ?
+        while (element) {
             this.fields.familyTree.unshift(element);
             element = element.parent();
         }
@@ -271,33 +161,22 @@ export class Element extends EntityBase {
         // TODO At the moment it's only upwards, later include children?
     }
 
-    setIndexRating(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+    setIndexRating() {
 
-        var indexSet = this.elementFieldIndexSet();
+        const fieldSet = this.elementFieldSet(false);
 
         var value = 0;
-        indexSet.forEach((index) => {
-            value += index.indexRating();
+        fieldSet.forEach(field => {
+            value += field.indexRating();
         });
 
         if (this.fields.indexRating !== value) {
             this.fields.indexRating = value;
 
             // Update related
-            if (updateRelated) {
-                this.elementFieldIndexSet().forEach((index) => {
-                    index.setIndexRatingPercentage();
-                });
-            }
-        }
-    }
-
-    setMultiplierField() {
-        var result = this.ElementFieldSet.filter((field) => field.DataType === ElementFieldDataType.Multiplier);
-
-        if (result.length > 0) {
-            this.fields.multiplierField = result[0];
+            fieldSet.forEach(field => {
+                field.setIndexRatingPercentage();
+            });
         }
     }
 
@@ -307,90 +186,38 @@ export class Element extends EntityBase {
         }
     }
 
-    totalDirectIncome() {
-
-        // TODO Check totalIncome notes
+    setIncome() {
 
         var value = 0;
-        this.ElementItemSet.forEach((item) => {
-            value += item.totalDirectIncome();
+        this.ElementItemSet.forEach(item => {
+            value += item.income();
         });
 
-        return value;
+        if (this.fields.income !== value) {
+            this.fields.income = value;
+        }
     }
 
-    totalDirectIncomeIncludingResourcePoolAmount() {
+    private getElementFieldSet(element: Element, indexEnabledFilter: boolean = true) {
 
-        // TODO Check totalIncome notes
-
-        var value = 0;
-        this.ElementItemSet.forEach((item) => {
-            value += item.totalDirectIncomeIncludingResourcePoolAmount();
-        });
-
-        return value;
-    }
-
-    totalIncome() {
-
-        // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?
-
-        var value = 0;
-        this.ElementItemSet.forEach((item) => {
-            value += item.totalIncome();
-        });
-
-        return value;
-    }
-
-    totalIncomeAverage() {
+        const sortedElementFieldSet = element.getElementFieldSetSorted();
+        var fieldSet: ElementField[] = [];
 
         // Validate
-        if (this.ElementItemSet.length === 0) {
-            return 0;
-        }
-
-        return this.totalIncome() / this.ElementItemSet.length;
-    }
-
-    // TODO This is out of pattern!
-    totalResourcePoolAmount() {
-
-        //console.log("res", this.resourcePool);
-
-        // TODO Check totalIncome notes
-
-        var value: number;
-
-        if (this === this.ResourcePool.mainElement()) {
-
-            value = this.ResourcePool.InitialValue;
-
-            this.ElementItemSet.forEach((item) => {
-                value += item.totalResourcePoolAmount();
-            });
-
-        } else {
-            if (this.ResourcePool.mainElement() !== null) {
-                value = this.ResourcePool.mainElement().totalResourcePoolAmount();
+        sortedElementFieldSet.forEach(field => {
+            if (!indexEnabledFilter || (indexEnabledFilter && field.IndexEnabled)) {
+                fieldSet.push(field);
             }
-        }
 
-        //console.log("TRPA-A " + value.toFixed(2));
+            if (field.DataType === ElementFieldDataType.Element && field.SelectedElement !== null) {
+                const childIndexSet = this.getElementFieldSet(field.SelectedElement, indexEnabledFilter);
 
-        if (this.fields.totalResourcePoolAmount !== value) {
-            this.fields.totalResourcePoolAmount = value;
+                childIndexSet.forEach(childIndex => {
+                    fieldSet.push(childIndex);
+                });
+            }
+        });
 
-            //console.log("TRPA-B " + value.toFixed(2));
-
-            this.elementFieldIndexSet().forEach((field) => {
-                // TODO How about this check?
-                // if (field.DataType === ElementFieldDataType.DirectIncome) { -
-                field.setIndexIncome();
-                // }
-            });
-        }
-
-        return value;
+        return fieldSet;
     }
 }

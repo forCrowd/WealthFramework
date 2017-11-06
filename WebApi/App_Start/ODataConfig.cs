@@ -1,7 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi
 {
     using Facade;
-    using forCrowd.WealthEconomy.WebApi.RoutingConventions;
+    using Conventions;
     using System.Web.Http;
     using System.Web.Http.OData;
     using System.Web.Http.OData.Batch;
@@ -10,7 +10,7 @@
     using System.Web.Http.OData.Routing;
     using System.Web.Http.OData.Routing.Conventions;
 
-    public class ODataConfig
+    public static class ODataConfig
     {
         public static void RegisterOData(HttpConfiguration config)
         {

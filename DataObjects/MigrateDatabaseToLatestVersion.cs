@@ -1,9 +1,9 @@
-﻿namespace forCrowd.WealthEconomy.DataObjects
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
+namespace forCrowd.WealthEconomy.DataObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects;
-    using forCrowd.WealthEconomy.DataObjects.Migrations;
-    using Microsoft.AspNet.Identity;
-    using System;
+    using BusinessObjects;
+    using Migrations;
     using System.Data.Entity;
 
     internal class MigrateDatabaseToLatestVersion : MigrateDatabaseToLatestVersion<WealthEconomyContext, DbMigrationsConfiguration>
@@ -11,7 +11,6 @@
         public bool IsTest { get; private set; }
 
         public MigrateDatabaseToLatestVersion(bool isTest = false)
-            : base()
         {
             IsTest = isTest;
         }

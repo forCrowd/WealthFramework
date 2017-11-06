@@ -1,4 +1,6 @@
-﻿namespace forCrowd.WealthEconomy.WebApi.Providers
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
+namespace forCrowd.WealthEconomy.WebApi.Providers
 {
     using BusinessObjects;
     using Facade;
@@ -15,12 +17,7 @@
 
         public ApplicationOAuthProvider(string publicClientId)
         {
-            if (publicClientId == null)
-            {
-                throw new ArgumentNullException("publicClientId");
-            }
-
-            _publicClientId = publicClientId;
+            _publicClientId = publicClientId ?? throw new ArgumentNullException(nameof(publicClientId));
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
@@ -30,7 +27,7 @@
             var password = context.Password;
             var singleUseToken = form.Get("singleUseToken");
 
-            User user = null;
+            User user;
             var userManager = context.OwinContext.GetUserManager<AppUserManager>();
 
             // Single use token case

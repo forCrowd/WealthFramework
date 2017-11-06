@@ -26,7 +26,7 @@ export class ResourcePoolCreateComponent implements OnInit {
         // TODO Instead of this, find all sub items of this.ResourcePool and call rejectChanges on them? / coni2k - 21 Feb. '17
         this.resourcePoolService.rejectChanges();
 
-        var command = "/" + this.resourcePoolService.currentUser.UserName;
+        const command = `/${this.resourcePoolService.currentUser.UserName}`;
 
         this.router.navigate([command]);
     }
@@ -60,10 +60,7 @@ export class ResourcePoolCreateComponent implements OnInit {
             this.templateApplied = true;
         }
 
-        // TODO Try to move this to a better place?
-        this.resourcePool.updateCache();
-
-        const command = "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
+        const command = `/${this.resourcePool.User.UserName}/${this.resourcePool.Key}`;
 
         this.resourcePoolService.saveChanges()
             .subscribe(() => {
@@ -76,7 +73,7 @@ export class ResourcePoolCreateComponent implements OnInit {
         this.activatedRoute.params.subscribe(
             (params: any) => {
 
-                let username = params.username;
+                const username = params.username;
 
                 // If username equals to current user
                 if (username === this.resourcePoolService.currentUser.UserName) {
@@ -84,7 +81,7 @@ export class ResourcePoolCreateComponent implements OnInit {
 
                 } else {
 
-                    let url = window.location.href.replace(window.location.origin, "");
+                    const url = window.location.href.replace(window.location.origin, "");
                     this.router.navigate(["/app/not-found", { url: url }]);
                     return;
                 }
@@ -93,7 +90,6 @@ export class ResourcePoolCreateComponent implements OnInit {
 
     submitDisabled() {
         return this.isBusy
-            || (this.resourcePool.entityAspect.getValidationErrors().length
-                + this.resourcePool.UserResourcePoolSet[0].entityAspect.getValidationErrors().length) > 0;
+            || this.resourcePool.entityAspect.getValidationErrors().length > 0;
     }
 }

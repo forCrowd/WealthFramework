@@ -1,4 +1,6 @@
-﻿namespace forCrowd.WealthEconomy.WebApi
+﻿using forCrowd.WealthEconomy.BusinessObjects.Entities;
+
+namespace forCrowd.WealthEconomy.WebApi
 {
     using BusinessObjects;
     using DataObjects;
@@ -16,7 +18,7 @@
     using Providers;
     using System;
 
-    public class AuthConfig
+    public static class AuthConfig
     {
         public static string PublicClientId { get; private set; }
 

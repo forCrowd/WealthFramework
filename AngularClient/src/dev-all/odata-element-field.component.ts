@@ -75,7 +75,7 @@ export class ODataElementFieldComponent {
 
             var elementField = {
                 ElementId: element.Id,
-                Name: "New field " + getUniqueValue()
+                Name: `New field ${getUniqueValue()}`
             };
 
             const url = `${AppSettings.serviceAppUrl}/odata/ElementField`;
@@ -140,7 +140,7 @@ export class ODataElementFieldComponent {
             var elementField = element.ElementFieldSet[0];
 
             var body = {
-                Name: "Updated field " + getUniqueValue(),
+                Name: `Updated field ${getUniqueValue()}`,
                 RowVersion: elementField.RowVersion
             };
 

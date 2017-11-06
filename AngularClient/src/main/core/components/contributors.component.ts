@@ -6,21 +6,12 @@ import { Component } from "@angular/core";
 })
 export class ContributorsComponent {
 
-    constructor() {
-    }
-
-    getExperienceYears(beginYear: number): string {
-        var beginYearValue = Number(beginYear);
-
-        if (beginYearValue === 0) {
-            return `-`;
-        }
-
-        let totalYears = new Date().getUTCFullYear() - beginYearValue;
+    getExperienceYears(year: number): string {
+        const totalYears = new Date().getUTCFullYear() - year;
         return `${totalYears}+`;
     }
 
-    getJoinedOnDate(day: any, month: any, year: any): Date {
+    getJoinedOnDate(day: number, month: number, year: number): Date {
         return new Date(year, month - 1, day);
     }
 }

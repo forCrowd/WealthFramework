@@ -15,7 +15,7 @@ import { AdminService } from "./admin.service";
 // Routes
 const adminRoutes: Routes = [
     { path: "app/admin", component: AdminOverviewComponent, canActivate: [AdminGuard], data: { title: "Admin Overview" } },
-    { path: "app/admin/resource-pools", component: ResourcePoolsComponent, canActivate: [AdminGuard], data: { title: "Resource pools" } },
+    { path: "app/admin/resource-pools", component: ResourcePoolsComponent, canActivate: [AdminGuard], data: { title: "Resource pools" } }
 ];
 
 @NgModule({

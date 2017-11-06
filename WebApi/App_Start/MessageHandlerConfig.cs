@@ -5,7 +5,7 @@
     using System.Net.Http;
     using System.Net.Http.Extensions.Compression.Core.Compressors;
 
-    public class MessageHandlerConfig
+    public static class MessageHandlerConfig
     {
         public static void RegisterMessageHandlerConfig(Collection<DelegatingHandler> messageHandlers)
         {

@@ -9,7 +9,6 @@ import { User } from "../main/app-entity-manager/entities/user";
 import { AppHttp } from "../main/app-http/app-http.module";
 import { AuthService } from "../main/auth/auth.module";
 import { Logger } from "../main/logger/logger.module";
-import { getUniqueValue } from "../main/utils";
 
 @Component({
     selector: "odata-user-element-cell",
@@ -93,8 +92,6 @@ export class ODataUserElementCellComponent {
     private delete(userId: number): Observable<Response> {
 
         return this.getElementCell(userId, true).mergeMap((elementCell) => {
-
-            var userElementCell = elementCell.UserElementCellSet[0];
 
             const url = this.getODataUrl(userId, elementCell.Id);
 

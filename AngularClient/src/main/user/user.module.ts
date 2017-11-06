@@ -8,7 +8,7 @@ import { UserService } from "./user.service";
 import { DynamicTitleResolve } from "../core/dynamic-title-resolve.service";
 
 const userRoutes: Routes = [
-    { path: ":username", component: ProfileComponent, resolve: { title: DynamicTitleResolve } },
+    { path: ":username", component: ProfileComponent, resolve: { title: DynamicTitleResolve } }
 ];
 
 @NgModule({
@@ -21,7 +21,7 @@ const userRoutes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(userRoutes),
-        MomentModule,
+        MomentModule
     ],
     providers: [
         UserService

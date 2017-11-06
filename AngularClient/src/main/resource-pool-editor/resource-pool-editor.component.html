@@ -61,8 +61,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ol class="breadcrumb" *ngIf="resourcePool.ElementSet.length > 1">
-                            <li *ngFor="let element of resourcePool.selectedElement().familyTree(); let lastItem = last" [ngClass]="{ active: lastItem }">
-                                <button *ngIf="!lastItem" (click)="changeSelectedElement(element)" type="button" class="btn-link" title="Switch to {{ element.Name }} view">
+                            <li *ngFor="let element of selectedElement.familyTree(); let lastItem = last" [ngClass]="{ active: lastItem }">
+                                <button *ngIf="!lastItem" (click)="selectedElement = element" type="button" class="btn-link" title="Switch to {{ element.Name }} view">
                                     {{ element.Name }}
                                 </button>
                                 <span *ngIf="lastItem">
@@ -71,28 +71,15 @@
                             </li>
                         </ol>
                     </div>
-                    <div *ngIf="resourcePool.selectedElement().ElementItemSet.length <= 20" class="col-md-12">
+                    <div *ngIf="selectedElement.ElementItemSet.length <= 20" class="col-md-12">
                         <ngChart [config]="chartConfig"></ngChart>
                     </div>
                 </div>
                 <div class="row">
                     <div class="details col-md-12">
-                        <div *ngIf="resourcePool.displayResourcePoolDetails()">
-                            <label>CMRP Rate</label>
-                            <span class="text-right">{{ resourcePool.resourcePoolRatePercentage() | percent }}</span>
-                            <div *ngIf="!resourcePool.UseFixedResourcePoolRate" class="btn-group" role="group">
-                                <button title="Increase CMRP Rate" type="button" (click)="increaseResourcePoolRate()" [disabled]="isBusy" class="btn btn-default btn-xs">+</button>
-                                <button title="Decrease CMRP Rate" type="button" (click)="decreaseResourcePoolRate()" [disabled]="isBusy" class="btn btn-default btn-xs">-</button>
-                                <button title="Reset CMRP Rate" type="button" (click)="resetResourcePoolRate()" [disabled]="isBusy" class="btn btn-default btn-xs">0</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="details col-md-12">
-                        <div *ngIf="resourcePool.displayResourcePoolDetails()">
-                            <label>CMRP Amount</label>
-                            <span class="text-right">{{ resourcePool.selectedElement().totalResourcePoolAmount() | symbolic }}</span>
+                        <div *ngIf="selectedElement.elementFieldSet().length > 0">
+                            <label>Total Amount</label>
+                            <span class="text-right">{{ resourcePool.InitialValue | symbolic }}</span>
                         </div>
                     </div>
                 </div>
@@ -104,59 +91,48 @@
                                     <tr>
                                         <!-- Name -->
                                         <th>
-                                            {{ resourcePool.selectedElement().Name }}
+                                            {{ selectedElement.Name }}
                                         </th>
                                         <!-- Fields -->
-                                        <th *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Integer || field.DataType === ElementFieldDataType.Decimal || field.DataType === ElementFieldDataType.DirectIncome || field.DataType === ElementFieldDataType.Multiplier }">
+                                        <th *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
                                             <div *ngIf="field.DataType !== ElementFieldDataType.Element">
                                                 {{ field.Name }}<span *ngIf="field.IndexEnabled" title="Index" class="infoText">(I)</span>
                                             </div>
                                             <span *ngIf="field.DataType === ElementFieldDataType.Element">
-                                                <button (click)="changeSelectedElement(field.SelectedElement)" type="button" class="btn-link" title="Switch to {{ field.Name }} view">{{ field.Name }}</button>
+                                                <button (click)="selectedElement = field.SelectedElement" type="button" class="btn-link" title="Switch to {{ field.Name }} view">{{ field.Name }}</button>
                                             </span>
                                         </th>
-                                        <!-- Direct Income -->
-                                        <th *ngIf="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0" class="text-right">
-                                            {{ resourcePool.selectedElement().directIncomeField().Name + ' Income' }}
-                                        </th>
-                                        <!-- CMRP Income & Details -->
+                                        <!-- Total Income & Details -->
                                         <ng-template [ngIf]="displayIndexDetails">
-                                            <th *ngFor="let field of resourcePool.selectedElement().elementFieldIndexSet()" class="text-right">
+                                            <th *ngFor="let field of selectedElement.elementFieldSet()" class="text-right">
                                                 {{ field.Name + ' (I) Income' }}
                                             </th>
                                         </ng-template>
-                                        <th *ngIf="resourcePool.selectedElement().elementFieldIndexSet().length > 1" class="text-right">
-                                            <!-- Display 'CMRP Income' view link only if there are more than one index -->
-                                            <button *ngIf="resourcePool.selectedElement().elementFieldIndexSet().length > 1" (click)="toggleIndexDetails()" type="button" class="btn-link" title="Toggle between 'Indexes' & 'Elements' views">CMRP Income</button>
+                                        <th *ngIf="resourcePool.InitialValue > 0" class="text-right">
+                                            <!-- Display 'Total Income' view link only if there are more than one index -->
+                                            <button *ngIf="selectedElement.elementFieldSet().length > 1" (click)="toggleIndexDetails()" type="button" class="btn-link" title="Toggle between 'Indexes' & 'Elements' views">Total Income</button>
                                             <!-- If there is only one index, then use that index's name -->
-                                            <span *ngIf="resourcePool.selectedElement().elementFieldIndexSet().length === 1">{{ resourcePool.selectedElement().elementFieldIndexSet()[0].Name + ' (I) Income' }}</span>
-                                        </th>
-                                        <!-- Total Income -->
-                                        <th *ngIf="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()" class="text-right">
-                                            Total Income
+                                            <span *ngIf="selectedElement.elementFieldSet().length === 1">Income</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let elementItem of resourcePool.selectedElement().getElementItemSet(elementItemsSortField)">
+                                    <tr *ngFor="let elementItem of selectedElement.getElementItemSet(elementItemsSortField)">
                                         <!-- Name -->
                                         <td>
                                             {{ elementItem.Name }}
                                         </td>
                                         <!-- Cells -->
-                                        <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === ElementFieldDataType.Integer || elementCell.ElementField.DataType === ElementFieldDataType.Decimal || elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome || elementCell.ElementField.DataType === ElementFieldDataType.Multiplier }">
+                                        <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === ElementFieldDataType.Decimal }">
                                             <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String">{{ elementCell.StringValue }}</span>
-                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Boolean
-                                        || elementCell.ElementField.DataType === ElementFieldDataType.Integer
-                                        || elementCell.ElementField.DataType === ElementFieldDataType.Decimal
-                                        || elementCell.ElementField.DataType === ElementFieldDataType.DateTime">
+                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal">
                                                 <div *ngIf="elementCell.ElementField.UseFixedValue">
                                                     {{ elementCell.numericValue() | symbolic }}
                                                 </div>
                                                 <div *ngIf="!elementCell.ElementField.UseFixedValue">
                                                     <div *ngIf="elementCell.ElementField.IndexEnabled">
                                                         <div [hidden]="resourcePool.RatingMode === RatingMode.CurrentUser">
-                                                            {{ elementCell.ratingPercentage() | percent }}
+                                                            {{ elementCell.numericValuePercentage() | percent }}
                                                         </div>
                                                         <div [hidden]="resourcePool.RatingMode === RatingMode.AllUsers">
                                                             <div class="btn-group" role="group">
@@ -177,63 +153,36 @@
                                             <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element">
                                                 {{ elementCell.SelectedElementItem !== null ? elementCell.SelectedElementItem.Name : "N/A" }}
                                             </div>
-                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.DirectIncome">
-                                                {{ elementItem.directIncome() | symbolic }}
-                                            </div>
-                                            <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Multiplier">
-                                                {{ elementItem.multiplier() | symbolic }}
-                                            </div>
                                         </td>
-                                        <!-- Direct Income -->
-                                        <td *ngIf="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0" class="text-right">
-                                            {{ elementItem.totalDirectIncome() | symbolic }}
-                                        </td>
-                                        <!-- CMRP Income & Details -->
+                                        <!-- Total Income & Details -->
                                         <ng-template [ngIf]="displayIndexDetails">
                                             <td *ngFor="let cellIndex of elementItem.elementCellIndexSet()" class="text-right">
-                                                {{ cellIndex.indexIncome() | symbolic }}
+                                                {{ cellIndex.income() | symbolic }}
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="resourcePool.selectedElement().elementFieldIndexSet().length > 1" class="text-right">
-                                            {{ elementItem.totalResourcePoolIncome() | symbolic }}
-                                        </td>
-                                        <!-- Total Income -->
-                                        <td *ngIf="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
-                                            {{ elementItem.totalIncome() | symbolic }}
+                                        <td *ngIf="resourcePool.InitialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
+                                            {{ elementItem.income() | symbolic }}
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
-                                    <tr *ngIf="resourcePool.selectedElement().ElementItemSet.length > 1">
+                                    <tr *ngIf="selectedElement.ElementItemSet.length > 1">
                                         <!-- Name -->
                                         <td>
                                             &nbsp;
                                         </td>
                                         <!-- Fields -->
-                                        <td *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Integer || field.DataType === ElementFieldDataType.Decimal || field.DataType === ElementFieldDataType.DirectIncome || field.DataType === ElementFieldDataType.Multiplier }">
-                                            <span *ngIf="field.DataType === ElementFieldDataType.DirectIncome">
-                                                {{ resourcePool.selectedElement().directIncome() | symbolic }}
-                                            </span>
-                                            <span *ngIf="field.DataType === ElementFieldDataType.Multiplier">
-                                                {{ resourcePool.selectedElement().multiplier() | symbolic }}
-                                            </span>
+                                        <td *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                                            &nbsp;
                                         </td>
-                                        <!-- Direct Income -->
-                                        <td *ngIf="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0" class="text-right">
-                                            {{ resourcePool.selectedElement().totalDirectIncome() | symbolic }}
-                                        </td>
-                                        <!-- CMRP Income & Details -->
+                                        <!-- Total Income & Details -->
                                         <ng-template [ngIf]="displayIndexDetails">
-                                            <td *ngFor="let field of resourcePool.selectedElement().elementFieldIndexSet()" class="text-right">
-                                                {{ field.indexIncome() | symbolic }}
+                                            <td *ngFor="let field of selectedElement.elementFieldSet()" class="text-right">
+                                                {{ field.income() | symbolic }}
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="resourcePool.selectedElement().elementFieldIndexSet().length > 1" class="text-right">
-                                            {{ resourcePool.selectedElement().totalResourcePoolAmount() | symbolic }} <!-- Same as income -->
-                                        </td>
-                                        <!-- Total Income -->
-                                        <td *ngIf="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()" class="text-right">
-                                            {{ resourcePool.selectedElement().totalIncome() | symbolic }}
+                                        <td *ngIf="resourcePool.InitialValue > 0" class="text-right">
+                                            {{ resourcePool.InitialValue | symbolic }} <!-- Same as income -->
                                         </td>
                                     </tr>
                                     <!-- Functions -->
@@ -243,25 +192,12 @@
                                             &nbsp;
                                         </td>
                                         <!-- Fields -->
-                                        <td class="noborder" *ngFor="let field of resourcePool.selectedElement().getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Integer || field.DataType === ElementFieldDataType.Decimal || field.DataType === ElementFieldDataType.DirectIncome || field.DataType === ElementFieldDataType.Multiplier }">
-                                            <div *ngIf="field.DataType !== ElementFieldDataType.Multiplier">
-                                                &nbsp;
-                                            </div>
-                                            <div *ngIf="field.DataType === ElementFieldDataType.Multiplier">
-                                                <div class="btn-group" role="group">
-                                                    <button title="Increase {{ resourcePool.selectedElement().multiplierField().Name }}" [disabled]="isBusy" (click)="increaseElementMultiplier(resourcePool.selectedElement())" class="btn btn-default btn-xs">+</button>
-                                                    <button title="Decrease {{ resourcePool.selectedElement().multiplierField().Name }}" type="button" [disabled]="isBusy" (click)="decreaseElementMultiplier(resourcePool.selectedElement())" class="btn btn-default btn-xs">-</button>
-                                                    <button title="Reset {{ resourcePool.selectedElement().multiplierField().Name }}" type="button" [disabled]="isBusy" (click)="resetElementMultiplier(resourcePool.selectedElement())" class="btn btn-default btn-xs">0</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <!-- Direct Income -->
-                                        <td *ngIf="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0" class="noborder text-right">
+                                        <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
                                             &nbsp;
                                         </td>
-                                        <!-- CMRP Income & Details -->
-                                        <ng-template [ngIf]="displayIndexDetails && resourcePool.selectedElement().elementFieldIndexSet().length > 1">
-                                            <td *ngFor="let field of resourcePool.selectedElement().elementFieldIndexSet()" class="noborder text-right">
+                                        <!-- Total Income & Details -->
+                                        <ng-template [ngIf]="displayIndexDetails">
+                                            <td *ngFor="let field of selectedElement.elementFieldSet()" class="noborder text-right">
                                                 <div class="btn-group" role="group">
                                                     <button title="Increase {{ field.Name }}" type="button" (click)="increaseIndexRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">+</button>
                                                     <button title="Decrease {{ field.Name }}" type="button" (click)="decreaseIndexRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">-</button>
@@ -269,11 +205,7 @@
                                                 </div>
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="resourcePool.selectedElement().elementFieldIndexSet().length > 1" class="noborder text-right">
-                                            &nbsp;
-                                        </td>
-                                        <!-- Total Income -->
-                                        <td *ngIf="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()" class="noborder text-right">
+                                        <td *ngIf="resourcePool.InitialValue > 0" class="noborder text-right">
                                             &nbsp;
                                         </td>
                                     </tr>

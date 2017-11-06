@@ -13,7 +13,7 @@ export class NotFoundComponent implements OnInit {
     ngOnInit(): void {
 
         this.activatedRoute.params.subscribe((params: any) => {
-            let notFoundUrl = params["url"];
+            const notFoundUrl = params["url"];
 
             if (notFoundUrl) {
 
@@ -25,7 +25,7 @@ export class NotFoundComponent implements OnInit {
 
                 // Case 2: routing module has redirected an invalid route to this component (path: **)
                 // Extract the invalid url and redirect it to itself by passing it, which will fall into Case 1
-                let url = window.location.href.replace(window.location.origin, "");
+                const url = window.location.href.replace(window.location.origin, "");
                 if (url !== "") {
                     this.router.navigate(["/app/not-found", { url: url }]);
                 }

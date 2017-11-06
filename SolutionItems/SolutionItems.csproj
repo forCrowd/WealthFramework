@@ -36,10 +36,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="GitHub\Issues\31\V3_EF.xml" />
-    <Content Include="GitHub\Issues\31\V3_OData.xml" />
-    <Content Include="GitHub\Issues\31\v4_EF.xml" />
-    <Content Include="GitHub\Issues\31\v4_OData.xml" />
     <Content Include="Scripts\Database\Sql\Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\User Insert.sql" />
     <None Include="..\.gitattributes">
@@ -51,9 +47,10 @@
     <None Include="..\CHANGELOG.md">
       <Link>Documents\CHANGELOG.md</Link>
     </None>
+    <None Include="Documents\AngularClient - Related functions.xlsx" />
     <None Include="Documents\Skecthes.pptx" />
     <None Include="Documents\Survey.docx" />
-    <None Include="Documents\Index Income Calculation.xlsx" />
+    <None Include="Documents\Index Income Calculation-Outdated.xlsx" />
     <None Include="Documents\Feedback.md" />
   </ItemGroup>
   <ItemGroup>

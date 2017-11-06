@@ -23,14 +23,8 @@
 
         public AppUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
+            private set => _userManager = value;
         }
     }
 }

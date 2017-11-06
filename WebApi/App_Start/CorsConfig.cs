@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using System.Web.Cors;
 
-    public class CorsConfig
+    public static class CorsConfig
     {
         public static void ConfigureCors(IAppBuilder app)
         {

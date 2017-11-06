@@ -3,67 +3,22 @@
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
+import { RatingMode } from "./resource-pool";
 import { UserElementField } from "./user-element-field";
 
 export enum ElementFieldDataType {
-    // A field that holds string value.
+
+    // A field that holds string value.
     // Use StringValue property to set its value on ElementItem level.
     String = 1,
-
-    // A field that holds boolean value.
-    // Use BooleanValue property to set its value on ElementItem level.
-    Boolean = 2,
-
-    // A field that holds integer value.
-    // Use IntegerValue property to set its value on ElementItem level.
-    Integer = 3,
 
     // A field that holds decimal value.
     // Use DecimalValue property to set its value on ElementItem level.
     Decimal = 4,
 
-    //// A field that holds DateTime value.
-    //// Use DateTimeValue property to set its value on ElementItem level.
-    DateTime = 5,
-
     // A field that holds another defined Element object within the resource pool.
     // Use SelectedElementItem property to set its value on ElementItem level.
     Element = 6,
-
-    // The field that presents each item's main income (e.g. Sales Price).
-    // Also resource pool amount will be calculated based on this field.
-    // Defined once per Element (at the moment, can be changed to per Resource Pool).
-    // Use DecimalValue property to set its value on ElementItem level.
-    DirectIncome = 11,
-
-    // The multiplier of the resource pool (e.g. Number of sales, number of users).
-    // Defined once per Element (at the moment, can be changed to per Resource Pool).
-    // Use DecimalValue property to set its value on ElementItem level.
-    Multiplier = 12
-}
-
-export enum ElementFieldIndexCalculationType {
-
-    // Default type.
-    // Uses the lowest score as the base (reference) rating in the group, then calculates the difference from that base.
-    // Base rating (lowest) gets 0 from the pool and other items get an amount based on their difference.
-    // Aims to maximize the benefit of the pool.
-    Aggressive = 1,
-
-    // Sums all ratings and calculates the percentages.
-    // All items get an amount, including the lowest scored item.
-    // Good for cases that only use "Resource Pool - Initial Amount" feature.
-    Passive = 2
-};
-
-export enum ElementFieldIndexSortType {
-
-    // Default type.
-    // High rating is better.
-    Highest = 1,
-
-    // Low rating is better.
-    Lowest = 2
 }
 
 export class ElementField extends EntityBase {
@@ -82,26 +37,15 @@ export class ElementField extends EntityBase {
 
             if (this.initialized) {
 
-                // a. UseFixedValue must be null for String & Element types
-                if (value === ElementFieldDataType.String ||
-                    value === ElementFieldDataType.Element) {
-                    this.UseFixedValue = null;
-                }
-
-                // b. UseFixedValue must be "false" for DirectIncome & Multiplier types
-                if (value === ElementFieldDataType.Multiplier) {
-                    this.UseFixedValue = false;
-                }
-
-                // c. UseFixedValue must be "true" for DirectIncome
-                if (value === ElementFieldDataType.DirectIncome) {
+                // a. UseFixedValue must be "true" for String & Element types
+                if (value === ElementFieldDataType.String
+                    || value === ElementFieldDataType.Element) {
                     this.UseFixedValue = true;
                 }
 
-                // d. IndexEnabled must be "false" for String, Element & Multipler types
+                // b. IndexEnabled must be "false" for String & Element types
                 if (value === ElementFieldDataType.String
-                    || ElementFieldDataType.Element
-                    || ElementFieldDataType.Multiplier) {
+                    || ElementFieldDataType.Element) {
                     this.IndexEnabled = false;
                 }
 
@@ -112,7 +56,7 @@ export class ElementField extends EntityBase {
     }
 
     SelectedElement: Element;
-    UseFixedValue: boolean = null;
+    UseFixedValue = false;
 
     get IndexEnabled(): boolean {
         return this.fields.indexEnabled;
@@ -122,38 +66,15 @@ export class ElementField extends EntityBase {
             this.fields.indexEnabled = value;
 
             if (this.initialized) {
-                this.IndexCalculationType = value ? ElementFieldIndexCalculationType.Aggressive : ElementFieldIndexCalculationType.Passive;
-                this.IndexSortType = value ? ElementFieldIndexSortType.Highest : ElementFieldIndexSortType.Lowest;
-
                 this.indexEnabledChanged$.emit(this);
+
+                // Update related
+                this.ElementCellSet.forEach(cell => {
+                    cell.setIncome();
+                });
             }
-
-            // TODO Complete this block!
-
-            //// Update related
-            //// a. Element
-            //this.Element.setElementFieldIndexSet();
-
-            //// b. Item(s)
-            //this.ElementCellSet.forEach(function(cell) {
-            //    var item = cell.ElementItem;
-            //    item.setElementCellIndexSet();
-            //});
-
-            //// c. Cells
-            //this.ElementCellSet.forEach(function(cell) {
-            //    cell.setNumericValueMultipliedPercentage(false);
-            //});
-            //this.setReferenceRatingMultiplied();
-
-            /* IndexEnabled related functions */
-            //cell.setAggressiveRating();
-            //cell.setratingPercentage();
-            //cell.setIndexIncome();
         }
     }
-    IndexCalculationType: ElementFieldIndexCalculationType = ElementFieldIndexCalculationType.Aggressive;
-    IndexSortType: ElementFieldIndexSortType = ElementFieldIndexSortType.Highest;
     SortOrder: number = 0;
     IndexRatingTotal: number = 0;
     IndexRatingCount: number = 0;
@@ -166,534 +87,231 @@ export class ElementField extends EntityBase {
         let text = ElementFieldDataType[this.DataType];
 
         if (this.DataType === ElementFieldDataType.Element) {
-            text += " (" + this.SelectedElement.Name + ")";
+            text += ` (${this.SelectedElement.Name})`;
         }
 
         return text;
     }
+    otherUsersIndexRatingTotal = 0;
+    otherUsersIndexRatingCount = 0;
 
-    dataTypeChanged$: EventEmitter<ElementField> = new EventEmitter<ElementField>();
-    indexEnabledChanged$: EventEmitter<ElementField> = new EventEmitter<ElementField>();
-    indexRatingUpdated$: EventEmitter<number> = new EventEmitter<number>();
+    dataTypeChanged$ = new EventEmitter<ElementField>();
+    indexEnabledChanged$ = new EventEmitter<ElementField>();
+    indexRatingUpdated$ = new EventEmitter<number>();
 
     private fields: {
-        dataType: ElementFieldDataType,
-        indexEnabled: boolean,
         currentUserIndexRating: number,
-        otherUsersIndexRatingTotal: number,
-        otherUsersIndexRatingCount: number,
+        dataType: ElementFieldDataType,
+        income: number,
+        indexEnabled: boolean,
         indexRating: number,
         indexRatingPercentage: number,
-        numericValueMultiplied: number,
-        passiveRating: number,
-        referenceRatingMultiplied: number,
-        // Aggressive rating formula prevents the organizations with the worst rating to get any income.
-        // However, in case all ratings are equal, then no one can get any income from the pool.
-        // This flag is used to determine this special case and let all organizations get a same share from the pool.
-        // See the usage in aggressiveRating() in elementCell.js
-        // TODO Usage of this field is correct?
-        referenceRatingAllEqualFlag: boolean,
-        aggressiveRating: number,
-        rating: number,
-        indexIncome: number
+        numericValue: number,
     } = {
-        dataType: 1,
+        currentUserIndexRating: 0,
+        dataType: ElementFieldDataType.String,
+        income: 0,
         indexEnabled: false,
-        currentUserIndexRating: null,
-        otherUsersIndexRatingTotal: null,
-        otherUsersIndexRatingCount: null,
-        indexRating: null,
-        indexRatingPercentage: null,
-        numericValueMultiplied: null,
-        passiveRating: null,
-        referenceRatingMultiplied: null,
-        // Aggressive rating formula prevents the organizations with the worst rating to get any income.
-        // However, in case all ratings are equal, then no one can get any income from the pool.
-        // This flag is used to determine this special case and let all organizations get a same share from the pool.
-        // See the usage in aggressiveRating() in elementCell.js
-        // TODO Usage of this field is correct?
-        referenceRatingAllEqualFlag: true,
-        aggressiveRating: null,
-        rating: null,
-        indexIncome: null
+        indexRating: 0,
+        indexRatingPercentage: 0,
+        numericValue: 0,
     };
 
-    currentUserElementField() {
-        return this.UserElementFieldSet.length > 0 ?
-            this.UserElementFieldSet[0] :
-            null;
-    }
-
     currentUserIndexRating() {
-
-        if (this.fields.currentUserIndexRating === null) {
-            this.setCurrentUserIndexRating(false);
-        }
-
         return this.fields.currentUserIndexRating;
     }
 
-    indexIncome() {
-
-        if (this.fields.indexIncome === null) {
-            this.setIndexIncome(false);
-        }
-
-        return this.fields.indexIncome;
+    income() {
+        return this.fields.income;
     }
 
     indexRating() {
-
-        if (this.fields.indexRating === null) {
-            this.setIndexRating(false);
-        }
-
         return this.fields.indexRating;
     }
 
-    indexRatingAverage() {
-
-        if (this.indexRatingCount() === null) {
-            return null;
-        }
-
+    indexRatingAverage() { // a.k.a allUsersIndexRating
         return this.indexRatingCount() === 0 ?
             0 :
             this.indexRatingTotal() / this.indexRatingCount();
     }
 
     indexRatingCount() {
-        return this.otherUsersIndexRatingCount() + 1;
+        return this.otherUsersIndexRatingCount + 1; // There is always default value, increase count by 1
     }
 
     indexRatingPercentage() {
-
-        if (this.fields.indexRatingPercentage === null) {
-            this.setIndexRatingPercentage(false);
-        }
-
         return this.fields.indexRatingPercentage;
     }
 
     indexRatingTotal() {
-        return this.otherUsersIndexRatingTotal() + this.currentUserIndexRating();
+        return this.otherUsersIndexRatingTotal + this.currentUserIndexRating();
     }
 
-    numericValueMultiplied() {
+    initialize(): boolean {
+        if (!super.initialize()) return false;
 
-        if (this.fields.numericValueMultiplied === null) {
-            this.setNumericValueMultiplied(false);
+        // Cells
+        this.ElementCellSet.forEach(cell => {
+            cell.initialize();
+        });
+
+        // Other users'
+        this.otherUsersIndexRatingTotal = this.IndexRatingTotal;
+        this.otherUsersIndexRatingCount = this.IndexRatingCount;
+
+        // Exclude current user's
+        if (this.UserElementFieldSet[0]) {
+            this.otherUsersIndexRatingTotal -= this.UserElementFieldSet[0].Rating;
+            this.otherUsersIndexRatingCount -= 1;
         }
 
-        return this.fields.numericValueMultiplied;
+        // User fields
+        this.UserElementFieldSet.forEach(userField => {
+            userField.initialize();
+        });
+
+        // Initial values
+        this.setCurrentUserIndexRating();
+
+        // Event handlers
+        this.Element.ResourcePool.ratingModeUpdated.subscribe(() => {
+            this.setIndexRating();
+        });
+
+        return true;
     }
 
-    // TODO Since this is a fixed value based on IndexRatingCount & current user's rate,
-    // it could be calculated on server, check it later again / coni2k - 03 Aug. '15
-    otherUsersIndexRatingCount() {
-
-        // Set other users" value on the initial call
-        if (this.fields.otherUsersIndexRatingCount === null) {
-            this.setOtherUsersIndexRatingCount();
-        }
-
-        return this.fields.otherUsersIndexRatingCount;
-    }
-
-    // TODO Since this is a fixed value based on IndexRatingTotal & current user's rate,
-    // it could be calculated on server, check it later again / coni2k - 03 Aug. '15
-    otherUsersIndexRatingTotal() {
-
-        // Set other users" value on the initial call
-        if (this.fields.otherUsersIndexRatingTotal === null) {
-            this.setOtherUsersIndexRatingTotal();
-        }
-
-        return this.fields.otherUsersIndexRatingTotal;
-    }
-
-    // Helper for Index Rating Type 1 case (low rating is better)
-    passiveRating() {
-        if (this.fields.passiveRating === null) {
-            this.setPassiveRating(false);
-        }
-
-        return this.fields.passiveRating;
-    }
-
-    rating() {
-
-        if (this.fields.rating === null) {
-            this.setRating(false);
-        }
-
-        return this.fields.rating;
-    }
-
-    referenceRatingAllEqualFlag() {
-        return this.fields.referenceRatingAllEqualFlag;
-    }
-
-    referenceRatingMultiplied() {
-
-        if (this.fields.referenceRatingMultiplied === null) {
-            this.setReferenceRatingMultiplied(false);
-        }
-
-        return this.fields.referenceRatingMultiplied;
+    numericValue() {
+        return this.fields.numericValue;
     }
 
     rejectChanges(): void {
 
+        const element = this.Element;
+
         // Related cells
-        var elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell) => {
+        const elementCellSet = this.ElementCellSet.slice();
+        elementCellSet.forEach(elementCell => {
             elementCell.rejectChanges();
         });
 
         // Related user element fields
-        var currentUserElementField = this.currentUserElementField();
-
-        if (currentUserElementField !== null) {
-            currentUserElementField.entityAspect.rejectChanges();
-
-            // Update the cache
-            this.setCurrentUserIndexRating();
+        if (this.UserElementFieldSet[0]) {
+            this.UserElementFieldSet[0].entityAspect.rejectChanges();
         }
 
         this.entityAspect.rejectChanges();
+
+        // Update related
+        element.setIndexRating();
     }
 
     remove() {
 
-        // Related cells
-        var elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell) => {
-            elementCell.remove();
+        const element = this.Element;
+
+        const elementCellSet = this.ElementCellSet.slice();
+        elementCellSet.forEach(elementCell => {
+
+            // User element cell
+            if (elementCell.UserElementCellSet[0]) {
+                elementCell.UserElementCellSet[0].entityAspect.setDeleted();
+            }
+
+            // Cell
+            elementCell.entityAspect.setDeleted();
         });
 
-        // Related user element fields
-        this.removeUserElementField();
+        // User element field
+        if (this.UserElementFieldSet[0]) {
+            this.UserElementFieldSet[0].entityAspect.setDeleted();
+        }
 
         this.entityAspect.setDeleted();
+
+        // Update related
+        element.setIndexRating();
     }
 
-    removeUserElementField() {
+    setCurrentUserIndexRating() {
 
-        var currentUserElementField = this.currentUserElementField();
-
-        if (currentUserElementField !== null) {
-            currentUserElementField.entityAspect.setDeleted();
-
-            // Update the cache
-            this.setCurrentUserIndexRating();
-        }
-    }
-
-    setCurrentUserIndexRating(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
-
-        var value = this.currentUserElementField() !== null ?
-            this.currentUserElementField().Rating :
-            50; // If there is no rating, this is the default value?
+        const value = this.UserElementFieldSet[0]
+            ? this.UserElementFieldSet[0].Rating
+            : this.IndexEnabled
+                ? 50 // Default value for IndexEnabled
+                : 0; // Otherwise 0
 
         if (this.fields.currentUserIndexRating !== value) {
             this.fields.currentUserIndexRating = value;
 
             // Update related
-            if (updateRelated) {
-                this.setIndexRating();
-            }
+            this.setIndexRating();
         }
     }
 
-    setIndexIncome(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+    setIncome() {
 
-        var value = this.Element.totalResourcePoolAmount() * this.indexRatingPercentage();
+        const value = this.Element.ResourcePool.InitialValue * this.indexRatingPercentage();
 
-        //if (this.IndexEnabled) {
-        //console.log(this.Name[0] + " II " + value.toFixed(2));
-        //}
-
-        if (this.fields.indexIncome !== value) {
-            this.fields.indexIncome = value;
+        if (this.fields.income !== value) {
+            this.fields.income = value;
 
             // Update related
-            if (updateRelated) {
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setIndexIncome();
-                });
-            }
+            this.ElementCellSet.forEach(cell => {
+                cell.setIncome();
+            });
         }
     }
 
-    setIndexRating(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+    setIndexRating() {
 
-        var value = 0; // Default value?
+        let value = 0; // Default value
 
         switch (this.Element.ResourcePool.RatingMode) {
-            case 1: { value = this.currentUserIndexRating(); break; } // Current user's
-            case 2: { value = this.indexRatingAverage(); break; } // All
+            case RatingMode.CurrentUser: { value = this.currentUserIndexRating(); break; }
+            case RatingMode.AllUsers: { value = this.indexRatingAverage(); break; }
         }
-
-        //console.log(this.Name[0] + " IR " + value.toFixed(2));
 
         if (this.fields.indexRating !== value) {
             this.fields.indexRating = value;
 
-            // TODO Update related
-            if (updateRelated) {
-                this.Element.ResourcePool.mainElement().setIndexRating();
-            }
+            // Update related
+            //this.indexRatingPercentage(); - No need to call this one since element is going to update it anyway! / coni2k - 05 Nov. '17 
+            this.Element.ResourcePool.mainElement().setIndexRating();
 
             this.indexRatingUpdated$.emit(this.fields.indexRating);
         }
     }
 
-    setIndexRatingPercentage(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+    setIndexRatingPercentage() {
 
-        var value = 0; // Default value?
+        const elementIndexRating = this.Element.ResourcePool.mainElement().indexRating();
 
-        var elementIndexRating = this.Element.ResourcePool.mainElement().indexRating();
-
-        if (elementIndexRating === 0) {
-            value = 0;
-        } else {
-            value = this.indexRating() / elementIndexRating;
-        }
-
-        //console.log(this.Name[0] + " IRP " + value.toFixed(2));
+        const value = elementIndexRating === 0 ? 0 : this.indexRating() / elementIndexRating;
 
         if (this.fields.indexRatingPercentage !== value) {
             this.fields.indexRatingPercentage = value;
 
             // Update related
-            if (updateRelated) {
-                this.setIndexIncome();
-            }
+            this.setIncome();
         }
     }
 
-    setNumericValueMultiplied(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
-
-        var value = 0; // Default value?
-
-        // Validate
-        if (this.ElementCellSet.length === 0) {
-            value = 0; // ?
-        } else {
-            this.ElementCellSet.forEach((cell) => {
-                value += cell.numericValueMultiplied();
-                //console.log(this.Name[0] + "-" + cell.ElementItem.Name[0] + " NVMA " + cell.numericValueMultiplied());
-            });
-        }
-
-        if (this.fields.numericValueMultiplied !== value) {
-            this.fields.numericValueMultiplied = value;
-
-            //console.log(this.Name[0] + " NVMB " + value.toFixed(2));
-
-            // Update related?
-            if (updateRelated && this.IndexEnabled) {
-
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setNumericValueMultipliedPercentage(false);
-                });
-
-                this.setPassiveRating(false);
-
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setPassiveRating(false);
-                });
-
-                this.setReferenceRatingMultiplied(false);
-
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setAggressiveRating(false);
-                });
-
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setRating(false);
-                });
-
-                this.setRating(false);
-
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setRatingPercentage(false);
-                });
-
-                //this.setIndexIncome(false);
-
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setIndexIncome(false);
-                });
-            }
-        }
-    }
-
-    setOtherUsersIndexRatingCount() {
-        this.fields.otherUsersIndexRatingCount = this.IndexRatingCount;
-
-        // Exclude current user's
-        if (this.currentUserElementField() !== null) {
-            this.fields.otherUsersIndexRatingCount--;
-        }
-    }
-
-    setOtherUsersIndexRatingTotal() {
-        this.fields.otherUsersIndexRatingTotal = this.IndexRatingTotal !== null ?
-            this.IndexRatingTotal :
-            0;
-
-        // Exclude current user's
-        if (this.currentUserElementField() !== null) {
-            this.fields.otherUsersIndexRatingTotal -= this.currentUserElementField().Rating;
-        }
-    }
-
-    setPassiveRating(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+    setNumericValue() {
 
         var value = 0;
 
-        this.ElementCellSet.forEach((cell) => {
-            value += 1 - cell.numericValueMultipliedPercentage();
+        this.ElementCellSet.forEach(cell => {
+            value += cell.numericValue();
         });
 
-        if (this.fields.passiveRating !== value) {
-            this.fields.passiveRating = value;
+        if (this.fields.numericValue !== value) {
+            this.fields.numericValue = value;
 
-            if (updateRelated) {
-                // TODO ?
-            }
-        }
-    }
-
-    setRating(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
-
-        var value = 0; // Default value?
-
-        // Validate
-        this.ElementCellSet.forEach((cell) => {
-            value += cell.rating();
-        });
-
-        //console.log(this.Name[0] + " AR " + value.toFixed(2));
-
-        if (this.fields.rating !== value) {
-            this.fields.rating = value;
-
-            //console.log(this.Name[0] + " AR OK");
-
-            if (updateRelated) {
-
-                // Update related
-                this.ElementCellSet.forEach((cell) => {
-                    cell.setRatingPercentage(false);
-                });
-
-                this.setIndexIncome();
-            }
-        }
-    }
-
-    setReferenceRatingAllEqualFlag(value: boolean) {
-
-        if (this.fields.referenceRatingAllEqualFlag !== value) {
-            this.fields.referenceRatingAllEqualFlag = value;
-            return true;
-        }
-        return false;
-    }
-
-    // TODO Currently updateRelated is always "false"?
-    setReferenceRatingMultiplied(updateRelated?: boolean) {
-        updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
-
-        var value: number = null;
-        var allEqualFlag = true;
-
-        // Validate
-        if (this.ElementCellSet.length === 0) {
-            value = 0; // ?
-        } else {
-
-            this.ElementCellSet.forEach((cell) => {
-
-                if (value === null) {
-
-                    switch (this.IndexSortType) {
-                        case 1: { // HighestToLowest (High number is better)
-                            value = (1 - cell.numericValueMultipliedPercentage());
-                            break;
-                        }
-                        case 2: { // LowestToHighest (Low number is better)
-                            value = cell.numericValueMultiplied();
-                            break;
-                        }
-                    }
-
-                } else {
-
-                    switch (this.IndexSortType) {
-                        case 1: { // HighestToLowest (High number is better)
-
-                            if (1 - cell.numericValueMultipliedPercentage() !== value) {
-                                allEqualFlag = false;
-                            }
-
-                            if (1 - cell.numericValueMultipliedPercentage() > value) {
-                                value = 1 - cell.numericValueMultipliedPercentage();
-                            }
-                            break;
-                        }
-                        case 2: { // LowestToHighest (Low number is better)
-
-                            if (cell.numericValueMultiplied() !== value) {
-                                allEqualFlag = false;
-                            }
-
-                            if (cell.numericValueMultiplied() > value) {
-                                value = cell.numericValueMultiplied();
-                            }
-
-                            break;
-                        }
-                    }
-                }
+            // Update related
+            this.ElementCellSet.forEach(cell => {
+                cell.setNumericValuePercentage();
             });
-        }
-
-        //console.log(this.Name[0] + "-" + cell.ElementItem.Name[0] + " RRMA " + value.toFixed(2));
-
-        // Set all equal flag
-        var flagUpdated = this.setReferenceRatingAllEqualFlag(allEqualFlag);
-        var ratingUpdated = false;
-
-        // Only if it's different..
-        if (this.fields.referenceRatingMultiplied !== value) {
-            this.fields.referenceRatingMultiplied = value;
-
-            ratingUpdated = true;
-
-            //console.log(this.Name[0] + " RRMB " + value.toFixed(2));
-        }
-
-        // Update related
-        if ((flagUpdated || ratingUpdated) && updateRelated) {
-
-            // TODO ?!
-
-            this.ElementCellSet.forEach((cell) => {
-                cell.setAggressiveRating(false);
-            });
-
-            // this.setAggressiveRating();
         }
     }
 }

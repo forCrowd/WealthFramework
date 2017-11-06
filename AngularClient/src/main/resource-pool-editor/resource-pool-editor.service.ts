@@ -1,7 +1,7 @@
 ﻿import { EventEmitter, Injectable } from "@angular/core";
 import { Http } from "@angular/http";
-import { EntityQuery, FetchStrategy, Predicate, QueryResult } from "breeze-client";
-import { Observable, ObservableInput } from "rxjs/Observable";
+import { EntityQuery, FetchStrategy, Predicate } from "../../libraries/breeze-client";
+import { Observable } from "rxjs/Observable";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AppHttp } from "../app-http/app-http.module";
@@ -13,7 +13,6 @@ import { IUniqueKey, ResourcePool } from "../app-entity-manager/entities/resourc
 import { User } from "../app-entity-manager/entities/user";
 import { UserElementCell } from "../app-entity-manager/entities/user-element-cell";
 import { UserElementField } from "../app-entity-manager/entities/user-element-field";
-import { UserResourcePool } from "../app-entity-manager/entities/user-resource-pool";
 import { AuthService } from "../auth/auth.module";
 import { AppEntityManager } from "../app-entity-manager/app-entity-manager.module";
 
@@ -26,7 +25,6 @@ export class ResourcePoolEditorService {
     get currentUserChanged$(): EventEmitter<User> {
         return this.authService.currentUserChanged$;
     }
-    elementMultiplierUpdated$: EventEmitter<any> = new EventEmitter<any>();
     elementCellDecimalValueUpdated$: EventEmitter<any> = new EventEmitter<ElementCell>();
     fetchedList: IUniqueKey[] = [];
     get isBusy(): boolean {
@@ -50,28 +48,19 @@ export class ResourcePoolEditorService {
     }
 
     createElement(initialValues: Object) {
-        return this.appEntityManager.createEntity("Element", initialValues);
+        return this.appEntityManager.createEntityNew("Element", initialValues);
     }
 
     createElementCell(initialValues: Object) {
 
-        var elementCell: ElementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
+        const elementCell = this.appEntityManager.createEntityNew("ElementCell", initialValues) as ElementCell;
 
         // User element cell
-        if (elementCell.ElementField.DataType !== ElementFieldDataType.String && elementCell.ElementField.DataType !== ElementFieldDataType.Element) {
-
-            switch (elementCell.ElementField.DataType) {
-                case 1: { break; }
-                case 2: { elementCell.NumericValueTotal = 1; break; }
-                case 3: { elementCell.NumericValueTotal = 0; break; }
-                case 4: { elementCell.NumericValueTotal = 50; break; }
-                case 6: { break; }
-                case 11: { elementCell.NumericValueTotal = 100; break; }
-                case 12: { elementCell.NumericValueTotal = 0; break; }
-            }
+        if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
+            elementCell.NumericValueTotal = 50;
             elementCell.NumericValueCount = 1;
 
-            this.createUserElementCell(elementCell, null, false);
+            this.createUserElementCell(elementCell, null);
         }
 
         return elementCell;
@@ -79,7 +68,7 @@ export class ResourcePoolEditorService {
 
     createElementField(initialValues: Object) {
 
-        const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+        const elementField = this.appEntityManager.createEntityNew("ElementField", initialValues) as ElementField;
 
         if (elementField.IndexEnabled) {
             elementField.IndexRatingTotal = 50; // Computed field
@@ -90,58 +79,55 @@ export class ResourcePoolEditorService {
 
         // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
         // Event handlers
-        elementField.dataTypeChanged$.subscribe((elementField: ElementField) => { this.elementField_DataTypeChanged(elementField); });
-        elementField.indexEnabledChanged$.subscribe((elementField: ElementField) => { this.elementField_IndexEnabledChanged(elementField); });
+        elementField.dataTypeChanged$.subscribe(elementField => { this.elementField_DataTypeChanged(elementField); });
+        elementField.indexEnabledChanged$.subscribe(elementField => { this.elementField_IndexEnabledChanged(elementField); });
 
         return elementField;
     }
 
     createElementItem(initialValues: Object): ElementItem {
-        return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
+        return this.appEntityManager.createEntityNew("ElementItem", initialValues) as ElementItem;
     }
 
     createResourcePoolEmpty(): ResourcePool {
 
-        var resourcePool = this.appEntityManager.createEntity("ResourcePool", {
+        const resourcePool = this.appEntityManager.createEntityNew("ResourcePool", {
             User: this.authService.currentUser,
             Name: "New CMRP",
             Key: "New-CMRP",
             Description: "Description for CMRP",
             InitialValue: 100,
-            UseFixedResourcePoolRate: true,
         }) as ResourcePool;
 
         resourcePool.RatingCount = 1; // Computed field
-        resourcePool.ResourcePoolRateTotal = 10; // Computed field
-        resourcePool.ResourcePoolRateCount = 1; // Computed field
-
-        this.createUserResourcePool(resourcePool, 10);
 
         return resourcePool;
     }
 
-    createResourcePoolBasic(resourcePool: ResourcePool) {
+    createResourcePoolBasic(resourcePool: ResourcePool = null) {
 
-        var element = this.createElement({
+        if (!resourcePool) {
+            resourcePool = this.createResourcePoolEmpty();
+        }
+
+        const element = this.createElement({
             ResourcePool: resourcePool,
             Name: "New element"
         }) as Element;
         element.IsMainElement = true;
 
         // Importance field (index)
-        var importanceField = this.createElementField({
+        const importanceField = this.createElementField({
             Element: element,
             Name: "Importance",
             DataType: 4,
             UseFixedValue: false,
             IndexEnabled: true,
-            IndexCalculationType: 2,
-            IndexSortType: 1,
             SortOrder: 1
         }) as ElementField;
 
         // Item 1
-        var elementItem1 = this.createElementItem({
+        const elementItem1 = this.createElementItem({
             Element: element,
             Name: "New item 1"
         }) as ElementItem;
@@ -153,7 +139,7 @@ export class ResourcePoolEditorService {
         });
 
         // Item 2
-        var elementItem2 = this.createElementItem({
+        const elementItem2 = this.createElementItem({
             Element: element,
             Name: "New item 2"
         });
@@ -167,14 +153,13 @@ export class ResourcePoolEditorService {
         return resourcePool;
     }
 
-    createUserElementCell(elementCell: ElementCell, value: any, updateCache?: boolean) {
-        updateCache = typeof updateCache !== "undefined" ? updateCache : true;
+    createUserElementCell(elementCell: ElementCell, value: any) {
 
         // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-        var existingKey = [this.authService.currentUser.Id, elementCell.Id];
-        var userElementCell = this.appEntityManager.getEntityByKey("UserElementCell", existingKey) as UserElementCell;
+        const existingKey = [this.authService.currentUser.Id, elementCell.Id];
+        let userElementCell = this.appEntityManager.getEntityByKey("UserElementCell", existingKey) as UserElementCell;
 
-        if (typeof userElementCell !== "undefined" && userElementCell !== null) {
+        if (userElementCell) {
 
             // If it's deleted, restore it
             if (userElementCell.entityAspect.entityState.isDeleted()) {
@@ -182,51 +167,37 @@ export class ResourcePoolEditorService {
             }
 
             switch (elementCell.ElementField.DataType) {
-                case 1: { break; }
-                case 2: { userElementCell.BooleanValue = value !== null ? value : false; break; }
-                case 3: { userElementCell.IntegerValue = value !== null ? value : 0; break; }
-                case 4: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
-                case 6: { break; }
-                case 11: { userElementCell.DecimalValue = value !== null ? value : 100; break; }
-                case 12: { userElementCell.DecimalValue = value !== null ? value : 0; break; }
+                case ElementFieldDataType.String: { break; }
+                case ElementFieldDataType.Decimal: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
+                case ElementFieldDataType.Element: { break; }
             }
 
         } else {
 
-            let userElementCellInitial = {
+            const userElementCellInitial = {
                 User: this.authService.currentUser,
                 ElementCell: elementCell
             } as any;
 
             switch (elementCell.ElementField.DataType) {
-                case 1: { break; }
-                case 2: { userElementCellInitial.BooleanValue = value !== null ? value : false; break; }
-                case 3: { userElementCellInitial.IntegerValue = value !== null ? value : 0; break; }
-                case 4: { userElementCellInitial.DecimalValue = value !== null ? value : 50; break; }
-                case 6: { break; }
-                case 11: { userElementCellInitial.DecimalValue = value !== null ? value : 100; break; }
-                case 12: { userElementCellInitial.DecimalValue = value !== null ? value : 0; break; }
+                case ElementFieldDataType.String: { break; }
+                case ElementFieldDataType.Decimal: { userElementCellInitial.DecimalValue = value !== null ? value : 50; break; }
+                case ElementFieldDataType.Element: { break; }
             }
 
-            userElementCell = this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
-        }
-
-        // Update the cache
-        if (updateCache) {
-            elementCell.setCurrentUserNumericValue();
+            userElementCell = this.appEntityManager.createEntityNew("UserElementCell", userElementCellInitial) as UserElementCell;
         }
 
         return userElementCell;
     }
 
-    createUserElementField(elementField: ElementField, rating?: number) {
-        rating = typeof rating !== "undefined" ? rating : 50;
+    createUserElementField(elementField: ElementField, rating: number = 50) {
 
         // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-        var existingKey = [this.authService.currentUser.Id, elementField.Id];
-        var userElementField = this.appEntityManager.getEntityByKey("UserElementField", existingKey) as UserElementField;
+        const existingKey = [this.authService.currentUser.Id, elementField.Id];
+        let userElementField = this.appEntityManager.getEntityByKey("UserElementField", existingKey) as UserElementField;
 
-        if (typeof userElementField !== "undefined" && userElementField !== null) {
+        if (userElementField) {
 
             // If it's deleted, restore it
             if (userElementField.entityAspect.entityState.isDeleted()) {
@@ -237,65 +208,32 @@ export class ResourcePoolEditorService {
 
         } else {
 
-            let userElementFieldInitial = {
+            const userElementFieldInitial = {
                 User: this.authService.currentUser,
                 ElementField: elementField,
                 Rating: rating
             };
 
-            userElementField = this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
+            userElementField = this.appEntityManager.createEntityNew("UserElementField", userElementFieldInitial) as UserElementField;
         }
-
-        // Update the cache
-        elementField.setCurrentUserIndexRating();
 
         return userElementField;
-    }
-
-    createUserResourcePool(resourcePool: ResourcePool, resourcePoolRate: number) {
-
-        // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-        var existingKey = [this.authService.currentUser.Id, resourcePool.Id];
-        var userResourcePool = this.appEntityManager.getEntityByKey("UserResourcePool", existingKey) as UserResourcePool;
-
-        if (userResourcePool) {
-
-            // If it's deleted, restore it
-            if (userResourcePool.entityAspect.entityState.isDeleted()) {
-                userResourcePool.entityAspect.rejectChanges();
-            }
-
-            userResourcePool.ResourcePoolRate = resourcePoolRate;
-
-        } else {
-
-            let userResourcePoolInitial = {
-                User: this.authService.currentUser,
-                ResourcePool: resourcePool,
-                ResourcePoolRate: resourcePoolRate
-            };
-
-            userResourcePool = this.appEntityManager.createEntity("UserResourcePool", userResourcePoolInitial) as UserResourcePool;
-        }
-
-        // Update the cache
-        resourcePool.setCurrentUserResourcePoolRate();
-
-        return userResourcePool;
     }
 
     elementField_DataTypeChanged(elementField: ElementField) {
 
         // Related element cells: Clear old values and set default values if necessary
-        elementField.ElementCellSet.forEach((elementCell: ElementCell) => {
+        elementField.ElementCellSet.forEach(elementCell => {
 
             elementCell.SelectedElementItem = null;
             elementCell.StringValue = "";
 
-            elementCell.removeUserElementCell(false);
+            if (elementCell.UserElementCellSet[0]) {
+                elementCell.UserElementCellSet[0].entityAspect.setDeleted();
+            }
 
-            if (elementCell.ElementField.DataType !== ElementFieldDataType.String && elementCell.ElementField.DataType !== ElementFieldDataType.Element) {
-                this.createUserElementCell(elementCell, null, false);
+            if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
+                this.createUserElementCell(elementCell, null);
             }
         });
     }
@@ -303,10 +241,12 @@ export class ResourcePoolEditorService {
     elementField_IndexEnabledChanged(elementField: ElementField) {
 
         // Add user element field, if IndexEnabled and there is none
-        if (elementField.IndexEnabled && elementField.currentUserElementField() === null) {
+        if (elementField.IndexEnabled && !elementField.UserElementFieldSet[0]) {
             this.createUserElementField(elementField);
-        } else if (!elementField.IndexEnabled && elementField.currentUserElementField() !== null) {
-            elementField.removeUserElementField();
+        } else if (!elementField.IndexEnabled && elementField.UserElementFieldSet[0]) {
+            if (elementField.UserElementFieldSet[0]) {
+                elementField.UserElementFieldSet[0].entityAspect.setDeleted();
+            }
         }
     }
 
@@ -315,7 +255,7 @@ export class ResourcePoolEditorService {
 
         // If it's forced, remove it from fetched list so it can be retrieved from the server
         if (forceRefresh) {
-            var keyIndex = this.fetchedList.indexOf(resourcePoolUniqueKey);
+            const keyIndex = this.fetchedList.indexOf(resourcePoolUniqueKey);
             this.fetchedList.splice(keyIndex, 1);
         }
 
@@ -328,17 +268,17 @@ export class ResourcePoolEditorService {
             && resourcePoolUniqueKey.resourcePoolKey === item.resourcePoolKey));
 
         // Prepare the query
-        var query = EntityQuery.from("ResourcePool");
+        let query = EntityQuery.from("ResourcePool");
 
         // Is authorized? No, then get only the public data, yes, then get include user's own records
         if (this.authService.currentUser.isAuthenticated()) {
-            query = query.expand("User, UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet");
+            query = query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet");
         } else {
             query = query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
         }
 
-        var userNamePredicate = new Predicate("User.UserName", "eq", resourcePoolUniqueKey.username);
-        var resourcePoolKeyPredicate = new Predicate("Key", "eq", resourcePoolUniqueKey.resourcePoolKey);
+        const userNamePredicate = new Predicate("User.UserName", "eq", resourcePoolUniqueKey.username);
+        const resourcePoolKeyPredicate = new Predicate("Key", "eq", resourcePoolUniqueKey.resourcePoolKey);
 
         query = query.where(userNamePredicate.and(resourcePoolKeyPredicate));
 
@@ -350,7 +290,7 @@ export class ResourcePoolEditorService {
         }
 
         return this.appEntityManager.executeQueryNew<ResourcePool>(query)
-            .map((response): ResourcePool => {
+            .map(response => {
 
                 // If there is no cmrp with this Id, return null
                 if (response.results.length === 0) {
@@ -358,23 +298,19 @@ export class ResourcePoolEditorService {
                 }
 
                 // ResourcePool
-                var resourcePool = response.results[0] as ResourcePool;
+                var resourcePool = response.results[0];
 
                 // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
                 // Events handlers
-                resourcePool.ElementSet.forEach((element: Element) => {
-                    element.ElementFieldSet.forEach((elementField: ElementField) => {
-                        elementField.dataTypeChanged$.subscribe((elementField: ElementField) => { this.elementField_DataTypeChanged(elementField); });
-                        elementField.indexEnabledChanged$.subscribe((elementField: ElementField) => { this.elementField_IndexEnabledChanged(elementField); });
+                resourcePool.ElementSet.forEach(element => {
+                    element.ElementFieldSet.forEach(elementField => {
+                        elementField.dataTypeChanged$.subscribe(elementField => { this.elementField_DataTypeChanged(elementField); });
+                        elementField.indexEnabledChanged$.subscribe(elementField => { this.elementField_IndexEnabledChanged(elementField); });
                     });
                 });
 
+                // Add the record into fetched list
                 if (!fetchedEarlier) {
-
-                    // Init
-                    resourcePool._init();
-
-                    // Add the record into fetched list
                     this.fetchedList.push(resourcePoolUniqueKey);
                 }
 
@@ -382,17 +318,16 @@ export class ResourcePoolEditorService {
             });
     }
 
-    getResourcePoolSet(searchKey: string) {
-        searchKey = typeof searchKey !== "undefined" ? searchKey : "";
+    getResourcePoolSet(searchKey: string = "") {
 
-        var query = EntityQuery
+        let query = EntityQuery
             .from("ResourcePool")
             .expand(["User"])
             .orderBy("Name");
 
         if (searchKey !== "") {
-            var resourcePoolNamePredicate = new Predicate("Name", "contains", searchKey);
-            var userNamePredicate = new Predicate("User.UserName", "contains", searchKey);
+            const resourcePoolNamePredicate = new Predicate("Name", "contains", searchKey);
+            const userNamePredicate = new Predicate("User.UserName", "contains", searchKey);
             query = query.where(resourcePoolNamePredicate.or(userNamePredicate));
         }
 
@@ -406,7 +341,7 @@ export class ResourcePoolEditorService {
         //}
 
         return this.appEntityManager.executeQueryNew<ResourcePool>(query)
-            .map((response) => {
+            .map(response => {
                 return response.results;
             });
     }
@@ -418,10 +353,10 @@ export class ResourcePoolEditorService {
     // Currently not in use
     refreshComputedFields(resourcePool: ResourcePool): Observable<void> {
 
-        var updateComputedFieldsUrl = this.getUpdateComputedFieldsUrl(resourcePool.Id);
+        const updateComputedFieldsUrl = this.getUpdateComputedFieldsUrl(resourcePool.Id);
 
         return this.appHttp.post<void>(updateComputedFieldsUrl, null).mergeMap(() => {
-            return this.getResourcePoolExpanded(resourcePool.uniqueKey, true).map(() => {});
+            return this.getResourcePoolExpanded(resourcePool.uniqueKey, true).map(() => { });
         });
     }
 
@@ -445,9 +380,9 @@ export class ResourcePoolEditorService {
     // Try do handle them in a better way, maybe by using broadcast?
     updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
 
-        var userElementCell = elementCell.currentUserCell();
+        const userElementCell = elementCell.UserElementCellSet[0];
 
-        if (userElementCell === null) { // If there is no item, create it
+        if (!userElementCell) { // If there is no item, create it
 
             this.createUserElementCell(elementCell, value);
 
@@ -455,78 +390,22 @@ export class ResourcePoolEditorService {
 
             userElementCell.DecimalValue = value;
 
-            // Update the cache
-            elementCell.setCurrentUserNumericValue();
         }
 
         this.elementCellDecimalValueUpdated$.emit(elementCell);
     }
 
-    updateElementCellMultiplier(elementCell: ElementCell, updateType: string) {
-
-        this.updateElementCellMultiplierInternal(elementCell, updateType);
-
-        // Update items
-        elementCell.ElementField.Element.ElementItemSet.forEach((item) => {
-            item.setMultiplier();
-        });
-
-        if (elementCell.ElementField.IndexEnabled) {
-            // Update numeric value cells
-            elementCell.ElementField.ElementCellSet.forEach((cell) => {
-                cell.setNumericValueMultiplied(false);
-            });
-
-            // Update fields
-            elementCell.ElementField.setNumericValueMultiplied();
-        }
-    }
-
-    updateElementCellMultiplierInternal(elementCell: ElementCell, updateType: string) {
-
-        switch (updateType) {
-            case "increase":
-            case "decrease": {
-
-                var userElementCell = elementCell.currentUserCell();
-
-                if (userElementCell === null) { // If there is no item, create it
-
-                    var decimalValue = updateType === "increase" ? 1 : 0;
-                    this.createUserElementCell(elementCell, decimalValue, false);
-
-                } else { // If there is an item, update DecimalValue, but cannot be lower than zero
-
-                    userElementCell.DecimalValue = updateType === "increase" ?
-                        userElementCell.DecimalValue + 1 :
-                        userElementCell.DecimalValue - 1 < 0 ? 0 : userElementCell.DecimalValue - 1;
-                }
-
-                break;
-            }
-            case "reset": {
-
-                elementCell.removeUserElementCell(false);
-                break;
-            }
-        }
-    }
-
     updateElementFieldIndexRatingNew(elementField: ElementField, value: number) {
 
-        var userElementField = elementField.currentUserElementField();
-
         // If there is no item, create it
-        if (userElementField === null) {
+        if (!elementField.UserElementFieldSet[0]) {
 
             this.createUserElementField(elementField, value);
 
         } else { // If there is an item, set the Rating
 
-            userElementField.Rating = value;
+            elementField.UserElementFieldSet[0].Rating = value;
 
-            // Update the cache
-            elementField.setCurrentUserIndexRating();
         }
     }
 
@@ -536,12 +415,12 @@ export class ResourcePoolEditorService {
             case "increase":
             case "decrease": {
 
-                var userElementField = elementField.currentUserElementField();
+                const userElementField = elementField.UserElementFieldSet[0];
 
                 // If there is no item, create it
-                if (userElementField === null) {
+                if (!userElementField) {
 
-                    var rating = updateType === "increase" ? 55 : 45;
+                    const rating = updateType === "increase" ? 55 : 45;
                     this.createUserElementField(elementField, rating);
 
                 } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
@@ -549,90 +428,16 @@ export class ResourcePoolEditorService {
                     userElementField.Rating = updateType === "increase" ?
                         userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5 :
                         userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
-
-                    // Update the cache
-                    elementField.setCurrentUserIndexRating();
                 }
 
                 break;
             }
             case "reset": {
 
-                elementField.removeUserElementField();
-                break;
-            }
-        }
-    }
-
-    updateElementMultiplier(element: Element, updateType: string) {
-
-        // Find user element cell
-        element.ElementItemSet.forEach((item) => {
-
-            var multiplierCell: ElementCell;
-            for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
-                var elementCell = item.ElementCellSet[cellIndex];
-                if (elementCell.ElementField.DataType === ElementFieldDataType.Multiplier) {
-                    multiplierCell = elementCell;
-                    break;
-                }
-            }
-
-            this.updateElementCellMultiplierInternal(multiplierCell, updateType);
-        });
-
-        // Update related
-
-        // Update items
-        element.ElementItemSet.forEach((item) => {
-            item.setMultiplier();
-        });
-
-        element.ElementFieldSet.forEach((field) => {
-
-            if (field.IndexEnabled) {
-                // Update numeric value cells
-                field.ElementCellSet.forEach((cell) => {
-                    cell.setNumericValueMultiplied(false);
-                });
-
-                // Update fields
-                field.setNumericValueMultiplied();
-            }
-        });
-
-        this.elementMultiplierUpdated$.emit({ element: element, updateType: updateType });
-    }
-
-    updateResourcePoolRate(resourcePool: ResourcePool, updateType: string) {
-
-        switch (updateType) {
-            case "increase":
-            case "decrease": {
-
-                var userResourcePool = resourcePool.currentUserResourcePool();
-
-                // If there is no item, create it
-                if (userResourcePool === null) {
-
-                    var resourcePoolRate = updateType === "increase" ? 15 : 5;
-                    this.createUserResourcePool(resourcePool, resourcePoolRate);
-
-                } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 1000
-
-                    userResourcePool.ResourcePoolRate = updateType === "increase" ?
-                        userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5 :
-                        userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
-
-                    // Update the cache
-                    resourcePool.setCurrentUserResourcePoolRate();
+                if (elementField.UserElementFieldSet[0]) {
+                    elementField.UserElementFieldSet[0].Rating = 50;
                 }
 
-                break;
-            }
-            case "reset": {
-
-                resourcePool.removeUserResourcePool();
                 break;
             }
         }

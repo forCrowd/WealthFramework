@@ -5,6 +5,7 @@ import { Angulartics2GoogleAnalytics, Angulartics2Module } from "angulartics2";
 // Components
 import { MiscComponent } from "./misc.component";
 import { ODataComponent } from "./odata.component";
+import { ResourcePoolTesterComponent } from "./resource-pool-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
 import { GoogleAnalyticsService } from "../main/core/google-analytics.service";
@@ -14,12 +15,13 @@ export { Angulartics2GoogleAnalytics, GoogleAnalyticsService }
 const routes: Routes = [
     { path: "", component: MiscComponent, data: { title: "Misc" } },
     { path: "app/odata", component: ODataComponent, data: { title: "OData" } },
+    { path: "app/resource-pool-tester", component: ResourcePoolTesterComponent, data: { title: "Resource Pool Tester" } },
     { path: "app/web-api", component: WebApiComponent, data: { title: "WebApi" } },
 
     /* Home alternatives */
     { path: "app/misc", redirectTo: "", pathMatch: "full" },
     { path: "app.html", redirectTo: "", pathMatch: "full" },
-    { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
+    { path: "app-aot.html", redirectTo: "", pathMatch: "full" }
 ];
 
 export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {

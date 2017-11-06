@@ -1,16 +1,14 @@
-﻿import { Entity, EntityAspect, EntityType } from "breeze-client";
+﻿import { Entity, EntityAspect, EntityType } from "../../../libraries/breeze-client";
 
 export class EntityBase implements Entity {
 
     entityAspect: EntityAspect;
     entityType: EntityType;
+    initialized = false; // Determines whether the entity is completely being created or loaded from server.
 
-    // Determines whether the entity is completely being created or loaded from server.
-    initialized: boolean = false;
-
-    CreatedOn: Date = new Date();
-    ModifiedOn: Date = new Date();
-    DeletedOn?: Date = null;
+    CreatedOn = new Date();
+    ModifiedOn = new Date();
+    DeletedOn: Date | null = null;
     RowVersion: string = "AAAAAAAAAAA="; 
 
     get $typeName(): string {
@@ -18,7 +16,16 @@ export class EntityBase implements Entity {
         return this.entityAspect.getKey().entityType.shortName;
     }
 
-    static initializer(entity: EntityBase): void {
-        entity.initialized = true;
+    initialize(): boolean {
+
+        if (this.initialized) {
+            return false;
+        }
+
+        //console.log(`id: ${this["Id"] || "n/a"} - name: ${this["Name"] || "n/a"}`, this);
+
+        this.initialized = true;
+
+        return true;
     }
 }

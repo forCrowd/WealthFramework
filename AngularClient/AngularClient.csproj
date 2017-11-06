@@ -10,12 +10,12 @@
     <TypeScriptCompile Include="src\app-settings\environments\environment-settings.ts" />
     <TypeScriptCompile Include="src\app-settings\environments\production-settings.ts" />
     <TypeScriptCompile Include="src\app-settings\environments\test-settings.ts" />
+    <TypeScriptCompile Include="src\dev-all\resource-pool-tester.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-cell.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-item.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-field.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-user-element-cell.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-user-element-field.component.ts" />
-    <TypeScriptCompile Include="src\dev-all\odata-user-resource-pool.component.ts" />
     <TypeScriptCompile Include="src\dev-all\web-api.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-user.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata.component.ts" />
@@ -87,7 +87,6 @@
     <TypeScriptCompile Include="src\main\app-entity-manager\entities\test-helpers.ts" />
     <TypeScriptCompile Include="src\main\app-entity-manager\entities\user-element-cell.ts" />
     <TypeScriptCompile Include="src\main\app-entity-manager\entities\user-element-field.ts" />
-    <TypeScriptCompile Include="src\main\app-entity-manager\entities\user-resource-pool.ts" />
     <TypeScriptCompile Include="src\main\app-entity-manager\entities\user.ts" />
     <TypeScriptCompile Include="src\main\resource-pool-editor\resource-pool-editor.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\search.component.ts" />
@@ -119,14 +118,16 @@
   <ItemGroup>
     <None Include=".angular-cli.json" />
     <None Include="e2e\tsconfig.e2e.json" />
+    <None Include="package-lock.json" />
     <None Include="package.json" />
     <None Include="src\app-settings\environments\Readme.md" />
+    <Content Include="src\dev-all\resource-pool-tester.component.css" />
+    <Content Include="src\dev-all\resource-pool-tester.component.html" />
     <Content Include="src\dev-all\odata-element-cell.component.html" />
     <Content Include="src\dev-all\odata-element-item.component.html" />
     <Content Include="src\dev-all\odata-element-field.component.html" />
     <Content Include="src\dev-all\odata-user-element-cell.component.html" />
     <Content Include="src\dev-all\odata-user-element-field.component.html" />
-    <Content Include="src\dev-all\odata-user-resource-pool.component.html" />
     <Content Include="src\dev-all\web-api.component.html" />
     <Content Include="src\dev-all\app.component.css" />
     <Content Include="src\dev-all\odata-user.component.html" />

@@ -1,4 +1,4 @@
-﻿namespace forCrowd.WealthEconomy.WebApi.Models.Validation
+﻿namespace forCrowd.WealthEconomy.WebApi.Models
 {
     using Facade;
     using Microsoft.AspNet.Identity.Owin;

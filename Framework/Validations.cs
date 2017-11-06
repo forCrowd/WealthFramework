@@ -1,9 +1,4 @@
-﻿using forCrowd.WealthEconomy.Framework.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace forCrowd.WealthEconomy.Framework
+﻿namespace forCrowd.WealthEconomy.Framework
 {
     public static class Validations
     {

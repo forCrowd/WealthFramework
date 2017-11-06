@@ -12,17 +12,17 @@ export class ChartConfig {
 
     private fields: {
         data: ChartDataItem[],
-        options: Options
+        options: Options,
     } = {
         data: null,
-        options: null
+        options: null,
     };
 
     constructor(options: Options, data: ChartDataItem[]) {
 
         // Validate: Only supports "column" and "pie" type
         if (!(options.chart.type === "column" || options.chart.type === "pie")) {
-            const message: string = "Unsupported chart type: " + this.options.chart.type + " - Only 'column' and 'pie' types supported";
+            const message = `Unsupported chart type: ${this.options.chart.type} - Only 'column' and 'pie' types supported`;
             throw new Error(message);
         }
 

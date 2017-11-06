@@ -1,7 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.Facade.Tests
 {
-    using forCrowd.WealthEconomy.Facade;
-    using forCrowd.WealthEconomy.Framework;
+    using Facade;
+    using Framework;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Linq;
     using System.Threading.Tasks;

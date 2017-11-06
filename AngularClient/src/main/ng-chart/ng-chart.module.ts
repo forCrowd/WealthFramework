@@ -17,7 +17,7 @@ export function highchartsFactory() {
 @NgModule({
     imports: [
         CommonModule,
-        ChartModule,
+        ChartModule
     ],
     declarations: [
         NgChartComponent
