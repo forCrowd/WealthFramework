@@ -3,13 +3,13 @@
 **0.82.0**
 
 * General
- * UserResourcePool entity was removed
- * ElementField - IndexCalculationType and IndexSortType enum fields were removed
- * Boolean, Integer, DateTime, DirectIncome and Multiplier data types were removed
- * Refactoring
+  * UserResourcePool entity was removed
+  * ElementField - IndexCalculationType and IndexSortType enum fields were removed
+  * Boolean, Integer, DateTime, DirectIncome and Multiplier data types were removed
+  * Refactoring
 * AngularClient
- * ResourcePoolTester page was introduced
- * Package updates & "breeze-client" reference fix
+  * ResourcePoolTester page was introduced
+  * Package updates & "breeze-client" reference fix
 
 **0.81.2**
 
