@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.82.2**
+
+* AngularClient - Contributors page - nakanoer
+
 **0.82.1**
 
 * AngularClient - Account Overview - Has password fix
