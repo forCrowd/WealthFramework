@@ -19,6 +19,10 @@
   * ResourcePoolTester page was introduced
   * Package updates & "breeze-client" reference fix
 
+**0.81.3**
+
+* AngularClient - Contributors page - bugrasitemkar
+
 **0.81.2**
 
 * AngularClient - Contributors page - ryanklee
