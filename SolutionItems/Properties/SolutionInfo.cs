@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Aiming to stick to Semver versioning: http://semver.org/spec/v2.0.0.html
-[assembly: AssemblyInformationalVersion("0.82.2")]
+[assembly: AssemblyInformationalVersion("0.82.4")]
