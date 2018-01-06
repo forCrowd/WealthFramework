@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.82.4**
+
+* AngularClient - Contributors page - chrised123
+
 **0.82.3**
 
 * AngularClient - Contributors page - bugrasitemkar
