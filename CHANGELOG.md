@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.82.5**
+
+* WebApi - web.config https transform
+
 **0.82.4**
 
 * AngularClient - Contributors page - chrised123

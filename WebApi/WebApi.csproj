@@ -279,15 +279,15 @@
     <Content Include="CustomErrors\403.html" />
     <Content Include="CustomErrors\500.html" />
     <Content Include="CustomErrors\404.html" />
-    <Content Include="googleanalytics.js" />
+    <None Include="googleanalytics.js" />
     <Content Include="favicon.ico" />
     <Content Include="default.aspx" />
     <Content Include="robots.txt" />
     <None Include="Properties\PublishProfiles\api.wealth.pubxml" />
     <None Include="Properties\PublishProfiles\api.wealth.test.pubxml" />
-    <None Include="Web.config">
+    <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
