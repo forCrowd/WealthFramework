@@ -2,6 +2,7 @@
 
 **0.82.5**
 
+* AngularClient - Minor
 * WebApi - web.config https transform
 
 **0.82.4**
