@@ -15,7 +15,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class UserElementCellController : BaseODataController
     {
-        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
+        private readonly ProjectManager _projectManager = new ProjectManager();
 
         // POST odata/UserElementCell
         public async Task<IHttpActionResult> Post(Delta<UserElementCell> patch)
@@ -40,7 +40,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             // TODO Fixed cell check: Is it allowed to add UserElementCell for that cell?
 
-            await _resourcePoolManager.AddUserElementCellAsync(userElementCell);
+            await _projectManager.AddUserElementCellAsync(userElementCell);
 
             return Created(userElementCell);
         }
@@ -60,10 +60,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             // REMARK UserCommandTreeInterceptor already filters "userId" on EntityFramework level, but that might be removed later on / coni2k - 31 Jul. '17
-            var userElementCell = await _resourcePoolManager.GetUserElementCellSet(userId, elementCellId).SingleOrDefaultAsync();
+            var userElementCell = await _projectManager.GetUserElementCellSet(userId, elementCellId).SingleOrDefaultAsync();
             patch.Patch(userElementCell);
 
-            await _resourcePoolManager.SaveChangesAsync();
+            await _projectManager.SaveChangesAsync();
 
             return Ok(userElementCell);
         }
@@ -81,7 +81,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.DeleteUserElementCellAsync(userId, elementCellId);
+            await _projectManager.DeleteUserElementCellAsync(userId, elementCellId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

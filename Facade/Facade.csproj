@@ -67,7 +67,7 @@
     </Compile>
     <Compile Include="EmailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourcePoolManager.cs" />
+    <Compile Include="ProjectManager.cs" />
     <Compile Include="AppUserManager.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

@@ -101,9 +101,9 @@ class Container implements OnDestroy {
                 this._config.options.series.push(columnChartItem.chartItem);
 
                 // Event handlers
-                if (dataItem.valueUpdated$) {
+                if (dataItem.valueUpdated) {
                     this.subscriptions.push(
-                        dataItem.valueUpdated$.subscribe((updatedValue: number) => {
+                        dataItem.valueUpdated.subscribe((updatedValue: number) => {
                             if (this.chartObject !== null) {
                                 this.chartObject.series[columnChartItem.index].data[0].update(updatedValue);
                             }
@@ -119,9 +119,9 @@ class Container implements OnDestroy {
                 (this._config.options.series[0].data as Object[]).push(pieChartItem.chartItem);
 
                 // Event handlers
-                if (dataItem.valueUpdated$) {
+                if (dataItem.valueUpdated) {
                     this.subscriptions.push(
-                        dataItem.valueUpdated$.subscribe((updatedValue: number) => {
+                        dataItem.valueUpdated.subscribe((updatedValue: number) => {
                             if (this.chartObject !== null) {
                                 this.chartObject.series[0].data[pieChartItem.index].update(updatedValue);
                             }

@@ -1,9 +1,9 @@
 ﻿import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable, Subscription } from "rxjs";
 
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
-import { IResourcePoolEditorConfig, ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
+import { IProjectViewerConfig } from "../project-viewer/project-viewer.module";
+import { ProjectService } from "../project.service";
 
 @Component({
     selector: "knowledge-index",
@@ -11,7 +11,7 @@ import { IResourcePoolEditorConfig, ResourcePoolEditorService } from "../../reso
 })
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 
-    knowledgeIndexConfig: IResourcePoolEditorConfig = { resourcePoolUniqueKey: { username: "sample", resourcePoolKey: "Knowledge-Index-Sample" } };
+    knowledgeIndexConfig: IProjectViewerConfig = { mainElementId: 15, title: "Knowledge Index Sample" };
 
     newModelChartConfig: ChartConfig = new ChartConfig({
         chart: {
@@ -47,10 +47,10 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
         new ChartDataItem("Nuka Cola Company", 0, new EventEmitter<number>())
         ]);
 
-    popularSoftwareLicensesConfig: IResourcePoolEditorConfig = { resourcePoolUniqueKey: { username: "sample", resourcePoolKey: "Knowledge-Index-Popular-Software-Licenses" } };
+    popularSoftwareLicensesConfig: IProjectViewerConfig = { mainElementId: 16, title: "Knowledge Index - Popular Software Licenses" };
     subscriptions: Subscription[] = [];
 
-    constructor(private resourcePoolService: ResourcePoolEditorService) {
+    constructor(private projectService: ProjectService) {
     }
 
     ngOnDestroy(): void {
@@ -71,10 +71,10 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
     refreshPage() {
 
         // New
-        this.newModelChartConfig.data[0].valueUpdated$.emit(this.newModelChartConfig.data[0].value++);
+        this.newModelChartConfig.data[0].valueUpdated.next(this.newModelChartConfig.data[0].value++);
 
         // Old
         const organizationIndex = Math.floor(Math.random() * 4);
-        this.oldModelChartConfig.data[organizationIndex].valueUpdated$.emit(this.oldModelChartConfig.data[organizationIndex].value++);
+        this.oldModelChartConfig.data[organizationIndex].valueUpdated.next(this.oldModelChartConfig.data[organizationIndex].value++);
     }
 }

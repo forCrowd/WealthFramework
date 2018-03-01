@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
-import { User } from "../main/app-entity-manager/entities/user";
-import { AuthService } from "../main/auth/auth.module";
+import { User } from "../main/core/entities/user";
+import { AuthService } from "../main/core/core.module";
 import { Logger, ToasterConfig } from "../main/logger/logger.module";
 
 @Component({

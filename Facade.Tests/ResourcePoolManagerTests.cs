@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     [TestClass]
-    public class ResourcePoolManagerTests
+    public class ProjectManagerTests
     {
         /// <summary>
         /// TODO: This is just a temp test with a specific db data, ignore it
@@ -18,9 +18,9 @@
         {
             Security.LoginAs(1, "Administrator");
 
-            using (var manager = new ResourcePoolManager())
+            using (var manager = new ProjectManager())
             {
-                var list = manager.GetResourcePoolSet(29).AsEnumerable();
+                var list = manager.GetProjectSet(29).AsEnumerable();
 
                 await manager.UpdateComputedFieldsAsync(list.First().Id);
             }
@@ -35,9 +35,9 @@
         {
             Security.LoginAs(3, "Regular");
 
-            using (var manager = new ResourcePoolManager())
+            using (var manager = new ProjectManager())
             {
-                var list = manager.GetResourcePoolSet(17).AsEnumerable();
+                var list = manager.GetProjectSet(17).AsEnumerable();
 
                 await manager.UpdateComputedFieldsAsync(list.First().Id);
             }

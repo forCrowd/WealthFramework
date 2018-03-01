@@ -13,18 +13,6 @@
                 </button>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-text">
-                    <li>
-                        <button (click)="navigate('/app/search')" type="button" class="btn-link">
-                            <span class="fa fa-search fa-lg g-mr-5" aria-hidden="true"></span>Search
-                        </button>
-                    </li>
-                    <li *ngIf="currentUser">
-                        <button (click)="navigate('/' + currentUser.UserName + '/new')" type="button" class="btn-link">
-                            <span class="fa fa-plus fa-lg g-mr-5" aria-hidden="true"></span>Create New
-                        </button>
-                    </li>
-                </ul>
                 <ul *ngIf="currentUser" class="nav navbar-nav navbar-text navbar-right">
                     <li [hidden]="currentUser.isAuthenticated()">
                         <button (click)="navigate('/app/account/register')" type="button" class="btn-link">
@@ -43,18 +31,8 @@
                         </button>
                     </li>
                     <li [hidden]="!currentUser.isAuthenticated()">
-                        <button (click)="navigate('/' + currentUser.UserName)" type="button" class="btn-link">
-                            {{ currentUser.userText }}
-                        </button>
-                    </li>
-                    <li [hidden]="!currentUser.isAuthenticated()">
                         <button (click)="navigate('/app/account')" type="button" class="btn-link">
                             Account
-                        </button>
-                    </li>
-                    <li [hidden]="!currentUser.isAdmin()">
-                        <button (click)="navigate('/app/admin')" type="button" class="btn-link">
-                            Admin
                         </button>
                     </li>
                     <li [hidden]="!currentUser.isAuthenticated()">

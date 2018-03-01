@@ -1,29 +1,25 @@
-﻿import { Component, OnDestroy, OnInit } from "@angular/core";
+﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs";
 
-import { AccountService } from "./account.service";
+import { AuthService } from "../core/core.module";
 import { Logger } from "../logger/logger.module";
 
 @Component({
     selector: "login",
     templateUrl: "login.component.html"
 })
-export class LoginComponent implements OnDestroy, OnInit {
+export class LoginComponent implements OnInit {
 
-    error: string;
     get isBusy(): boolean {
-        return this.accountService.isBusy;
+        return this.authService.isBusy;
     }
-    init: string;
     password = "";
     rememberMe = true;
-    singleUseToken: string;
-    subscriptions: Subscription[] = [];
     username: string;
 
     constructor(private activatedRoute: ActivatedRoute,
-        private accountService: AccountService,
+        private authService: AuthService,
         private logger: Logger,
         private router: Router) {
     }
@@ -31,73 +27,32 @@ export class LoginComponent implements OnDestroy, OnInit {
     login() {
 
         if (this.username !== "" && this.password !== "") {
-            this.accountService.login(this.username, this.password, this.rememberMe)
+            this.authService.login(this.username, this.password, this.rememberMe)
                 .subscribe(() => {
 
                     this.logger.logSuccess("You have been logged in!");
 
                     // Get return url, reset loginReturnUrl and navigate
-                    const returnUrl = this.accountService.loginReturnUrl || "/app/home";
-                    this.accountService.loginReturnUrl = "";
+                    const returnUrl = this.authService.loginReturnUrl || "/app/home";
+                    this.authService.loginReturnUrl = "";
                     this.router.navigate([returnUrl]);
                 });
         }
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
 
-        // Params
-        this.subscriptions.push(
-            this.activatedRoute.params.subscribe((params: any) => {
-                this.error = params.error;
+        // Todo This timer silliness is necessary probably cos of this issue: https://github.com/angular/angular/issues/15634
+        Observable.timer(0).subscribe(() => {
 
-                // Error
-                if (typeof this.error !== "undefined") {
-                    this.logger.logError(this.error);
-                    return;
-                }
+            // Error
+            const error = this.activatedRoute.snapshot.params["error"];
 
-                this.init = params.init;
-                this.singleUseToken = params.token;
+            if (error) {
+                this.logger.logError(error);
+                return;
+            }
 
-                this.tryExternalLogin();
-            })
-        );
-    }
-
-    /**
-     * External (single use token) login
-     */
-    tryExternalLogin() {
-
-        if (!this.singleUseToken) {
-            return;
-        }
-
-        this.accountService.login("", "", this.rememberMe, this.singleUseToken)
-            .subscribe(() => {
-                this.logger.logSuccess("You have been logged in!");
-
-                // First time
-                if (this.init) {
-                    this.router.navigate(["/app/account/change-username", { init: true }]);
-
-                } else {
-
-                    // Get return url, reset loginReturnUrl and navigate
-                    const returnUrl = this.accountService.loginReturnUrl || "/app/home";
-                    this.accountService.loginReturnUrl = "";
-                    this.router.navigate([returnUrl]);
-                }
-            },
-            () => {
-                this.logger.logError("Invalid token");
-            });
-    }
-
-    ngOnDestroy(): void {
-        for (let i = 0; i < this.subscriptions.length; i++) {
-            this.subscriptions[i].unsubscribe();
-        }
+        });
     }
 }

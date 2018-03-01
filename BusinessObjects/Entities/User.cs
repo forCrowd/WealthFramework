@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public User()
         {
-            ResourcePoolSet = new HashSet<ResourcePool>();
+            ProjectSet = new HashSet<Project>();
             UserElementFieldSet = new HashSet<UserElementField>();
             UserElementCellSet = new HashSet<UserElementCell>();
         }
@@ -61,7 +61,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public virtual ICollection<ResourcePool> ResourcePoolSet { get; set; }
+        public virtual ICollection<Project> ProjectSet { get; set; }
         public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 

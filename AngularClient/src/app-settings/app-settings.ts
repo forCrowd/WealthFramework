@@ -20,12 +20,17 @@ export class AppSettings {
     static get analyticsTrackingCode(): string { return environment.analyticsTrackingCode; }
 
     /**
-     * Service application (WebApi) url
+     * Service application API url
      */
-    static get serviceAppUrl(): string { return environment.serviceAppUrl; }
+    static get serviceApiUrl(): string { return `${environment.serviceAppUrl}/api/v1` };
+
+    /**
+     * Service application OData url
+     */
+    static get serviceODataUrl(): string { return `${environment.serviceAppUrl}/odata/v1`; }
 
     /**
      * Application version number
      */
-    static get version(): string { return "0.82.6"; }
+    static get version(): string { return "0.83.0"; }
 }

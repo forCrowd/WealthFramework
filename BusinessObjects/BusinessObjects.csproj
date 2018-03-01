@@ -78,7 +78,7 @@
     <Compile Include="UserQueryVisitor.cs" />
     <Compile Include="Entities\ElementItem.cs" />
     <Compile Include="Entities\Element.cs" />
-    <Compile Include="Entities\ResourcePool.cs" />
+    <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Entities\WealthEconomyContext.cs" />

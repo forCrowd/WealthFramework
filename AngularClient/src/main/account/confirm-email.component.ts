@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 import { AccountService } from "./account.service";
 import { Logger } from "../logger/logger.module";
@@ -30,26 +31,23 @@ export class ConfirmEmailComponent implements OnInit {
 
     ngOnInit() {
 
-        // Parameters (token)
-        let token: string;
-        this.activatedRoute.params.subscribe(
-            (params: any) => {
-                token = params.token;
-            });
+        // Todo This timer silliness is necessary probably cos of this issue: https://github.com/angular/angular/issues/15634
+        Observable.timer(0).subscribe(() => {
 
-        if (!this.accountService.currentUser.isAuthenticated()) {
-            return;
-        }
+            // Get token
+            const token = this.activatedRoute.snapshot.params["token"];
 
-        // If there is no token, no need to continue
-        if (typeof token === "undefined") {
-            return;
-        }
+            // Validate
+            if (!token) {
+                return;
+            }
 
-        this.accountService.confirmEmail({ Token: token })
-            .subscribe(() => {
-                this.logger.logSuccess("Your email address has been confirmed!");
-                this.router.navigate(["/app/account"]);
-            });
+            // Confirm
+            this.accountService.confirmEmail({ Token: token })
+                .subscribe(() => {
+                    this.logger.logSuccess("Your email address has been confirmed!");
+                    this.router.navigate(["/app/account"]);
+                });
+        });
     }
 }

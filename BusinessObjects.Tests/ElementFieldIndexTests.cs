@@ -12,7 +12,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         public void NewElementFieldIndex_ShouldCreate()
         {
             var user = new User("User", "user@email.com");
-            new ResourcePool(user, "CMRP")
+            new Project(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.Decimal, true)
                 .EnableIndex();
@@ -23,7 +23,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         public void NewElementFieldIndexWithInvalidConstructor_Exception()
         {
             var user = new User("User", "user@email.com");
-            new ResourcePool(user, "CMRP")
+            new Project(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.String)
                 .EnableIndex();
@@ -34,7 +34,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         public void NewElementFieldIndexOnStringType_Exception()
         {
             var user = new User("User", "email@user.com");
-            new ResourcePool(user, "CMRP")
+            new Project(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.String)
                 .EnableIndex();

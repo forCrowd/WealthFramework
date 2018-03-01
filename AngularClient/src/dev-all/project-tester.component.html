@@ -1,0 +1,128 @@
+<div class="project-tester" *ngIf="project">
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Project</strong>
+            Id: {{ project.Id }} -
+            User: {{ project.User.UserName }} -
+            Name: {{ project.Name }} -
+            Key: {{ project.Key }} -
+            InitialValue: {{ project.InitialValue }} -
+            RatingMode: <span (click)="project.toggleRatingMode()">{{ RatingMode[project.RatingMode] }}</span> -
+
+            <div class="row g-mt-20">
+                <div class="col-md-2">
+                    <strong>Elements</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        Id: {{ element.Id }}<br />
+                        Name: {{ element.Name }}<br />
+                        ...: -<br />
+                        income: {{ element.income() }}<br />
+                        rating: {{ element.rating() }}<br />
+                        ...: -<br />
+                        <hr />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Fields</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            Id: {{ field.Id }}<br />
+                            Element: {{ field.Element.Name }}<br />
+                            Name: {{ field.Name }}<br />
+                            DataType: {{ field.DataType }}<br />
+                            SelectedElement: {{ field.SelectedElement?.Name }}<br />
+                            UseFixedValue: {{ field.UseFixedValue }}<br />
+                            RatingEnabled: {{ field.RatingEnabled }}<br />
+                            SortOrder: {{ field.SortOrder }}<br />
+                            RatingTotal: {{ field.ratingTotal }}<br />
+                            RatingCount: {{ field.ratingCount }}<br />
+                            ...: -<br />
+                            DataTypeText: {{ field.DataTypeText }}<br />
+                            otherUsersRatingTotal: {{ field.otherUsersRatingTotal }}<br />
+                            otherUsersRatingCount: {{ field.otherUsersRatingCount }}<br />
+                            currentUserRating: {{ field.currentUserRating() }}<br />
+                            income: {{ field.income() }}<br />
+                            rating: {{ field.rating() }}<br />
+                            ratingAverage: {{ field.ratingAverage() }}<br />
+                            ratingCount: {{ field.ratingCount() }}<br />
+                            ratingPercentage: {{ field.ratingPercentage() }}<br />
+                            ratingTotal: {{ field.ratingTotal() }}<br />
+                            decimalValue: {{ field.decimalValue() | number : '1.0-2' }}<br />
+                            ...: -<br />
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>User fields</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            <div *ngFor="let userField of field.UserElementFieldSet">
+                                Id: {{ userField.Id }}<br />
+                                Field: {{ userField.ElementField.Name }}<br />
+                                Rating: {{ userField.Rating }}<br />
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Items</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let item of element.ElementItemSet">
+                            Id: {{ item.Id }}<br />
+                            Element: {{ item.Element.Name }}<br />
+                            Name: {{ item.Name }}<br />
+                            ...: -<br />
+                            incomeStatus: {{ item.incomeStatus() }}<br />
+                            ...: -<br />
+                            income: {{ item.income() | number : '1.0-2' }}<br />
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Cells</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            <div *ngFor="let cell of field.ElementCellSet">
+                                Id: {{ cell.Id }}<br />
+                                Field: {{ cell.ElementField.Name }}<br />
+                                Item: {{ cell.ElementItem.Name }}<br />
+                                StringValue: {{ cell.StringValue }}<br />
+                                DecimalValueTotal: {{ cell.DecimalValueTotal }}<br />
+                                DecimalValueCount: {{ cell.DecimalValueCount }}<br />
+                                SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
+                                otherUsersDecimalValueTotal: {{ cell.otherUsersDecimalValueTotal }}<br />
+                                otherUsersDecimalValueCount: {{ cell.otherUsersDecimalValueCount }}<br />
+                                currentUserDecimalValue: {{ cell.currentUserDecimalValue() }}<br />
+                                income: {{ cell.income() | number : '1.0-2' }}<br />
+                                decimalValue: {{ cell.decimalValue() | number : '1.0-2' }}<br />
+                                decimalValueAverage: {{ cell.decimalValueAverage() | number : '1.0-2' }}<br />
+                                decimalValueCount: {{ cell.decimalValueCount() }}<br />
+                                decimalValuePercentage: {{ cell.decimalValuePercentage() | number : '1.0-2' }}<br />
+                                decimalValueTotal: {{ cell.decimalValueTotal() }}<br />
+                                ...: -<br />
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>User cells</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            <div *ngFor="let cell of field.ElementCellSet">
+                                <div *ngFor="let userCell of cell.UserElementCellSet">
+                                    Cell: {{ userCell.ElementCell.Id }}<br />
+                                    DecimalValue: {{ userCell.DecimalValue }}<br />
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

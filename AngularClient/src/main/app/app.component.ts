@@ -3,9 +3,8 @@ import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { Subscription } from "rxjs/Subscription";
 
-import { User } from "../app-entity-manager/entities/user";
-import { AuthService } from "../auth/auth.module";
-import { Angulartics2GoogleAnalytics } from "../core/core.module";
+import { User } from "../core/entities/user";
+import { Angulartics2GoogleAnalytics, AuthService } from "../core/core.module";
 import { Logger, ToasterConfig } from "../logger/logger.module";
 import { AppSettings } from "../../app-settings/app-settings";
 
@@ -77,7 +76,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
         // Current user
         this.subscriptions.push(
-            this.authService.currentUserChanged$.subscribe((newUser: User) => this.currentUserChanged(newUser)));
+            this.authService.currentUserChanged.subscribe((newUser: User) => this.currentUserChanged(newUser)));
 
         // Toaster config
         this.toasterConfig = this.logger.getToasterConfig();

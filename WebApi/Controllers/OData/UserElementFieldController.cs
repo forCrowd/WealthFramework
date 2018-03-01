@@ -15,7 +15,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class UserElementFieldController : BaseODataController
     {
-        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
+        private readonly ProjectManager _projectManager = new ProjectManager();
 
         // POST odata/UserElementField
         public async Task<IHttpActionResult> Post(Delta<UserElementField> patch)
@@ -38,7 +38,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.AddUserElementFieldAsync(userElementField);
+            await _projectManager.AddUserElementFieldAsync(userElementField);
 
             return Created(userElementField);
         }
@@ -58,10 +58,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             // REMARK UserCommandTreeInterceptor already filters "userId" on EntityFramework level, but that might be removed later on / coni2k - 31 Jul. '17
-            var userElementField = await _resourcePoolManager.GetUserElementFieldSet(userId, elementFieldId).SingleOrDefaultAsync();
+            var userElementField = await _projectManager.GetUserElementFieldSet(userId, elementFieldId).SingleOrDefaultAsync();
             patch.Patch(userElementField);
 
-            await _resourcePoolManager.SaveChangesAsync();
+            await _projectManager.SaveChangesAsync();
 
             return Ok(userElementField);
         }
@@ -79,7 +79,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.DeleteUserElementFieldAsync(userId, elementFieldId);
+            await _projectManager.DeleteUserElementFieldAsync(userId, elementFieldId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

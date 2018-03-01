@@ -39,7 +39,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
         }
 
         // These definitions are used in generating OData metadata at the moment / coni2k - 07 Nov '14
-        public virtual DbSet<ResourcePool> ResourcePool { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<Element> Element { get; set; }
         public virtual DbSet<ElementField> ElementField { get; set; }
         public virtual DbSet<ElementItem> ElementItem { get; set; }
