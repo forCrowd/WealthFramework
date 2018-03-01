@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.82.6**
+
+* AngularClient - Package updates
+
 **0.82.5**
 
 * AngularClient - Minor
