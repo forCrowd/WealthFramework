@@ -146,8 +146,8 @@ namespace Microsoft.Data.Edm
                 var edmx = XDocument.Load(stream);
                 RemoveProperty(edmx, "User", "SecurityStamp");
                 RemoveProperty(edmx, "User", "PasswordHash");
-                //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
-                //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
+                //AddReadonlyProperty(edmx, "Project", "OtherUsersProjectRateTotal", "Decimal", true);
+                //AddReadonlyProperty(edmx, "Project", "OtherUsersProjectRateCount", "Int32", false);
                 //AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingTotal", "Decimal", true);
                 //AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingCount", "Int32", false);
                 //AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueTotal", "Decimal", true);

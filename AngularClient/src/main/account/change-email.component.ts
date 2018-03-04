@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
-import { getUniqueEmail } from "../utils";
+import { getUniqueEmail } from "../shared/utils";
 
 @Component({
     selector: "change-email",

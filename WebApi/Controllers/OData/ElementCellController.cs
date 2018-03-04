@@ -16,7 +16,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ElementCellController : BaseODataController
     {
-        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
+        private readonly ProjectManager _projectManager = new ProjectManager();
 
         // POST odata/ElementCell
         public async Task<IHttpActionResult> Post(Delta<ElementCell> patch)
@@ -27,16 +27,16 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             // TODO Use ForbiddenFieldsValidator?: Currently breeze doesn't allow to post custom (delta) entity
             // TODO Or use DTO?: Needs a different metadata than the context, which can be overkill
             elementCell.Id = 0;
-            elementCell.NumericValueTotal = 0;
-            elementCell.NumericValueCount = 0;
+            elementCell.DecimalValueTotal = 0;
+            elementCell.DecimalValueCount = 0;
             elementCell.CreatedOn = DateTime.UtcNow;
             elementCell.ModifiedOn = DateTime.UtcNow;
             elementCell.DeletedOn = null;
 
             // Owner check: Entity must belong to the current user
-            var userId = await _resourcePoolManager
-                .GetElementFieldSet(elementCell.ElementFieldId, true, item => item.Element.ResourcePool)
-                .Select(item => item.Element.ResourcePool.UserId)
+            var userId = await _projectManager
+                .GetElementFieldSet(elementCell.ElementFieldId, true, item => item.Element.Project)
+                .Select(item => item.Element.Project.UserId)
                 .Distinct()
                 .SingleOrDefaultAsync();
 
@@ -47,30 +47,30 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.AddElementCellAsync(elementCell);
+            await _projectManager.AddElementCellAsync(elementCell);
 
             return Created(elementCell);
         }
 
         // PATCH odata/ElementCell(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        [ForbiddenFieldsValidator(nameof(ElementCell.Id), nameof(ElementCell.ElementFieldId), nameof(ElementCell.ElementItemId), nameof(ElementCell.NumericValueTotal), nameof(ElementCell.NumericValueCount), nameof(ElementCell.CreatedOn), nameof(ElementCell.ModifiedOn), nameof(ElementCell.DeletedOn))]
+        [ForbiddenFieldsValidator(nameof(ElementCell.Id), nameof(ElementCell.ElementFieldId), nameof(ElementCell.ElementItemId), nameof(ElementCell.DecimalValueTotal), nameof(ElementCell.DecimalValueCount), nameof(ElementCell.CreatedOn), nameof(ElementCell.ModifiedOn), nameof(ElementCell.DeletedOn))]
         [EntityExistsValidator(typeof(ElementCell))]
         [ConcurrencyValidator(typeof(ElementCell))]
         public async Task<IHttpActionResult> Patch(int key, Delta<ElementCell> patch)
         {
-            var elementCell = await _resourcePoolManager.GetElementCellSet(key, true, item => item.ElementField.Element.ResourcePool).SingleOrDefaultAsync();
+            var elementCell = await _projectManager.GetElementCellSet(key, true, item => item.ElementField.Element.Project).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
-            if (currentUserId != elementCell.ElementField.Element.ResourcePool.UserId)
+            if (currentUserId != elementCell.ElementField.Element.Project.UserId)
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
             patch.Patch(elementCell);
 
-            await _resourcePoolManager.SaveChangesAsync();
+            await _projectManager.SaveChangesAsync();
 
             return Ok(elementCell);
         }
@@ -81,16 +81,16 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // [ConcurrencyValidator(typeof(ElementCell))]
         public async Task<IHttpActionResult> Delete(int key)
         {
-            var elementCell = await _resourcePoolManager.GetElementCellSet(key, true, item => item.ElementField.Element.ResourcePool).SingleOrDefaultAsync();
+            var elementCell = await _projectManager.GetElementCellSet(key, true, item => item.ElementField.Element.Project).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
-            if (currentUserId != elementCell.ElementField.Element.ResourcePool.UserId)
+            if (currentUserId != elementCell.ElementField.Element.Project.UserId)
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.DeleteElementCellAsync(elementCell.Id);
+            await _projectManager.DeleteElementCellAsync(elementCell.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

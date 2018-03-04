@@ -11,9 +11,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         {
             var user = new User("User", "user@email.com");
 
-            var resourcePool = new ResourcePool(user, "CMRP");
+            var project = new Project(user, "CMRP");
             
-            resourcePool
+            project
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.Decimal, true)
                 .EnableIndex()

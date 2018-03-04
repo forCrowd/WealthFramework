@@ -6,7 +6,8 @@
     {
         public static void Initialize(bool isTest = false)
         {
-            var initializer = new MigrateDatabaseToLatestVersion(isTest);
+            // var initializer = new MigrateDatabaseToLatestVersion(isTest);
+            var initializer = new CreateDatabaseIfNotExists<BusinessObjects.Entities.WealthEconomyContext>();
             Database.SetInitializer(initializer);
         }
     }

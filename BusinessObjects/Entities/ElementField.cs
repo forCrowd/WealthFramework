@@ -20,7 +20,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
         Decimal = 4,
 
         /// <summary>
-        /// A field that holds another defined Element object within the resource pool.
+        /// A field that holds another defined Element object within the project.
         /// Use SelectedElementItem property to set its value on ElementItem level.
         /// </summary>
         Element = 6,
@@ -75,12 +75,12 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
         /// </summary>
         public bool UseFixedValue { get; set; }
 
-        public bool IndexEnabled { get; set; }
+        public bool RatingEnabled { get; set; }
 
         public byte SortOrder { get; set; }
 
-        public decimal IndexRatingTotal { get; set; }
-        public int IndexRatingCount { get; set; }
+        public decimal RatingTotal { get; set; }
+        public int RatingCount { get; set; }
 
         public virtual Element Element { get; set; }
         public virtual Element SelectedElement { get; set; }
@@ -106,10 +106,10 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
                 throw new InvalidOperationException($"Index cannot be enabled for this type: {DataType}");
             }
 
-            IndexEnabled = true;
+            RatingEnabled = true;
 
-            IndexRatingTotal = 50; // Computed field
-            IndexRatingCount = 1; // Computed field
+            RatingTotal = 50; // Computed field
+            RatingCount = 1; // Computed field
 
             AddUserRating(50);
 

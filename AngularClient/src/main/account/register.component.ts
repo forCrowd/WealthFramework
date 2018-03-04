@@ -1,11 +1,11 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AccountService } from "./account.service";
+import { AuthService } from "../core/core.module";
 import { Logger } from "../logger/logger.module";
-import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "../utils";
+import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "../shared/utils";
 
 @Component({
     selector: "register",
@@ -28,12 +28,12 @@ export class RegisterComponent implements OnInit {
         }
     };
     get isBusy(): boolean {
-        return this.accountService.isBusy;
+        return this.authService.isBusy;
     }
     rememberMe = true;
     subscriptions: Subscription[] = [];
 
-    constructor(private accountService: AccountService, private logger: Logger, private router: Router) {
+    constructor(private authService: AuthService, private logger: Logger, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
 
     register() {
 
-        this.accountService.register(this.bindingModel, this.rememberMe)
+        this.authService.register(this.bindingModel, this.rememberMe)
             .subscribe(() => {
                 this.logger.logSuccess("You have been registered!");
                 this.router.navigate(["/app/account/confirm-email"]);

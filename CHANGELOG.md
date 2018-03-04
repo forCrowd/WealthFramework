@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.83.0**
+
+* Backbone migration
+
 **0.82.6**
 
 * AngularClient - Package updates

@@ -40,20 +40,16 @@ export class ResetPasswordComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.activatedRoute.params.subscribe(
-            (params: any) => {
+        const email = this.activatedRoute.snapshot.params["email"];
+        const token = this.activatedRoute.snapshot.params["token"];
 
-                const email = params["email"];
-                const token = params["token"];
+        this.bindingModel.Email = email;
+        this.bindingModel.Token = token;
 
-                this.bindingModel.Email = email;
-                this.bindingModel.Token = token;
-
-                this.viewMode = typeof email === "undefined" ||
-                    typeof token === "undefined"
-                    ? "initial"
-                    : "received"; // initial | sent | received
-            });
+        this.viewMode = typeof email === "undefined" ||
+            typeof token === "undefined"
+            ? "initial"
+            : "received"; // initial | sent | received
     }
 
     resetPassword() {

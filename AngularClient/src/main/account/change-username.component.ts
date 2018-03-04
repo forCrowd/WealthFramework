@@ -1,10 +1,11 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
+import { AuthService } from "../core/core.module";
 import { Logger } from "../logger/logger.module";
-import { getUniqueUserName, stripInvalidChars } from "../utils";
+import { getUniqueUserName, stripInvalidChars } from "../shared/utils";
 
 @Component({
     selector: "change-username",
@@ -23,29 +24,29 @@ export class ChangeUserNameComponent implements OnInit {
             userName: ""
         }
     };
-    externalLoginInit: boolean; // For external login's
+
     get isBusy(): boolean {
-        return this.accountService.isBusy;
+        return this.accountService.isBusy || this.authService.isBusy;
     }
 
-    constructor(private activatedRoute: ActivatedRoute,
-        private accountService: AccountService,
+    constructor(private accountService: AccountService,
+        private authService: AuthService,
         private logger: Logger,
         private router: Router) {
     }
 
     cancel() {
         // To be able to pass CanDeactivate
-        this.bindingModel.UserName = this.accountService.currentUser.UserName;
+        this.bindingModel.UserName = this.authService.currentUser.UserName;
 
         // Get return url, reset loginReturnUrl and navigate
-        const returnUrl = this.accountService.loginReturnUrl || "/app/account";
-        this.accountService.loginReturnUrl = "";
+        const returnUrl = this.authService.loginReturnUrl || "/app/account";
+        this.authService.loginReturnUrl = "";
         this.router.navigate([returnUrl]);
     }
 
     canDeactivate() {
-        if (this.bindingModel.UserName === this.accountService.currentUser.UserName) {
+        if (this.bindingModel.UserName === this.authService.currentUser.UserName) {
             return true;
         }
 
@@ -59,8 +60,8 @@ export class ChangeUserNameComponent implements OnInit {
                 this.logger.logSuccess("Your username has been changed!");
 
                 // Get return url, reset loginReturnUrl and navigate
-                const returnUrl = this.accountService.loginReturnUrl || "/app/account";
-                this.accountService.loginReturnUrl = "";
+                const returnUrl = this.authService.loginReturnUrl || "/app/account";
+                this.authService.loginReturnUrl = "";
                 this.router.navigate([returnUrl]);
             });
     }
@@ -68,21 +69,15 @@ export class ChangeUserNameComponent implements OnInit {
     ngOnInit(): void {
 
         // User name
-        this.bindingModel.UserName = this.accountService.currentUser.UserName;
+        this.bindingModel.UserName = this.authService.currentUser.UserName;
 
         // Generate test data if localhost
         if (AppSettings.environment === "Development") {
             this.bindingModel.UserName = getUniqueUserName();
         }
-
-        // Params
-        this.activatedRoute.params.subscribe(
-            (params: any) => {
-                this.externalLoginInit = params.init;
-            });
     }
 
     submitDisabled() {
-        return this.bindingModel.UserName === this.accountService.currentUser.UserName || this.isBusy;
+        return this.bindingModel.UserName === this.authService.currentUser.UserName || this.isBusy;
     }
 }

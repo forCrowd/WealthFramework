@@ -36,11 +36,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                             V_0_80_0_Updates.Apply(context); // Initial data
                             break;
                         }
-                    case "V_0_82_0":
-                        {
-                            V_0_82_0_Updates.Apply(context);
-                            break;
-                        }
                 }
             }
         }

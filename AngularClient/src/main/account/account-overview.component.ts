@@ -1,7 +1,7 @@
 ﻿import { Component } from "@angular/core";
 
-import { AccountService } from "./account.service";
-import { User } from "../app-entity-manager/entities/user";
+import { User } from "../core/entities/user";
+import { AuthService } from "../core/core.module";
 
 @Component({
     selector: "account-overview",
@@ -10,7 +10,7 @@ import { User } from "../app-entity-manager/entities/user";
 export class AccountOverviewComponent {
 
     get currentUser(): User {
-        return this.accountService.currentUser;
+        return this.authService.currentUser;
     }
 
     get displayConfirmEmail(): boolean {
@@ -19,5 +19,5 @@ export class AccountOverviewComponent {
                 && !this.currentUser.EmailConfirmationSentOn));
     }
 
-    constructor(private accountService: AccountService) { }
+    constructor(private authService: AuthService) { }
 }

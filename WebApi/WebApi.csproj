@@ -218,7 +218,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\CorsConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
-    <Compile Include="Controllers\Api\ResourcePoolApiController.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ExceptionController.cs" />
     <Compile Include="Controllers\Api\WebApiController.cs" />
@@ -229,7 +228,7 @@
     <Compile Include="Controllers\OData\ElementFieldController.cs" />
     <Compile Include="Controllers\OData\ElementItemController.cs" />
     <Compile Include="Controllers\OData\BaseODataController.cs" />
-    <Compile Include="Controllers\OData\ResourcePoolController.cs" />
+    <Compile Include="Controllers\OData\ProjectController.cs" />
     <Compile Include="Controllers\OData\RolesController.cs" />
     <Compile Include="Controllers\OData\UsersController.cs" />
     <Compile Include="Controllers\OData\UserElementCellController.cs" />

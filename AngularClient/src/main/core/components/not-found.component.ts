@@ -17,7 +17,7 @@ export class NotFoundComponent implements OnInit {
 
             if (notFoundUrl) {
 
-                // Case 1: Component has "url" parameter, either comes from profile, resource pool viever or from itself (see Case 2)
+                // Case 1: Component has "url" parameter, either comes from profile, project viever or from itself (see Case 2)
                 // Throw the error, so error handler can report this "invalid url" to the server
                 throw new Error("Client url not found");
 

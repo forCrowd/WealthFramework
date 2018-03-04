@@ -16,28 +16,25 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Entities
             ParentFieldSet = new HashSet<ElementField>();
         }
 
-        public Element(ResourcePool resourcePool, string name)
+        public Element(Project project, string name)
             : this()
         {
-            Validations.ArgumentNullOrDefault(resourcePool, nameof(resourcePool));
+            Validations.ArgumentNullOrDefault(project, nameof(project));
             Validations.ArgumentNullOrDefault(name, nameof(name));
 
-            ResourcePool = resourcePool;
+            Project = project;
             Name = name;
         }
 
         public int Id { get; set; }
 
-        public int ResourcePoolId { get; set; }
+        public int ProjectId { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
 
-        [Required]
-        public bool IsMainElement { get; set; }
-
-        public virtual ResourcePool ResourcePool { get; set; }
+        public virtual Project Project { get; set; }
 
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }

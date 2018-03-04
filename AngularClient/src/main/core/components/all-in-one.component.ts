@@ -1,7 +1,8 @@
 ﻿import { Component } from "@angular/core";
 
-import { ElementCell } from "../../app-entity-manager/entities/element-cell";
-import { IResourcePoolEditorConfig, ResourcePoolEditorService } from "../../resource-pool-editor/resource-pool-editor.module";
+import { ElementCell } from "../entities/element-cell";
+import { IProjectViewerConfig } from "../project-viewer/project-viewer.module";
+import { ProjectService } from "../project.service";
 
 @Component({
     selector: "all-in-one",
@@ -9,55 +10,56 @@ import { IResourcePoolEditorConfig, ResourcePoolEditorService } from "../../reso
 })
 export class AllInOneComponent {
 
-    allInOneConfig: IResourcePoolEditorConfig = { resourcePoolUniqueKey: { username: "sample", resourcePoolKey: "All-in-One" } };
-    syncFlag: boolean = true;
+    allInOneConfig: IProjectViewerConfig = { mainElementId: 21, title: "All in One" };
+    syncFlag = true;
 
-    constructor(private resourcePoolService: ResourcePoolEditorService) {
+    constructor(private projectService: ProjectService) {
 
         // Event handlers
-        resourcePoolService.elementCellDecimalValueUpdated$.subscribe((elementCell: ElementCell): void => this.processNewInteraction(elementCell));
+        // Todo ?
+        //projectService.elementCellDecimalValueUpdated.subscribe(elementCell => this.processNewInteraction(elementCell));
     }
 
     // Processes whether the user is currently interacting with this example
-    processNewInteraction(elementCell: ElementCell): void {
+    //processNewInteraction(elementCell: ElementCell): void {
 
-        // Priority Index
-        if (elementCell.ElementField.Element.ResourcePool.User.UserName === "sample"
-            && (elementCell.ElementField.Element.ResourcePool.Key === "Priority-Index-Sample"
-                || elementCell.ElementField.Element.ResourcePool.Key === "Knowledge-Index-Sample")
-            && this.syncFlag) {
+    //    // Priority Index
+    //    if (elementCell.ElementField.Element.Project.User.UserName === "sample"
+    //        && (elementCell.ElementField.Element.Project.Key === "Priority-Index-Sample"
+    //            || elementCell.ElementField.Element.Project.Key === "Knowledge-Index-Sample")
+    //        && this.syncFlag) {
 
-            this.resourcePoolService.getResourcePoolExpanded(this.allInOneConfig.resourcePoolUniqueKey)
-                .subscribe((resourcePool: any): void => {
+    //        this.projectService.getProjectExpanded()
+    //            .subscribe((project: any): void => {
 
-                    if (!resourcePool) {
-                        return;
-                    }
+    //                if (!project) {
+    //                    return;
+    //                }
 
-                    // Elements
-                    for (let elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
-                        const element = resourcePool.ElementSet[elementIndex];
-                        if (element.Name === elementCell.ElementField.Element.Name) {
+    //                // Elements
+    //                for (let elementIndex = 0; elementIndex < project.ElementSet.length; elementIndex++) {
+    //                    const element = project.ElementSet[elementIndex];
+    //                    if (element.Name === elementCell.ElementField.Element.Name) {
 
-                            // Element fields
-                            for (let elementFieldIndex = 0; elementFieldIndex < element.ElementFieldSet.length; elementFieldIndex++) {
-                                const elementField = element.ElementFieldSet[elementFieldIndex];
-                                if (elementField.Name === elementCell.ElementField.Name) {
+    //                        // Element fields
+    //                        for (let elementFieldIndex = 0; elementFieldIndex < element.ElementFieldSet.length; elementFieldIndex++) {
+    //                            const elementField = element.ElementFieldSet[elementFieldIndex];
+    //                            if (elementField.Name === elementCell.ElementField.Name) {
 
-                                    // Element cells
-                                    for (let elementCellIndex = 0; elementCellIndex < elementField.ElementCellSet.length; elementCellIndex++) {
-                                        const cell = elementField.ElementCellSet[elementCellIndex];
+    //                                // Element cells
+    //                                for (let elementCellIndex = 0; elementCellIndex < elementField.ElementCellSet.length; elementCellIndex++) {
+    //                                    const cell = elementField.ElementCellSet[elementCellIndex];
 
-                                        if (cell.ElementItem.Name === elementCell.ElementItem.Name) {
-                                            this.resourcePoolService.updateElementCellDecimalValue(cell, elementCell.numericValue());
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-        }
-    }
+    //                                    if (cell.ElementItem.Name === elementCell.ElementItem.Name) {
+    //                                        this.projectService.updateElementCellDecimalValue(cell, elementCell.decimalValue());
+    //                                        break;
+    //                                    }
+    //                                }
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //            });
+    //    }
+    //}
 }

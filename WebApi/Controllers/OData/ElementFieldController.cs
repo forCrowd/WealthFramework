@@ -16,7 +16,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
     public class ElementFieldController : BaseODataController
     {
-        private readonly ResourcePoolManager _resourcePoolManager = new ResourcePoolManager();
+        private readonly ProjectManager _projectManager = new ProjectManager();
 
         // POST odata/ElementField
         public async Task<IHttpActionResult> Post(Delta<ElementField> patch)
@@ -27,16 +27,16 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             // TODO Use ForbiddenFieldsValidator?: Currently breeze doesn't allow to post custom (delta) entity
             // TODO Or use DTO?: Needs a different metadata than the context, which can be overkill
             elementField.Id = 0;
-            elementField.IndexRatingTotal = 0;
-            elementField.IndexRatingCount = 0;
+            elementField.RatingTotal = 0;
+            elementField.RatingCount = 0;
             elementField.CreatedOn = DateTime.UtcNow;
             elementField.ModifiedOn = DateTime.UtcNow;
             elementField.DeletedOn = null;
 
             // Owner check: Entity must belong to the current user
-            var userId = await _resourcePoolManager
-                .GetElementSet(elementField.ElementId, true, item => item.ResourcePool)
-                .Select(item => item.ResourcePool.UserId)
+            var userId = await _projectManager
+                .GetElementSet(elementField.ElementId, true, item => item.Project)
+                .Select(item => item.Project.UserId)
                 .Distinct()
                 .SingleOrDefaultAsync();
 
@@ -47,30 +47,30 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.AddElementFieldAsync(elementField);
+            await _projectManager.AddElementFieldAsync(elementField);
 
             return Created(elementField);
         }
 
         // PATCH odata/ElementField(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        [ForbiddenFieldsValidator(nameof(ElementField.Id), nameof(ElementField.ElementId), nameof(ElementField.IndexRatingTotal), nameof(ElementField.IndexRatingCount), nameof(ElementField.CreatedOn), nameof(ElementField.ModifiedOn), nameof(ElementField.DeletedOn))]
+        [ForbiddenFieldsValidator(nameof(ElementField.Id), nameof(ElementField.ElementId), nameof(ElementField.RatingTotal), nameof(ElementField.RatingCount), nameof(ElementField.CreatedOn), nameof(ElementField.ModifiedOn), nameof(ElementField.DeletedOn))]
         [EntityExistsValidator(typeof(ElementField))]
         [ConcurrencyValidator(typeof(ElementField))]
         public async Task<IHttpActionResult> Patch(int key, Delta<ElementField> patch)
         {
-            var elementField = await _resourcePoolManager.GetElementFieldSet(key, true, item => item.Element.ResourcePool).SingleOrDefaultAsync();
+            var elementField = await _projectManager.GetElementFieldSet(key, true, item => item.Element.Project).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
-            if (currentUserId != elementField.Element.ResourcePool.UserId)
+            if (currentUserId != elementField.Element.Project.UserId)
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
             patch.Patch(elementField);
 
-            await _resourcePoolManager.SaveChangesAsync();
+            await _projectManager.SaveChangesAsync();
 
             return Ok(elementField);
         }
@@ -81,16 +81,16 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // [ConcurrencyValidator(typeof(ElementField))]
         public async Task<IHttpActionResult> Delete(int key)
         {
-            var elementField = await _resourcePoolManager.GetElementFieldSet(key, true, item => item.Element.ResourcePool).SingleOrDefaultAsync();
+            var elementField = await _projectManager.GetElementFieldSet(key, true, item => item.Element.Project).SingleOrDefaultAsync();
 
             // Owner check: Entity must belong to the current user
             var currentUserId = User.Identity.GetUserId<int>();
-            if (currentUserId != elementField.Element.ResourcePool.UserId)
+            if (currentUserId != elementField.Element.Project.UserId)
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            await _resourcePoolManager.DeleteElementFieldAsync(elementField.Id);
+            await _projectManager.DeleteElementFieldAsync(elementField.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
