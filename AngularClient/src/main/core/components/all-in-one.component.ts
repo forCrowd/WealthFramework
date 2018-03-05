@@ -1,5 +1,6 @@
 ﻿import { Component } from "@angular/core";
 
+import { AppSettings } from "../../../app-settings/app-settings";
 import { ElementCell } from "../entities/element-cell";
 import { IProjectViewerConfig } from "../project-viewer/project-viewer.module";
 import { ProjectService } from "../project.service";
@@ -10,7 +11,7 @@ import { ProjectService } from "../project.service";
 })
 export class AllInOneComponent {
 
-    allInOneConfig: IProjectViewerConfig = { mainElementId: 21, title: "All in One" };
+    allInOneConfig: IProjectViewerConfig = { mainElementId: AppSettings.content.allInOne_MainElementId, title: "All in One" };
     syncFlag = true;
 
     constructor(private projectService: ProjectService) {

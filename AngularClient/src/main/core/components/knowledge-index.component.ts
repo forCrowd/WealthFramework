@@ -1,6 +1,7 @@
 ﻿import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 
+import { AppSettings } from "../../../app-settings/app-settings";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { IProjectViewerConfig } from "../project-viewer/project-viewer.module";
 import { ProjectService } from "../project.service";
@@ -11,7 +12,10 @@ import { ProjectService } from "../project.service";
 })
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 
-    knowledgeIndexConfig: IProjectViewerConfig = { mainElementId: 15, title: "Knowledge Index Sample" };
+    knowledgeIndexConfig: IProjectViewerConfig = {
+        mainElementId: AppSettings.content.knowledge_MainElementId,
+        title: "Knowledge Index Sample"
+    };
 
     newModelChartConfig: ChartConfig = new ChartConfig({
         chart: {
@@ -47,7 +51,10 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
         new ChartDataItem("Nuka Cola Company", 0, new EventEmitter<number>())
         ]);
 
-    popularSoftwareLicensesConfig: IProjectViewerConfig = { mainElementId: 16, title: "Knowledge Index - Popular Software Licenses" };
+    popularSoftwareLicensesConfig: IProjectViewerConfig = {
+        mainElementId: AppSettings.content.knowledgeLicenses_MainElementId,
+        title: "Knowledge Index - Popular Software Licenses"
+    };
     subscriptions: Subscription[] = [];
 
     constructor(private projectService: ProjectService) {

@@ -17,14 +17,16 @@ import { HomeComponent } from "./components/home.component";
 import { NotFoundComponent } from "./components/not-found.component";
 
 import { AllInOneComponent } from "./components/all-in-one.component";
-import { BasicsComponent } from "./components/basics.component";
-import { ImplementationComponent } from "./components/implementation.component";
 import { IntroductionComponent } from "./components/introduction.component";
 import { KnowledgeIndexComponent } from "./components/knowledge-index.component";
 import { PriorityIndexComponent } from "./components/priority-index.component";
 import { PrologueComponent } from "./components/prologue.component";
-import { ReasonComponent } from "./components/reason.component";
-import { TotalCostIndexComponent } from "./components/total-cost-index.component";
+
+// Components - not in use
+//import { BasicsComponent } from "./components/basics.component";
+//import { ImplementationComponent } from "./components/implementation.component";
+//import { ReasonComponent } from "./components/reason.component";
+//import { TotalCostIndexComponent } from "./components/total-cost-index.component";
 
 // Services
 import { AppEntityManager } from "./app-entity-manager.service";
@@ -72,14 +74,16 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
         NotFoundComponent,
 
         AllInOneComponent,
-        BasicsComponent,
-        ImplementationComponent,
         IntroductionComponent,
         KnowledgeIndexComponent,
         PriorityIndexComponent,
         PrologueComponent,
-        ReasonComponent,
-        TotalCostIndexComponent
+
+        // Not in use
+        //BasicsComponent,
+        //ImplementationComponent,
+        //ReasonComponent,
+        //TotalCostIndexComponent
     ],
     exports: [
         NgChartModule,

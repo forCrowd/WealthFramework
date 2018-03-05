@@ -2,6 +2,13 @@
 
 **0.83.0**
 
+* AngularClient
+  * Multiple getProjectExpanded fix
+  * initialValue fix
+  * Projects cleanup
+
+**0.83.0**
+
 * Backbone migration
 
 **0.82.6**

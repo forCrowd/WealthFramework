@@ -8,15 +8,6 @@
 npm-debug.log
 node_modules
 
-# NuGet packages
-packages
-
-# Personal database queries (no need to save)
-SolutionItems/Scripts/Database/Personal/
-
-# Publish profiles
-*.pubxml
-
 # User-specific files
 *.suo
 *.user
@@ -24,9 +15,6 @@ SolutionItems/Scripts/Database/Personal/
 # Visual Studio
 .vs/
 UpgradeLog.htm
-
-# WebApiWarmUp script result file
-SolutionItems/Scripts/Build/WebApiWarmUpResult.txt
 
 # Others
 ~$*
@@ -37,44 +25,7 @@ Thumbs.db
 # AngularClient
 AngularClient/dist
 AngularClient/out-tsc
-# AngularClient/tmp ?
-
-#AngularClient/e2e/*.js
-#AngularClient/e2e/*.map
 
 AngularClient/src/app-settings/environments/*
 !AngularClient/src/app-settings/environments/environment-settings.ts
 !AngularClient/src/app-settings/environments/Readme.md
-
-# WebApi
-WebApi/App_Data/
-WebApi/Configs/*.config
-
-# ng2Client
-
-ng2Client/app/**/*.js
-ng2Client/app/**/*.map
-!ng2Client/app/main/libs/**/*.js
-!ng2Client/app/main/libs/**/*.map
-
-ng2Client/app/main/settings/local*
-ng2Client/app/main/settings/test*
-ng2Client/app/main/settings/production*
-
-ng2Client/app/resources/css/app.min.css
-ng2Client/app/resources/fonts
-
-ng2Client/aot
-ng2Client/publish
-
-# ngClient
-ngClient/_system/js/app/settings/*.js
-ngClient/_system/js/app/settings/*.ts
-ngClient/_system/js/app/**/*.js
-ngClient/_system/js/app/**/*.map
-ngClient/_system/js/lib/*.js
-ngClient/_system/js/lib/*.map
-ngClient/_system/css/app.css
-ngClient/_system/css/app.min.css
-ngClient/_system/css/lib/*.css
-ngClient/_system/css/fonts/

@@ -30,7 +30,12 @@ export class AppSettings {
     static get serviceODataUrl(): string { return `${environment.serviceAppUrl}/odata/v1`; }
 
     /**
+     * Content settings
+     */
+    static get content() { return environment.content; }
+
+    /**
      * Application version number
      */
-    static get version(): string { return "0.83.0"; }
+    static get version(): string { return "0.83.1"; }
 }

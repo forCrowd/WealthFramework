@@ -154,7 +154,7 @@ export class ElementField extends EntityBase {
 
     setIncome() {
 
-        const value = this.Element.Project.InitialValue * this.ratingPercentage();
+        const value = this.Element.familyTree()[0].initialValue * this.ratingPercentage();
 
         if (this.fields.income !== value) {
             this.fields.income = value;

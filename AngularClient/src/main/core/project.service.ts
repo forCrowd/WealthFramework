@@ -26,6 +26,7 @@ export class ProjectService {
 
     private readonly appHttpClient: AppHttpClient;
     private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
+    private projectExpandedObservable: Observable<Project> = null;
 
     constructor(private appEntityManager: AppEntityManager,
         private authService: AuthService,
@@ -103,20 +104,25 @@ export class ProjectService {
 
     getProjectExpanded(forceRefresh = false) {
 
-        let projectId = 8;
+        if (!this.projectExpandedObservable) {
 
-        // Prepare the query
-        let query = EntityQuery.from("Project").where("Id", "eq", projectId);
+            let projectId = AppSettings.content.projectId;
 
-        // Is authorized? No, then get only the public data, yes, then get include user's own records
-        query = this.authService.currentUser.isAuthenticated()
-            ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
-            : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
+            // Prepare the query
+            let query = EntityQuery.from("Project").where("Id", "eq", projectId);
 
-        return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
-            .map(response => {
-                return response.results[0] || null;
-            });
+            // Is authorized? No, then get only the public data, yes, then get include user's own records
+            query = this.authService.currentUser.isAuthenticated()
+                ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
+                : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
+
+            this.projectExpandedObservable = this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
+                .map(response => {
+                    return response.results[0] || null;
+                });
+        }
+
+        return this.projectExpandedObservable;
     }
 
     hasChanges(): boolean {

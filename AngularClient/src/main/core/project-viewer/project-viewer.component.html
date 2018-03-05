@@ -22,13 +22,15 @@
                     </div>
                     <hr />
                     <div class="settings">
-                        <button (click)="mainElement.Project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': mainElement.Project.RatingMode === RatingMode.CurrentUser }">
-                            Your Ratings
-                        </button>
-                        <button (click)="mainElement.Project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': mainElement.Project.RatingMode === RatingMode.AllUsers }">
-                            All Users
-                            <span class="g-ml-10 badge">{{ mainElement.Project.RatingCount }}</span>
-                        </button>
+                        <div class="btn-group" role="group" aria-label="Rating Options">
+                            <button (click)="mainElement.Project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': mainElement.Project.RatingMode === RatingMode.CurrentUser }">
+                                Your Ratings
+                            </button>
+                            <button (click)="mainElement.Project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': mainElement.Project.RatingMode === RatingMode.AllUsers }">
+                                All Users
+                                <span class="g-ml-10 badge">{{ mainElement.Project.RatingCount }}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,7 +58,7 @@
                     <div class="details col-md-12">
                         <div *ngIf="selectedElement.elementFieldSet().length > 0">
                             <label>Total Amount</label>
-                            <span class="text-right">{{ mainElement.Project.InitialValue | symbolic }}</span>
+                            <span class="text-right">{{ mainElement.initialValue | symbolic }}</span>
                         </div>
                     </div>
                 </div>
@@ -85,7 +87,7 @@
                                                 {{ field.Name + ' (I) Income' }}
                                             </th>
                                         </ng-template>
-                                        <th *ngIf="mainElement.Project.InitialValue > 0" class="text-right">
+                                        <th *ngIf="mainElement.initialValue > 0" class="text-right">
                                             <!-- Display 'Total Income' view link only if there are more than one index -->
                                             <button *ngIf="selectedElement.elementFieldSet().length > 1" (click)="toggleIndexDetails()" type="button" class="btn-link" title="Toggle between 'Indexes' & 'Elements' views">Total Income</button>
                                             <!-- If there is only one index, then use that index's name -->
@@ -137,7 +139,7 @@
                                                 {{ ratingCell.income() | symbolic }}
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="mainElement.Project.InitialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
+                                        <td *ngIf="mainElement.initialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
                                             {{ elementItem.income() | symbolic }}
                                         </td>
                                     </tr>
@@ -158,8 +160,8 @@
                                                 {{ field.income() | symbolic }}
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="mainElement.Project.InitialValue > 0" class="text-right">
-                                            {{ mainElement.Project.InitialValue | symbolic }} <!-- Same as income -->
+                                        <td *ngIf="mainElement.initialValue > 0" class="text-right">
+                                            {{ mainElement.initialValue | symbolic }} <!-- Same as income -->
                                         </td>
                                     </tr>
                                     <!-- Functions -->
@@ -182,7 +184,7 @@
                                                 </div>
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="mainElement.Project.InitialValue > 0" class="noborder text-right">
+                                        <td *ngIf="mainElement.initialValue > 0" class="noborder text-right">
                                             &nbsp;
                                         </td>
                                     </tr>

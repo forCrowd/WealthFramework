@@ -7,63 +7,47 @@ Experimental ideas on increasing sustainability and productivity
 
 ## Current Stack
 
-### Client
-
 * Angular
 * Angular CLI
 * TypeScript
 * BreezeJS
 * Karma & Jasmine
 
-### Server
+## Setup (Will be updated - 05 March 2018)
 
-* .NET Framework 4.6
-* ASP.NET Web API 2 & OData v3
-* Entity Framework 6
-* SQL Server 2014
+...
 
-## Setup
+### Deployment
 
-### Getting Started
-[Getting Started](https://github.com/forcrowd/WealthEconomy/wiki/Getting-Started)
+AngularClient is a **Angular CLI** project and you can use its commands.
 
-### First Mission: Contributors Page
-This is an experimental attempt to help you to get familiar with our project and make your first pull request.
+For deployment, there are three environments defined in `.angular-cli.json` file:
+* dev
+* test
+* prod
 
-Follow this tutorial to get started:
-[First Mission](https://github.com/forCrowd/WealthEconomy/wiki/First-Mission)
-
-### WebApi Deployment
-
-You can deploy WebApi appliation through Visual Studio publish.  
-
-Only remark is, configuration files are excluded from deploy (Build Action: 'None').  
-When deploying the project, update following configuration files with your own settings and manually copy them:
-* WebApi\googleanalytics.js
-* WebApi\Web.config
-* WebApi\Configs\\*.config
-
-If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
-
-### AngularClient Deployment
-
-AngularClient is a Angular CLI project and all of its commands are available.
-
-Thera are three environments defined in `.angular-cli.json` file: `dev`, `test` & `prod`.  
-For `test` & `prod`, please create your own files by copying `dev` configuration file:
+You can use **dev** configuration as a base file to create your own **test** and **prod** configuration files:
 
     AngularClient\src\app-settings\environments\environment-settings.ts
 
-To prepare a production bundle, run the following on your command console:
+To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build -prod
+    ng build -prod -sm
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 
+## Contribute
+
+We welcome all contributors and all kinds of contributions.  
+
+For more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
+
 ## Changelog
 
-See [Changelog.md](/CHANGELOG.md) for a detailed list.
+To see the changes in our project: [Changelog](/CHANGELOG.md)
 
 ## License
 
-Wealth Economy is licensed under [MIT license](/LICENSE).
+WealthEconomy is licensed under MIT license.
+
+You are free to use, modify and distribute it, even in commercial activities: [MIT license](/LICENSE)

@@ -128,7 +128,7 @@ describe("main/core/entities/element", () => {
         expect(element.income()).toBe(0);
 
         // Case 2: Set initial value, add the fields, first item and the cell
-        element.Project.InitialValue = 275;
+        element.initialValue = 275;
 
         var item1 = TestHelpers.createElementItem(element);
 

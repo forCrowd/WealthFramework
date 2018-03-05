@@ -15,9 +15,10 @@ import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 
 export interface IConfig {
+    initialValue?: number,
     mainElementId: number,
     title: string
-};
+}
 
 @Component({
     selector: "project-viewer",
@@ -109,6 +110,12 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
 
                 // It returns an array, set the first item in the list
                 this.mainElement = project.ElementSet.find(element => element.Id === this.config.mainElementId);
+
+                // Set Initial value + setIncome()
+                this.mainElement.initialValue = this.config.initialValue || 100;
+                this.mainElement.ElementFieldSet.forEach(field => {
+                    field.setIncome();
+                });
 
                 // Rating mode updated event
                 // TODO: Unsubscribe?

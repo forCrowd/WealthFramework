@@ -36,8 +36,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Scripts\Database\Sql\Backup Database.sql" />
-    <Content Include="Scripts\Database\Sql\User Insert.sql" />
     <None Include="..\.gitattributes">
       <Link>Documents\.gitattributes</Link>
     </None>
@@ -47,11 +45,11 @@
     <None Include="..\CHANGELOG.md">
       <Link>Documents\CHANGELOG.md</Link>
     </None>
-    <None Include="Documents\AngularClient - Related functions.xlsx" />
-    <None Include="Documents\Skecthes.pptx" />
-    <None Include="Documents\Survey.docx" />
+    <None Include="..\CODE_OF_CONDUCT.md">
+      <Link>Documents\CODE_OF_CONDUCT.md</Link>
+    </None>
+    <None Include="Documents\Related functions.xlsx" />
     <None Include="Documents\Index Income Calculation-Outdated.xlsx" />
-    <None Include="Documents\Feedback.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\appveyor.yml">
@@ -63,10 +61,6 @@
     <None Include="..\README.md">
       <Link>Documents\README.md</Link>
     </None>
-    <None Include="Scripts\Build\MSBuild.bat" />
-    <None Include="Scripts\Build\RunIISExpress.ps1" />
-    <None Include="Scripts\Build\WebApiWarmUp.ps1" />
-    <None Include="Scripts\Database\Local_BackupDatabase.bat" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

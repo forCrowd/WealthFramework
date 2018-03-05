@@ -17,7 +17,6 @@ export class Project extends EntityBase {
     User: User;
     Name = "";
     Description: string = null;
-    InitialValue = 100; // 1000000000
     RatingCount = 0;
     ElementSet: Element[];
 
