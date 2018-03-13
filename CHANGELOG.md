@@ -1,6 +1,10 @@
 ### Changelog
 
-**0.83.0**
+**0.83.2**
+
+* appveyor.yml removed
+
+**0.83.1**
 
 * AngularClient
   * Multiple getProjectExpanded fix

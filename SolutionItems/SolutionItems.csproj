@@ -52,9 +52,6 @@
     <None Include="Documents\Index Income Calculation-Outdated.xlsx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\appveyor.yml">
-      <Link>Documents\appveyor.yml</Link>
-    </None>
     <None Include="..\LICENSE">
       <Link>Documents\LICENSE</Link>
     </None>
