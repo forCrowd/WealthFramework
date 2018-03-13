@@ -1,8 +1,12 @@
 ### Changelog
 
+**0.83.3**
+
+* Solution - Minor
+
 **0.83.2**
 
-* appveyor.yml removed
+* Solution - appveyor.yml removed
 
 **0.83.1**
 

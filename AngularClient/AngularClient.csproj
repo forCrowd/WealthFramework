@@ -102,6 +102,10 @@
     <Content Include="src\dev-all\app.component.css" />
     <Content Include="src\dev-all\navigation.component.html" />
     <Content Include="src\dev-all\misc.component.html" />
+    <Content Include="src\main\core\components\not-in-use\conclusion.html" />
+    <Content Include="src\main\core\components\not-in-use\fairShareIndexSample.html" />
+    <Content Include="src\main\core\components\not-in-use\overview.html" />
+    <Content Include="src\main\core\components\not-in-use\roadmap.html" />
     <Content Include="src\main\core\project-viewer\project-viewer.component.css" />
     <Content Include="src\main\core\project-viewer\project-viewer.component.html" />
     <Content Include="src\_app_offline.htm" />
