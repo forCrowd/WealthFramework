@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.83.4**
+
+* Solution - Clean-up
+
 **0.83.3**
 
 * Solution - Minor
