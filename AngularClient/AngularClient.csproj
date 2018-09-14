@@ -92,31 +92,11 @@
     <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\CHANGELOG.md">
-      <Link>docs\CHANGELOG.md</Link>
-    </None>
-    <None Include="..\CODE_OF_CONDUCT.md">
-      <Link>docs\CODE_OF_CONDUCT.md</Link>
-    </None>
-    <None Include="..\LICENSE">
-      <Link>docs\LICENSE</Link>
-    </None>
-    <None Include="..\README.md">
-      <Link>docs\README.md</Link>
-    </None>
     <None Include=".angular-cli.json" />
-    <None Include="docs\Index Income Calculation-Outdated.xlsx" />
-    <None Include="docs\Related functions.xlsx" />
     <None Include="e2e\tsconfig.e2e.json" />
     <None Include="package-lock.json" />
     <None Include="package.json" />
     <None Include="src\app-settings\environments\Readme.md" />
-    <None Include="..\.gitattributes">
-      <Link>docs\.gitattributes</Link>
-    </None>
-    <None Include="..\.gitignore">
-      <Link>docs\.gitignore</Link>
-    </None>
     <Content Include="src\dev-all\project-tester.component.css" />
     <Content Include="src\dev-all\project-tester.component.html" />
     <Content Include="src\dev-all\app.component.css" />

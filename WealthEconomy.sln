@@ -5,6 +5,18 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularClient", "AngularClient\AngularClient.csproj", "{E0B5C557-467E-49F4-A73D-F7947A8F91F2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9F17C8C0-B9A2-4FE2-8A6F-F77171907103}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		CHANGELOG.md = CHANGELOG.md
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		Solution Items\Index Income Calculation-Outdated.xlsx = Solution Items\Index Income Calculation-Outdated.xlsx
+		LICENSE = LICENSE
+		README.md = README.md
+		Solution Items\Related functions.xlsx = Solution Items\Related functions.xlsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
