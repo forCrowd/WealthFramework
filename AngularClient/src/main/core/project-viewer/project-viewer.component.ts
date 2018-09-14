@@ -16,8 +16,7 @@ import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 
 export interface IConfig {
     initialValue?: number,
-    mainElementId: number,
-    title: string
+    projectId: number,
 }
 
 @Component({
@@ -33,7 +32,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
     }
 
     @Input()
-    config: IConfig = { mainElementId: 0, title: "" };
+    config: IConfig = { projectId: 0 };
     chartConfig: ChartConfig = null;
     currentUser: User = null;
     displayChart: boolean = false;
@@ -43,8 +42,8 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
     elementItemsSortField = "name";
     errorMessage: string = "";
     RatingMode = RatingMode;
-    mainElement: Element = null;
-    elementId = 0;
+    project: Project = null;
+    projectId = 0;
     saveStream = new Subject();
     subscriptions: Subscription[] = [];
     username = "";
@@ -80,27 +79,27 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         this.saveStream.next();
     }
 
-    initialize(elementId: number, user: User) {
+    initialize(projectId: number, user: User) {
 
         // If there is no change, no need to continue
-        if (this.elementId === elementId && this.currentUser === user) {
+      if (this.projectId === projectId && this.currentUser === user) {
             return;
         }
 
-        this.elementId = elementId;
+      this.projectId = projectId;
         this.currentUser = user;
 
         // Clear previous error messages
         this.errorMessage = "";
 
         // Validate
-        if (!this.elementId) {
-            this.errorMessage = "Element id cannot be null";
+      if (!this.projectId) {
+            this.errorMessage = "Project id cannot be null";
             return;
         }
 
         // Get project
-        this.projectService.getProjectExpanded()
+        this.projectService.getProjectExpanded(this.config.projectId)
             .subscribe(project => {
 
                 if (!project) {
@@ -108,21 +107,25 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
                     return;
                 }
 
+                this.project = project;
+
                 // It returns an array, set the first item in the list
-                this.mainElement = project.ElementSet.find(element => element.Id === this.config.mainElementId);
+                //this.project = project.ElementSet.find(element => element.Id === this.config.Id);
 
                 // Set Initial value + setIncome()
-                this.mainElement.initialValue = this.config.initialValue || 100;
-                this.mainElement.ElementFieldSet.forEach(field => {
-                    field.setIncome();
+                this.project.initialValue = this.config.initialValue || 100;
+                this.project.ElementSet.forEach(element => {
+                    element.ElementFieldSet.forEach(field => {
+                        field.setIncome();
+                    });
                 });
 
                 // Rating mode updated event
                 // TODO: Unsubscribe?
-                this.mainElement.Project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
+                this.project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
 
                 // Selected element
-                this.selectedElement = this.mainElement;
+                this.selectedElement = this.project.ElementSet[0];
 
                 this.loadChartData();
             });
@@ -213,7 +216,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
 
-        const elementId = this.config.mainElementId || 0;
+        const projectId = this.config.projectId || 0;
 
         // Delayed save operation
         this.saveStream.debounceTime(1500)
@@ -222,10 +225,10 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         // Event handlers
         this.subscriptions.push(
             this.authService.currentUserChanged.subscribe((newUser) =>
-                this.initialize(this.elementId, newUser))
+                this.initialize(this.projectId, newUser))
         );
 
-        this.initialize(elementId, this.authService.currentUser);
+        this.initialize(projectId, this.authService.currentUser);
     }
 
     resetRating(field: ElementField) {
@@ -249,7 +252,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
     }
 
     updateElementItemsSortField(): void {
-        this.elementItemsSortField = this.mainElement.Project.RatingMode === RatingMode.CurrentUser
+        this.elementItemsSortField = this.project.RatingMode === RatingMode.CurrentUser
             ? "name"
             : "income";
     }

@@ -3,43 +3,43 @@
         <div class="heading panel-heading">
             <div class="row">
                 <div class="col-md-12">
-                    <p [hidden]="mainElement || errorMessage.length > 0">
+                    <p [hidden]="project || errorMessage.length > 0">
                         <span class="label label-info">Loading...</span>
                     </p>
                     <p [hidden]="errorMessage.length === 0">
                         <span class="label label-danger">{{ errorMessage }}</span>
                     </p>
                 </div>
-                <div class="col-md-12" *ngIf="mainElement">
+                <div class="col-md-12" *ngIf="project">
                     <div class="clearfix">
                         <p class="pull-left">
                             <span class="title panel-title">
-                                {{ config.title }}
+                                {{ project.Name }}
                             </span>
                             <br />
-                            <small>Last modified on {{ mainElement.Project.ModifiedOn | date: 'medium' }}</small>
+                            <small>Last modified on {{ project.ModifiedOn | date: 'medium' }}</small>
                         </p>
                     </div>
                     <hr />
                     <div class="settings">
                         <div class="btn-group" role="group" aria-label="Rating Options">
-                            <button (click)="mainElement.Project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': mainElement.Project.RatingMode === RatingMode.CurrentUser }">
+                            <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.CurrentUser }">
                                 Your Ratings
                             </button>
-                            <button (click)="mainElement.Project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': mainElement.Project.RatingMode === RatingMode.AllUsers }">
+                            <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.AllUsers }">
                                 All Users
-                                <span class="g-ml-10 badge">{{ mainElement.Project.RatingCount }}</span>
+                                <span class="g-ml-10 badge">{{ project.RatingCount }}</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div *ngIf="mainElement">
+        <div *ngIf="project">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <ol class="breadcrumb" *ngIf="mainElement.familyTree().length > 0">
+                        <ol class="breadcrumb" *ngIf="selectedElement.familyTree().length > 0">
                             <li *ngFor="let element of selectedElement.familyTree(); let lastItem = last" [ngClass]="{ active: lastItem }">
                                 <button *ngIf="!lastItem" (click)="selectedElement = element" type="button" class="btn-link" title="Switch to {{ element.Name }} view">
                                     {{ element.Name }}
@@ -58,7 +58,7 @@
                     <div class="details col-md-12">
                         <div *ngIf="selectedElement.elementFieldSet().length > 0">
                             <label>Total Amount</label>
-                            <span class="text-right">{{ mainElement.initialValue | symbolic }}</span>
+                            <span class="text-right">{{ project.initialValue | symbolic }}</span>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                                                 {{ field.Name + ' (I) Income' }}
                                             </th>
                                         </ng-template>
-                                        <th *ngIf="mainElement.initialValue > 0" class="text-right">
+                                        <th *ngIf="project.initialValue > 0" class="text-right">
                                             <!-- Display 'Total Income' view link only if there are more than one index -->
                                             <button *ngIf="selectedElement.elementFieldSet().length > 1" (click)="toggleIndexDetails()" type="button" class="btn-link" title="Toggle between 'Indexes' & 'Elements' views">Total Income</button>
                                             <!-- If there is only one index, then use that index's name -->
@@ -110,10 +110,10 @@
                                                 </div>
                                                 <div *ngIf="!elementCell.ElementField.UseFixedValue">
                                                     <div *ngIf="elementCell.ElementField.RatingEnabled">
-                                                        <div [hidden]="mainElement.Project.RatingMode === RatingMode.CurrentUser">
+                                                        <div [hidden]="project.RatingMode === RatingMode.CurrentUser">
                                                             {{ elementCell.decimalValuePercentage() | percent }}
                                                         </div>
-                                                        <div [hidden]="mainElement.Project.RatingMode === RatingMode.AllUsers">
+                                                        <div [hidden]="project.RatingMode === RatingMode.AllUsers">
                                                             <div class="btn-group" role="group">
                                                                 <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
                                                                 <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 20)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 20, 'btn-default': elementCell.decimalValue() !== 20 }">1</button>
@@ -139,7 +139,7 @@
                                                 {{ ratingCell.income() | symbolic }}
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="mainElement.initialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
+                                        <td *ngIf="project.initialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
                                             {{ elementItem.income() | symbolic }}
                                         </td>
                                     </tr>
@@ -160,8 +160,8 @@
                                                 {{ field.income() | symbolic }}
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="mainElement.initialValue > 0" class="text-right">
-                                            {{ mainElement.initialValue | symbolic }} <!-- Same as income -->
+                                        <td *ngIf="project.initialValue > 0" class="text-right">
+                                            {{ project.initialValue | symbolic }} <!-- Same as income -->
                                         </td>
                                     </tr>
                                     <!-- Functions -->
@@ -184,7 +184,7 @@
                                                 </div>
                                             </td>
                                         </ng-template>
-                                        <td *ngIf="mainElement.initialValue > 0" class="noborder text-right">
+                                        <td *ngIf="project.initialValue > 0" class="noborder text-right">
                                             &nbsp;
                                         </td>
                                     </tr>

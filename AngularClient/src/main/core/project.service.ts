@@ -102,27 +102,20 @@ export class ProjectService {
         return userElementField;
     }
 
-    getProjectExpanded(forceRefresh = false) {
+    getProjectExpanded(projectId: number, forceRefresh = false) {
 
-        if (!this.projectExpandedObservable) {
+        // Prepare the query
+        let query = EntityQuery.from("Project").where("Id", "eq", projectId);
 
-            let projectId = AppSettings.content.projectId;
+        // Is authorized? No, then get only the public data, yes, then get include user's own records
+        query = this.authService.currentUser.isAuthenticated()
+            ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
+            : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
 
-            // Prepare the query
-            let query = EntityQuery.from("Project").where("Id", "eq", projectId);
-
-            // Is authorized? No, then get only the public data, yes, then get include user's own records
-            query = this.authService.currentUser.isAuthenticated()
-                ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
-                : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
-
-            this.projectExpandedObservable = this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
-                .map(response => {
-                    return response.results[0] || null;
-                });
-        }
-
-        return this.projectExpandedObservable;
+        return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
+            .map(response => {
+                return response.results[0] || null;
+            });
     }
 
     hasChanges(): boolean {

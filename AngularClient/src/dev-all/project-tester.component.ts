@@ -18,7 +18,7 @@ export class ProjectTesterComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.projectService.getProjectExpanded()
+        this.projectService.getProjectExpanded(2)
             .subscribe(project => {
                 this.project = project;
             });
