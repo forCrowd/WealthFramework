@@ -13,9 +13,6 @@ export class Element extends EntityBase {
     ElementItemSet: ElementItem[];
     ParentFieldSet: ElementField[];
 
-    // Client-side
-    initialValue = 100;
-
     private fields: {
         parent: Element,
         familyTree: Element[],

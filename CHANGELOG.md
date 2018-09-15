@@ -1,5 +1,13 @@
 ### Changelog
 
+**0.84.0**
+
+* Back from Element to Project based structure
+
+**0.83.4**
+
+* Solution - Clean-up
+
 **0.83.3**
 
 * Solution - Minor

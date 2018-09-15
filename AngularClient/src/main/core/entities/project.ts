@@ -21,6 +21,9 @@ export class Project extends EntityBase {
     ElementSet: Element[];
 
     // Client-side
+    initialValue = 100;
+
+    // Client-side
     get RatingMode(): RatingMode {
         return this.fields.ratingMode;
     }

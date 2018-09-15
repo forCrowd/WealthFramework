@@ -1,9 +1,5 @@
 ## General rules
 
-# Build folders
-[Bb]in/
-[Oo]bj/
-
 # NPM packages
 npm-debug.log
 node_modules

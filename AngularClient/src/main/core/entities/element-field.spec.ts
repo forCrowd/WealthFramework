@@ -48,7 +48,7 @@ describe("main/core/entities/element-field", () => {
 
         // Case 1: Initial
         const decimalField1 = TestHelpers.createElementField(null, ElementFieldDataType.Decimal);
-        decimalField1.Element.initialValue = 50;
+        decimalField1.Element.Project.initialValue = 50;
         decimalField1.setIncome();
 
         expect(decimalField1.income()).toBe(50);
