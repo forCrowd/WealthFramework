@@ -13,7 +13,7 @@ import { ProjectService } from "../project.service";
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 
     knowledgeIndexConfig: IProjectViewerConfig = {
-        projectId: 4
+        projectId: AppSettings.content.knowledgeProjectId
     };
 
     newModelChartConfig: ChartConfig = new ChartConfig({
@@ -51,7 +51,7 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
         ]);
 
     popularSoftwareLicensesConfig: IProjectViewerConfig = {
-        projectId: 5
+        projectId: AppSettings.content.knowledgeLicensesProjectId
     };
     subscriptions: Subscription[] = [];
 

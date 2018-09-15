@@ -11,7 +11,7 @@ import { ProjectService } from "../project.service";
 })
 export class AllInOneComponent {
 
-    allInOneConfig: IProjectViewerConfig = { projectId: 8 };
+    allInOneConfig: IProjectViewerConfig = { projectId: AppSettings.content.allInOneProjectId };
     syncFlag = true;
 
     constructor(private projectService: ProjectService) {
