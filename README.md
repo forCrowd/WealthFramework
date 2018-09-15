@@ -15,16 +15,7 @@ Experimental ideas on increasing sustainability and productivity
 
 ## Setup
 
-Wealth Economy is using our another project [Backbone](https://github.com/forCrowd/Backbone) as a backend.
-
-To run Wealth Economy on your local computer:
-* Install Backbone project: https://github.com/forCrowd/Backbone/wiki/Getting-Started
-* After the installation, only run **WebAPI** project, and don't run (or stop) **AngularClient**
-* Download a copy of WealthEconomy project
-* Under **AngularClient** folder, run `npm install` to install node packages
-* Run `ng serve` to run the application
-* Open the application in your browser by navigating to the following url:
-http://localhost:4200/
+Follow this document to setup the application: [Getting Started](https://github.com/forcrowd/WealthEconomy/wiki/Getting-Started)
 
 ### Deployment
 
