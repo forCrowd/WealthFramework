@@ -13,9 +13,18 @@ Experimental ideas on increasing sustainability and productivity
 * BreezeJS
 * Karma & Jasmine
 
-## Setup (Will be updated - 05 March 2018)
+## Setup
 
-...
+Wealth Economy is using our another project [Backbone](https://github.com/forCrowd/Backbone) as a backend.
+
+To run Wealth Economy on your local computer:
+* Install Backbone project: https://github.com/forCrowd/Backbone/wiki/Getting-Started
+* After the installation, only run **WebAPI** project, and don't run (or stop) **AngularClient**
+* Download a copy of WealthEconomy project
+* Under **AngularClient** folder, run `npm install` to install node packages
+* Run `ng serve` to run the application
+* Open the application in your browser by navigating to the following url:
+http://localhost:4200/
 
 ### Deployment
 
@@ -32,15 +41,15 @@ You can use **dev** configuration as a base file to create your own **test** and
 
 To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build -prod -sm
+    ng build -prod
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 
 ## Contribute
 
-We welcome all contributors and all kinds of contributions.  
+Our project is, without any discrimination, open to anyone who is willing to make a contribution!  
 
-For more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
+To learn more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
 
 ## Changelog
 
@@ -48,6 +57,6 @@ To see the changes in our project: [Changelog](/CHANGELOG.md)
 
 ## License
 
-WealthEconomy is licensed under MIT license.
+Our project is licensed under [MIT license](/LICENSE).
 
-You are free to use, modify and distribute it, even in commercial activities: [MIT license](/LICENSE)
+You are free to use, modify and distribute it, even in commercial activities.
