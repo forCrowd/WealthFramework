@@ -1,8 +1,6 @@
-
-import {of as observableOf, from as observableFrom, throwError as observableThrowError,  Observable } from 'rxjs';
-
-import {map, finalize, catchError} from 'rxjs/operators';
 import { ErrorHandler, Injectable } from "@angular/core";
+import { of as observableOf, from as observableFrom, throwError as observableThrowError, Observable } from "rxjs";
+import { map, finalize, catchError } from "rxjs/operators";
 import {
     config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
     ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
@@ -126,25 +124,25 @@ export class AppEntityManager extends EntityManager {
     executeQueryObservable<T extends Entity>(query: EntityQuery, forceRefresh = false): Observable<IQueryResult<T>> {
 
         this.isBusy = true;
-    
+
         // Ignore previous "FetchStrategy" settings
         query = query.using(FetchStrategy.FromServer);
-    
+
         // In cache? If not, add it
         const queryString = JSON.stringify(query);
         const cached = this.queryCache.indexOf(queryString) > -1;
         if (!cached) {
-          this.queryCache.push(queryString);
+            this.queryCache.push(queryString);
         }
-    
+
         // From server or local cache?
         if (cached && !forceRefresh) {
-          query = query.using(FetchStrategy.FromLocalCache);
+            query = query.using(FetchStrategy.FromLocalCache);
         }
 
         // Execute 
-        return Observable.fromPromise(super.executeQuery(query))
-            .map(response => {
+        return observableFrom(super.executeQuery(query)).pipe(
+            map(response => {
 
                 if (!cached) {
                     this.queryCache.push(queryString);
@@ -156,15 +154,12 @@ export class AppEntityManager extends EntityManager {
 
                 return {
                     count: response.inlineCount,
-                    results: response.results
+                    results: response.results as T[]
                 }
-            })
-            .catch((error: any) => this.handleODataErrors(error))
-            .finally(() => { this.isBusy = false; });
+            }),
+            catchError((error: any) => this.handleODataErrors(error)),
+            finalize(() => { this.isBusy = false; }));
     }
-          catchError((error: any) => this.handleODataErrors(error)),
-          finalize(() => { this.isBusy = false; }));
-      }
 
     getMetadata(): Observable<Object> {
 
@@ -179,8 +174,7 @@ export class AppEntityManager extends EntityManager {
                 return metadata;
             }),
             catchError((error: any) => this.handleODataErrors(error)),
-            finalize(() => { this.isBusy = false; }),
-        );
+            finalize(() => { this.isBusy = false; }));
     }
 
     saveChanges(entities?: Entity[],
@@ -194,7 +188,7 @@ export class AppEntityManager extends EntityManager {
 
         this.isBusy = true;
 
-        var promise: any = null;
+        var promise: Promise<SaveResult> = null;
         var count = this.getChanges().length;
         const saveBatches = this.prepareSaveBatches();
 
@@ -219,8 +213,7 @@ export class AppEntityManager extends EntityManager {
                 this.logger.logSuccess(`Saved ${count} change(s)`, false);
             }),
             catchError((error: any) => this.handleODataErrors(error)),
-            finalize(() => { this.isBusy = false; }),
-        );
+            finalize(() => { this.isBusy = false; }));
     }
 
     // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically

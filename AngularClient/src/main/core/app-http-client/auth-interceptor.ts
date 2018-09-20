@@ -2,6 +2,8 @@
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
 import { Observable } from "rxjs";
 
+import { Token } from "../token";
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
@@ -10,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
         const tokenItem = localStorage.getItem("token");
 
         if (tokenItem) {
-            const token = JSON.parse(tokenItem.toString());
+            const token = JSON.parse(tokenItem.toString()) as Token;
 
             req = req.clone({
                 headers: req.headers.set("Authorization", `Bearer ${token.access_token}`)
