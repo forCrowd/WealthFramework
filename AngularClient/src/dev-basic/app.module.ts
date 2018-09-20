@@ -1,5 +1,5 @@
 import { Component, NgModule } from "@angular/core";
-import { HttpModule } from "@angular/http";
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from "@angular/platform-browser";
 
 @Component({
@@ -40,7 +40,7 @@ export class AppComponent {
 @NgModule({
     imports: [
         BrowserModule,
-        HttpModule
+        HttpClientModule
     ],
     declarations: [
         AppComponent

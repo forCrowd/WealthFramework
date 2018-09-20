@@ -1,6 +1,7 @@
-﻿import { Injectable } from "@angular/core";
+
+import {map} from 'rxjs/operators';
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { User } from "../core/entities/user";
@@ -43,44 +44,44 @@ export class AccountService {
 
     addPassword(addPasswordBindingModel: any) {
 
-        return this.httpClient.post<User>(this.addPasswordUrl, addPasswordBindingModel)
-            .map(updatedUser => {
+        return this.httpClient.post<User>(this.addPasswordUrl, addPasswordBindingModel).pipe(
+            map(updatedUser => {
                 this.authService.updateCurrentUser(updatedUser);
-            });
+            }));
     }
 
     changeEmail(changeEmailBindingModel: any) {
 
         changeEmailBindingModel.ClientAppUrl = window.location.origin;
 
-        return this.httpClient.post<User>(this.changeEmailUrl, changeEmailBindingModel)
-            .map(updatedUser => {
+        return this.httpClient.post<User>(this.changeEmailUrl, changeEmailBindingModel).pipe(
+            map(updatedUser => {
                 this.authService.updateCurrentUser(updatedUser);
-            });
+            }));
     }
 
     changePassword(changePasswordBindingModel: any) {
 
-        return this.httpClient.post<User>(this.changePasswordUrl, changePasswordBindingModel)
-            .map(updatedUser => {
+        return this.httpClient.post<User>(this.changePasswordUrl, changePasswordBindingModel).pipe(
+            map(updatedUser => {
                 this.authService.updateCurrentUser(updatedUser);
-            });
+            }));
     }
 
     changeUserName(changeUserNameBindingModel: any) {
 
-        return this.httpClient.post<User>(this.changeUserNameUrl, changeUserNameBindingModel)
-            .map(updatedUser => {
+        return this.httpClient.post<User>(this.changeUserNameUrl, changeUserNameBindingModel).pipe(
+            map(updatedUser => {
                 this.authService.updateCurrentUser(updatedUser);
-            });
+            }));
     }
 
     confirmEmail(confirmEmailBindingModel: any) {
 
-        return this.httpClient.post<User>(this.confirmEmailUrl, confirmEmailBindingModel)
-            .map(updatedUser => {
+        return this.httpClient.post<User>(this.confirmEmailUrl, confirmEmailBindingModel).pipe(
+            map(updatedUser => {
                 this.authService.updateCurrentUser(updatedUser);
-            });
+            }));
     }
 
     resendConfirmationEmail() {
@@ -92,10 +93,10 @@ export class AccountService {
 
     resetPassword(resetPasswordBindingModel: any) {
 
-        return this.httpClient.post<User>(this.resetPasswordUrl, resetPasswordBindingModel)
-            .map(updatedUser => {
+        return this.httpClient.post<User>(this.resetPasswordUrl, resetPasswordBindingModel).pipe(
+            map(updatedUser => {
                 this.authService.updateCurrentUser(updatedUser);
-            });
+            }));
     }
 
     resetPasswordRequest(resetPasswordRequestBindingModel: any) {

@@ -1,4 +1,6 @@
-﻿import { Injectable } from "@angular/core";
+
+import {finalize} from 'rxjs/operators';
+import { Injectable } from "@angular/core";
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
 import { Observable } from "rxjs";
 
@@ -11,8 +13,8 @@ export class BusyInterceptor implements HttpInterceptor {
 
         this.isBusy = true;
 
-        return next.handle(req).finally(() => {
+        return next.handle(req).pipe(finalize(() => {
             this.isBusy = false;
-        });
+        }));
     }
 }

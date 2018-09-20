@@ -1,6 +1,9 @@
-﻿import { Injectable } from "@angular/core";
+
+import {catchError} from 'rxjs/operators';
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
-import { Observable } from "rxjs";
 
 import { Logger } from "../../logger/logger.module";
 
@@ -10,8 +13,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor(private readonly logger: Logger) {  }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req)
-            .catch((error: any) => this.handleHttpErrors(error));
+        return next.handle(req).pipe(
+            catchError((error: any) => this.handleHttpErrors(error)));
 
     }
 
@@ -117,7 +120,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (handled) {
 
             // If handled, continue with Observable flow
-            return Observable.throw(response);
+            return observableThrowError(response);
 
         } else {
 

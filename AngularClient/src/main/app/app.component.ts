@@ -1,10 +1,13 @@
+
+import { mergeMap, map, filter} from 'rxjs/operators';
+import { Subscription } from "rxjs";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Subscription } from "rxjs/Subscription";
 
 import { User } from "../core/entities/user";
 import { Angulartics2GoogleAnalytics, AuthService } from "../core/core.module";
+
 import { Logger, ToasterConfig } from "../logger/logger.module";
 import { AppSettings } from "../../app-settings/app-settings";
 
@@ -59,15 +62,15 @@ export class AppComponent implements OnDestroy, OnInit {
 
         // Title
         // https://toddmotto.com/dynamic-page-titles-angular-2-router-events
-        this.router.events
-            .filter(event => event instanceof NavigationEnd)
-            .map(() => this.activatedRoute)
-            .map(route => {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd),
+            map(() => this.activatedRoute),
+            map(route => {
                 while (route.firstChild) { route = route.firstChild; }
                 return route;
-            })
-            .filter(route => route.outlet === "primary")
-            .mergeMap(route => route.data)
+            }),
+            filter(route => route.outlet === "primary"),
+            mergeMap(route => route.data),)
             .subscribe((data: any) => {
                 if (data.title) {
                     this.titleService.setTitle(`Wealth Economy - ${data.title}`);

@@ -1,6 +1,6 @@
-﻿import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+
+import {timer as observableTimer,  Observable ,  Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { ChartObject } from "highcharts";
 
 import { ChartConfig } from "./chart-config";
@@ -60,7 +60,7 @@ export class NgChartComponent implements OnInit {
 
         this.displayChart = false;
 
-        Observable.timer().subscribe(() => {
+        observableTimer().subscribe(() => {
             this.container.config = this.config;
             this.displayChart = true;
         });
