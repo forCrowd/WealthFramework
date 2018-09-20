@@ -1,4 +1,6 @@
-﻿import { Injectable } from "@angular/core";
+
+import {finalize, mergeMap, map} from 'rxjs/operators';
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { EntityQuery, Predicate } from "../../libraries/breeze-client";
 import { Observable, Subject } from "rxjs";
@@ -112,10 +114,10 @@ export class ProjectService {
             ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
             : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
 
-        return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
-            .map(response => {
+        return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh).pipe(
+            map(response => {
                 return response.results[0] || null;
-            });
+            }));
     }
 
     hasChanges(): boolean {
@@ -124,13 +126,13 @@ export class ProjectService {
 
     saveChanges(): Observable<void> {
         this.isBusyLocal = true;
-        return this.authService.ensureAuthenticatedUser()
-            .mergeMap(() => {
+        return this.authService.ensureAuthenticatedUser().pipe(
+            mergeMap(() => {
                 return this.appEntityManager.saveChangesObservable();
-            })
-            .finally(() => {
+            }),
+            finalize(() => {
                 this.isBusyLocal = false;
-            });
+            }),);
     }
 
     // These "updateX" functions were defined in their related entities (user.js).

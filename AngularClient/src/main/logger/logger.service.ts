@@ -1,5 +1,5 @@
 ﻿import { Injectable } from "@angular/core";
-import { BodyOutputType, ToasterConfig, ToasterService } from "angular2-toaster";
+import { BodyOutputType, ToasterConfig, ToasterModule, ToasterService } from "angular2-toaster";
 
 @Injectable()
 export class Logger {
