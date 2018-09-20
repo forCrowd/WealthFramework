@@ -1,6 +1,9 @@
-﻿import { ErrorHandler, Injectable } from "@angular/core";
+
+import {timer as observableTimer, of as observableOf, forkJoin as observableForkJoin, throwError as observableThrowError,  Observable, Subscription } from 'rxjs';
+
+import {mergeMap, share, map} from 'rxjs/operators';
+import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, Subscription } from "rxjs";
 import { SourceMapConsumer } from "source-map";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -59,20 +62,20 @@ export class AppErrorHandler implements ErrorHandler {
 
         } else {
 
-            const observable = this.httpClient.get(url, { responseType: "text" }).mergeMap(body => {
+            const observable = this.httpClient.get(url, { responseType: "text" }).pipe(mergeMap(body => {
 
                 const match = body.match(/\/\/# sourceMappingURL=([^"\s]+\.map)/);
 
                 if (match) {
                     const sourceMapUrl = match[1];
-                    return this.httpClient.get(sourceMapUrl, { responseType: "text" })
-                        .map((response: any) => {
+                    return this.httpClient.get(sourceMapUrl, { responseType: "text" }).pipe(
+                        map((response: any) => {
                             return new SourceMapConsumer(response);
-                        });
+                        }));
                 } else {
-                    return Observable.throw("no 'sourceMappingURL' regex match");
+                    return observableThrowError("no 'sourceMappingURL' regex match");
                 }
-            }).share();
+            }),share(),);
 
             this.sourceMapCache[url] = observable;
 
@@ -89,7 +92,7 @@ export class AppErrorHandler implements ErrorHandler {
 
         if (error.stack) { // not all browsers support stack traces
 
-            return Observable.forkJoin(
+            return observableForkJoin(
 
                 error.stack.split(/\n/).map((stackLine: any) => {
 
@@ -124,12 +127,12 @@ export class AppErrorHandler implements ErrorHandler {
                             return stackLine;
                         });
                     } else {
-                        return Observable.of(stackLine);
+                        return observableOf(stackLine);
                     }
                 })
-            ).map((lines: any) => lines.join("\r\n"));
+            ).pipe(map((lines: any) => lines.join("\r\n")));
         } else {
-            return Observable.of("");
+            return observableOf("");
         }
     }
 
@@ -146,7 +149,7 @@ export class AppErrorHandler implements ErrorHandler {
                 this.errorLimitResetTimer.unsubscribe();
             }
 
-            this.errorLimitResetTimer = Observable.timer(5000).subscribe(() => this.errorCounter = 0);
+            this.errorLimitResetTimer = observableTimer(5000).subscribe(() => this.errorCounter = 0);
         }
 
         this.errorCounter++;

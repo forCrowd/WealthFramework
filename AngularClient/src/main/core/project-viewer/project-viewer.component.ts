@@ -1,8 +1,8 @@
-﻿import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+
+import {mergeMap, debounceTime} from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
+import { Observable ,  Subject ,  Subscription } from "rxjs";
 import { Options } from "highcharts";
 
 import { Element } from "../entities/element";
@@ -219,8 +219,8 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         const projectId = this.config.projectId || 0;
 
         // Delayed save operation
-        this.saveStream.debounceTime(1500)
-            .mergeMap(() => this.projectService.saveChanges()).subscribe();
+        this.saveStream.pipe(debounceTime(1500),
+            mergeMap(() => this.projectService.saveChanges()),).subscribe();
 
         // Event handlers
         this.subscriptions.push(

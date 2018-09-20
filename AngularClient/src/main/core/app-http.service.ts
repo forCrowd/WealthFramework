@@ -1,6 +1,9 @@
-﻿import { Injectable } from "@angular/core";
+
+import {map, finalize, catchError} from 'rxjs/operators';
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
 import { ConnectionBackend, Headers, Http, Request, RequestOptions, RequestOptionsArgs, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 
 import { Logger } from "../logger/logger.module";
 
@@ -14,10 +17,10 @@ export class AppHttp extends Http {
     }
 
     get<T>(url: string, options?: RequestOptionsArgs): Observable<T> {
-        return super.get(url, options)
-            .map<Response, T>((response: Response) => {
+        return super.get(url, options).pipe(
+            map<Response, T>((response: Response) => {
                 return this.extractData<T>(response);
-            });
+            }));
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
@@ -41,18 +44,18 @@ export class AppHttp extends Http {
             }
         }
 
-        return super.request(url, options)
-            .catch((error: any) => this.handleHttpErrors(error))
-            .finally(() => {
+        return super.request(url, options).pipe(
+            catchError((error: any) => this.handleHttpErrors(error)),
+            finalize(() => {
                 this.isBusy = false;
-            });
+            }),);
     }
 
     post<T>(url: string, body: any, options?: RequestOptionsArgs): Observable<T> {
-        return super.post(url, body, options)
-            .map<Response, T>((response: Response) => {
+        return super.post(url, body, options).pipe(
+            map<Response, T>((response: Response) => {
                 return this.extractData<T>(response);
-            });
+            }));
     }
 
     private extractData<T>(response: Response): T {
@@ -164,7 +167,7 @@ export class AppHttp extends Http {
         if (handled) {
 
             // If handled, continue with Observable flow
-            return Observable.throw(error);
+            return observableThrowError(error);
 
         } else {
 

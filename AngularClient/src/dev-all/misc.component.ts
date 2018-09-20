@@ -1,5 +1,6 @@
+
+import {timer as observableTimer,  Observable } from 'rxjs';
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs/Observable";
 
 import { Logger } from "../main/logger/logger.module";
 import { ChartConfig, ChartDataItem } from "../main/ng-chart/ng-chart.module";
@@ -47,7 +48,7 @@ export class MiscComponent implements OnInit {
     }
 
     rxjsTest(): void {
-        Observable.timer(1000).subscribe(() => {
+        observableTimer(1000).subscribe(() => {
             console.log("rxjs test");
         });
     }
