@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.85.0**
+
+* AngularClient
+  * Update from Angular 5.1 to Angular 6.1
+
 **0.84.0**
 
 * Back from Element to Project based structure
