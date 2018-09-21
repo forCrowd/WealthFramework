@@ -25,3 +25,4 @@ AngularClient/out-tsc
 AngularClient/src/app-settings/environments/*
 !AngularClient/src/app-settings/environments/environment-settings.ts
 !AngularClient/src/app-settings/environments/Readme.md
+.DS_Store

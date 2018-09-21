@@ -1,5 +1,6 @@
-﻿import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
+
+import {timer as observableTimer,  Observable, Subscription } from 'rxjs';
+import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 
 import { AppSettings } from "../../../app-settings/app-settings";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
@@ -66,7 +67,7 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
 
-        const timer = Observable.timer(10000, 1000);
+        const timer = observableTimer(10000, 1000);
         this.subscriptions.push(
             timer.subscribe(() => {
                 this.refreshPage();
