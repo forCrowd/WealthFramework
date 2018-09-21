@@ -4,8 +4,8 @@
     <ProjectGuid>{E0B5C557-467E-49F4-A73D-F7947A8F91F2}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="e2e\app.e2e-spec.ts" />
-    <TypeScriptCompile Include="e2e\app.po.ts" />
+    <TypeScriptCompile Include="e2e\src\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\src\app.po.ts" />
     <TypeScriptCompile Include="src\app-settings\app-settings.ts" />
     <TypeScriptCompile Include="src\app-settings\environments\environment-settings.ts" />
     <TypeScriptCompile Include="src\app-settings\environments\production-settings.ts" />
@@ -92,16 +92,18 @@
     <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".angular-cli.json" />
+    <None Include="angular.json" />
     <None Include="e2e\tsconfig.e2e.json" />
     <None Include="package-lock.json" />
     <None Include="package.json" />
     <None Include="src\app-settings\environments\Readme.md" />
+    <Content Include="e2e\protractor.conf.js" />
     <Content Include="src\dev-all\project-tester.component.css" />
     <Content Include="src\dev-all\project-tester.component.html" />
     <Content Include="src\dev-all\app.component.css" />
     <Content Include="src\dev-all\navigation.component.html" />
     <Content Include="src\dev-all\misc.component.html" />
+    <Content Include="src\karma.conf.js" />
     <Content Include="src\main\core\components\not-in-use\conclusion.html" />
     <Content Include="src\main\core\components\not-in-use\fairShareIndexSample.html" />
     <Content Include="src\main\core\components\not-in-use\overview.html" />
@@ -114,12 +116,12 @@
     <None Include="src\libraries\Readme.md" />
     <None Include="src\tsconfig.app.json" />
     <None Include="src\tsconfig.spec.json" />
+    <None Include="src\tslint.json" />
     <None Include="src\Web.config" />
     <None Include="tsconfig.json" />
     <None Include="tslint.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="karma.conf.js" />
     <Content Include="protractor.conf.js" />
     <Content Include="src\assets\images\forCrowd_Logo_142x30.jpg" />
     <Content Include="src\assets\images\PresentvsNew.png" />

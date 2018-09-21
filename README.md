@@ -32,7 +32,7 @@ You can use **dev** configuration as a base file to create your own **test** and
 
 To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build -prod
+    ng build --prod
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 

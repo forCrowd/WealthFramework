@@ -1,5 +1,15 @@
 ### Changelog
 
+**0.85.1**
+
+* app-entity-manager.ts fix
+* global fix
+* source-map fix
+
+**0.85.0**
+
+* Upgrade to Angular 6.x
+
 **0.84.0**
 
 * Back from Element to Project based structure

@@ -1,16 +1,15 @@
 import { Component, NgModule } from "@angular/core";
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from "@angular/platform-browser";
 
 @Component({
-    selector: "app",
-    template: `
+  selector: "app",
+  template: `
 <div class="container body-content">
     <div class="row">
         <div class="col-md-12">
-            <h3>
+            <h2>
                 Dev Module - Basic Component
-            </h3>
+            </h2>
             <p>
                 A lightweight versions of app-module to make quick sanity checks.
             </p>
@@ -28,25 +27,24 @@ import { BrowserModule } from "@angular/platform-browser";
 })
 export class AppComponent {
 
-    consoleLog(): void {
-        console.log("test");
-    }
+  consoleLog(): void {
+    console.log("test");
+  }
 
-    error(): void {
-        throw new Error("test");
-    }
+  error(): void {
+    throw new Error("test");
+  }
 }
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        HttpClientModule
-    ],
-    declarations: [
-        AppComponent
-    ],
-    bootstrap: [
-        AppComponent
-    ]
+  imports: [
+    BrowserModule
+  ],
+  declarations: [
+    AppComponent
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

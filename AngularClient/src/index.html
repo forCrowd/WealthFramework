@@ -1,12 +1,19 @@
 ﻿<!doctype html>
 <html>
 <head>
-    <title>Wealth Economy</title>
+    <base href="/" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=0.77.0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="/" />
-
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=0.77.0">
+    <title>Wealth Economy</title>
+	
+	<!-- https://github.com/aws/aws-amplify/issues/678 fix: -->
+	<script>
+		if (global === undefined) {
+		  var global = window;
+		}
+	</script>
+	<!-- https://github.com/aws/aws-amplify/issues/678 fix end-->	
 </head>
 <body>
     <app>

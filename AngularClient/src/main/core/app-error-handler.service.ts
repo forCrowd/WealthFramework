@@ -1,10 +1,8 @@
-
-import {timer as observableTimer, of as observableOf, forkJoin as observableForkJoin, throwError as observableThrowError,  Observable, Subscription } from 'rxjs';
-
-import {mergeMap, share, map} from 'rxjs/operators';
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { SourceMapConsumer } from "source-map";
+import { forkJoin as observableForkJoin, of as observableOf, timer as observableTimer, throwError as observableThrowError, Observable, Subscription } from "rxjs";
+import { map, mergeMap, share } from "rxjs/operators";
+import { SourceMapConsumer } from "../../libraries/source-map";
 
 import { AppSettings } from "../../app-settings/app-settings";
 
@@ -16,7 +14,7 @@ export class AppErrorHandler implements ErrorHandler {
     errorLimitResetTimer: Subscription = null;
     get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private readonly httpClient: HttpClient) {
     }
 
     handleError(error: Error): void {
@@ -68,14 +66,14 @@ export class AppErrorHandler implements ErrorHandler {
 
                 if (match) {
                     const sourceMapUrl = match[1];
-                    return this.httpClient.get(sourceMapUrl, { responseType: "text" }).pipe(
-                        map((response: any) => {
-                            return new SourceMapConsumer(response);
-                        }));
+                    return this.httpClient.get(sourceMapUrl, { responseType: "text" })
+                        .pipe(map((response: any) => {
+                                return new SourceMapConsumer(response);
+                            }));
                 } else {
                     return observableThrowError("no 'sourceMappingURL' regex match");
                 }
-            }),share(),);
+            })).pipe(share());
 
             this.sourceMapCache[url] = observable;
 
