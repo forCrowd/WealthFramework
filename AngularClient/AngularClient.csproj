@@ -122,7 +122,6 @@
     <None Include="tslint.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="protractor.conf.js" />
     <Content Include="src\assets\images\forCrowd_Logo_142x30.jpg" />
     <Content Include="src\assets\images\PresentvsNew.png" />
     <Content Include="src\dev-all\app.component.html" />

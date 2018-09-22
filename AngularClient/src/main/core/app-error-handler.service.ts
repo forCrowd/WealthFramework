@@ -1,6 +1,6 @@
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { forkJoin as observableForkJoin, of as observableOf, timer as observableTimer, throwError as observableThrowError, Observable, Subscription } from "rxjs";
+import { forkJoin, Observable, of as observableOf, Subscription, timer } from "rxjs";
 import { map, mergeMap, share } from "rxjs/operators";
 import { SourceMapConsumer } from "../../libraries/source-map";
 
@@ -71,7 +71,7 @@ export class AppErrorHandler implements ErrorHandler {
               return new SourceMapConsumer(response);
             }));
         } else {
-          return observableThrowError("no 'sourceMappingURL' regex match");
+          return Observable.throw("no 'sourceMappingURL' regex match");
         }
       })).pipe(share());
 
@@ -86,12 +86,11 @@ export class AppErrorHandler implements ErrorHandler {
    * Original solutions: http://stackoverflow.com/questions/19420604/angularjs-stack-trace-ignoring-source-map
    * @param exception
    */
-  private getSourceMappedStackTrace(error: Error) {
+  private getSourceMappedStackTrace(error: Error): Observable<any> {
 
     if (error.stack) { // not all browsers support stack traces
 
-      return observableForkJoin(
-
+      return forkJoin(
         error.stack.split(/\n/).map((stackLine: any) => {
 
           var match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
@@ -147,7 +146,7 @@ export class AppErrorHandler implements ErrorHandler {
         this.errorLimitResetTimer.unsubscribe();
       }
 
-      this.errorLimitResetTimer = observableTimer(5000).subscribe(() => this.errorCounter = 0);
+      this.errorLimitResetTimer = timer(5000).subscribe(() => this.errorCounter = 0);
     }
 
     this.errorCounter++;

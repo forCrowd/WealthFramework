@@ -1,9 +1,7 @@
-
-import { catchError } from "rxjs/operators";
-
-import { throwError as observableThrowError, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
+import { throwError as observableThrowError, Observable } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 import { Logger } from "../../logger/logger.module";
 

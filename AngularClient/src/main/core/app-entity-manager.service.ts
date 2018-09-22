@@ -24,6 +24,7 @@ import { UserElementField } from "./entities/user-element-field";
 import { UserRole } from "./entities/user-role";
 import { AppErrorHandler } from "./app-error-handler.service";
 import { Logger } from "../logger/logger.module";
+import { Token } from "./token";
 
 export interface IQueryResult<T> {
   count: number;
@@ -58,9 +59,15 @@ export class AppEntityManager extends EntityManager {
     const newClient = {
       request(request: any, success: Function, error: Function) {
         request.headers = request.headers || {};
+
         const tokenItem = localStorage.getItem("token");
-        const token = tokenItem ? JSON.parse(tokenItem.toString()) : null;
-        request.headers.Authorization = token ? `Bearer ${token.access_token}` : "";
+
+        if (tokenItem) {
+          const token = JSON.parse(tokenItem.toString()) as Token;
+
+          request.headers.Authorization = `Bearer ${token.access_token}`;
+        }
+
         return oldClient.request(request, success, error);
       }
     };
