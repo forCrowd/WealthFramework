@@ -41,6 +41,7 @@
     <TypeScriptCompile Include="src\main\core\app-http.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth.service.ts" />
+    <TypeScriptCompile Include="src\main\core\breeze-client-odata-fix.ts" />
     <TypeScriptCompile Include="src\main\core\components\all-in-one.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-in-use\basics.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-in-use\implementation.component.ts" />
@@ -85,7 +86,6 @@
     <TypeScriptCompile Include="src\main\ng-chart\chart-data-item.ts" />
     <TypeScriptCompile Include="src\main\ng-chart\ng-chart.component.ts" />
     <TypeScriptCompile Include="src\main\ng-chart\ng-chart.module.ts" />
-    <TypeScriptCompile Include="src\main\core\rxjs-extensions.ts" />
     <TypeScriptCompile Include="src\main\shared\utils.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
     <TypeScriptCompile Include="src\sanity.spec.ts" />

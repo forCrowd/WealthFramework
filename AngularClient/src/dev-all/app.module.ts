@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { MomentModule } from "angular2-moment";
-import "../main/core/rxjs-extensions";
 
 import { CoreModule } from "../main/core/core.module";
 import { LoggerModule } from "../main/logger/logger.module";
