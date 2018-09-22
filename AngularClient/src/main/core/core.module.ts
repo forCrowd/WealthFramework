@@ -1,10 +1,7 @@
-import { CommonModule } from "@angular/common";
 import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { MomentModule } from "angular2-moment";
 
 // Breeze
 import "./breeze-client-odata-fix";
@@ -13,6 +10,7 @@ import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 // Internal modules
 import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { ProjectViewerModule, NgChartModule } from "./project-viewer/project-viewer.module";
+import { SharedModule } from "../shared/shared.module";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -93,13 +91,11 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     RouterModule,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
+    SharedModule,
     AppHttpClientModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     BreezeBridgeHttpClientModule,
-    MomentModule,
     ProjectViewerModule,
   ],
   providers: [
