@@ -1,9 +1,8 @@
-
-import {finalize, mergeMap, map} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EntityQuery, Predicate } from "../../libraries/breeze-client";
+import { EntityQuery, Predicate } from "breeze-client";
 import { Observable, Subject } from "rxjs";
+import { mergeMap, finalize, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AppHttpClient } from "./app-http-client/app-http-client.module";

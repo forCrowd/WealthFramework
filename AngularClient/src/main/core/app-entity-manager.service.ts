@@ -1,15 +1,13 @@
 import { ErrorHandler, Injectable } from "@angular/core";
-import { of as observableOf, from as observableFrom, throwError as observableThrowError, Observable } from "rxjs";
+import { throwError as observableThrowError, of as observableOf, from as observableFrom, Observable } from "rxjs";
 import { map, finalize, catchError } from "rxjs/operators";
+
 import {
     config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
     ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
     SaveOptions, SaveResult
-} from "../../libraries/breeze-client";
-import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular";
-import "../../libraries/breeze-client/breeze.dataService.odata";
-import "../../libraries/breeze-client/breeze.modelLibrary.backingStore";
-import "../../libraries/breeze-client/breeze.uriBuilder.odata";
+} from "breeze-client";
+import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -40,7 +38,7 @@ export class AppEntityManager extends EntityManager {
     metadata: Object = null;
     queryCache: string[] = [];
 
-    constructor(private breezeBridgeAngularModule: BreezeBridgeAngularModule, errorHandler: ErrorHandler, private logger: Logger) {
+    constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule, errorHandler: ErrorHandler, private logger: Logger) {
 
         super({
             serviceName: AppSettings.serviceODataUrl
@@ -143,10 +141,6 @@ export class AppEntityManager extends EntityManager {
         // Execute 
         return observableFrom(super.executeQuery(query)).pipe(
             map(response => {
-
-                if (!cached) {
-                    this.queryCache.push(queryString);
-                }
 
                 response.results.forEach((result: EntityBase) => {
                     result.initialize();

@@ -1,4 +1,4 @@
-﻿import { Entity, EntityAspect, EntityType } from "../../../libraries/breeze-client";
+﻿import { Entity, EntityAspect, EntityType } from "breeze-client";
 
 export class EntityBase implements Entity {
 

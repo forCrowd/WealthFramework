@@ -1,10 +1,8 @@
-
-import {of as observableOf, throwError as observableThrowError,  Observable, Subject } from 'rxjs';
-
-import {catchError, mergeMap, map} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EntityQuery, EntityState, MergeStrategy } from "../../libraries/breeze-client";
+import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
+import { throwError as observableThrowError, of as observableOf, Observable, Subject } from "rxjs";
+import { catchError, mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { Role } from "./entities/role";
@@ -13,6 +11,7 @@ import { UserRole } from "./entities/user-role";
 import { AppHttpClient } from "./app-http-client/app-http-client.module";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { Logger } from "../logger/logger.module";
+import { Token } from "./token";
 import { getUniqueUserName } from "../shared/utils";
 
 @Injectable()
@@ -134,7 +133,7 @@ export class AuthService {
                 } else {
                     throw error;
                 }
-            }),);
+            }));
     }
 
     login(username: string, password: string, rememberMe: boolean, singleUseToken?: string): Observable<void> {
@@ -257,7 +256,7 @@ export class AuthService {
 
         const tokenData = `grant_type=password&username=${username}&password=${password}&rememberMe=${rememberMe}&singleUseToken=${singleUseToken}`;
 
-        return this.appHttpClient.post<Object>(this.tokenUrl, tokenData).pipe(
+        return this.appHttpClient.post<Token>(this.tokenUrl, tokenData).pipe(
             map((token) => {
                 localStorage.setItem("token", JSON.stringify(token)); // Store the token in localStorage
             }));

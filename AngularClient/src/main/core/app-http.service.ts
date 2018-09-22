@@ -1,9 +1,7 @@
-
-import {map, finalize, catchError} from 'rxjs/operators';
-
-import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { ConnectionBackend, Headers, Http, Request, RequestOptions, RequestOptionsArgs, Response } from "@angular/http";
+import { throwError as observableThrowError, Observable } from "rxjs";
+import { map, finalize, catchError } from "rxjs/operators";
 
 import { Logger } from "../logger/logger.module";
 
