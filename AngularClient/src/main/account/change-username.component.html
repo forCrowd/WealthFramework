@@ -1,24 +1,24 @@
-﻿<h2>Change Username</h2>
+<h2>Change Username</h2>
 <form #changeUserNameForm="ngForm">
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="UserName" class="control-label col-md-3">Username</label>
-            <div class="col-md-9" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
-                <input id="UserName" name="UserName" type="text" [(ngModel)]="bindingModel.UserName" #UserName="ngModel" class="form-control" aria-describedby="UserNameHelp" required />
-                <span id="UserNameHelp" class="help-block">
-                    No special characters allowed, except dash "-" and underscore "_".
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <button (click)="changeUserName()" [disabled]="changeUserNameForm.form.invalid || submitDisabled()" type="button" class="btn btn-primary">
-                    Save
-                </button>
-                <button (click)="cancel()" [disabled]="isBusy" type="button" class="btn btn-default">
-                    Cancel
-                </button>
-            </div>
-        </div>
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label for="UserName" class="control-label col-md-3">Username</label>
+      <div class="col-md-9" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
+        <input id="UserName" name="UserName" type="text" [(ngModel)]="bindingModel.UserName" #UserName="ngModel" class="form-control" aria-describedby="UserNameHelp" required />
+        <span id="UserNameHelp" class="help-block">
+          No special characters allowed, except dash "-" and underscore "_".
+        </span>
+      </div>
     </div>
+    <div class="form-group">
+      <div class="col-md-offset-3 col-md-9">
+        <button (click)="changeUserName()" [disabled]="changeUserNameForm.form.invalid || submitDisabled()" type="button" class="btn btn-primary">
+          Save
+        </button>
+        <button (click)="cancel()" [disabled]="isBusy" type="button" class="btn btn-default">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </form>

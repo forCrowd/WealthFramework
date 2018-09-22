@@ -1,63 +1,63 @@
 
-import {timer as observableTimer,  Observable } from 'rxjs';
+import { timer as observableTimer, Observable } from "rxjs";
 import { Component, OnInit } from "@angular/core";
 
 import { Logger } from "../main/logger/logger.module";
 import { ChartConfig, ChartDataItem } from "../main/ng-chart/ng-chart.module";
 
 @Component({
-    selector: "misc",
-    templateUrl: "misc.component.html"
+  selector: "misc",
+  templateUrl: "misc.component.html"
 })
 export class MiscComponent implements OnInit {
 
-    chartConfig: ChartConfig = null;
-    displayChart: boolean = false;
+  chartConfig: ChartConfig = null;
+  displayChart: boolean = false;
 
-    constructor(private logger: Logger) {
+  constructor(private logger: Logger) {
+  }
+
+  ngOnInit(): void {
+
+    // Chart
+    const options: Highcharts.Options = {
+      title: { text: "Test" },
+      chart: { type: "column" },
+      yAxis: {
+        title: { text: "Total Income" }
+      }
     }
 
-    ngOnInit(): void {
+    const data: ChartDataItem[] = [];
+    data.push(new ChartDataItem("Item 1", 100, null));
+    data.push(new ChartDataItem("Item 2", 150, null));
 
-        // Chart
-        const options: Highcharts.Options = {
-            title: { text: "Test" },
-            chart: { type: "column" },
-            yAxis: {
-                title: { text: "Total Income" }
-            }
-        }
+    this.chartConfig = new ChartConfig(options, data);
+  }
 
-        const data: ChartDataItem[] = [];
-        data.push(new ChartDataItem("Item 1", 100, null));
-        data.push(new ChartDataItem("Item 2", 150, null));
+  error(): void {
+    throw new Error("test");
+  }
 
-        this.chartConfig = new ChartConfig(options, data);
-    }
+  consoleLog(): void {
+    console.log("test");
+  }
 
-    error(): void {
-        throw new Error("test");
-    }
+  getNewDate(): Date {
+    return new Date();
+  }
 
-    consoleLog(): void {
-        console.log("test");
-    }
+  rxjsTest(): void {
+    observableTimer(1000).subscribe(() => {
+      console.log("rxjs test");
+    });
+  }
 
-    getNewDate(): Date {
-        return new Date();
-    }
+  toasterLog(): void {
+    this.logger.log("test");
+  }
 
-    rxjsTest(): void {
-        observableTimer(1000).subscribe(() => {
-            console.log("rxjs test");
-        });
-    }
-
-    toasterLog(): void {
-        this.logger.log("test");
-    }
-
-    toggleChart(): void {
-        this.displayChart = !this.displayChart;
-    }
+  toggleChart(): void {
+    this.displayChart = !this.displayChart;
+  }
 }

@@ -1,4 +1,4 @@
-﻿import { NgModule } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ChartModule } from "angular2-highcharts";
 import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
@@ -11,23 +11,23 @@ export { ChartConfig, ChartDataItem }
 
 declare var require: any;
 export function highchartsFactory() {
-    return require("highcharts");
+  return require("highcharts");
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ChartModule
-    ],
-    declarations: [
-        NgChartComponent
-    ],
-    exports: [
-        NgChartComponent
-    ],
-    providers: [{
-        provide: HighchartsStatic,
-        useFactory: highchartsFactory
-    }]
+  imports: [
+    CommonModule,
+    ChartModule
+  ],
+  declarations: [
+    NgChartComponent
+  ],
+  exports: [
+    NgChartComponent
+  ],
+  providers: [{
+    provide: HighchartsStatic,
+    useFactory: highchartsFactory
+  }]
 })
 export class NgChartModule { }

@@ -1,97 +1,97 @@
-﻿.project-viewer {
-    font-family: Tahoma;
-    padding: 1.5em 0;
+.project-viewer {
+  font-family: Tahoma;
+  padding: 1.5em 0;
 }
 
-    .project-viewer button.btn-link {
-        border: 0;
-        font-weight: inherit;
-        padding: 0;
-    }
+  .project-viewer button.btn-link {
+    border: 0;
+    font-weight: inherit;
+    padding: 0;
+  }
 
-    .project-viewer button.btn-xs {
-        line-height: normal;
-        padding: 0;
-    }
+  .project-viewer button.btn-xs {
+    line-height: normal;
+    padding: 0;
+  }
 
-    .project-viewer .heading {
-        padding: 15px;
-    }
+  .project-viewer .heading {
+    padding: 15px;
+  }
 
-    .project-viewer .title {
-        font-size: 18px;
-        line-height: 2em;
-    }
+  .project-viewer .title {
+    font-size: 18px;
+    line-height: 2em;
+  }
 
-    .project-viewer hr {
-        margin: 10px 0 20px 0;
-        border-color: #ddd;
-    }
+  .project-viewer hr {
+    margin: 10px 0 20px 0;
+    border-color: #ddd;
+  }
 
-    .project-viewer .description {
-        padding: 30px 15px;
-        font-size: 14px;
-        line-height: 1.5em;
-        border-bottom: 1px solid #ddd;
-    }
+  .project-viewer .description {
+    padding: 30px 15px;
+    font-size: 14px;
+    line-height: 1.5em;
+    border-bottom: 1px solid #ddd;
+  }
 
-    .project-viewer .settings,
-    .project-viewer .details {
-        min-height: 3em;
-    }
+  .project-viewer .settings,
+  .project-viewer .details {
+    min-height: 3em;
+  }
 
     .project-viewer .details label, .project-viewer .details span {
-        border-bottom: 1px solid #ddd;
-        display: inline-block;
-        line-height: 2em;
-        margin-bottom: 0;
-        min-width: 125px;
-        padding: 5px;
+      border-bottom: 1px solid #ddd;
+      display: inline-block;
+      line-height: 2em;
+      margin-bottom: 0;
+      min-width: 125px;
+      padding: 5px;
     }
 
 .project-table {
 }
 
-    .project-table > thead > tr > th {
-        vertical-align: top;
-    }
+  .project-table > thead > tr > th {
+    vertical-align: top;
+  }
 
-    .project-table > thead > tr > th,
-    .project-table > thead > tr > td,
-    .project-table > tbody > tr > td,
-    .project-table > tfoot > tr > td {
-        line-height: 2em;
-        min-width: 85px;
-        overflow: hidden; /* Hide text outside the cell */
-        padding: 3px;
-    }
+  .project-table > thead > tr > th,
+  .project-table > thead > tr > td,
+  .project-table > tbody > tr > td,
+  .project-table > tfoot > tr > td {
+    line-height: 2em;
+    min-width: 85px;
+    overflow: hidden; /* Hide text outside the cell */
+    padding: 3px;
+  }
 
-    .project-table .infoText {
-        margin-left: 2px;
-    }
+  .project-table .infoText {
+    margin-left: 2px;
+  }
 
-    .project-table .incomeStatusLow {
-        color: #a94442;
-    }
+  .project-table .incomeStatusLow {
+    color: #a94442;
+  }
 
-    .project-table .incomeStatusHigh {
-        color: #3c763d;
-    }
+  .project-table .incomeStatusHigh {
+    color: #3c763d;
+  }
 
-    .project-table .noborder {
-        border: 0;
-    }
+  .project-table .noborder {
+    border: 0;
+  }
 
 .label-as-on-badge {
-    border-radius: 1em;
-    background-color: #3c763d;
-    cursor: pointer;
-    margin-left: 5px;
+  border-radius: 1em;
+  background-color: #3c763d;
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 .label-as-off-badge {
-    border-radius: 1em;
-    background-color: #a94442;
-    cursor: pointer;
-    margin-left: 5px;
+  border-radius: 1em;
+  background-color: #a94442;
+  cursor: pointer;
+  margin-left: 5px;
 }

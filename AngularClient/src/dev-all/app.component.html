@@ -1,25 +1,25 @@
 <div class="container body-content">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>
-                Dev Module - All Components
-            </h3>
-            <p>
-                A lightweight versions of 'app module' to make quick sanity checks.
-            </p>
-            <hr />
-            <div *ngIf="currentUser">
-                Current User / Id / Auth?: {{ currentUser.Email + " - " + currentUser.Id + " - " + currentUser.isAuthenticated() }}
-                <button *ngIf="currentUser.isAuthenticated()" (click)="logout()">logout</button>
-                <button *ngIf="!currentUser.isAuthenticated()" (click)="login()">login</button>
-            </div>
-            <hr />
-            <navigation></navigation>
-            <hr />
-            <div>
-                <router-outlet></router-outlet>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        Dev Module - All Components
+      </h3>
+      <p>
+        A lightweight versions of 'app module' to make quick sanity checks.
+      </p>
+      <hr />
+      <div *ngIf="currentUser">
+        Current User / Id / Auth?: {{ currentUser.Email + " - " + currentUser.Id + " - " + currentUser.isAuthenticated() }}
+        <button *ngIf="currentUser.isAuthenticated()" (click)="logout()">logout</button>
+        <button *ngIf="!currentUser.isAuthenticated()" (click)="login()">login</button>
+      </div>
+      <hr />
+      <navigation></navigation>
+      <hr />
+      <div>
+        <router-outlet></router-outlet>
+      </div>
     </div>
+  </div>
 </div>
 <toaster-container [toasterconfig]="toasterConfig"></toaster-container>

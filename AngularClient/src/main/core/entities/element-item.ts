@@ -1,4 +1,4 @@
-﻿import { Subject } from "rxjs";
+import { Subject } from "rxjs";
 
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
@@ -7,115 +7,115 @@ import { ElementFieldDataType } from "./element-field";
 
 export class ElementItem extends EntityBase {
 
-    // Server-side
-    Id = 0;
-    Element: Element;
-    Name = "";
-    ElementCellSet: ElementCell[];
-    ParentCellSet: ElementCell[];
+  // Server-side
+  Id = 0;
+  Element: Element;
+  Name = "";
+  ElementCellSet: ElementCell[];
+  ParentCellSet: ElementCell[];
 
-    incomeUpdated = new Subject<number>();
+  incomeUpdated = new Subject<number>();
 
-    // Client-side
-    private fields: {
-        income: number,
-    } = {
-        income: 0,
+  // Client-side
+  private fields: {
+    income: number,
+  } = {
+      income: 0,
     };
 
-    ratingCells() {
-        return this.getRatingCells(this);
+  ratingCells() {
+    return this.getRatingCells(this);
+  }
+
+  elementCell(fieldName: string): ElementCell {
+
+    let cell: ElementCell = null;
+
+    for (let elementCellIndex = 0; elementCellIndex < this.ElementCellSet.length; elementCellIndex++) {
+      cell = this.ElementCellSet[elementCellIndex];
+
+      if (cell.ElementField.Name === fieldName) {
+        break;
+      }
     }
 
-    elementCell(fieldName: string): ElementCell {
+    return cell;
+  }
 
-        let cell: ElementCell = null;
+  getElementCellSetSorted(): ElementCell[] {
+    return this.ElementCellSet.sort((a, b) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
+  }
 
-        for (let elementCellIndex = 0; elementCellIndex < this.ElementCellSet.length; elementCellIndex++) {
-            cell = this.ElementCellSet[elementCellIndex];
+  income() {
+    return this.fields.income;
+  }
 
-            if (cell.ElementField.Name === fieldName) {
-                break;
-            }
+  incomeStatus() {
+
+    const income = +(this.income().toFixed(2));
+    const averageIncome = +((this.Element.income() / this.Element.ElementItemSet.length).toFixed(2));
+
+    if (income < averageIncome) {
+      return "low";
+    } else if (income > averageIncome) {
+      return "high";
+    }
+    return "average";
+  }
+
+  initialize(): boolean {
+    if (!super.initialize()) return false;
+
+    // Cells
+    this.ElementCellSet.forEach(cell => {
+      cell.initialize();
+    });
+
+    return true;
+  }
+
+  setIncome(): void {
+    var value = 0;
+
+    this.ElementCellSet.forEach(cell => {
+      value += cell.income();
+    });
+
+    if (this.fields.income !== value) {
+      this.fields.income = value;
+
+      // Update related
+      // TODO Is this correct? It looks like it didn't affect anything?
+      this.ParentCellSet.forEach(parentCell => {
+        parentCell.setIncome();
+      });
+
+      this.Element.setIncome();
+
+      this.incomeUpdated.next(this.fields.income);
+    }
+  }
+
+  private getRatingCells(elementItem: ElementItem) {
+
+    var ratingCells: ElementCell[] = [];
+    const sortedElementCellSet = elementItem.getElementCellSetSorted();
+
+    sortedElementCellSet.forEach(cell => {
+
+      if (cell.ElementField.RatingEnabled) {
+        ratingCells.push(cell);
+      }
+
+      if (cell.ElementField.DataType === ElementFieldDataType.Element && cell.SelectedElementItem !== null) {
+        const childRatingCells = this.getRatingCells(cell.SelectedElementItem);
+
+        if (childRatingCells.length > 0) {
+          ratingCells.push(cell);
         }
+      }
+    });
 
-        return cell;
-    }
-
-    getElementCellSetSorted(): ElementCell[] {
-        return this.ElementCellSet.sort((a, b) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
-    }
-
-    income() {
-        return this.fields.income;
-    }
-
-    incomeStatus() {
-
-        const income = +(this.income().toFixed(2));
-        const averageIncome = +((this.Element.income() / this.Element.ElementItemSet.length).toFixed(2));
-
-        if (income < averageIncome) {
-            return "low";
-        } else if (income > averageIncome) {
-            return "high";
-        }
-        return "average";
-    }
-
-    initialize(): boolean {
-        if (!super.initialize()) return false;
-
-        // Cells
-        this.ElementCellSet.forEach(cell => {
-            cell.initialize();
-        });
-
-        return true;
-    }
-
-    setIncome(): void {
-        var value = 0;
-
-        this.ElementCellSet.forEach(cell => {
-            value += cell.income();
-        });
-
-        if (this.fields.income !== value) {
-            this.fields.income = value;
-
-            // Update related
-            // TODO Is this correct? It looks like it didn't affect anything?
-            this.ParentCellSet.forEach(parentCell => {
-                parentCell.setIncome();
-            });
-
-            this.Element.setIncome();
-
-            this.incomeUpdated.next(this.fields.income);
-        }
-    }
-
-    private getRatingCells(elementItem: ElementItem) {
-
-        var ratingCells: ElementCell[] = [];
-        const sortedElementCellSet = elementItem.getElementCellSetSorted();
-
-        sortedElementCellSet.forEach(cell => {
-
-            if (cell.ElementField.RatingEnabled) {
-                ratingCells.push(cell);
-            }
-
-            if (cell.ElementField.DataType === ElementFieldDataType.Element && cell.SelectedElementItem !== null) {
-                const childRatingCells = this.getRatingCells(cell.SelectedElementItem);
-
-                if (childRatingCells.length > 0) {
-                    ratingCells.push(cell);
-                }
-            }
-        });
-
-        return ratingCells;
-    }
+    return ratingCells;
+  }
 }

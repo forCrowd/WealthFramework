@@ -1,10 +1,16 @@
 ### Changelog
 
+**0.85.2**
+
+* Breeze fix moved to "breeze-client-odata-fix.ts" file
+* editorConfig file introduced
+* Minor updates
+
 **0.85.1**
 
 * app-entity-manager.ts fix
-* global fix
-* source-map fix
+* index.html - "global" variable fix: https://github.com/aws/aws-amplify/issues/678
+* "source-map" library fi
 
 **0.85.0**
 

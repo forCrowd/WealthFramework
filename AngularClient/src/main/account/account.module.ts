@@ -1,7 +1,7 @@
-﻿import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+
+import { SharedModule } from "../shared/shared.module";
 
 // Components
 import { AccountOverviewComponent } from "./account-overview.component";
@@ -18,43 +18,40 @@ import { ResetPasswordComponent } from "./reset-password.component";
 import { AccountService } from "./account.service";
 import { AuthGuard, CanDeactivateGuard } from "../core/core.module";
 
-export { AccountService }
-
 // Routes
 const accountRoutes: Routes = [
-    { path: "app/account", component: AccountOverviewComponent, canActivate: [AuthGuard], data: { title: "Account Overview" } },
-    { path: "app/account/add-password", component: AddPasswordComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Add Password" } },
-    { path: "app/account/change-email", component: ChangeEmailComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Change Email" } },
-    { path: "app/account/change-password", component: ChangePasswordComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Change Password" } },
-    { path: "app/account/change-username", component: ChangeUserNameComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Change Username" } },
-    { path: "app/account/confirm-email", component: ConfirmEmailComponent, canActivate: [AuthGuard], data: { title: "Confirm Email" } },
-    { path: "app/account/login", component: LoginComponent, data: { title: "Login" } },
-    { path: "app/account/register", component: RegisterComponent, data: { title: "Register" } },
-    { path: "app/account/reset-password", component: ResetPasswordComponent, canDeactivate: [CanDeactivateGuard], data: { title: "Reset Password" } }
+  { path: "app/account", component: AccountOverviewComponent, canActivate: [AuthGuard], data: { title: "Account Overview" } },
+  { path: "app/account/add-password", component: AddPasswordComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Add Password" } },
+  { path: "app/account/change-email", component: ChangeEmailComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Change Email" } },
+  { path: "app/account/change-password", component: ChangePasswordComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Change Password" } },
+  { path: "app/account/change-username", component: ChangeUserNameComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], data: { title: "Change Username" } },
+  { path: "app/account/confirm-email", component: ConfirmEmailComponent, canActivate: [AuthGuard], data: { title: "Confirm Email" } },
+  { path: "app/account/login", component: LoginComponent, data: { title: "Login" } },
+  { path: "app/account/register", component: RegisterComponent, data: { title: "Register" } },
+  { path: "app/account/reset-password", component: ResetPasswordComponent, canDeactivate: [CanDeactivateGuard], data: { title: "Reset Password" } }
 ];
 
 @NgModule({
-    declarations: [
-        AccountOverviewComponent,
-        AddPasswordComponent,
-        ChangeEmailComponent,
-        ChangePasswordComponent,
-        ChangeUserNameComponent,
-        ConfirmEmailComponent,
-        LoginComponent,
-        RegisterComponent,
-        ResetPasswordComponent,
-    ],
-    exports: [
-        RouterModule
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule.forChild(accountRoutes)
-    ],
-    providers: [
-        AccountService
-    ]
+  declarations: [
+    AccountOverviewComponent,
+    AddPasswordComponent,
+    ChangeEmailComponent,
+    ChangePasswordComponent,
+    ChangeUserNameComponent,
+    ConfirmEmailComponent,
+    LoginComponent,
+    RegisterComponent,
+    ResetPasswordComponent,
+  ],
+  exports: [
+    RouterModule
+  ],
+  imports: [
+    SharedModule,
+    RouterModule.forChild(accountRoutes)
+  ],
+  providers: [
+    AccountService
+  ]
 })
 export class AccountModule { }
