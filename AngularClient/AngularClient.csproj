@@ -38,7 +38,6 @@
     <TypeScriptCompile Include="src\main\core\app-http-client\auth-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\app-http-client\error-interceptor.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth.service.ts" />
     <TypeScriptCompile Include="src\main\core\breeze-client-odata-fix.ts" />

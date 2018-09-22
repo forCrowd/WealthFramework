@@ -1,7 +1,0 @@
-build
-src
-typings
-.vscode
-
-tsconfig.json
-typings.json
