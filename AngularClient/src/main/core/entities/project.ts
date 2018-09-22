@@ -1,4 +1,4 @@
-﻿import { Subject } from "rxjs";
+import { Subject } from "rxjs";
 
 import { Element } from "./element";
 import { EntityBase } from "./entity-base";
@@ -6,56 +6,56 @@ import { User } from "./user";
 import { stripInvalidChars } from "../../shared/utils";
 
 export enum RatingMode {
-    CurrentUser = 1,
-    AllUsers = 2
+  CurrentUser = 1,
+  AllUsers = 2
 }
 
 export class Project extends EntityBase {
 
-    // Server-side
-    Id = 0;
-    User: User;
-    Name = "";
-    Description: string = null;
-    RatingCount = 0;
-    ElementSet: Element[];
+  // Server-side
+  Id = 0;
+  User: User;
+  Name = "";
+  Description: string = null;
+  RatingCount = 0;
+  ElementSet: Element[];
 
-    // Client-side
-    initialValue = 100;
+  // Client-side
+  initialValue = 100;
 
-    // Client-side
-    get RatingMode(): RatingMode {
-        return this.fields.ratingMode;
+  // Client-side
+  get RatingMode(): RatingMode {
+    return this.fields.ratingMode;
+  }
+  set RatingMode(value: RatingMode) {
+
+    if (this.fields.ratingMode !== value) {
+      this.fields.ratingMode = value;
+      this.ratingModeUpdated.next(value);
     }
-    set RatingMode(value: RatingMode) {
+  }
 
-        if (this.fields.ratingMode !== value) {
-            this.fields.ratingMode = value;
-            this.ratingModeUpdated.next(value);
-        }
-    }
+  ratingModeUpdated = new Subject<RatingMode>();
 
-    ratingModeUpdated = new Subject<RatingMode>();
-
-    private fields: {
-        ratingMode: number,
-    } = {
-        ratingMode: RatingMode.CurrentUser,
+  private fields: {
+    ratingMode: number,
+  } = {
+      ratingMode: RatingMode.CurrentUser,
     };
 
-    initialize(): boolean {
-        if (!super.initialize()) return false;
+  initialize(): boolean {
+    if (!super.initialize()) return false;
 
-        this.ElementSet.forEach(element => {
-            element.initialize();
-        });
+    this.ElementSet.forEach(element => {
+      element.initialize();
+    });
 
-        return true;
-    }
+    return true;
+  }
 
-    toggleRatingMode() {
-        this.RatingMode = this.RatingMode === RatingMode.CurrentUser
-            ? RatingMode.AllUsers
-            : RatingMode.CurrentUser;
-    }
+  toggleRatingMode() {
+    this.RatingMode = this.RatingMode === RatingMode.CurrentUser
+      ? RatingMode.AllUsers
+      : RatingMode.CurrentUser;
+  }
 }

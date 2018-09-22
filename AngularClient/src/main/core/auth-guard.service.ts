@@ -6,19 +6,19 @@ import { AuthService } from "./auth.service";
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
+  }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+
+    // Success
+    if (this.authService.currentUser.isAuthenticated()) {
+      return true;
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
-        // Success
-        if (this.authService.currentUser.isAuthenticated()) {
-            return true;
-        }
-
-        // Failure
-        this.authService.loginReturnUrl = state.url;
-        this.router.navigate(["/app/account/login", { error: "Please login first!" }]);
-        return false;
-    }
+    // Failure
+    this.authService.loginReturnUrl = state.url;
+    this.router.navigate(["/app/account/login", { error: "Please login first!" }]);
+    return false;
+  }
 }

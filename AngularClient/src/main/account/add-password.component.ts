@@ -1,51 +1,51 @@
-﻿import { Component } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { AccountService } from "./account.service";
 import { Logger } from "../logger/logger.module";
 
 @Component({
-    selector: "add-password",
-    templateUrl: "add-password.component.html"
+  selector: "add-password",
+  templateUrl: "add-password.component.html"
 })
 export class AddPasswordComponent {
 
-    get isBusy(): boolean {
-        return this.accountService.isBusy;
-    }
-    model: any = { Password: "", ConfirmPassword: "" };
+  get isBusy(): boolean {
+    return this.accountService.isBusy;
+  }
+  model: any = { Password: "", ConfirmPassword: "" };
 
-    constructor(private accountService: AccountService, private logger: Logger, private router: Router) {
-    }
+  constructor(private accountService: AccountService, private logger: Logger, private router: Router) {
+  }
 
-    addPassword() {
+  addPassword() {
 
-        // Todo password match validation?
+    // Todo password match validation?
 
-        this.accountService.addPassword(this.model)
-            .subscribe(() => {
-                this.logger.logSuccess("Your password has been set!");
-                this.reset();
-                this.router.navigate(["/app/account"]);
-            });
-    }
-
-    cancel() {
+    this.accountService.addPassword(this.model)
+      .subscribe(() => {
+        this.logger.logSuccess("Your password has been set!");
         this.reset();
         this.router.navigate(["/app/account"]);
+      });
+  }
+
+  cancel() {
+    this.reset();
+    this.router.navigate(["/app/account"]);
+  }
+
+  canDeactivate() {
+    if (this.model.Password === ""
+      && this.model.ConfirmPassword === "") {
+      return true;
     }
 
-    canDeactivate() {
-        if (this.model.Password === ""
-            && this.model.ConfirmPassword === "") {
-            return true;
-        }
+    return confirm("Discard changes?");
+  }
 
-        return confirm("Discard changes?");
-    }
-
-    reset(): void {
-        this.model.Password = "";
-        this.model.ConfirmPassword = "";
-    }
+  reset(): void {
+    this.model.Password = "";
+    this.model.ConfirmPassword = "";
+  }
 }

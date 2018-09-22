@@ -1,46 +1,46 @@
-﻿<h2>Login</h2>
+<h2>Login</h2>
 <div class="row">
-    <div class="col-md-12 g-mt-20">
-        <section id="loginForm">
-            <form #loginForm="ngForm">
-                <div class="form-horizontal">
-                    <h4>Use a local account to log in</h4>
-                    <hr />
-                    <div class="form-group">
-                        <label for="UserName" class="control-label col-md-3">Username or email</label>
-                        <div class="col-md-9" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
-                            <input id="UserName" name="UserName" type="text" [(ngModel)]="username" #UserName="ngModel" class="form-control" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Password" class="control-label col-md-3">Password</label>
-                        <div class="col-md-9" [ngClass]="{'has-error': Password.dirty && Password.invalid}">
-                            <input id="Password" name="Password" type="password" [(ngModel)]="password" #Password="ngModel" class="form-control" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-9">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="RememberMe" name="RememberMe" type="checkbox" [(ngModel)]="rememberMe"> Remember me
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button (click)="login()" [disabled]="loginForm.form.invalid || isBusy" type="button" class="btn btn-primary">
-                                Login
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-9">
-                            <a routerLink="/app/account/reset-password">Forgot your password?</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </section>
-    </div>
+  <div class="col-md-12 g-mt-20">
+    <section id="loginForm">
+      <form #loginForm="ngForm">
+        <div class="form-horizontal">
+          <h4>Use a local account to log in</h4>
+          <hr />
+          <div class="form-group">
+            <label for="UserName" class="control-label col-md-3">Username or email</label>
+            <div class="col-md-9" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
+              <input id="UserName" name="UserName" type="text" [(ngModel)]="username" #UserName="ngModel" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Password" class="control-label col-md-3">Password</label>
+            <div class="col-md-9" [ngClass]="{'has-error': Password.dirty && Password.invalid}">
+              <input id="Password" name="Password" type="password" [(ngModel)]="password" #Password="ngModel" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+              <div class="checkbox">
+                <label>
+                  <input id="RememberMe" name="RememberMe" type="checkbox" [(ngModel)]="rememberMe"> Remember me
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+              <button (click)="login()" [disabled]="loginForm.form.invalid || isBusy" type="button" class="btn btn-primary">
+                Login
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+              <a routerLink="/app/account/reset-password">Forgot your password?</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
 </div>
