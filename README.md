@@ -21,10 +21,10 @@ Follow this document to setup the application: [Getting Started](https://github.
 
 AngularClient is a **Angular CLI** project and you can use its commands.
 
-For deployment, there are three environments defined in `.angular-cli.json` file:
-* dev
+For deployment, there are three environments defined in `angular.json` file:
+
 * test
-* prod
+* production
 
 You can use **dev** configuration as a base file to create your own **test** and **prod** configuration files:
 
