@@ -168,7 +168,8 @@
                   <tr>
                     <!-- Name -->
                     <td class="noborder">
-                      &nbsp;
+                      <button title="Timer {{ !paused ? 'Paused' : 'Start' }}" class="btn btn-md btn-default" (click)="startStop()"> {{ !paused ? 'Pause' : 'Start' }} </button>
+                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md" >Reset</button>
                     </td>
                     <!-- Fields -->
                     <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">

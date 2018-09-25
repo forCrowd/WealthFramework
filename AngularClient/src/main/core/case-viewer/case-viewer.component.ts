@@ -2,7 +2,8 @@
 import { mergeMap, debounceTime } from "rxjs/operators";
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Observable, Subject, Subscription } from "rxjs";
+import { timer as observableTimer, Observable, Subject, Subscription } from "rxjs";
+import { switchMap } from 'rxjs/operators';
 import { Options } from "highcharts";
 
 import { Element } from "../entities/element";
@@ -13,6 +14,7 @@ import { User } from "../entities/user";
 import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
+import { element } from 'protractor';
 
 export interface IConfig {
   initialValue?: number,
@@ -47,6 +49,9 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
   saveStream = new Subject();
   subscriptions: Subscription[] = [];
   username = "";
+
+  timer = observableTimer(10000, 5000);
+  paused: boolean = false;
 
   get isBusy(): boolean {
     return this.projectService.isBusy;
@@ -208,6 +213,54 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
     }
   }
 
+  // Pause-play Timer
+  startStop(): void {
+    if (this.paused) {
+      this.paused = false;
+    } else {
+      this.paused = true;
+    }
+  }
+
+  // Start timer
+  startTimer(): void {
+    this.subscriptions.push(
+      this.timer.subscribe(() => {
+        this.paused ? null : this.refreshPage();
+      }));
+  }
+
+  // Reset timer
+  resetTimer(): void {
+
+  }
+
+  // Timer refresh income
+  refreshPage():void {
+
+      this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach((elementItem, j)=>{
+
+        var e = elementItem.getElementCellSetSorted();
+        var elementCell = e[0];
+
+        //var decValue = [0, 20, 40, 60, 80, 100];
+        //if (decValue.indexOf(elementCell.decimalValue()) < 0) {
+
+        //var elementItemIncome = elementItem.income();
+        var d = elementCell.income();
+        console.log(j,elementCell.ElementItem.Name, "Item.IC:", (d++).toFixed(2),"-> DV:", elementCell.decimalValue().toFixed(2).toString());
+        this.chartConfig.data[j].valueUpdated.next(d++);
+        this.projectService.updateElementCellDecimalValue(elementCell, d++);
+        this.project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
+        console.log(j,"ElementItemIncome:", (elementItem.income()).toFixed(2));
+
+        //this.updateElementCellDecimalValue(elementCell, d++);
+        //}
+
+      });
+  };
+
+
   ngOnDestroy(): void {
     for (let i = 0; i < this.subscriptions.length; i++) {
       this.subscriptions[i].unsubscribe();
@@ -230,6 +283,9 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
     );
 
     this.initialize(projectId, this.authService.currentUser);
+
+    // Timer starts
+    this.startTimer();
   }
 
   resetRating(field: ElementField) {
