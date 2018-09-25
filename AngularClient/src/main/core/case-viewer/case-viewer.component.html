@@ -1,0 +1,200 @@
+<div class="project-viewer">
+  <div class="panel panel-default">
+    <div class="heading panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <p [hidden]="project || errorMessage.length > 0">
+            <span class="label label-info">Loading...</span>
+          </p>
+          <p [hidden]="errorMessage.length === 0">
+            <span class="label label-danger">{{ errorMessage }}</span>
+          </p>
+        </div>
+        <div class="col-md-12" *ngIf="project">
+          <div class="clearfix">
+            <p class="pull-left">
+              <span class="title panel-title">
+                {{ project.Name }}
+              </span>
+              <br />
+              <small>Last modified on {{ project.ModifiedOn | date: 'medium' }}</small>
+            </p>
+          </div>
+          <hr />
+          <div class="settings">
+            <div class="btn-group" role="group" aria-label="Rating Options">
+              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.CurrentUser }">
+                Your Ratings
+              </button>
+              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.AllUsers }">
+                All Users
+                <span class="g-ml-10 badge">{{ project.RatingCount }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="project">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <ol class="breadcrumb" *ngIf="selectedElement.familyTree().length > 0">
+              <li *ngFor="let element of selectedElement.familyTree(); let lastItem = last" [ngClass]="{ active: lastItem }">
+                <button *ngIf="!lastItem" (click)="selectedElement = element" type="button" class="btn-link" title="Switch to {{ element.Name }} view">
+                  {{ element.Name }}
+                </button>
+                <span *ngIf="lastItem">
+                  {{ element.Name }}
+                </span>
+              </li>
+            </ol>
+          </div>
+          <div *ngIf="selectedElement.ElementItemSet.length <= 20" class="col-md-12">
+            <ngChart [config]="chartConfig"></ngChart>
+          </div>
+        </div>
+        <div class="row">
+          <div class="details col-md-12">
+            <div *ngIf="selectedElement.elementFieldSet().length > 0">
+              <label>Total Amount</label>
+              <span class="text-right">{{ project.initialValue | symbolic }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="project-table table table-striped">
+                <thead>
+                  <tr>
+                    <!-- Name -->
+                    <th>
+                      {{ selectedElement.Name }}
+                    </th>
+                    <!-- Fields -->
+                    <th *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                      <div *ngIf="field.DataType !== ElementFieldDataType.Element">
+                        {{ field.Name }}<span *ngIf="field.RatingEnabled" title="Index" class="infoText">(I)</span>
+                      </div>
+                      <span *ngIf="field.DataType === ElementFieldDataType.Element">
+                        <button (click)="selectedElement = field.SelectedElement" type="button" class="btn-link" title="Switch to {{ field.Name }} view">{{ field.Name }}</button>
+                      </span>
+                    </th>
+                    <!-- Total Income & Details -->
+                    <ng-template [ngIf]="displayIndexDetails">
+                      <th *ngFor="let field of selectedElement.elementFieldSet()" class="text-right">
+                        {{ field.Name + ' (I) Income' }}
+                      </th>
+                    </ng-template>
+                    <th *ngIf="project.initialValue > 0" class="text-right">
+                      <!-- Display 'Total Income' view link only if there are more than one index -->
+                      <button *ngIf="selectedElement.elementFieldSet().length > 1" (click)="toggleIndexDetails()" type="button" class="btn-link" title="Toggle between 'Indexes' & 'Elements' views">Total Income</button>
+                      <!-- If there is only one index, then use that index's name -->
+                      <span *ngIf="selectedElement.elementFieldSet().length === 1">Income</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let elementItem of selectedElement.getElementItemSet(elementItemsSortField)">
+                    <!-- Name -->
+                    <td>
+                      {{ elementItem.Name }}
+                    </td>
+                    <!-- Cells -->
+                    <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === ElementFieldDataType.Decimal }">
+                      <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String">{{ elementCell.StringValue }}</span>
+                      <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal">
+                        <div *ngIf="elementCell.ElementField.UseFixedValue">
+                          {{ elementCell.decimalValue() | symbolic }}
+                        </div>
+                        <div *ngIf="!elementCell.ElementField.UseFixedValue">
+                          <div *ngIf="elementCell.ElementField.RatingEnabled">
+                            <div [hidden]="project.RatingMode === RatingMode.CurrentUser">
+                              {{ elementCell.decimalValuePercentage() | percent }}
+                            </div>
+                            <div [hidden]="project.RatingMode === RatingMode.AllUsers">
+                              <div class="btn-group" role="group">
+                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
+                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 20)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 20, 'btn-default': elementCell.decimalValue() !== 20 }">1</button>
+                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 40)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 40, 'btn-default': elementCell.decimalValue() !== 40 }">2</button>
+                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 60)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 60, 'btn-default': elementCell.decimalValue() !== 60 }">3</button>
+                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 80)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 80, 'btn-default': elementCell.decimalValue() !== 80 }">4</button>
+                                <button title="5" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">5</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="!elementCell.ElementField.RatingEnabled">
+                            {{ elementCell.decimalValue() | symbolic }}
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element">
+                        {{ elementCell.SelectedElementItem !== null ? elementCell.SelectedElementItem.Name : "N/A" }}
+                      </div>
+                    </td>
+                    <!-- Total Income & Details -->
+                    <ng-template [ngIf]="displayIndexDetails">
+                      <td *ngFor="let ratingCell of elementItem.ratingCells()" class="text-right">
+                        {{ ratingCell.income() | symbolic }}
+                      </td>
+                    </ng-template>
+                    <td *ngIf="project.initialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
+                      {{ elementItem.income() | symbolic }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr *ngIf="selectedElement.ElementItemSet.length > 1">
+                    <!-- Name -->
+                    <td>
+                      &nbsp;
+                    </td>
+                    <!-- Fields -->
+                    <td *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                      &nbsp;
+                    </td>
+                    <!-- Total Income & Details -->
+                    <ng-template [ngIf]="displayIndexDetails">
+                      <td *ngFor="let field of selectedElement.elementFieldSet()" class="text-right">
+                        {{ field.income() | symbolic }}
+                      </td>
+                    </ng-template>
+                    <td *ngIf="project.initialValue > 0" class="text-right">
+                      {{ project.initialValue | symbolic }} <!-- Same as income -->
+                    </td>
+                  </tr>
+                  <!-- Functions -->
+                  <tr>
+                    <!-- Name -->
+                    <td class="noborder">
+                      <button title="Timer {{ !paused ? 'Paused' : 'Start' }}" class="btn btn-md btn-default" (click)="startStop()"> {{ !paused ? 'Pause' : 'Start' }} </button>
+                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md" >Reset</button>
+                    </td>
+                    <!-- Fields -->
+                    <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                      &nbsp;
+                    </td>
+                    <!-- Total Income & Details -->
+                    <ng-template [ngIf]="displayIndexDetails">
+                      <td *ngFor="let field of selectedElement.elementFieldSet()" class="noborder text-right">
+                        <div class="btn-group" role="group">
+                          <button title="Increase {{ field.Name }}" type="button" (click)="increaseRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">+</button>
+                          <button title="Decrease {{ field.Name }}" type="button" (click)="decreaseRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">-</button>
+                          <button title="Reset {{ field.Name }}" type="button" (click)="resetRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">0</button>
+                        </div>
+                      </td>
+                    </ng-template>
+                    <td *ngIf="project.initialValue > 0" class="noborder text-right">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
