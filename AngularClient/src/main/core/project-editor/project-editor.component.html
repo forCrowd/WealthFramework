@@ -114,13 +114,15 @@
                               {{ elementCell.decimalValuePercentage() | percent }}
                             </div>
                             <div [hidden]="project.RatingMode === RatingMode.AllUsers">
+
+                              <span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> - <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
+
                               <div class="btn-group" role="group">
-                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
-                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 20)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 20, 'btn-default': elementCell.decimalValue() !== 20 }">1</button>
-                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 40)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 40, 'btn-default': elementCell.decimalValue() !== 40 }">2</button>
-                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 60)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 60, 'btn-default': elementCell.decimalValue() !== 60 }">3</button>
-                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 80)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 80, 'btn-default': elementCell.decimalValue() !== 80 }">4</button>
-                                <button title="5" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">5</button>
+                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 0, 'btn-default': elementCell.selectedDecimalValue !== 0 }">0</button>
+                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 25, 'btn-default': elementCell.selectedDecimalValue !== 25 }">1</button>
+                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 50, 'btn-default': elementCell.selectedDecimalValue !== 50 }">2</button>
+                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 75, 'btn-default': elementCell.selectedDecimalValue !== 75 }">3</button>
+                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 100, 'btn-default': elementCell.selectedDecimalValue !== 100 }">4</button>
                               </div>
                             </div>
                           </div>

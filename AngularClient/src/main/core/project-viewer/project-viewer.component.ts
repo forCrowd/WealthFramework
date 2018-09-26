@@ -1,8 +1,6 @@
-
-import { mergeMap, debounceTime } from "rxjs/operators";
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { Observable, Subject, Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
+import { mergeMap, debounceTime } from "rxjs/operators";
 import { Options } from "highcharts";
 
 import { Element } from "../entities/element";
@@ -27,8 +25,7 @@ export interface IConfig {
 export class ProjectViewerComponent implements OnDestroy, OnInit {
 
   constructor(private authService: AuthService,
-    private projectService: ProjectService,
-    private router: Router) {
+    private projectService: ProjectService) {
   }
 
   @Input()

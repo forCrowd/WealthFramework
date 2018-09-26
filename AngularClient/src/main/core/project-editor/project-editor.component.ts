@@ -1,9 +1,7 @@
-
-import { mergeMap, debounceTime } from "rxjs/operators";
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { timer as observableTimer, Observable, Subject, Subscription } from "rxjs";
-import { switchMap } from 'rxjs/operators';
+import { mergeMap, debounceTime } from "rxjs/operators";
 import { Options } from "highcharts";
 
 import { Element } from "../entities/element";
@@ -14,19 +12,19 @@ import { User } from "../entities/user";
 import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
-import { element } from 'protractor';
+import { ElementItem } from "../entities/element-item";
 
-export interface IConfig {
+export interface IProjectEditorConfig {
   initialValue?: number,
   projectId: number,
 }
 
 @Component({
-  selector: "case-viewer",
-  styleUrls: ["case-viewer.component.css"],
-  templateUrl: "case-viewer.component.html"
+  selector: "project-editor",
+  styleUrls: ["project-editor.component.css"],
+  templateUrl: "project-editor.component.html"
 })
-export class CaseViewerComponent implements OnDestroy, OnInit {
+export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   constructor(private authService: AuthService,
     private projectService: ProjectService,
@@ -34,7 +32,7 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
   }
 
   @Input()
-  config: IConfig = { projectId: this.activatedRoute.snapshot.params["projectId"]  };
+  config: IProjectEditorConfig = { projectId: 0 };
   chartConfig: ChartConfig = null;
   currentUser: User = null;
   displayChart: boolean = false;
@@ -50,7 +48,7 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
   subscriptions: Subscription[] = [];
   username = "";
 
-  timer = observableTimer(10000, 5000);
+  timer = observableTimer(500, 2000);
   paused: boolean = false;
 
   get isBusy(): boolean {
@@ -215,19 +213,7 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
 
   // Pause-play Timer
   startStop(): void {
-    if (this.paused) {
-      this.paused = false;
-    } else {
-      this.paused = true;
-    }
-  }
-
-  // Start timer
-  startTimer(): void {
-    this.subscriptions.push(
-      this.timer.subscribe(() => {
-        this.paused ? null : this.refreshPage();
-      }));
+    this.paused = !this.paused;
   }
 
   // Reset timer
@@ -236,28 +222,43 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
   }
 
   // Timer refresh income
-  refreshPage():void {
+  refreshPage(): void {
 
-      this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach((elementItem, j)=>{
+    if (this.paused) {
+      return;
+    }
 
-        var e = elementItem.getElementCellSetSorted();
-        var elementCell = e[0];
+    console.log("---");
 
-        //var decValue = [0, 20, 40, 60, 80, 100];
-        //if (decValue.indexOf(elementCell.decimalValue()) < 0) {
+    this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach(elementItem => {
+      elementItem.ElementCellSet.forEach(elementCell => {
 
-        //var elementItemIncome = elementItem.income();
-        var d = elementCell.income();
-        console.log(j,elementCell.ElementItem.Name, "Item.IC:", (d++).toFixed(2),"-> DV:", elementCell.decimalValue().toFixed(2).toString());
-        this.chartConfig.data[j].valueUpdated.next(d++);
-        this.projectService.updateElementCellDecimalValue(elementCell, d++);
-        this.project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
-        console.log(j,"ElementItemIncome:", (elementItem.income()).toFixed(2));
-
-        //this.updateElementCellDecimalValue(elementCell, d++);
-        //}
-
+        if (!elementCell.ElementField.UseFixedValue && elementCell.ElementField.RatingEnabled) {
+          this.updateElementCellDecimalValue(elementCell, elementCell.selectedDecimalValue);
+        }
       });
+    });
+
+    //this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach((elementItem, j) => {
+
+    //  var e = elementItem.getElementCellSetSorted();
+    //  var elementCell = e[0];
+
+    //  //var decValue = [0, 20, 40, 60, 80, 100];
+    //  //if (decValue.indexOf(elementCell.decimalValue()) < 0) {
+
+    //  //var elementItemIncome = elementItem.income();
+    //  var d = elementCell.income();
+    //  console.log(j, elementCell.ElementItem.Name, "Item.IC:", (d++).toFixed(2), "-> DV:", elementCell.decimalValue().toFixed(2).toString());
+    //  this.chartConfig.data[j].valueUpdated.next(d++);
+    //  this.projectService.updateElementCellDecimalValue(elementCell, d++);
+    //  this.project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
+    //  console.log(j, "ElementItemIncome:", (elementItem.income()).toFixed(2));
+
+    //  //this.updateElementCellDecimalValue(elementCell, d++);
+    //  //}
+
+    //});
   };
 
 
@@ -276,7 +277,7 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
     this.saveStream.pipe(debounceTime(1500),
       mergeMap(() => this.projectService.saveChanges())).subscribe();
 
-    // Event handlers
+    // User changed event handler
     this.subscriptions.push(
       this.authService.currentUserChanged.subscribe((newUser) =>
         this.initialize(this.projectId, newUser))
@@ -284,8 +285,10 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
 
     this.initialize(projectId, this.authService.currentUser);
 
-    // Timer starts
-    this.startTimer();
+    // Timer event handler
+    this.subscriptions.push(this.timer.subscribe(() => {
+      this.refreshPage()
+    }));
   }
 
   resetRating(field: ElementField) {
@@ -303,9 +306,13 @@ export class CaseViewerComponent implements OnDestroy, OnInit {
     this.loadChartData();
   }
 
-  updateElementCellDecimalValue(cell: ElementCell, value: number) {
-    this.projectService.updateElementCellDecimalValue(cell, value);
-    this.saveStream.next();
+  updateElementCellDecimalValue(cell: ElementCell, selectedValue: number) {
+
+    cell.selectedDecimalValue = selectedValue;
+    const newDecimalValue = cell.decimalValue() + selectedValue;
+
+    this.projectService.updateElementCellDecimalValue(cell, newDecimalValue);
+    // this.saveStream.next();
   }
 
   updateElementItemsSortField(): void {

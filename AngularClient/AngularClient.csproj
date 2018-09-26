@@ -41,6 +41,10 @@
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth.service.ts" />
     <TypeScriptCompile Include="src\main\core\breeze-client-odata-fix.ts" />
+    <TypeScriptCompile Include="src\main\core\components\project-viewer.component.ts" />
+    <TypeScriptCompile Include="src\main\core\project-editor\project-editor.component.ts" />
+    <TypeScriptCompile Include="src\main\core\project-editor\project-editor.module.ts" />
+    <TypeScriptCompile Include="src\main\core\project-editor\symbolic.pipe.ts" />
     <TypeScriptCompile Include="src\main\core\components\all-in-one.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-in-use\basics.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-in-use\implementation.component.ts" />
@@ -93,6 +97,7 @@
     <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="angular.json" />
     <None Include="e2e\tsconfig.e2e.json" />
     <None Include="package-lock.json" />
@@ -105,6 +110,9 @@
     <Content Include="src\dev-all\navigation.component.html" />
     <Content Include="src\dev-all\misc.component.html" />
     <Content Include="src\karma.conf.js" />
+    <Content Include="src\main\core\components\project-viewer.component.html" />
+    <Content Include="src\main\core\project-editor\project-editor.component.css" />
+    <Content Include="src\main\core\project-editor\project-editor.component.html" />
     <Content Include="src\main\core\components\not-in-use\conclusion.html" />
     <Content Include="src\main\core\components\not-in-use\fairShareIndexSample.html" />
     <Content Include="src\main\core\components\not-in-use\overview.html" />
