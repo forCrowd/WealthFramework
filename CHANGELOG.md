@@ -1,5 +1,13 @@
 ### Changelog
 
+**0.86.0**
+
+* Project editor timer feature
+
+**0.85.3 ~ 5**
+
+* Project editor introduced
+
 **0.85.2**
 
 * Breeze fix moved to "breeze-client-odata-fix.ts" file

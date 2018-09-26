@@ -9,8 +9,8 @@ import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 
 // Internal modules
 import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
-import { ProjectViewerModule, NgChartModule } from "./project-viewer/project-viewer.module";
-import { CaseViewerModule } from "./case-viewer/case-viewer.module";
+import { ProjectEditorModule } from "./project-editor/project-editor.module";
+import { ProjectViewerModule } from "./project-viewer/project-viewer.module";
 import { SharedModule } from "../shared/shared.module";
 
 // Components
@@ -22,6 +22,7 @@ import { AllInOneComponent } from "./components/all-in-one.component";
 import { IntroductionComponent } from "./components/introduction.component";
 import { KnowledgeIndexComponent } from "./components/knowledge-index.component";
 import { PriorityIndexComponent } from "./components/priority-index.component";
+import { ProjectViewerComponent } from "./components/project-viewer.component";
 import { PrologueComponent } from "./components/prologue.component";
 
 // Components - not in use
@@ -39,7 +40,6 @@ import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
-import { CaseViewerComponent } from "./case-viewer/case-viewer.component";
 
 export { Angulartics2GoogleAnalytics, AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
@@ -47,8 +47,8 @@ const coreRoutes: Routes = [
   { path: "", component: HomeComponent, data: { title: "Home" } },
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
-  { path: "example/:projectId", component: CaseViewerComponent, data: { title: DynamicTitleResolve } },
-  { path: "**", redirectTo:"", pathMatch:"full"},
+  { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
+  { path: "**", redirectTo: "", pathMatch: "full" },
 
   /* Home alternatives */
   { path: "app/home", redirectTo: "", pathMatch: "full" },
@@ -82,6 +82,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     IntroductionComponent,
     KnowledgeIndexComponent,
     PriorityIndexComponent,
+    ProjectViewerComponent,
     PrologueComponent,
 
     // Not in use
@@ -91,7 +92,6 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     //TotalCostIndexComponent
   ],
   exports: [
-    NgChartModule,
     RouterModule,
   ],
   imports: [
@@ -100,8 +100,8 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     BreezeBridgeHttpClientModule,
+    ProjectEditorModule,
     ProjectViewerModule,
-    CaseViewerModule,
   ],
   providers: [
     // Application initializer

@@ -21,6 +21,7 @@ export class ElementCell extends EntityBase {
   // Client
   otherUsersDecimalValueTotal = 0;
   otherUsersDecimalValueCount = 0;
+  selectedDecimalValue = 0;
 
   // Events
   decimalValueUpdated = new Subject<number>();

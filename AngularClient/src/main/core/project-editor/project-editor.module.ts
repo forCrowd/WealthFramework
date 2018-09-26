@@ -2,19 +2,19 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
-import { IConfig as IProjectViewerConfig, CaseViewerComponent } from "./case-viewer.component";
+import { IProjectEditorConfig, ProjectEditorComponent } from "./project-editor.component";
 import { SymbolicPipe } from "./symbolic.pipe";
 import { NgChartModule } from "../../ng-chart/ng-chart.module";
 
-export { IProjectViewerConfig, NgChartModule }
+export { IProjectEditorConfig, NgChartModule }
 
 @NgModule({
   declarations: [
-    CaseViewerComponent,
+    ProjectEditorComponent,
     SymbolicPipe
   ],
   exports: [
-    CaseViewerComponent,
+    ProjectEditorComponent,
     SymbolicPipe,
     NgChartModule
   ],
@@ -24,4 +24,4 @@ export { IProjectViewerConfig, NgChartModule }
     NgChartModule,
   ]
 })
-export class CaseViewerModule { }
+export class ProjectEditorModule { }
