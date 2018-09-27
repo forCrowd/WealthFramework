@@ -115,7 +115,8 @@
                             </div>
                             <div [hidden]="project.RatingMode === RatingMode.AllUsers">
 
-                              <span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> - <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
+                              <span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> -
+                              <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
 
                               <div class="btn-group" role="group">
                                 <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 0, 'btn-default': elementCell.selectedDecimalValue !== 0 }">0</button>
@@ -170,8 +171,21 @@
                   <tr>
                     <!-- Name -->
                     <td class="noborder">
-                      <button title="Timer {{ !paused ? 'Paused' : 'Start' }}" class="btn btn-md btn-default" (click)="startStop()"> {{ !paused ? 'Pause' : 'Start' }} </button>
-                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md" >Reset</button>
+                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default" >
+                        <i class="fa fa-refresh"></i>
+                      </button>
+                      <button [disabled]="paused || timerDelay === 1000" class="btn btn-md btn-default ml-2" (click)="decreaseTimer()">
+                        <i class="fa fa-backward"></i>
+                      </button>
+                      <button title="Timer {{ paused ? 'Start' : 'Paused' }}" class="btn btn-md btn-default ml-2" [ngClass]="{'btn-warning': paused, 'btn-primary': !paused}" (click)="startStop()">
+                        <i [attr.class]="paused ? 'fa fa-play' : 'fa fa-pause'"></i>
+                      </button>
+                      <button [disabled]="paused || timerDelay === 5000" class="btn btn-md btn-default ml-2" (click)="increaseTimer()">
+                        <i class="fa fa-forward"></i>
+                      </button>
+
+                       Timer delay {{ timerDelay/ 1000 }}s.
+
                     </td>
                     <!-- Fields -->
                     <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">

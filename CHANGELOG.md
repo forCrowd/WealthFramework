@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.86.1**
+
+* Minor updates for project editor timer feature
+
 **0.86.0**
 
 * Project editor timer feature

@@ -95,3 +95,7 @@
   cursor: pointer;
   margin-left: 5px;
 }
+
+.ml-2 {
+  margin-left: 2px;
+}
