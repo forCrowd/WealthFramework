@@ -48,9 +48,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   elementItemCount = 0;
   paused: boolean = false;
   /// Timer schedule
-  timerDelay = 5000;
+  timerDelay = 1000;
   timerSubscription = observableTimer(5000, this.timerDelay).subscribe(() => {
-    this.refreshPage()
+    this.refreshPage();
   });
 
   get isBusy(): boolean {
@@ -320,16 +320,18 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
 
     console.log(" -- timer");
+
     this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach(elementItem => {
       elementItem.ElementCellSet.forEach(elementCell => {
         if (!elementCell.ElementField.UseFixedValue && elementCell.ElementField.RatingEnabled) {
-          if (!reset) this.updateElementCellDecimalValue(elementCell, reset ? 0 : elementCell.selectedDecimalValue);
+          const newValue = reset ? 0 : elementCell.selectedDecimalValue;
+          this.updateElementCellDecimalValue(elementCell, newValue);
         }
-        if (reset) this.projectService.updateElementCellDecimalValue(elementCell, 0);
       });
     });
 
-    reset ? console.log("Reset: Timer delay time set to 5 seconds..") : null
+    if (reset)
+      console.log("Reset: Timer delay time set to 5 seconds..");
 
     this.increaseInitivalValue();
   };
@@ -382,7 +384,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     const newDecimalValue = cell.decimalValue() + selectedValue;
 
     this.projectService.updateElementCellDecimalValue(cell, newDecimalValue);
-    // this.saveStream.next();
+    //this.saveStream.next();
   }
 
   updateElementItemsSortField(): void {
