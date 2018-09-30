@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { timer as observableTimer, Observable, Subject, Subscription } from "rxjs";
+import { timer as observableTimer, Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime } from "rxjs/operators";
 import { Options } from "highcharts";
 
@@ -26,10 +25,7 @@ export interface IProjectEditorConfig {
 })
 export class ProjectEditorComponent implements OnDestroy, OnInit {
 
-  constructor(private authService: AuthService,
-    private projectService: ProjectService,
-    private router: Router, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(private authService: AuthService, private projectService: ProjectService) { }
 
   @Input()
   config: IProjectEditorConfig = { projectId: 0 };
@@ -38,10 +34,10 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   displayChart: boolean = false;
   displayDescription: boolean = false;
   displayIndexDetails = false;
-  ElementFieldDataType = ElementFieldDataType;
+  elementFieldDataType = ElementFieldDataType;
   elementItemsSortField = "name";
   errorMessage: string = "";
-  RatingMode = RatingMode;
+  ratingMode = RatingMode;
   project: Project = null;
   projectId = 0;
   saveStream = new Subject();
@@ -268,7 +264,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.refreshPage(true); // reset selectedDecimalValue
     this.timerDelay = 5000;
     this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(()=> {
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage()
     });
     this.increaseInitivalValue(true);
@@ -299,10 +295,10 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     if (this.timerDelay + 1000 > 6000) return;
     this.timerDelay += 1000;
     this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(()=> {
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage()
     });
-    console.log(`Timer delay time set to ${this.timerDelay/1000} second${this.timerDelay/1000>1?'s.':'.'}`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} second${this.timerDelay / 1000 > 1 ? 's.' : '.'}`);
   }
 
   // Decrease timer delay 1 second.
@@ -310,10 +306,10 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     if (this.timerDelay - 1000 <= 0) return;
     this.timerDelay -= 1000;
     this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(()=> {
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage()
     });
-    console.log(`Timer delay time set to ${this.timerDelay/1000} seconds`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} seconds`);
   }
 
   // Timer refresh income
