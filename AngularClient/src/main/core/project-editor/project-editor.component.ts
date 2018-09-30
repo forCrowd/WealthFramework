@@ -48,6 +48,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   subscriptions: Subscription[] = [];
   username = "";
 
+  // count current items
+  elementItemCount = 0;
   paused: boolean = false;
   /// Timer schedule
   timerDelay = 5000;
@@ -215,15 +217,52 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
   }
 
+  // Remove element item
+  removeElementItem(elementItem: ElementItem) {
+
+    const elementCellSet = elementItem.ElementCellSet.slice();
+    elementCellSet.forEach(elementCell => {
+      this.projectService.removeElementCell(elementCell);
+    });
+
+    elementItem.entityAspect.setDeleted();
+  }
+
+  // Add a new item
+  addElementItem(): void {
+    if (this.elementItemCount == 0) this.elementItemCount = this.selectedElement.ElementItemSet.length;
+
+    // Create element item
+    const newElementItem = this.projectService.createElementItem({
+      Element: this.selectedElement,
+      Name: "New Item " + (this.elementItemCount + 1).toString()
+    }) as ElementItem;
+
+    // Create cell
+    this.projectService.createElementCell({
+      ElementField: this.selectedElement.ElementFieldSet[0],
+      ElementItem: newElementItem
+    });
+
+    this.elementItemCount += 1;
+
+    this.project.ElementSet.forEach(element => {
+      element.ElementFieldSet.forEach(field => {
+        field.setIncome();
+      });
+    });
+
+    this.loadChartData();
+  }
+
   // Pause-play Timer
   startStop(): void {
     this.paused = !this.paused;
   }
 
- /**
+  /**
   * Reset Timer
   * - Timer delay set 5 seconds (by defaul)
-  * - TODO: initialValue increase ?
   */
   resetTimer(): void {
     this.refreshPage(true); // reset selectedDecimalValue
@@ -283,6 +322,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     if (this.paused) {
       return;
     }
+
     console.log(" -- timer");
     this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach(elementItem => {
       elementItem.ElementCellSet.forEach(elementCell => {
