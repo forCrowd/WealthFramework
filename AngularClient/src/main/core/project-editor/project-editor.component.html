@@ -23,10 +23,10 @@
           <hr />
           <div class="settings">
             <div class="btn-group" role="group" aria-label="Rating Options">
-              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.CurrentUser }">
+              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === ratingMode.CurrentUser }">
                 Your Ratings
               </button>
-              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.AllUsers }">
+              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === ratingMode.AllUsers }">
                 All Users
                 <span class="g-ml-10 badge">{{ project.RatingCount }}</span>
               </button>
@@ -73,11 +73,11 @@
                       {{ selectedElement.Name }}
                     </th>
                     <!-- Fields -->
-                    <th *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
-                      <div *ngIf="field.DataType !== ElementFieldDataType.Element">
+                    <th *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
+                      <div *ngIf="field.DataType !== elementFieldDataType.Element">
                         {{ field.Name }}<span *ngIf="field.RatingEnabled" title="Index" class="infoText">(I)</span>
                       </div>
-                      <span *ngIf="field.DataType === ElementFieldDataType.Element">
+                      <span *ngIf="field.DataType === elementFieldDataType.Element">
                         <button (click)="selectedElement = field.SelectedElement" type="button" class="btn-link" title="Switch to {{ field.Name }} view">{{ field.Name }}</button>
                       </span>
                     </th>
@@ -105,18 +105,18 @@
                       {{ elementItem.Name }}
                     </td>
                     <!-- Cells -->
-                    <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === ElementFieldDataType.Decimal }">
-                      <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String">{{ elementCell.StringValue }}</span>
-                      <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal">
+                    <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === elementFieldDataType.Decimal }">
+                      <span *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String">{{ elementCell.StringValue }}</span>
+                      <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Decimal">
                         <div *ngIf="elementCell.ElementField.UseFixedValue">
                           {{ elementCell.decimalValue() | symbolic }}
                         </div>
                         <div *ngIf="!elementCell.ElementField.UseFixedValue">
                           <div *ngIf="elementCell.ElementField.RatingEnabled">
-                            <div [hidden]="project.RatingMode === RatingMode.CurrentUser">
+                            <div [hidden]="project.RatingMode === ratingMode.CurrentUser">
                               {{ elementCell.decimalValuePercentage() | percent }}
                             </div>
-                            <div [hidden]="project.RatingMode === RatingMode.AllUsers">
+                            <div [hidden]="project.RatingMode === ratingMode.AllUsers">
 
                               <span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> -
                               <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
@@ -135,7 +135,7 @@
                           </div>
                         </div>
                       </div>
-                      <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element">
+                      <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Element">
                         {{ elementCell.SelectedElementItem !== null ? elementCell.SelectedElementItem.Name : "N/A" }}
                       </div>
                     </td>
@@ -157,7 +157,7 @@
                       &nbsp;
                     </td>
                     <!-- Fields -->
-                    <td *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                    <td *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
                       &nbsp;
                     </td>
                     <!-- Total Income & Details -->
@@ -177,22 +177,22 @@
                       <button *ngIf="project.User.Id === currentUser.Id" (click)="addElementItem()" class="btn btn-md btn-success">
                         <i class="fa fa-plus"></i> Add a new
                       </button>
-                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2" >
+                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2">
                         <i class="fa fa-refresh"></i>
                       </button>
-                      <button [disabled]="paused || timerDelay === 1000" class="btn btn-md btn-default ml-2" (click)="decreaseTimer()">
+                      <button [disabled]="paused || timerDelay === 5000" class="btn btn-md btn-default ml-2" (click)="decreaseSpeed()">
                         <i class="fa fa-backward"></i>
                       </button>
                       <button title="Timer {{ paused ? 'Start' : 'Paused' }}" class="btn btn-md btn-default ml-2" [ngClass]="{'btn-warning': paused, 'btn-primary': !paused}" (click)="startStop()">
                         <i [attr.class]="paused ? 'fa fa-play' : 'fa fa-pause'"></i>
                       </button>
-                      <button [disabled]="paused || timerDelay === 5000" class="btn btn-md btn-default ml-2" (click)="increaseTimer()">
+                      <button [disabled]="paused || timerDelay === 1000" class="btn btn-md btn-default ml-2" (click)="increaseSpeed()">
                         <i class="fa fa-forward"></i>
                       </button>
-                       Timer delay {{ timerDelay/ 1000 }}s.
+                      Timer delay {{ timerDelay / 1000 }}s.
                     </td>
                     <!-- Fields -->
-                    <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                    <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
                       &nbsp;
                     </td>
                     <!-- Total Income & Details -->

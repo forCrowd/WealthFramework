@@ -45,18 +45,10 @@ export { Angulartics2GoogleAnalytics, AppEntityManager, AppHttpClient, AuthGuard
 
 const coreRoutes: Routes = [
   { path: "", component: HomeComponent, data: { title: "Home" } },
+  { path: "app/home", redirectTo: "", pathMatch: "full" }, // Alternative
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
   { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
-  { path: "**", redirectTo: "", pathMatch: "full" },
-
-  /* Home alternatives */
-  { path: "app/home", redirectTo: "", pathMatch: "full" },
-  { path: "app.html", redirectTo: "", pathMatch: "full" },
-  { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
-
-  /* Backward compatibility */
-  { path: "_system/content/contributors", redirectTo: "app/contributors", pathMatch: "full" }
 ];
 
 export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
@@ -97,7 +89,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   imports: [
     SharedModule,
     AppHttpClientModule,
-    RouterModule.forRoot(coreRoutes),
+    RouterModule.forChild(coreRoutes),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     BreezeBridgeHttpClientModule,
     ProjectEditorModule,
