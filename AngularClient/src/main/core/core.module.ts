@@ -48,7 +48,6 @@ const coreRoutes: Routes = [
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
   { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
-  { path: "**", redirectTo: "", pathMatch: "full" },
 
   /* Home alternatives */
   { path: "app/home", redirectTo: "", pathMatch: "full" },
@@ -97,7 +96,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   imports: [
     SharedModule,
     AppHttpClientModule,
-    RouterModule.forRoot(coreRoutes),
+    RouterModule.forChild(coreRoutes),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     BreezeBridgeHttpClientModule,
     ProjectEditorModule,

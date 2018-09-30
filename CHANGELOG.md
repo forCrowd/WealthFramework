@@ -1,20 +1,25 @@
 ### Changelog
 
+**0.86.3**
+
+* Catch-all route fix
+* Contributors page update
+
 **0.86.2**
 
-* Add/remove element item
+* Project Editor - Add/remove element item
 
 **0.86.1**
 
-* Minor updates for project editor timer feature
+* Project Editor - Minor
 
 **0.86.0**
 
-* Project editor timer feature
+* Project Editor - timer feature
 
 **0.85.3 ~ 5**
 
-* Project editor introduced
+* Project Editor introduced
 
 **0.85.2**
 

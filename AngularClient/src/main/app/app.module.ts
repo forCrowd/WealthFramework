@@ -1,6 +1,6 @@
-// External
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule, Routes } from "@angular/router";
 import { ToasterModule } from "angular2-toaster";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule, Title } from "@angular/platform-browser";
@@ -14,6 +14,10 @@ import { AppComponent } from "./app.component";
 
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+
+const appRoutes: Routes = [
+  { path: "**", redirectTo: "", pathMatch: "full" },
+];
 
 @NgModule({
   bootstrap: [
@@ -36,6 +40,7 @@ import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
     LoggerModule,
     CoreModule,
     AccountModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     Title
