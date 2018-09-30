@@ -99,6 +99,9 @@
                   <tr *ngFor="let elementItem of selectedElement.getElementItemSet(elementItemsSortField)">
                     <!-- Name -->
                     <td>
+                      <button *ngIf="project.User.Id === currentUser.Id" (click)="removeElementItem(elementItem)" type="button" class="close item-rm" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                       {{ elementItem.Name }}
                     </td>
                     <!-- Cells -->
@@ -170,8 +173,11 @@
                   <!-- Functions -->
                   <tr>
                     <!-- Name -->
-                    <td class="noborder">
-                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default" >
+                    <td class="noborder" colspan="selectedElement.getElementFieldSetSorted().length + 1">
+                      <button *ngIf="project.User.Id === currentUser.Id" (click)="addElementItem()" class="btn btn-md btn-success">
+                        <i class="fa fa-plus"></i> Add a new
+                      </button>
+                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2" >
                         <i class="fa fa-refresh"></i>
                       </button>
                       <button [disabled]="paused || timerDelay === 1000" class="btn btn-md btn-default ml-2" (click)="decreaseTimer()">
@@ -183,9 +189,7 @@
                       <button [disabled]="paused || timerDelay === 5000" class="btn btn-md btn-default ml-2" (click)="increaseTimer()">
                         <i class="fa fa-forward"></i>
                       </button>
-
                        Timer delay {{ timerDelay/ 1000 }}s.
-
                     </td>
                     <!-- Fields -->
                     <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">

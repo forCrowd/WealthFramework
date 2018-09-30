@@ -99,3 +99,10 @@
 .ml-2 {
   margin-left: 2px;
 }
+
+.item-rm {
+  float: left !important;
+  padding-top: .1em;
+  padding-right: .4em;
+  color: red !important;
+}

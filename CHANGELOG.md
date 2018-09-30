@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.86.2**
+
+* Add/remove element item
+
 **0.86.1**
 
 * Minor updates for project editor timer feature
