@@ -291,23 +291,23 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Increase timer delay 1 second.
-  increaseTimer(): void {
-    if (this.timerDelay + 1000 > 6000) return;
+  decreaseSpeed(): void {
+    if (this.timerDelay === 5000) return;
     this.timerDelay += 1000;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage()
+      this.refreshPage();
     });
     console.log(`Timer delay time set to ${this.timerDelay / 1000} second${this.timerDelay / 1000 > 1 ? 's.' : '.'}`);
   }
 
   // Decrease timer delay 1 second.
-  decreaseTimer(): void {
+  increaseSpeed(): void {
     if (this.timerDelay - 1000 <= 0) return;
     this.timerDelay -= 1000;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage()
+      this.refreshPage();
     });
     console.log(`Timer delay time set to ${this.timerDelay / 1000} seconds`);
   }
