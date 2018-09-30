@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { timer as observableTimer, Observable, Subject, Subscription } from "rxjs";
+import { timer as observableTimer, Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime } from "rxjs/operators";
 import { Options } from "highcharts";
 
@@ -26,10 +25,7 @@ export interface IProjectEditorConfig {
 })
 export class ProjectEditorComponent implements OnDestroy, OnInit {
 
-  constructor(private authService: AuthService,
-    private projectService: ProjectService,
-    private router: Router, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(private authService: AuthService, private projectService: ProjectService) { }
 
   @Input()
   config: IProjectEditorConfig = { projectId: 0 };
@@ -38,10 +34,10 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   displayChart: boolean = false;
   displayDescription: boolean = false;
   displayIndexDetails = false;
-  ElementFieldDataType = ElementFieldDataType;
+  elementFieldDataType = ElementFieldDataType;
   elementItemsSortField = "name";
   errorMessage: string = "";
-  RatingMode = RatingMode;
+  ratingMode = RatingMode;
   project: Project = null;
   projectId = 0;
   saveStream = new Subject();
@@ -52,9 +48,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   elementItemCount = 0;
   paused: boolean = false;
   /// Timer schedule
-  timerDelay = 5000;
+  timerDelay = 1000;
   timerSubscription = observableTimer(5000, this.timerDelay).subscribe(() => {
-    this.refreshPage()
+    this.refreshPage();
   });
 
   get isBusy(): boolean {
@@ -268,7 +264,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.refreshPage(true); // reset selectedDecimalValue
     this.timerDelay = 5000;
     this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(()=> {
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage()
     });
     this.increaseInitivalValue(true);
@@ -295,25 +291,25 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Increase timer delay 1 second.
-  increaseTimer(): void {
-    if (this.timerDelay + 1000 > 6000) return;
+  decreaseSpeed(): void {
+    if (this.timerDelay === 5000) return;
     this.timerDelay += 1000;
     this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(()=> {
-      this.refreshPage()
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
+      this.refreshPage();
     });
-    console.log(`Timer delay time set to ${this.timerDelay/1000} second${this.timerDelay/1000>1?'s.':'.'}`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} second${this.timerDelay / 1000 > 1 ? 's.' : '.'}`);
   }
 
   // Decrease timer delay 1 second.
-  decreaseTimer(): void {
+  increaseSpeed(): void {
     if (this.timerDelay - 1000 <= 0) return;
     this.timerDelay -= 1000;
     this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(()=> {
-      this.refreshPage()
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
+      this.refreshPage();
     });
-    console.log(`Timer delay time set to ${this.timerDelay/1000} seconds`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} seconds`);
   }
 
   // Timer refresh income
@@ -324,16 +320,18 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
 
     console.log(" -- timer");
+
     this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach(elementItem => {
       elementItem.ElementCellSet.forEach(elementCell => {
         if (!elementCell.ElementField.UseFixedValue && elementCell.ElementField.RatingEnabled) {
-          if (!reset) this.updateElementCellDecimalValue(elementCell, reset ? 0 : elementCell.selectedDecimalValue);
+          const newValue = reset ? 0 : elementCell.selectedDecimalValue;
+          this.updateElementCellDecimalValue(elementCell, newValue);
         }
-        if (reset) this.projectService.updateElementCellDecimalValue(elementCell, 0);
       });
     });
 
-    reset ? console.log("Reset: Timer delay time set to 5 seconds..") : null
+    if (reset)
+      console.log("Reset: Timer delay time set to 5 seconds..");
 
     this.increaseInitivalValue();
   };
@@ -386,7 +384,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     const newDecimalValue = cell.decimalValue() + selectedValue;
 
     this.projectService.updateElementCellDecimalValue(cell, newDecimalValue);
-    // this.saveStream.next();
+    //this.saveStream.next();
   }
 
   updateElementItemsSortField(): void {
