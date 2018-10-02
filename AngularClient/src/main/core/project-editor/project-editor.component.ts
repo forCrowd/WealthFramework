@@ -13,6 +13,8 @@ import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { ElementItem } from "../entities/element-item";
 
+declare function makingQRCode(projectId: string): any;
+
 export interface IProjectEditorConfig {
   initialValue?: number,
   projectId: number,
@@ -47,10 +49,19 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   // count current items
   elementItemCount = 0;
   paused: boolean = false;
-  /// Timer schedule
+
+  // Timer schedule
   timerDelay = 1000;
   timerSubscription = observableTimer(5000, this.timerDelay).subscribe(() => {
     this.refreshPage();
+  });
+
+  // QRCode
+
+  qrcode = observableTimer(1000, 1000).subscribe(() => {
+    //QRCodeJs: Js file call
+    makingQRCode(this.projectId.toString());
+    this.qrcode.unsubscribe(); // for function call one time
   });
 
   get isBusy(): boolean {
