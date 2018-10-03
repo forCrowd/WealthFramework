@@ -13,6 +13,8 @@ import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { ElementItem } from "../entities/element-item";
 
+declare function makingQRCode(projectId: string): any;
+
 export interface IProjectEditorConfig {
   initialValue?: number,
   projectId: number,
@@ -47,10 +49,19 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   // count current items
   elementItemCount = 0;
   paused: boolean = false;
-  /// Timer schedule
+
+  // Timer schedule
   timerDelay = 1000;
   timerSubscription = observableTimer(5000, this.timerDelay).subscribe(() => {
     this.refreshPage();
+  });
+
+  // QRCode
+
+  qrcode = observableTimer(2500, 1000).subscribe(() => {
+    //QRCodeJs: Js file call
+    makingQRCode(this.projectId.toString());
+    this.qrcode.unsubscribe(); // for function call one time
   });
 
   get isBusy(): boolean {
@@ -226,29 +237,68 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   // Add a new item
   addElementItem(): void {
-    if (this.elementItemCount == 0) this.elementItemCount = this.selectedElement.ElementItemSet.length;
+    this.elementItemCount == 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
 
-    // Create element item
-    const newElementItem = this.projectService.createElementItem({
-      Element: this.selectedElement,
-      Name: "New Item " + (this.elementItemCount + 1).toString()
-    }) as ElementItem;
+    this.project.ElementSet.forEach((element, e) => {
 
-    // Create cell
-    this.projectService.createElementCell({
-      ElementField: this.selectedElement.ElementFieldSet[0],
-      ElementItem: newElementItem
+      console.log("E:",element.Name, " Fset:", element.ElementFieldSet.length, element.Id, e);
+
+      // New Element Item
+      var newElementItem;
+
+      element.ElementFieldSet.forEach((field, i) => {
+
+        if (i == 0) { // Create element item once for all fields
+          newElementItem = this.projectService.createElementItem({
+            Element: element,
+            Name: `New ${element.Name} Item ${(this.elementItemCount + 1).toString()}`
+          }) as ElementItem;
+        }
+
+        if (field.DataType === 4) {
+          // For ElementFieldDataType: Decimal
+          this.projectService.createElementCell({
+            ElementField: field,
+            ElementItem: newElementItem,
+          });
+        } else {
+          // For ElementFieldDataType: String
+          this.projectService.createElementCell({
+            ElementField: field,
+            ElementItem: newElementItem,
+            StringValue: "N/A" // What should it be?
+          });
+        }
+
+      });
+
+      // Main element: Selected Element Item?
+      if (e === this.project.ElementSet.length - 1 && this.project.ElementSet.length > 0) {
+          // Main element
+          var mainElement = this.project.ElementSet[0];
+
+          // Set selected element item
+          for (var i = 0; i < this.project.ElementSet.length - 1; i++) {
+            mainElement.ElementItemSet[mainElement.ElementItemSet.length - 1]
+              .ElementCellSet[i].SelectedElementItem = this.project.ElementSet[i + 1]
+                .ElementItemSet[this.project.ElementSet[i + 1].ElementItemSet.length - 1];
+          }
+      }
+
     });
 
-    this.elementItemCount += 1;
-
+    // Set Income
     this.project.ElementSet.forEach(element => {
-      element.ElementFieldSet.forEach(field => {
+      element.ElementFieldSet.forEach((field, i) => {
         field.setIncome();
       });
     });
 
     this.loadChartData();
+  }
+
+  addNewElementField(): void {
+
   }
 
   // Pause-play Timer
@@ -258,11 +308,11 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   /**
   * Reset Timer
-  * - Timer delay set 5 seconds (by defaul)
+  * - Timer delay set 1 seconds (by defaul)
   */
   resetTimer(): void {
     this.refreshPage(true); // reset selectedDecimalValue
-    this.timerDelay = 5000;
+    this.timerDelay = 1000;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage()
@@ -331,7 +381,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     });
 
     if (reset)
-      console.log("Reset: Timer delay time set to 5 seconds..");
+      console.log(`Reset: Timer delay time set to 1 second..`);
 
     this.increaseInitivalValue();
   };

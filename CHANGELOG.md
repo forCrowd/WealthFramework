@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.86.4**
+
+* Project Editor - QRCode is added for project link
+* Project Editor - Add/remove items minor fix
+
 **0.86.3**
 
 * Catch-all route fix
@@ -31,7 +36,7 @@
 
 * app-entity-manager.ts fix
 * index.html - "global" variable fix: https://github.com/aws/aws-amplify/issues/678
-* "source-map" library fi
+* "source-map" library fix
 
 **0.85.0**
 
