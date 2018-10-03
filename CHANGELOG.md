@@ -3,7 +3,7 @@
 **0.86.4**
 
 * Project Editor - QRCode is added for project link
-* Project Editor - Add/remove element minor fix
+* Project Editor - Add/remove items minor fix
 
 **0.86.3**
 
