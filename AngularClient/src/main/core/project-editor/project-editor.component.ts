@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { timer as observableTimer, Subject, Subscription } from "rxjs";
-import { mergeMap, debounceTime } from "rxjs/operators";
+import { mergeMap, debounceTime, finalize } from "rxjs/operators";
 import { Options } from "highcharts";
 
 import { Element } from "../entities/element";
@@ -27,7 +28,10 @@ export interface IProjectEditorConfig {
 })
 export class ProjectEditorComponent implements OnDestroy, OnInit {
 
-  constructor(private authService: AuthService, private projectService: ProjectService) { }
+  constructor(
+    private authService: AuthService,
+    private projectService: ProjectService,
+    private router: Router) { }
 
   @Input()
   config: IProjectEditorConfig = { projectId: 0 };
@@ -45,6 +49,12 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   saveStream = new Subject();
   subscriptions: Subscription[] = [];
   username = "";
+
+  // User Project Array
+  projectDataSet = Array<Project>();
+
+  // User project list - selected project Id
+  loadProjectId: number = 0;
 
   // count current items
   elementItemCount = 0;
@@ -250,33 +260,156 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       Name: `Item ${this.elementItemCount + 1}`
     }) as ElementItem;
 
-    // Cells
-    this.selectedElement.ElementFieldSet.forEach(field => {
-      var elementCell = this.projectService.createElementCell({
-        ElementField: field,
-        ElementItem: newElementItem,
-      });
+    this.elementItemCount == 0
+      ? this.elementItemCount = this.selectedElement.ElementItemSet.length
+      : this.elementItemCount += 1;
+    this.project.ElementSet.forEach((element, e) => {
 
-      switch (field.DataType) {
-        case ElementFieldDataType.String: { break; }
-        case ElementFieldDataType.Decimal: { break; }
-        case ElementFieldDataType.Element:
-          {
-            const randomItemIndex = Math.floor(Math.random() * field.SelectedElement.ElementItemSet.length);
-            elementCell.SelectedElementItem = field.SelectedElement.ElementItemSet[randomItemIndex];
-            break;
-          }
-      }
+      // New Element Item
+      var newElementItem;
+
+      element.ElementFieldSet.forEach((field, i) => {
+
+        if (i == 0) { // Create element item once for all fields
+          newElementItem = this.projectService.createElementItem({
+            Element: element,
+            Name: `${element.Name} Item ${element.ElementItemSet.length + 1}`
+          }) as ElementItem;
+        }
+
+        if (field.DataType === 4) {
+          // For ElementFieldDataType: Decimal
+          this.projectService.createElementCell({
+            ElementField: field,
+            ElementItem: newElementItem,
+          });
+        } else {
+          // For ElementFieldDataType: String
+          this.projectService.createElementCell({
+            ElementField: field,
+            ElementItem: newElementItem,
+            StringValue: "N/A" // What should it be?
+          });
+        }
+
+        // Set Income
+        this.project.ElementSet.forEach(element => {
+          element.ElementFieldSet.forEach((field, i) => {
+            field.setIncome();
+          });
+        });
+
+        this.loadChartData();
+      });
+    });
+  }
+
+  addNewElementField(): void {
+    const mainElement = this.project.ElementSet[0];
+
+    this.elementItemCount == 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
+
+    // New Element
+    const newElement = this.projectService.createElement({
+      Project: this.project,
+      Name: `Element ${this.project.ElementSet.length + 1}`
+    }) as Element;
+
+    // Element Fields
+    const newElementField = this.projectService.createElementField({
+      Element: newElement,
+      Name: "New Field",
+      DataType: ElementFieldDataType.Decimal,
+      UseFixedValue: false,
+      RatingEnabled: true,
+      SortOrder: newElement.ElementFieldSet.length + 1
     });
 
-    // Set Income
+    // Element Items
+    const newElementItem1 = this.projectService.createElementItem({
+      Element: newElement,
+      Name: `Element ${this.project.ElementSet.length} item 1`
+    }) as ElementItem;
+
+    const newElementItem2 = this.projectService.createElementItem({
+      Element: newElement,
+      Name: `Element ${this.project.ElementSet.length} item 2`
+    }) as ElementItem;
+
+    // Element Cells
+    this.projectService.createElementCell({
+      ElementField: newElementField,
+      ElementItem: newElementItem1,
+    });
+
+    this.projectService.createElementCell({
+      ElementField: newElementField,
+      ElementItem: newElementItem2,
+    });
+
+    /* --- */
+
+    // Main Element New Field
+    const newField = this.projectService.createElementField({
+      Element: mainElement,
+      Name: newElement.Name, // Element name: Same as NewElement Name
+      DataType: ElementFieldDataType.Element,
+      SortOrder: mainElement.ElementFieldSet.length + 1
+    }) as ElementField;
+
+    newField.SelectedElement = newElement;
+
+    // Cells
+    newField.Element.ElementItemSet.forEach((elementItem, i) => {
+      this.projectService.createElementCell({
+        ElementField: newField,
+        ElementItem: elementItem
+      });
+    });
+
+    //console.log("efs, eis", mainElement.ElementFieldSet.length, mainElement.ElementItemSet.length);
+    mainElement.ElementItemSet[0].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem = newElementItem1
+    mainElement.ElementItemSet[1].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem = newElementItem2
+
+    // if the item is added before?
+    if (mainElement.ElementItemSet.length > 2) {
+      for (var i = 2; i < mainElement.ElementItemSet.length; i++) {
+        var randomNewElementItem = newElement.ElementItemSet[Math.floor(Math.random() * newElement.ElementItemSet.length)];
+        mainElement.ElementItemSet[i].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem = randomNewElementItem;
+      }
+    }
+
     this.project.ElementSet.forEach(element => {
       element.ElementFieldSet.forEach((field, i) => {
+        field.Element.setFamilyTree();
         field.setIncome();
+        field.ElementCellSet.forEach((cell, c) => {
+        });
       });
     });
 
-    this.loadChartData();
+  }
+
+  // Get project list of current user
+  getProjectSet(): void {
+
+    this.projectService.getProjectSet(this.currentUser.UserName).pipe(
+      finalize(() => {
+
+        //TODO: Do something ?
+        // Delete after ?
+        this.projectDataSet.forEach((p, i) => {
+          console.log("Project Name:", p.Name, p.Id);
+        });
+
+      }))
+      .subscribe(results => {
+        this.projectDataSet = results;
+      });
+  }
+
+  changeProject(): void {
+    this.router.navigate(["/project", this.loadProjectId]);
   }
 
   // Pause-play Timer
@@ -388,6 +521,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     this.initialize(projectId, this.authService.currentUser);
 
+    // Fetch data: Get project list of current user
+    this.getProjectSet();
   }
 
   resetRating(field: ElementField) {

@@ -177,8 +177,11 @@
                   <tr>
                     <!-- Name -->
                     <td class="noborder" colspan="selectedElement.getElementFieldSetSorted().length + 1">
-                      <button *ngIf="project.User.Id === currentUser.Id" (click)="addElementItem()" class="btn btn-md btn-success">
-                        <i class="fa fa-plus"></i> Add a new
+                      <button *ngIf="project.User.Id === currentUser.Id" (click)="addNewElementField()" class="btn btn-md btn-success ml-2">
+                        <i class="fa fa-plus"></i> Field
+                      </button>
+                      <button *ngIf="project.User.Id === currentUser.Id" (click)="addElementItem()" class="btn btn-md btn-success ml-2">
+                        <i class="fa fa-plus"></i> Item
                       </button>
                       <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2">
                         <i class="fa fa-refresh"></i>
@@ -210,6 +213,16 @@
                     </ng-template>
                     <td *ngIf="project.initialValue > 0" class="noborder text-right">
                       &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="noborder" colspan="4">
+                      <select [(ngModel)]="loadProjectId" class="form-control form-control-lg pull-left">
+                        <option *ngFor="let p of projectDataSet; let i=index" [value]="p.Id" [selected]="project.Id === p.Id ? 'selected': null">{{ p.Name }}</option>
+                      </select>
+                      <button *ngIf="project.User.Id === currentUser.Id" [disabled]="loadProjectId === 0" (click)="changeProject()" class="btn btn-md btn-default ml-2">
+                        <i class="fa fa-paper-plane-o"></i> Load
+                      </button>
                     </td>
                   </tr>
                 </tfoot>
