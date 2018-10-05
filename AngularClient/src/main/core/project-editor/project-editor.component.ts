@@ -252,56 +252,39 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       ? this.selectedElement.ElementItemSet.length
       : this.elementItemCount + 1;
 
-    // console.log("E:", element.Name, " Fset:", element.ElementFieldSet.length, element.Id, e);
-
-    // New Element Item
+    // New element Item
     const newElementItem = this.projectService.createElementItem({
       Element: this.selectedElement,
       Name: `Item ${this.elementItemCount + 1}`
     }) as ElementItem;
 
-    this.elementItemCount == 0
-      ? this.elementItemCount = this.selectedElement.ElementItemSet.length
-      : this.elementItemCount += 1;
-    this.project.ElementSet.forEach((element, e) => {
+    // Cells
+    this.selectedElement.ElementFieldSet.forEach(field => {
+      var elementCell = this.projectService.createElementCell({
+        ElementField: field,
+        ElementItem: newElementItem,
+      });
 
-      // New Element Item
-      var newElementItem;
+      switch (field.DataType) {
+        case ElementFieldDataType.String: { break; }
+        case ElementFieldDataType.Decimal: { break; }
+        case ElementFieldDataType.Element:
+          {
+            const randomItemIndex = Math.floor(Math.random() * field.SelectedElement.ElementItemSet.length);
+            elementCell.SelectedElementItem = field.SelectedElement.ElementItemSet[randomItemIndex];
+            break;
+          }
+      }
+    });
 
+    // Set Income
+    this.project.ElementSet.forEach(element => {
       element.ElementFieldSet.forEach((field, i) => {
-
-        if (i == 0) { // Create element item once for all fields
-          newElementItem = this.projectService.createElementItem({
-            Element: element,
-            Name: `${element.Name} Item ${element.ElementItemSet.length + 1}`
-          }) as ElementItem;
-        }
-
-        if (field.DataType === 4) {
-          // For ElementFieldDataType: Decimal
-          this.projectService.createElementCell({
-            ElementField: field,
-            ElementItem: newElementItem,
-          });
-        } else {
-          // For ElementFieldDataType: String
-          this.projectService.createElementCell({
-            ElementField: field,
-            ElementItem: newElementItem,
-            StringValue: "N/A" // What should it be?
-          });
-        }
-
-        // Set Income
-        this.project.ElementSet.forEach(element => {
-          element.ElementFieldSet.forEach((field, i) => {
-            field.setIncome();
-          });
-        });
-
-        this.loadChartData();
+        field.setIncome();
       });
     });
+
+    this.loadChartData();
   }
 
   addNewElementField(): void {

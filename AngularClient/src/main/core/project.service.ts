@@ -193,7 +193,22 @@ export class ProjectService {
 
     return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh).pipe(
       map(response => {
-        return response.results[0] || null;
+        var project = response.results[0] || null;
+        console.log("p", project);
+
+        project.ElementSet.forEach(element => {
+          element.ElementFieldSet.forEach(field => {
+
+            // Default 
+            field.ElementCellSet.forEach(cell => {
+              console.log("c", cell.DecimalValueTotal, cell.DecimalValueCount, cell.UserElementCellSet.length);
+            });
+          });
+        });
+
+        console.log(" --- ");
+
+        return project;
       }));
   }
 
