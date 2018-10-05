@@ -237,54 +237,36 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   // Add a new item
   addElementItem(): void {
-    this.elementItemCount == 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
 
-    this.project.ElementSet.forEach((element, e) => {
+    this.elementItemCount = this.elementItemCount === 0
+      ? this.selectedElement.ElementItemSet.length
+      : this.elementItemCount + 1;
 
-      console.log("E:",element.Name, " Fset:", element.ElementFieldSet.length, element.Id, e);
+    // console.log("E:", element.Name, " Fset:", element.ElementFieldSet.length, element.Id, e);
 
-      // New Element Item
-      var newElementItem;
+    // New Element Item
+    const newElementItem = this.projectService.createElementItem({
+      Element: this.selectedElement,
+      Name: `Item ${this.elementItemCount + 1}`
+    }) as ElementItem;
 
-      element.ElementFieldSet.forEach((field, i) => {
-
-        if (i == 0) { // Create element item once for all fields
-          newElementItem = this.projectService.createElementItem({
-            Element: element,
-            Name: `New ${element.Name} Item ${(this.elementItemCount + 1).toString()}`
-          }) as ElementItem;
-        }
-
-        if (field.DataType === 4) {
-          // For ElementFieldDataType: Decimal
-          this.projectService.createElementCell({
-            ElementField: field,
-            ElementItem: newElementItem,
-          });
-        } else {
-          // For ElementFieldDataType: String
-          this.projectService.createElementCell({
-            ElementField: field,
-            ElementItem: newElementItem,
-            StringValue: "N/A" // What should it be?
-          });
-        }
-
+    // Cells
+    this.selectedElement.ElementFieldSet.forEach(field => {
+      var elementCell = this.projectService.createElementCell({
+        ElementField: field,
+        ElementItem: newElementItem,
       });
 
-      // Main element: Selected Element Item?
-      if (e === this.project.ElementSet.length - 1 && this.project.ElementSet.length > 0) {
-          // Main element
-          var mainElement = this.project.ElementSet[0];
-
-          // Set selected element item
-          for (var i = 0; i < this.project.ElementSet.length - 1; i++) {
-            mainElement.ElementItemSet[mainElement.ElementItemSet.length - 1]
-              .ElementCellSet[i].SelectedElementItem = this.project.ElementSet[i + 1]
-                .ElementItemSet[this.project.ElementSet[i + 1].ElementItemSet.length - 1];
+      switch (field.DataType) {
+        case ElementFieldDataType.String: { break; }
+        case ElementFieldDataType.Decimal: { break; }
+        case ElementFieldDataType.Element:
+          {
+            const randomItemIndex = Math.floor(Math.random() * field.SelectedElement.ElementItemSet.length);
+            elementCell.SelectedElementItem = field.SelectedElement.ElementItemSet[randomItemIndex];
+            break;
           }
       }
-
     });
 
     // Set Income
@@ -295,10 +277,6 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     });
 
     this.loadChartData();
-  }
-
-  addNewElementField(): void {
-
   }
 
   // Pause-play Timer
@@ -315,7 +293,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.timerDelay = 1000;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage()
+      this.refreshPage();
     });
     this.increaseInitivalValue(true);
   }

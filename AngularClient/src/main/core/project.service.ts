@@ -119,7 +119,7 @@ export class ProjectService {
         DecimalValue: 0,
       } as any;
 
-      this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
+      this.appEntityManager.createEntity("UserElementCell", userElementCellInitial);
     }
 
     return elementCell;
@@ -141,7 +141,7 @@ export class ProjectService {
         Rating: rating
       };
 
-      this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
+      this.appEntityManager.createEntity("UserElementField", userElementFieldInitial);
     }
 
     return elementField;

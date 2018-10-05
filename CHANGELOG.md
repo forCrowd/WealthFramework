@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.86.x**
+
+* Minor updates
+
 **0.86.4**
 
 * Project Editor - QRCode is added for project link
