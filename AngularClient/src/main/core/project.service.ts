@@ -151,6 +151,25 @@ export class ProjectService {
     return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
   }
 
+  createElement(initialValues: Object) {
+    return this.appEntityManager.createEntity("Element", initialValues);
+  }
+
+  saveElementField(elementField: ElementField): Observable<void> {
+
+    // Related cells
+    if (elementField.ElementCellSet.length === 0) {
+      elementField.Element.ElementItemSet.forEach(elementItem => {
+        this.createElementCell({
+          ElementField: elementField,
+          ElementItem: elementItem
+        });
+      });
+    }
+
+    return this.saveChanges();
+  }
+
   removeElementCell(elementCell: ElementCell): void {
 
     // User element cell
@@ -175,6 +194,25 @@ export class ProjectService {
     return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh).pipe(
       map(response => {
         return response.results[0] || null;
+      }));
+  }
+
+  getProjectSet(searchKey: string = "") {
+
+    let query = EntityQuery
+      .from("Project")
+      .expand(["User"])
+      .orderBy("Name");
+
+    if (searchKey !== "") {
+      const projectNamePredicate = new Predicate("Name", "contains", searchKey);
+      const userNamePredicate = new Predicate("User.UserName", "contains", searchKey);
+      query = query.where(projectNamePredicate.or(userNamePredicate));
+    }
+
+    return this.appEntityManager.executeQueryObservable<Project>(query).pipe(
+      map(response => {
+        return response.results;
       }));
   }
 

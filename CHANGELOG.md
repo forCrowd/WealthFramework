@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.86.5**
+
+* Project Editor - Add Fields
+* Project Editor - Loading feature is added (Get project list of current user) 
+
 **0.86.4**
 
 * Project Editor - QRCode is added for project link
