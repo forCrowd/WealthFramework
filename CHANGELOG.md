@@ -2,6 +2,7 @@
 
 **0.86.6**
 
+* Project - Sorting elements by using "Sort Order" field
 * Minor updates
 
 **0.86.5**

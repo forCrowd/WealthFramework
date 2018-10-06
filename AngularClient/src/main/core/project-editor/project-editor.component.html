@@ -215,7 +215,8 @@
                       &nbsp;
                     </td>
                   </tr>
-                  <!--<tr>
+                  <!-- Project load - hidden for the moment -->
+                  <tr style="display: none;">
                     <td class="noborder" colspan="4">
                       <select [(ngModel)]="loadProjectId" class="form-control form-control-lg pull-left">
                         <option *ngFor="let p of projectDataSet; let i=index" [value]="p.Id" [selected]="project.Id === p.Id ? 'selected': null">{{ p.Name }}</option>
@@ -224,7 +225,7 @@
                         <i class="fa fa-paper-plane-o"></i> Load
                       </button>
                     </td>
-                  </tr>-->
+                  </tr>
                 </tfoot>
               </table>
             </div>

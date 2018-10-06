@@ -135,9 +135,6 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
         this.project = project;
 
-        // It returns an array, set the first item in the list
-        //this.project = project.ElementSet.find(element => element.Id === this.config.Id);
-
         // Set Initial value + setIncome()
         this.project.initialValue = this.config.initialValue || 100;
         this.project.ElementSet.forEach(element => {
@@ -374,22 +371,22 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Get project list of current user
-  //getProjectSet(): void {
+  getProjectSet(): void {
 
-  //  this.projectService.getProjectSet(this.currentUser.UserName).pipe(
-  //    finalize(() => {
+    this.projectService.getProjectSet(this.currentUser.UserName).pipe(
+      finalize(() => {
 
-  //      //TODO: Do something ?
-  //      // Delete after ?
-  //      this.projectDataSet.forEach((p, i) => {
-  //        console.log("Project Name:", p.Name, p.Id);
-  //      });
+        //TODO: Do something ?
+        // Delete after ?
+        this.projectDataSet.forEach((p, i) => {
+          console.log("Project Name:", p.Name, p.Id);
+        });
 
-  //    }))
-  //    .subscribe(results => {
-  //      this.projectDataSet = results;
-  //    });
-  //}
+      }))
+      .subscribe(results => {
+        this.projectDataSet = results;
+      });
+  }
 
   changeProject(): void {
     this.router.navigate(["/project", this.loadProjectId]);
