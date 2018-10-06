@@ -46,6 +46,9 @@ export class Project extends EntityBase {
   initialize(): boolean {
     if (!super.initialize()) return false;
 
+    // Elements sort order
+    this.ElementSet = this.ElementSet.sort((a, b) => a.SortOrder - b.SortOrder);
+
     this.ElementSet.forEach(element => {
       element.initialize();
     });

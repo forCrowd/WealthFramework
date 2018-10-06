@@ -374,22 +374,22 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Get project list of current user
-  getProjectSet(): void {
+  //getProjectSet(): void {
 
-    this.projectService.getProjectSet(this.currentUser.UserName).pipe(
-      finalize(() => {
+  //  this.projectService.getProjectSet(this.currentUser.UserName).pipe(
+  //    finalize(() => {
 
-        //TODO: Do something ?
-        // Delete after ?
-        this.projectDataSet.forEach((p, i) => {
-          console.log("Project Name:", p.Name, p.Id);
-        });
+  //      //TODO: Do something ?
+  //      // Delete after ?
+  //      this.projectDataSet.forEach((p, i) => {
+  //        console.log("Project Name:", p.Name, p.Id);
+  //      });
 
-      }))
-      .subscribe(results => {
-        this.projectDataSet = results;
-      });
-  }
+  //    }))
+  //    .subscribe(results => {
+  //      this.projectDataSet = results;
+  //    });
+  //}
 
   changeProject(): void {
     this.router.navigate(["/project", this.loadProjectId]);
@@ -505,7 +505,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.initialize(projectId, this.authService.currentUser);
 
     // Fetch data: Get project list of current user
-    this.getProjectSet();
+    //this.getProjectSet();
   }
 
   resetRating(field: ElementField) {
