@@ -2,6 +2,7 @@
 
 **0.86.6**
 
+* Timer related calculation fixes
 * Project - Sorting elements by using "Sort Order" field
 * Minor updates
 
