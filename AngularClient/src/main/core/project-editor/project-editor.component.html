@@ -60,8 +60,8 @@
         <div class="row">
           <div class="details col-md-12">
             <div *ngIf="selectedElement.elementFieldSet().length > 0">
-              <label>Total Amount</label>
-              <span class="text-right">{{ project.initialValue | symbolic }}</span>
+              <label>Total Amount / Rounds</label>
+              <span class="text-right">{{ project.initialValue | symbolic }} - {{ project.rounds }}</span>
             </div>
           </div>
         </div>
@@ -121,15 +121,15 @@
                             </div>
                             <div [hidden]="project.RatingMode === ratingMode.AllUsers">
 
-                              <span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> -
+                              <!--<span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> --->
                               <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
 
                               <div class="btn-group" role="group">
-                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 0, 'btn-default': elementCell.selectedDecimalValue !== 0 }">0</button>
-                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 25, 'btn-default': elementCell.selectedDecimalValue !== 25 }">1</button>
-                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 50, 'btn-default': elementCell.selectedDecimalValue !== 50 }">2</button>
-                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 75, 'btn-default': elementCell.selectedDecimalValue !== 75 }">3</button>
-                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.selectedDecimalValue === 100, 'btn-default': elementCell.selectedDecimalValue !== 100 }">4</button>
+                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
+                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 25, 'btn-default': elementCell.decimalValue() !== 25 }">1</button>
+                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 50, 'btn-default': elementCell.decimalValue() !== 50 }">2</button>
+                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 75, 'btn-default': elementCell.decimalValue() !== 75 }">3</button>
+                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">4</button>
                               </div>
                             </div>
                           </div>
@@ -145,11 +145,11 @@
                     <!-- Total Income & Details -->
                     <ng-template [ngIf]="displayIndexDetails">
                       <td *ngFor="let ratingCell of elementItem.ratingCells()" class="text-right">
-                        {{ ratingCell.income() | symbolic }}
+                        {{ ratingCell.allRoundsIncome() | symbolic }}
                       </td>
                     </ng-template>
                     <td *ngIf="project.initialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
-                      {{ elementItem.income() | symbolic }}
+                      {{ elementItem.allRoundsIncome() | symbolic }}
                     </td>
                   </tr>
                 </tbody>
@@ -170,7 +170,7 @@
                       </td>
                     </ng-template>
                     <td *ngIf="project.initialValue > 0" class="text-right">
-                      {{ project.initialValue | symbolic }} <!-- Same as income -->
+                      {{ (project.initialValue * project.rounds) | symbolic }} <!-- Same as income -->
                     </td>
                   </tr>
                   <!-- Functions -->
@@ -215,7 +215,8 @@
                       &nbsp;
                     </td>
                   </tr>
-                  <tr>
+                  <!-- Project load - hidden for the moment -->
+                  <tr style="display: none;">
                     <td class="noborder" colspan="4">
                       <select [(ngModel)]="loadProjectId" class="form-control form-control-lg pull-left">
                         <option *ngFor="let p of projectDataSet; let i=index" [value]="p.Id" [selected]="project.Id === p.Id ? 'selected': null">{{ p.Name }}</option>

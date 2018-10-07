@@ -9,6 +9,7 @@ export class Element extends EntityBase {
   Id = 0;
   Project: Project;
   Name = "";
+  SortOrder = 0;
   ElementFieldSet: ElementField[];
   ElementItemSet: ElementItem[];
   ParentFieldSet: ElementField[];

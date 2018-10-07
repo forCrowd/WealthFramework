@@ -51,7 +51,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   username = "";
 
   // User Project Array
-  projectDataSet =  Array<Project>();
+  projectDataSet = Array<Project>();
 
   // User project list - selected project Id
   loadProjectId: number = 0;
@@ -62,7 +62,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   // Timer schedule
   timerDelay = 1000;
-  timerSubscription = observableTimer(5000, this.timerDelay).subscribe(() => {
+  timerSubscription = observableTimer(1500, this.timerDelay).subscribe(() => {
     this.refreshPage();
   });
 
@@ -135,9 +135,6 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
         this.project = project;
 
-        // It returns an array, set the first item in the list
-        //this.project = project.ElementSet.find(element => element.Id === this.config.Id);
-
         // Set Initial value + setIncome()
         this.project.initialValue = this.config.initialValue || 100;
         this.project.ElementSet.forEach(element => {
@@ -187,8 +184,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
         element.ElementItemSet.forEach(elementItem => {
           data.push(new ChartDataItem(elementItem.Name,
-            elementItem.income(),
-            elementItem.incomeUpdated));
+            elementItem.allRoundsIncome(),
+            elementItem.allRoundsIncomeUpdated));
         });
 
         this.chartConfig = new ChartConfig(options, data);
@@ -247,51 +244,34 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   // Add a new item
   addElementItem(): void {
-    this.elementItemCount == 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
-    this.project.ElementSet.forEach((element, e) => {
 
-      // New Element Item
-      var newElementItem;
+    this.elementItemCount = this.elementItemCount === 0
+      ? this.selectedElement.ElementItemSet.length
+      : this.elementItemCount + 1;
 
-      element.ElementFieldSet.forEach((field, i) => {
+    // New element Item
+    const newElementItem = this.projectService.createElementItem({
+      Element: this.selectedElement,
+      Name: `Item ${this.elementItemCount + 1}`
+    }) as ElementItem;
 
-        if (i == 0) { // Create element item once for all fields
-          newElementItem = this.projectService.createElementItem({
-            Element: element,
-            Name: `${element.Name} Item ${element.ElementItemSet.length + 1}`
-          }) as ElementItem;
-        }
-
-        if (field.DataType === 4) {
-          // For ElementFieldDataType: Decimal
-          this.projectService.createElementCell({
-            ElementField: field,
-            ElementItem: newElementItem,
-          });
-        } else {
-          // For ElementFieldDataType: String
-          this.projectService.createElementCell({
-            ElementField: field,
-            ElementItem: newElementItem,
-            StringValue: "N/A" // What should it be?
-          });
-        }
-
+    // Cells
+    this.selectedElement.ElementFieldSet.forEach(field => {
+      var elementCell = this.projectService.createElementCell({
+        ElementField: field,
+        ElementItem: newElementItem,
       });
 
-      // Main element: Selected Element Item?
-      if (e === this.project.ElementSet.length - 1 && this.project.ElementSet.length > 0) {
-          // Main element
-          var mainElement = this.project.ElementSet[0];
-
-          // Set selected element item
-          for (var i = 0; i < this.project.ElementSet.length - 1; i++) {
-            mainElement.ElementItemSet[mainElement.ElementItemSet.length - 1]
-              .ElementCellSet[i].SelectedElementItem = this.project.ElementSet[i + 1]
-                .ElementItemSet[this.project.ElementSet[i + 1].ElementItemSet.length - 1];
+      switch (field.DataType) {
+        case ElementFieldDataType.String: { break; }
+        case ElementFieldDataType.Decimal: { break; }
+        case ElementFieldDataType.Element:
+          {
+            const randomItemIndex = Math.floor(Math.random() * field.SelectedElement.ElementItemSet.length);
+            elementCell.SelectedElementItem = field.SelectedElement.ElementItemSet[randomItemIndex];
+            break;
           }
       }
-
     });
 
     // Set Income
@@ -323,7 +303,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       UseFixedValue: false,
       RatingEnabled: true,
       SortOrder: newElement.ElementFieldSet.length + 1
-    })
+    });
 
     // Element Items
     const newElementItem1 = this.projectService.createElementItem({
@@ -368,8 +348,10 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     });
 
     //console.log("efs, eis", mainElement.ElementFieldSet.length, mainElement.ElementItemSet.length);
-    mainElement.ElementItemSet[0].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem = newElementItem1
-    mainElement.ElementItemSet[1].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem = newElementItem2
+    mainElement.ElementItemSet[0].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem =
+      newElementItem1;
+    mainElement.ElementItemSet[1].ElementCellSet[mainElement.ElementFieldSet.length - 1].SelectedElementItem =
+      newElementItem2;
 
     // if the item is added before?
     if (mainElement.ElementItemSet.length > 2) {
@@ -408,7 +390,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       });
   }
 
-  changeProject():void {
+  changeProject(): void {
     this.router.navigate(["/project", this.loadProjectId]);
   }
 
@@ -422,33 +404,16 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   * - Timer delay set 1 seconds (by defaul)
   */
   resetTimer(): void {
-    this.refreshPage(true); // reset selectedDecimalValue
+
+    this.project.resetRounds();
+
     this.timerDelay = 1000;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage()
+      this.refreshPage();
     });
-    this.increaseInitivalValue(true);
-  }
 
-  increaseInitivalValue(reset: boolean = false): void {
-    if (reset) {
-      this.project.initialValue = 100 || this.config.initialValue;
-      this.project.ElementSet.forEach(element => {
-        element.ElementFieldSet.forEach(field => {
-          field.setIncome();
-        });
-      });
-      return;
-    }
-    var currentInitialValue = this.project.initialValue;
-    this.project.initialValue = currentInitialValue + 100 || this.config.initialValue;
-    this.config.initialValue = currentInitialValue + 100;
-    this.project.ElementSet.forEach(element => {
-      element.ElementFieldSet.forEach(field => {
-        field.setIncome();
-      });
-    });
+    console.log(`Reset: Timer delay time set to 1 second..`);
   }
 
   // Increase timer delay 1 second.
@@ -474,27 +439,13 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Timer refresh income
-  refreshPage(reset: boolean = false): void {
+  refreshPage(): void {
 
     if (this.paused) {
       return;
     }
 
-    console.log(" -- timer");
-
-    this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach(elementItem => {
-      elementItem.ElementCellSet.forEach(elementCell => {
-        if (!elementCell.ElementField.UseFixedValue && elementCell.ElementField.RatingEnabled) {
-          const newValue = reset ? 0 : elementCell.selectedDecimalValue;
-          this.updateElementCellDecimalValue(elementCell, newValue);
-        }
-      });
-    });
-
-    if (reset)
-      console.log(`Reset: Timer delay time set to 1 second..`);
-
-    this.increaseInitivalValue();
+    this.project.increaseRounds();
   };
 
   ngOnDestroy(): void {
@@ -522,7 +473,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.initialize(projectId, this.authService.currentUser);
 
     // Fetch data: Get project list of current user
-    this.getProjectSet();
+    //this.getProjectSet();
   }
 
   resetRating(field: ElementField) {
@@ -541,13 +492,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   updateElementCellDecimalValue(cell: ElementCell, selectedValue: number) {
-
-    cell.selectedDecimalValue = selectedValue;
-    //TODO: if total amount increase then ..?
-    const newDecimalValue = cell.decimalValue() + selectedValue;
-
-    this.projectService.updateElementCellDecimalValue(cell, newDecimalValue);
-    //this.saveStream.next();
+    this.projectService.updateElementCellDecimalValue(cell, selectedValue);
+    this.saveStream.next();
   }
 
   updateElementItemsSortField(): void {

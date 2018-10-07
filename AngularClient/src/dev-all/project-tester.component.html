@@ -6,7 +6,9 @@
       User: {{ project.User.UserName }} -
       Name: {{ project.Name }} -
       Key: {{ project.Key }} -
+      InitialValue: {{ project.InitialValue }} -
       RatingMode: <span (click)="project.toggleRatingMode()">{{ RatingMode[project.RatingMode] }}</span> -
+      rounds: {{ project.rounds }} - <button (click)="project.increaseRounds()">+</button> - <button (click)="project.resetRounds()">R</button>
 
       <div class="row g-mt-20">
         <div class="col-md-2">
@@ -14,7 +16,7 @@
           <div *ngFor="let element of project.ElementSet">
             Id: {{ element.Id }}<br />
             Name: {{ element.Name }}<br />
-            initialValue: {{ element.initialValue }} -
+            SortOrder: {{ element.SortOrder }}
             ...: -<br />
             income: {{ element.income() }}<br />
             rating: {{ element.rating() }}<br />
@@ -34,8 +36,8 @@
               UseFixedValue: {{ field.UseFixedValue }}<br />
               RatingEnabled: {{ field.RatingEnabled }}<br />
               SortOrder: {{ field.SortOrder }}<br />
-              RatingTotal: {{ field.ratingTotal }}<br />
-              RatingCount: {{ field.ratingCount }}<br />
+              RatingTotal: {{ field.ratingTotal() }}<br />
+              RatingCount: {{ field.ratingCount() }}<br />
               ...: -<br />
               DataTypeText: {{ field.DataTypeText }}<br />
               otherUsersRatingTotal: {{ field.otherUsersRatingTotal }}<br />
@@ -73,10 +75,10 @@
               Id: {{ item.Id }}<br />
               Element: {{ item.Element.Name }}<br />
               Name: {{ item.Name }}<br />
-              ...: -<br />
-              incomeStatus: {{ item.incomeStatus() }}<br />
+              allRoundsIncome: {{ item.allRoundsIncome() | number : '1.0-2' }}<br />
               ...: -<br />
               income: {{ item.income() | number : '1.0-2' }}<br />
+              incomeStatus: {{ item.incomeStatus() }}<br />
               <hr />
             </div>
           </div>
@@ -95,6 +97,7 @@
                 SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
                 otherUsersDecimalValueTotal: {{ cell.otherUsersDecimalValueTotal }}<br />
                 otherUsersDecimalValueCount: {{ cell.otherUsersDecimalValueCount }}<br />
+                allRoundsIncome: {{ cell.allRoundsIncome() | number : '1.0-2' }}<br />
                 currentUserDecimalValue: {{ cell.currentUserDecimalValue() }}<br />
                 income: {{ cell.income() | number : '1.0-2' }}<br />
                 decimalValue: {{ cell.decimalValue() | number : '1.0-2' }}<br />
