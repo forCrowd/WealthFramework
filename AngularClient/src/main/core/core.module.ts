@@ -1,7 +1,10 @@
 import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+import { MomentModule } from "angular2-moment";
+import { ToasterModule } from "angular2-toaster";
 
 // Breeze
 import "./breeze-client-odata-fix";
@@ -87,6 +90,9 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     RouterModule,
   ],
   imports: [
+    ToasterModule.forRoot(),
+    MomentModule,
+
     SharedModule,
     AppHttpClientModule,
     RouterModule.forChild(coreRoutes),
@@ -114,7 +120,8 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     CanDeactivateGuard,
     DynamicTitleResolve,
     GoogleAnalyticsService,
-    ProjectService
+    ProjectService,
+    Title
   ]
 })
 export class CoreModule { }

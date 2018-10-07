@@ -1,19 +1,12 @@
 import { NgModule } from "@angular/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
-import { ToasterModule } from "angular2-toaster";
-import { FormsModule } from "@angular/forms";
-import { BrowserModule, Title } from "@angular/platform-browser";
-import { MomentModule } from "angular2-moment";
+import { BrowserModule } from "@angular/platform-browser";
 
 import { CoreModule } from "../core/core.module";
 import { LoggerModule } from "../logger/logger.module";
 import { AccountModule } from "../account/account.module";
 
 import { AppComponent } from "./app.component";
-
-import { Angulartics2Module } from "angulartics2";
-import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 
 const appRoutes: Routes = [
   { path: "**", redirectTo: "", pathMatch: "full" },
@@ -29,12 +22,6 @@ const appRoutes: Routes = [
   imports: [
     // External
     BrowserModule,
-    BrowserAnimationsModule,
-    ToasterModule,
-    ToasterModule.forRoot(),
-    FormsModule,
-    MomentModule,
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
 
     // Internal
     LoggerModule,
@@ -42,8 +29,5 @@ const appRoutes: Routes = [
     AccountModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [
-    Title
-  ]
 })
 export class AppModule { }
