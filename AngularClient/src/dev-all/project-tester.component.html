@@ -6,6 +6,7 @@
       User: {{ project.User.UserName }} -
       Name: {{ project.Name }} -
       Key: {{ project.Key }} -
+      InitialValue: {{ project.InitialValue }} -
       RatingMode: <span (click)="project.toggleRatingMode()">{{ RatingMode[project.RatingMode] }}</span> -
 
       <div class="row g-mt-20">
@@ -14,7 +15,7 @@
           <div *ngFor="let element of project.ElementSet">
             Id: {{ element.Id }}<br />
             Name: {{ element.Name }}<br />
-            initialValue: {{ element.initialValue }} -
+            SortOrder: {{ element.SortOrder }}
             ...: -<br />
             income: {{ element.income() }}<br />
             rating: {{ element.rating() }}<br />
