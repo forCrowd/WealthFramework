@@ -27,26 +27,36 @@ export class ElementCell extends EntityBase {
   decimalValueUpdated = new Subject<number>();
 
   private fields: {
+    allRoundsIncome: number,
     currentUserDecimalValue: number,
     income: number,
     decimalValue: number,
     decimalValuePercentage: number,
   } = {
+      allRoundsIncome: 0,
       currentUserDecimalValue: 0,
       income: 0,
       decimalValue: 0,
       decimalValuePercentage: 0,
     };
 
+  allRoundsIncome() {
+    return this.fields.allRoundsIncome;
+  }
+
   currentUserDecimalValue() {
     return this.fields.currentUserDecimalValue;
+  }
+
+  increaseAllRoundsIncome() {
+    this.fields.allRoundsIncome += this.income();
   }
 
   income() {
     return this.fields.income;
   }
 
-  initialize(): boolean {
+  initialize() {
     if (!super.initialize()) return false;
 
     // Other users'
@@ -99,6 +109,10 @@ export class ElementCell extends EntityBase {
         ? this.currentUserDecimalValue()
         : this.otherUsersDecimalValueTotal
       : this.otherUsersDecimalValueTotal + this.currentUserDecimalValue();
+  }
+
+  resetAllRoundsIncome() {
+    this.fields.allRoundsIncome = 0;
   }
 
   setCurrentUserDecimalValue() {

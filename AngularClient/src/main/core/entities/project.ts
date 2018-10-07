@@ -3,7 +3,6 @@ import { Subject } from "rxjs";
 import { Element } from "./element";
 import { EntityBase } from "./entity-base";
 import { User } from "./user";
-import { stripInvalidChars } from "../../shared/utils";
 
 export enum RatingMode {
   CurrentUser = 1,
@@ -23,7 +22,6 @@ export class Project extends EntityBase {
   // Client-side
   initialValue = 100;
 
-  // Client-side
   get RatingMode(): RatingMode {
     return this.fields.ratingMode;
   }
@@ -35,12 +33,43 @@ export class Project extends EntityBase {
     }
   }
 
+  get rounds(): number {
+    return this.fields.rounds;
+  }
+
+  increaseRounds(): void {
+    this.fields.rounds++;
+
+    this.ElementSet.forEach(element => {
+      element.ElementItemSet.forEach(elementItem => {
+        elementItem.ElementCellSet.forEach(elementCell => {
+          elementCell.setIncome();
+          elementCell.increaseAllRoundsIncome();
+        });
+      });
+    });
+  }
+
+  resetRounds(): void {
+    this.fields.rounds = 0;
+
+    this.ElementSet.forEach(element => {
+      element.ElementItemSet.forEach(elementItem => {
+        elementItem.ElementCellSet.forEach(elementCell => {
+          elementCell.resetAllRoundsIncome();
+        });
+      });
+    });
+  }
+
   ratingModeUpdated = new Subject<RatingMode>();
 
   private fields: {
     ratingMode: number,
+    rounds: number,
   } = {
       ratingMode: RatingMode.CurrentUser,
+      rounds: 0,
     };
 
   initialize(): boolean {
