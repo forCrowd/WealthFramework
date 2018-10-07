@@ -62,7 +62,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   // Timer schedule
   timerDelay = 1000;
-  timerSubscription = observableTimer(5000, this.timerDelay).subscribe(() => {
+  timerSubscription = observableTimer(1500, this.timerDelay).subscribe(() => {
     this.refreshPage();
   });
 
@@ -404,7 +404,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   * - Timer delay set 1 seconds (by defaul)
   */
   resetTimer(): void {
-    this.refreshPage(); // reset selectedDecimalValue
+
+    this.project.resetRounds();
+
     this.timerDelay = 1000;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
@@ -412,29 +414,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     });
 
     console.log(`Reset: Timer delay time set to 1 second..`);
-
-    //this.increaseInitivalValue(true);
   }
-
-  //increaseInitivalValue(reset: boolean = false): void {
-  //  if (reset) {
-  //    this.project.initialValue = 100 || this.config.initialValue;
-  //    this.project.ElementSet.forEach(element => {
-  //      element.ElementFieldSet.forEach(field => {
-  //        field.setIncome();
-  //      });
-  //    });
-  //    return;
-  //  }
-  //  var currentInitialValue = this.project.initialValue;
-  //  this.project.initialValue = currentInitialValue + 100 || this.config.initialValue;
-  //  this.config.initialValue = currentInitialValue + 100;
-  //  this.project.ElementSet.forEach(element => {
-  //    element.ElementFieldSet.forEach(field => {
-  //      field.setIncome();
-  //    });
-  //  });
-  //}
 
   // Increase timer delay 1 second.
   decreaseSpeed(): void {
@@ -465,23 +445,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       return;
     }
 
-    //console.log(" -- timer");
-
     this.project.increaseRounds();
-
-    //this.selectedElement.getElementItemSet(this.elementItemsSortField).forEach(elementItem => {
-    //  elementItem.ElementCellSet.forEach(elementCell => {
-    //    if (!elementCell.ElementField.UseFixedValue && elementCell.ElementField.RatingEnabled) {
-    //      const newValue = reset ? 0 : elementCell.selectedDecimalValue;
-    //      this.updateElementCellDecimalValue(elementCell, newValue);
-    //    }
-    //  });
-    //});
-
-    //if (reset)
-    //  console.log(`Reset: Timer delay time set to 1 second..`);
-
-    // this.increaseInitivalValue();
   };
 
   ngOnDestroy(): void {
@@ -528,13 +492,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   updateElementCellDecimalValue(cell: ElementCell, selectedValue: number) {
-
-    //cell.selectedDecimalValue = selectedValue;
-    //TODO: if total amount increase then ..?
-    //const newDecimalValue = cell.decimalValue() + selectedValue;
-
     this.projectService.updateElementCellDecimalValue(cell, selectedValue);
-    //this.saveStream.next();
+    this.saveStream.next();
   }
 
   updateElementItemsSortField(): void {

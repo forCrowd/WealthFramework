@@ -60,6 +60,8 @@ export class Project extends EntityBase {
         elementItem.ElementCellSet.forEach(elementCell => {
           elementCell.resetAllRoundsIncome();
         });
+
+        elementItem.resetAllRoundsIncome();
       });
     });
   }
