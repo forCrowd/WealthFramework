@@ -14,6 +14,7 @@ export class ElementItem extends EntityBase {
   ElementCellSet: ElementCell[];
   ParentCellSet: ElementCell[];
 
+  allRoundsIncomeUpdated = new Subject<number>();
   incomeUpdated = new Subject<number>();
 
   // Client-side
@@ -67,6 +68,8 @@ export class ElementItem extends EntityBase {
 
   increaseAllRoundsIncome() {
     this.fields.allRoundsIncome += this.income();
+
+    this.allRoundsIncomeUpdated.next(this.fields.allRoundsIncome);
   }
 
   initialize(): boolean {
@@ -86,6 +89,8 @@ export class ElementItem extends EntityBase {
 
   resetAllRoundsIncome() {
     this.fields.allRoundsIncome = 0;
+
+    this.allRoundsIncomeUpdated.next(this.fields.allRoundsIncome);
   }
 
   setIncome(): void {
