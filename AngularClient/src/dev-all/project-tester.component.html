@@ -75,10 +75,10 @@
               Id: {{ item.Id }}<br />
               Element: {{ item.Element.Name }}<br />
               Name: {{ item.Name }}<br />
-              ...: -<br />
-              incomeStatus: {{ item.incomeStatus() }}<br />
+              allRoundsIncome: {{ item.allRoundsIncome() | number : '1.0-2' }}<br />
               ...: -<br />
               income: {{ item.income() | number : '1.0-2' }}<br />
+              incomeStatus: {{ item.incomeStatus() }}<br />
               <hr />
             </div>
           </div>

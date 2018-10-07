@@ -18,13 +18,15 @@ export class ElementItem extends EntityBase {
 
   // Client-side
   private fields: {
+    allRoundsIncome: number,
     income: number,
   } = {
+      allRoundsIncome: 0,
       income: 0,
     };
 
-  ratingCells() {
-    return this.getRatingCells(this);
+  allRoundsIncome() {
+    return this.fields.allRoundsIncome;
   }
 
   elementCell(fieldName: string): ElementCell {
@@ -63,6 +65,10 @@ export class ElementItem extends EntityBase {
     return "average";
   }
 
+  increaseAllRoundsIncome() {
+    this.fields.allRoundsIncome += this.income();
+  }
+
   initialize(): boolean {
     if (!super.initialize()) return false;
 
@@ -72,6 +78,14 @@ export class ElementItem extends EntityBase {
     });
 
     return true;
+  }
+
+  ratingCells() {
+    return this.getRatingCells(this);
+  }
+
+  resetAllRoundsIncome() {
+    this.fields.allRoundsIncome = 0;
   }
 
   setIncome(): void {

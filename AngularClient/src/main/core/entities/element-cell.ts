@@ -48,12 +48,12 @@ export class ElementCell extends EntityBase {
     return this.fields.currentUserDecimalValue;
   }
 
-  increaseAllRoundsIncome() {
-    this.fields.allRoundsIncome += this.income();
-  }
-
   income() {
     return this.fields.income;
+  }
+
+  increaseAllRoundsIncome() {
+    this.fields.allRoundsIncome += this.income();
   }
 
   initialize() {

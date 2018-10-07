@@ -46,6 +46,8 @@ export class Project extends EntityBase {
           elementCell.setIncome();
           elementCell.increaseAllRoundsIncome();
         });
+
+        elementItem.increaseAllRoundsIncome();
       });
     });
   }
