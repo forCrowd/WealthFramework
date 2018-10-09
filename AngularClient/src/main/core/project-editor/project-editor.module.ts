@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { IProjectEditorConfig, ProjectEditorComponent } from "./project-editor.component";
 import { SymbolicPipe } from "./symbolic.pipe";
 import { NgChartModule } from "../../ng-chart/ng-chart.module";
+import { QRCodeModule } from "angularx-qrcode";
 
 export { IProjectEditorConfig, NgChartModule }
 
@@ -22,6 +23,7 @@ export { IProjectEditorConfig, NgChartModule }
     CommonModule,
     FormsModule,
     NgChartModule,
+    QRCodeModule,
   ]
 })
 export class ProjectEditorModule { }

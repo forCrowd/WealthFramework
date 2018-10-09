@@ -14,8 +14,6 @@ import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { ElementItem } from "../entities/element-item";
 
-declare function makingQRCode(projectId: string): any;
-
 export interface IProjectEditorConfig {
   initialValue?: number,
   projectId: number,
@@ -67,12 +65,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   });
 
   // QRCode
-
-  qrcode = observableTimer(2500, 1000).subscribe(() => {
-    //QRCodeJs: Js file call
-    makingQRCode(this.projectId.toString());
-    this.qrcode.unsubscribe(); // for function call one time
-  });
+  qrCodeData: string = document.location.href;
 
   get isBusy(): boolean {
     return this.projectService.isBusy;
@@ -416,26 +409,26 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     console.log(`Reset: Timer delay time set to 1 second..`);
   }
 
-  // Increase timer delay 1 second.
+  // Increase: Timer delay duration has been doubled
   decreaseSpeed(): void {
-    if (this.timerDelay === 5000) return;
-    this.timerDelay += 1000;
+    if (this.timerDelay * 2 > 4000) return;
+    this.timerDelay *= 2;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage();
     });
-    console.log(`Timer delay time set to ${this.timerDelay / 1000} second${this.timerDelay / 1000 > 1 ? 's.' : '.'}`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
   }
 
-  // Decrease timer delay 1 second.
+  // Decrease: Timer delay duration has been halved
   increaseSpeed(): void {
-    if (this.timerDelay - 1000 <= 0) return;
-    this.timerDelay -= 1000;
+    if (this.timerDelay / 2 < 250) return;
+    this.timerDelay /= 2;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage();
     });
-    console.log(`Timer delay time set to ${this.timerDelay / 1000} seconds`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
   }
 
   // Timer refresh income
