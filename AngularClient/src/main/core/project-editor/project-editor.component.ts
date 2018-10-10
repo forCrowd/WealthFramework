@@ -226,20 +226,25 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
   }
 
-  // Remove element item
-  removeElementItem(elementItem: ElementItem) {
+  // if parent element cells selected item then true
+  isSelectedElementItem(elementItem: ElementItem): Boolean {
 
     // Main (Parent) Element
     const mainElement = this.project.ElementSet[0];
-    // if parent element cells selected item then true
-    var isRemove = false;
+    var isSelectedElementItem = false;
     mainElement.ElementItemSet.forEach(item => {
       item.ElementCellSet.forEach(cell => {
-        if (cell.SelectedElementItem.Id === elementItem.Id) isRemove = true;
-      })
-    })
+        if (cell.SelectedElementItem.Id === elementItem.Id) isSelectedElementItem = true;
+      });
+    });
+    return isSelectedElementItem;
+  }
 
-    if (!isRemove) {
+  // Remove element item
+  removeElementItem(elementItem: ElementItem) {
+
+    // is this a selected item of parent element?
+    if (!this.isSelectedElementItem(elementItem)) {
       const elementCellSet = elementItem.ElementCellSet.slice();
       elementCellSet.forEach(elementCell => {
         this.projectService.removeElementCell(elementCell);
