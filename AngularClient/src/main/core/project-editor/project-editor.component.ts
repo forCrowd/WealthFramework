@@ -13,6 +13,7 @@ import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { ElementItem } from "../entities/element-item";
+import { Logger } from "src/main/logger/logger.module";
 
 export interface IProjectEditorConfig {
   initialValue?: number,
@@ -29,7 +30,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   constructor(
     private authService: AuthService,
     private projectService: ProjectService,
-    private router: Router) { }
+    private router: Router,
+    private logger: Logger) { }
 
   @Input()
   config: IProjectEditorConfig = { projectId: 0 };
@@ -227,12 +229,26 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   // Remove element item
   removeElementItem(elementItem: ElementItem) {
 
-    const elementCellSet = elementItem.ElementCellSet.slice();
-    elementCellSet.forEach(elementCell => {
-      this.projectService.removeElementCell(elementCell);
-    });
+    // Main (Parent) Element
+    const mainElement = this.project.ElementSet[0];
+    // if parent element cells selected item then true
+    var isRemove = false;
+    mainElement.ElementItemSet.forEach(item => {
+      item.ElementCellSet.forEach(cell => {
+        if (cell.SelectedElementItem.Id === elementItem.Id) isRemove = true;
+      })
+    })
 
-    elementItem.entityAspect.setDeleted();
+    if (!isRemove) {
+      const elementCellSet = elementItem.ElementCellSet.slice();
+      elementCellSet.forEach(elementCell => {
+        this.projectService.removeElementCell(elementCell);
+      });
+
+      elementItem.entityAspect.setDeleted();
+    } else {
+      this.logger.logError("This item is parent element selected item, should not be remove");
+    }
   }
 
   // Add a new item
