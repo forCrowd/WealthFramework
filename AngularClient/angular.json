@@ -32,9 +32,7 @@
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.slim.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.js",
-              "src/libraries/qrcodejs/qrcode.min.js",
-              "src/libraries/qrcodejs/qrcode.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {

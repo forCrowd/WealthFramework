@@ -55,12 +55,23 @@ export class ElementItem extends EntityBase {
 
   incomeStatus() {
 
-    const income = +(this.income().toFixed(2));
-    const averageIncome = +((this.Element.income() / this.Element.ElementItemSet.length).toFixed(2));
+    var value = 0; // for element allRoundsIncome;
+    var notSelected = 0; // if item isn't selectedElementItem then increase
 
-    if (income < averageIncome) {
+    this.Element.ElementItemSet.forEach(item => {
+      if (item.ParentCellSet.length === 0) notSelected++;
+        value += item.allRoundsIncome();
+    });
+
+    // Probably Element is Parent
+    if (this.Element.ElementItemSet.length === notSelected) notSelected = 0;
+
+    const incomeAllRounds = +(this.allRoundsIncome().toFixed(2));
+    const allRoundsIncomeAverage = +((value / (this.Element.ElementItemSet.length - notSelected)).toFixed(2));
+
+    if (incomeAllRounds < allRoundsIncomeAverage) {
       return "low";
-    } else if (income > averageIncome) {
+    } else if (incomeAllRounds > allRoundsIncomeAverage) {
       return "high";
     }
     return "average";

@@ -13,7 +13,7 @@
         <div class="col-md-12" *ngIf="project">
           <div class="clearfix">
             <!-- QRCode -->
-            <div id="qrcode" class="pull-left mr-1"></div>
+            <qrcode class="pull-left mr-1" [qrdata]="qrCodeData" [size]="64" [level]="'M'"></qrcode>
             <!-- Project Name -->
             <p class="pull-left">
               <span class="title panel-title">
@@ -125,11 +125,11 @@
                               <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
 
                               <div class="btn-group" role="group">
-                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
-                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 25, 'btn-default': elementCell.decimalValue() !== 25 }">1</button>
-                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 50, 'btn-default': elementCell.decimalValue() !== 50 }">2</button>
-                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 75, 'btn-default': elementCell.decimalValue() !== 75 }">3</button>
-                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">4</button>
+                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
+                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 25, 'btn-default': elementCell.decimalValue() !== 25 }">1</button>
+                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 50, 'btn-default': elementCell.decimalValue() !== 50 }">2</button>
+                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 75, 'btn-default': elementCell.decimalValue() !== 75 }">3</button>
+                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">4</button>
                               </div>
                             </div>
                           </div>
@@ -186,13 +186,13 @@
                       <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2">
                         <i class="fa fa-refresh"></i>
                       </button>
-                      <button [disabled]="paused || timerDelay === 5000" class="btn btn-md btn-default ml-2" (click)="decreaseSpeed()">
+                      <button [disabled]="paused || timerDelay === 4000" class="btn btn-md btn-default ml-2" (click)="decreaseSpeed()">
                         <i class="fa fa-backward"></i>
                       </button>
                       <button title="Timer {{ paused ? 'Start' : 'Paused' }}" class="btn btn-md btn-default ml-2" [ngClass]="{'btn-warning': paused, 'btn-primary': !paused}" (click)="startStop()">
                         <i [attr.class]="paused ? 'fa fa-play' : 'fa fa-pause'"></i>
                       </button>
-                      <button [disabled]="paused || timerDelay === 1000" class="btn btn-md btn-default ml-2" (click)="increaseSpeed()">
+                      <button [disabled]="paused || timerDelay === 250" class="btn btn-md btn-default ml-2" (click)="increaseSpeed()">
                         <i class="fa fa-forward"></i>
                       </button>
                       Timer delay {{ timerDelay / 1000 }}s.

@@ -30,6 +30,7 @@
     "angular2-moment": "1.9.0",
     "angular2-toaster": "6.1.0",
     "angulartics2": "6.3.0",
+    "angularx-qrcode": "1.2.4",
     "bootstrap": "3.3.7",
     "breeze-bridge2-angular": "1.1.0",
     "breeze-client": "1.7.1",

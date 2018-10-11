@@ -1,5 +1,15 @@
 ### Changelog
 
+**0.86.7**
+
+* Project Editor - Timer delay duration has been updated
+* Project Editor - Add/remove element item fix
+* "angularx-qrcode" package has been added - https://github.com/cordobo/angularx-qrcode
+  * QRCodeJs library has been changed with "angularx-qrcode" library
+  * (QRCodeJs library has been removed)
+* ElementCell -  instead of setDecimalValue(), currentUserDecimalValue() and allUsersDecimalValue() was created
+* ElementItem updated
+
 **0.86.6**
 
 * Timer related calculation fixes

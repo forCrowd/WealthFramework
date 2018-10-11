@@ -13,8 +13,7 @@ import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { ElementItem } from "../entities/element-item";
-
-declare function makingQRCode(projectId: string): any;
+import { Logger } from "src/main/logger/logger.module";
 
 export interface IProjectEditorConfig {
   initialValue?: number,
@@ -31,7 +30,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   constructor(
     private authService: AuthService,
     private projectService: ProjectService,
-    private router: Router) { }
+    private router: Router,
+    private logger: Logger) { }
 
   @Input()
   config: IProjectEditorConfig = { projectId: 0 };
@@ -67,12 +67,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   });
 
   // QRCode
-
-  qrcode = observableTimer(2500, 1000).subscribe(() => {
-    //QRCodeJs: Js file call
-    makingQRCode(this.projectId.toString());
-    this.qrcode.unsubscribe(); // for function call one time
-  });
+  qrCodeData: string = document.location.href;
 
   get isBusy(): boolean {
     return this.projectService.isBusy;
@@ -231,15 +226,34 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
   }
 
+  // if parent element cells selected item then true
+  isSelectedElementItem(elementItem: ElementItem): Boolean {
+
+    // Main (Parent) Element
+    const mainElement = this.project.ElementSet[0];
+    var isSelectedElementItem = false;
+    mainElement.ElementItemSet.forEach(item => {
+      item.ElementCellSet.forEach(cell => {
+        if (cell.SelectedElementItem.Id === elementItem.Id) isSelectedElementItem = true;
+      });
+    });
+    return isSelectedElementItem;
+  }
+
   // Remove element item
   removeElementItem(elementItem: ElementItem) {
 
-    const elementCellSet = elementItem.ElementCellSet.slice();
-    elementCellSet.forEach(elementCell => {
-      this.projectService.removeElementCell(elementCell);
-    });
+    // is this a selected item of parent element?
+    if (!this.isSelectedElementItem(elementItem)) {
+      const elementCellSet = elementItem.ElementCellSet.slice();
+      elementCellSet.forEach(elementCell => {
+        this.projectService.removeElementCell(elementCell);
+      });
 
-    elementItem.entityAspect.setDeleted();
+      elementItem.entityAspect.setDeleted();
+    } else {
+      this.logger.logError("This item is parent element selected item, should not be remove");
+    }
   }
 
   // Add a new item
@@ -416,26 +430,26 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     console.log(`Reset: Timer delay time set to 1 second..`);
   }
 
-  // Increase timer delay 1 second.
+  // Increase: Timer delay duration has been doubled
   decreaseSpeed(): void {
-    if (this.timerDelay === 5000) return;
-    this.timerDelay += 1000;
+    if (this.timerDelay * 2 > 4000) return;
+    this.timerDelay *= 2;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage();
     });
-    console.log(`Timer delay time set to ${this.timerDelay / 1000} second${this.timerDelay / 1000 > 1 ? 's.' : '.'}`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
   }
 
-  // Decrease timer delay 1 second.
+  // Decrease: Timer delay duration has been halved
   increaseSpeed(): void {
-    if (this.timerDelay - 1000 <= 0) return;
-    this.timerDelay -= 1000;
+    if (this.timerDelay / 2 < 250) return;
+    this.timerDelay /= 2;
     this.timerSubscription.unsubscribe();
     this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
       this.refreshPage();
     });
-    console.log(`Timer delay time set to ${this.timerDelay / 1000} seconds`);
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
   }
 
   // Timer refresh income
