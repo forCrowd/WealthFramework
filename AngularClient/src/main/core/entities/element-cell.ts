@@ -44,10 +44,6 @@ export class ElementCell extends EntityBase {
     return this.fields.allRoundsIncome;
   }
 
-  currentUserDecimalValue() {
-    return this.fields.currentUserDecimalValue;
-  }
-
   income() {
     return this.fields.income;
   }
@@ -79,7 +75,13 @@ export class ElementCell extends EntityBase {
 
     // Event handlers
     this.ElementField.Element.Project.ratingModeUpdated.subscribe(() => {
-      this.setDecimalValue();
+      //this.setDecimalValue();
+      console.log(this.ElementField.Element.Project.RatingMode.toString());
+
+      this.ElementField.Element.Project.RatingMode == RatingMode.CurrentUser
+        ? this.currentUserDecimalValue()
+        : this.allUsersDecimalValue();
+
     });
 
     return true;
@@ -122,7 +124,7 @@ export class ElementCell extends EntityBase {
     if (this.fields.currentUserDecimalValue !== value) {
       this.fields.currentUserDecimalValue = value;
 
-      this.setDecimalValue();
+      this.currentUserDecimalValue();
     }
   }
 
@@ -148,28 +150,28 @@ export class ElementCell extends EntityBase {
     }
   }
 
-  setDecimalValue() {
+  currentUserDecimalValue() {
 
-    let value: number;
-
-    switch (this.ElementField.Element.Project.RatingMode) {
-      case RatingMode.CurrentUser:
-        {
-          value = this.currentUserDecimalValue();
-          break;
-        }
-      case RatingMode.AllUsers:
-        {
-          value = this.decimalValueAverage();
-          break;
-        }
-    }
-
-    if (this.fields.decimalValue !== value) {
-      this.fields.decimalValue = value;
+    if (this.fields.decimalValue !== this.fields.currentUserDecimalValue) {
+      this.fields.decimalValue = this.fields.currentUserDecimalValue;
 
       // Update related
       //this.setDecimalValuePercentage(); - No need to call this one since field is going to update it anyway! / coni2k - 05 Nov. '17
+      this.ElementField.setDecimalValue();
+
+      // Event
+      this.decimalValueUpdated.next(this.fields.decimalValue);
+    }
+
+    return this.fields.currentUserDecimalValue;
+  }
+
+  allUsersDecimalValue() {
+
+    if (this.fields.decimalValue !== this.decimalValueAverage()) {
+      this.fields.decimalValue = this.decimalValueAverage();
+
+      // Update related
       this.ElementField.setDecimalValue();
 
       // Event

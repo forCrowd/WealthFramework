@@ -7,6 +7,7 @@
 * "angularx-qrcode" package has been added - https://github.com/cordobo/angularx-qrcode
   * QRCodeJs library has been changed with "angularx-qrcode" library
   * (QRCodeJs library has been removed)
+* ElementCell - setDecimalValue() instead of currentUserDecimalValue() and allUsersDecimalValue() was created
 
 **0.86.6**
 
