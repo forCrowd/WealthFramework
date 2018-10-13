@@ -1,5 +1,5 @@
 {
-  "name": "forcrowd-wealtheconomy-angularclient",
+  "name": "forcrowd-wealthframework-angularclient",
   "description": "Experimental ideas on increasing sustainability and productivity",
   "author": "forCrowd Foundation",
   "version": "0.0.0",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/forCrowd/WealthEconomy"
+    "url": "https://github.com/forCrowd/WealthFramework"
   },
   "dependencies": {
     "@angular/animations": "6.1.8",

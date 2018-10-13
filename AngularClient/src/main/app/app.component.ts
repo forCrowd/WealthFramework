@@ -73,7 +73,7 @@ export class AppComponent implements OnDestroy, OnInit {
       mergeMap(route => route.data))
       .subscribe((data: any) => {
         if (data.title) {
-          this.titleService.setTitle(`Wealth Economy - ${data.title}`);
+          this.titleService.setTitle(`Wealth Framework - ${data.title}`);
         }
       });
 

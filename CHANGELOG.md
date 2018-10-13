@@ -1,12 +1,15 @@
 ### Changelog
 
+**0.87.0**
+
+* Project was renamed to "WealthFramework"
+
 **0.86.7**
 
 * Project Editor - Timer delay duration has been updated
 * Project Editor - Add/remove element item fix
 * "angularx-qrcode" package has been added - https://github.com/cordobo/angularx-qrcode
-  * QRCodeJs library has been changed with "angularx-qrcode" library
-  * (QRCodeJs library has been removed)
+  * QRCodeJs library has been replaced with "angularx-qrcode"
 * ElementCell -  instead of setDecimalValue(), currentUserDecimalValue() and allUsersDecimalValue() was created
 * ElementItem updated
 
@@ -476,7 +479,7 @@ https://github.com/angular/angular/issues/12851
 * ng2Client - "images folder is missing in publish package" fix - coni2k
 * ng2Client - default.aspx has "app.min.js", not "systemjs.config.js" & "System.import" fix - coni2k
 * ng2Client - "Font Awesome fonts don't get loaded" fix - coni2k
-https://github.com/forCrowd/WealthEconomy/issues/118
+https://github.com/forCrowd/WealthFramework/issues/118
 * WebApi - "appSettings.config is getting published to test/live" fix: Build Action was set to 'None' - coni2k
 * Minor fixes
 
@@ -572,7 +575,7 @@ ClientAppUrl setting in appSettings was renamed to AllowedDomains and only used 
 **0.63.0**
 
 * typings  
-https://github.com/forCrowd/WealthEconomy/issues/97
+https://github.com/forCrowd/WealthFramework/issues/97
 * appSettings.js was converted to .ts file, renamed and moved under: "/app/settings/settings.ts"
 
 **0.62.3**
@@ -582,20 +585,20 @@ https://github.com/forCrowd/WealthEconomy/issues/97
 **0.62.2**
 
 * breeze.angular dependency is missing after new project setup  
-https://github.com/forCrowd/WealthEconomy/issues/94
+https://github.com/forCrowd/WealthFramework/issues/94
 * Some obsolete blocks were removed
 
 **0.62.1**
 
 * gulp doesn't display typescript error messages  
-https://github.com/forCrowd/WealthEconomy/issues/91
+https://github.com/forCrowd/WealthFramework/issues/91
 
 **0.62.0**
 
 * Typescript  
-https://github.com/forCrowd/WealthEconomy/issues/88
+https://github.com/forCrowd/WealthFramework/issues/88
 * Resharper  
-https://github.com/forCrowd/WealthEconomy/issues/89
+https://github.com/forCrowd/WealthFramework/issues/89
 * Comments signature update - coni2k
 
 **0.61.3**
@@ -606,7 +609,7 @@ https://github.com/forCrowd/WealthEconomy/issues/89
 **0.61.2**
 
 * ngClient - appSettings.js doesn't get copied from 'Setup' folder bug fix  
-https://github.com/forCrowd/WealthEconomy/issues/79
+https://github.com/forCrowd/WealthFramework/issues/79
 
 **0.61.1**
 
@@ -617,7 +620,7 @@ https://github.com/forCrowd/WealthEconomy/issues/79
 **0.61.0**
 
 * bower was replaced with npm  
-https://github.com/forCrowd/WealthEconomy/issues/76
+https://github.com/forCrowd/WealthFramework/issues/76
 
 **0.60.1**
 
@@ -631,7 +634,7 @@ https://github.com/forCrowd/WealthEconomy/issues/76
 **0.59.0**
 
 * Contributors page  
-https://github.com/forCrowd/WealthEconomy/issues/69
+https://github.com/forCrowd/WealthFramework/issues/69
 * Sticky footer
 * Disqus minor fix
 * Menu minor layout fix
@@ -642,11 +645,11 @@ https://github.com/forCrowd/WealthEconomy/issues/69
 **0.58.0**
 
 * Description field for resource pool  
-https://github.com/forCrowd/WealthEconomy/issues/68
+https://github.com/forCrowd/WealthFramework/issues/68
 * Is Main Element bug fix  
-https://github.com/forCrowd/WealthEconomy/issues/67
+https://github.com/forCrowd/WealthFramework/issues/67
 * Project notes were moved to wiki page  
-https://github.com/forCrowd/WealthEconomy/wiki
+https://github.com/forCrowd/WealthFramework/wiki
 * package updates
   * breezejs was updated to 1.5.7 and odata adapter's manually fixed version was removed
   * angular was replaced with fixed 1.5.4: there is a problem with 1.5.5+ packages, it installs 1.5.7 instead
@@ -656,17 +659,17 @@ https://github.com/forCrowd/WealthEconomy/wiki
 **0.57.0**
 
 * Search page instead of list  
-https://github.com/forCrowd/WealthEconomy/issues/65
+https://github.com/forCrowd/WealthFramework/issues/65
 * Fix mobile navigation menu  
-https://github.com/forCrowd/WealthEconomy/issues/66
+https://github.com/forCrowd/WealthFramework/issues/66
 * glyphicon icons were replaced with font awesome
 
 **0.56.0**
 
 * resourcePoolManage - Field rating edit  
-https://github.com/forCrowd/WealthEconomy/issues/64
+https://github.com/forCrowd/WealthFramework/issues/64
 * Find keep alive service  
-https://github.com/forCrowd/WealthEconomy/issues/63
+https://github.com/forCrowd/WealthFramework/issues/63
 * Async action was removed from dataContext.js currentUser(): it was already keeping it as a local variable, now its returns that, which makes this function much easier to use.
 * resourcePool and its child entities related functions were moved from dataContext.js to resourcePoolFactory.js
 
@@ -677,11 +680,11 @@ https://github.com/forCrowd/WealthEconomy/issues/63
 **0.55.0**
 
 * Auto register with guest account  
-https://github.com/forCrowd/WealthEconomy/issues/61
+https://github.com/forCrowd/WealthFramework/issues/61
   * login.html & register.html was updated accordingly
   * registerLogin.html was removed
 * Allow login with email address  
-https://github.com/forCrowd/WealthEconomy/issues/62
+https://github.com/forCrowd/WealthFramework/issues/62
 * Both Profile (/[username]) and New CMRP (/[username]/new) routes now correctly check 'username' for both against local (currentUser) & remote
 * README.md updates
 * favicon.ico update
@@ -695,7 +698,7 @@ https://github.com/forCrowd/WealthEconomy/issues/62
 **0.53.0**
 
 * Navigate away confirmation in 'Unsaved changes' case  
-https://github.com/forCrowd/WealthEconomy/issues/60
+https://github.com/forCrowd/WealthFramework/issues/60
   * isEditing property was removed
   * ResourcePool.isTemp property was removed
   * dataContext - _createEntitySuppressAuthValidation variable was removed
@@ -708,29 +711,29 @@ https://github.com/forCrowd/WealthEconomy/issues/60
 **0.52.0**
 
 * Send an exception to server in 404 case  
-https://github.com/forCrowd/WealthEconomy/issues/53
+https://github.com/forCrowd/WealthFramework/issues/53
 * Post correct binding models to server  
-https://github.com/forCrowd/WealthEconomy/issues/54
+https://github.com/forCrowd/WealthFramework/issues/54
 * Use breeze's z-validate directive for entity validation errors  
-https://github.com/forCrowd/WealthEconomy/issues/55
+https://github.com/forCrowd/WealthFramework/issues/55
 * OData controller error - No HTTP resource was found that matches the request URI  
-https://github.com/forCrowd/WealthEconomy/issues/56
+https://github.com/forCrowd/WealthFramework/issues/56
 * Create validate model filter  
-https://github.com/forCrowd/WealthEconomy/issues/58
+https://github.com/forCrowd/WealthFramework/issues/58
 * Improve OData validation  
-https://github.com/forCrowd/WealthEconomy/issues/59
+https://github.com/forCrowd/WealthFramework/issues/59
 * angular dependencies alphabetical order
 * Todo.md cleanup
 
 **0.51.2**
 
 * ResourcePoolListController.js - $location is not defined  
-https://github.com/forCrowd/WealthEconomy/issues/57
+https://github.com/forCrowd/WealthFramework/issues/57
 
 **0.51.1**
 
 * OData controller error - No HTTP resource was found that matches the request URI  
-https://github.com/forCrowd/WealthEconomy/issues/56
+https://github.com/forCrowd/WealthFramework/issues/56
 * Fixes for initial setup
   * -ExecutionPolicy Unrestricted was added for WebApiWarmup.ps1 call in post build
   * WebApi targets path fix
@@ -739,9 +742,9 @@ https://github.com/forCrowd/WealthEconomy/issues/56
 **0.51.0**
 
 * Add username to account  
-https://github.com/forCrowd/WealthEconomy/issues/20
+https://github.com/forCrowd/WealthFramework/issues/20
 * New regular account shows 'Add password' instead of 'Change password'  
-https://github.com/forCrowd/WealthEconomy/issues/22
+https://github.com/forCrowd/WealthFramework/issues/22
 * moment + angular moment.js libs were added
 * Twitter badge on README
 * BusinessObjects clean-up: Display(Name), DisplayOnEditView, DisplayOnListView etc.
@@ -749,9 +752,9 @@ https://github.com/forCrowd/WealthEconomy/issues/22
 **0.50.0**
 
 * Anonymous account  
-https://github.com/forCrowd/WealthEconomy/issues/24
+https://github.com/forCrowd/WealthFramework/issues/24
 * Reset password & external login callback links fix  
-https://github.com/forCrowd/WealthEconomy/issues/23
+https://github.com/forCrowd/WealthFramework/issues/23
 * TempToken was renamed to SingleUseToken
 * SimpleUseToken and HasPassword were moved from Claims to User table
 
@@ -759,23 +762,23 @@ https://github.com/forCrowd/WealthEconomy/issues/23
 
 * .gitignore _system folder fix
 * 404 for fontawesome-webfont.woff2  
-https://github.com/forCrowd/WealthEconomy/issues/21
+https://github.com/forCrowd/WealthFramework/issues/21
 
 **0.49.0**
 
 * ngClient - _system folder  
-https://github.com/forCrowd/WealthEconomy/issues/18
+https://github.com/forCrowd/WealthFramework/issues/18
 
 **0.48.0**
 
 * Reset / Forgot Password  
-https://github.com/forCrowd/WealthEconomy/issues/5
+https://github.com/forCrowd/WealthFramework/issues/5
 * Remember me  
-https://github.com/forCrowd/WealthEconomy/issues/7
+https://github.com/forCrowd/WealthFramework/issues/7
 * Use Request.Form to send custom data to web api token endpoint  
-https://github.com/forCrowd/WealthEconomy/issues/17
+https://github.com/forCrowd/WealthFramework/issues/17
 * Store web api token itself in localStorage  
-https://github.com/forCrowd/WealthEconomy/issues/13
+https://github.com/forCrowd/WealthFramework/issues/13
 * 'Anonymous user warning remove' login page fix
 * Update element cell multiplier buttons / functions (but hidden for now)
 * Package updates
@@ -848,7 +851,7 @@ Exact cause is unknown but registering Compression message handler after than 'c
 Exists parts were replaced with SingleOrDefault()
 * 'Missing glyphicons fonts' fix
 * ngClient - LoginController - returnUrl fix for newly loaded app
-* WealthEconomyContext - Don't add deleted items addition
+* WealthFrameworkContext - Don't add deleted items addition
 * WebApi - Startup.cs + WebApiConfig merge
 * WebApi - default.aspx version text was added
 * gulpfile updates
@@ -1096,8 +1099,8 @@ All in One example increase multiplier action was reduced under a second from 7 
 
 **0.31.0**
 
-* https://github.com/forCrowd/WealthEconomy/issues/50
-* https://github.com/forCrowd/WealthEconomy/issues/25
+* https://github.com/forCrowd/WealthFramework/issues/50
+* https://github.com/forCrowd/WealthFramework/issues/25
 * Label as on / off badge was created
 
 **0.30.0**
@@ -1110,7 +1113,7 @@ All in One example increase multiplier action was reduced under a second from 7 
 
 **0.29.2**
 
-* https://github.com/forCrowd/WealthEconomy/issues/8
+* https://github.com/forCrowd/WealthFramework/issues/8
 * Logo was added to footer
 
 **0.29.1**
@@ -1119,44 +1122,44 @@ All in One example increase multiplier action was reduced under a second from 7 
 
 **0.29.0**
 
-* https://github.com/forCrowd/WealthEconomy/issues/15
-* https://github.com/forCrowd/WealthEconomy/issues/48
-* https://github.com/forCrowd/WealthEconomy/issues/49
-* https://github.com/forCrowd/WealthEconomy/issues/12
-* https://github.com/forCrowd/WealthEconomy/issues/14
+* https://github.com/forCrowd/WealthFramework/issues/15
+* https://github.com/forCrowd/WealthFramework/issues/48
+* https://github.com/forCrowd/WealthFramework/issues/49
+* https://github.com/forCrowd/WealthFramework/issues/12
+* https://github.com/forCrowd/WealthFramework/issues/14
 
 **0.28.0**
 
-* https://github.com/forCrowd/WealthEconomy/issues/27
+* https://github.com/forCrowd/WealthFramework/issues/27
 
 **0.27.1**
 
-* https://github.com/forCrowd/WealthEconomy/issues/46
-* https://github.com/forCrowd/WealthEconomy/issues/47
+* https://github.com/forCrowd/WealthFramework/issues/46
+* https://github.com/forCrowd/WealthFramework/issues/47
 
 **0.27.0**
 
-* https://github.com/forCrowd/WealthEconomy/issues/40
-* https://github.com/forCrowd/WealthEconomy/issues/26
-* https://github.com/forCrowd/WealthEconomy/issues/39
-* https://github.com/forCrowd/WealthEconomy/issues/41
-* https://github.com/forCrowd/WealthEconomy/issues/16
-* https://github.com/forCrowd/WealthEconomy/issues/42
-* https://github.com/forCrowd/WealthEconomy/issues/43
-* https://github.com/forCrowd/WealthEconomy/issues/44
-* https://github.com/forCrowd/WealthEconomy/issues/45
-* https://github.com/forCrowd/WealthEconomy/issues/6
+* https://github.com/forCrowd/WealthFramework/issues/40
+* https://github.com/forCrowd/WealthFramework/issues/26
+* https://github.com/forCrowd/WealthFramework/issues/39
+* https://github.com/forCrowd/WealthFramework/issues/41
+* https://github.com/forCrowd/WealthFramework/issues/16
+* https://github.com/forCrowd/WealthFramework/issues/42
+* https://github.com/forCrowd/WealthFramework/issues/43
+* https://github.com/forCrowd/WealthFramework/issues/44
+* https://github.com/forCrowd/WealthFramework/issues/45
+* https://github.com/forCrowd/WealthFramework/issues/6
 
 **0.26.0**
 
-* https://github.com/forCrowd/WealthEconomy/issues/37
-* https://github.com/forCrowd/WealthEconomy/issues/38
+* https://github.com/forCrowd/WealthFramework/issues/37
+* https://github.com/forCrowd/WealthFramework/issues/38
 
 **0.25.0**
 
-* https://github.com/forCrowd/WealthEconomy/issues/34
-* https://github.com/forCrowd/WealthEconomy/issues/35
-* https://github.com/forCrowd/WealthEconomy/issues/36
+* https://github.com/forCrowd/WealthFramework/issues/34
+* https://github.com/forCrowd/WealthFramework/issues/35
+* https://github.com/forCrowd/WealthFramework/issues/36
 
 **0.24.0**
 
@@ -1479,7 +1482,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 **0.11.10**
 
 * Replace metadata.xml with EdmBuilder CodeFirst output
-  * WealthEconomyContext moved under BusinessObjects
+  * WealthFrameworkContext moved under BusinessObjects
 * IsSample field to ResourcePool object, SampleUserId to Web\web.config and UserUnitOfWork now uses these parameters to copy the sample data
 
 **0.11.9**
@@ -1548,7 +1551,7 @@ were replaced with Entity Framework 6.1 versions.
 
 * MSBuild and IISExpress script files were created
 * UserAccountType.cs file and its references were removed
-* WealthEconomyContext and AspNetIdentityContext were merged
+* WealthFrameworkContext and AspNetIdentityContext were merged
 * Initial admin role + user + password
 
 **0.10.7**

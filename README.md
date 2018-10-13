@@ -1,7 +1,6 @@
-# Wealth Economy
+# Wealth Framework
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
-[![Join the chat at https://gitter.im/forCrowd/WealthEconomy](https://badges.gitter.im/forCrowd/WealthEconomy.svg)](https://gitter.im/forCrowd/WealthEconomy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Experimental ideas on increasing sustainability and productivity
 
@@ -15,7 +14,7 @@ Experimental ideas on increasing sustainability and productivity
 
 ## Setup
 
-Follow this document to setup the application: [Getting Started](https://github.com/forcrowd/WealthEconomy/wiki/Getting-Started)
+Follow this document to setup the application: [Getting Started](https://github.com/forcrowd/WealthFramework/wiki/Getting-Started)
 
 ### Deployment
 
