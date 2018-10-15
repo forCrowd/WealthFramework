@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.87.1**
+
+* Project Editor - Sorting ElementItems by using "allRoundsIncome" after timer rounds  
+* Project Editor - ElementItem income compare status has been added
+
 **0.87.0**
 
 * Project was renamed to "WealthFramework"

@@ -60,6 +60,9 @@ export class Element extends EntityBase {
           if (nameA > nameB) return 1;
           return 0;
         }
+        case "allRoundsIncome": {
+          return b.allRoundsIncome() - a.allRoundsIncome();
+        }
       }
     });
   }
