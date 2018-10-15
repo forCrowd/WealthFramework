@@ -149,7 +149,9 @@
                       </td>
                     </ng-template>
                     <td *ngIf="project.initialValue > 0" [ngClass]="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }" class="text-right">
+                      <i [attr.class]="getIncomeCompareStatus(elementItem.Id)" style="padding-top: 6px"></i>
                       {{ elementItem.allRoundsIncome() | symbolic }}
+                      <!-- i:[{{ elementItem.income().toFixed(2) | symbolic }}] -->
                     </td>
                   </tr>
                 </tbody>

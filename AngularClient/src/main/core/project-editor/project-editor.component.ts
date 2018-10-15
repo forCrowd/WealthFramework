@@ -41,7 +41,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   displayDescription: boolean = false;
   displayIndexDetails = false;
   elementFieldDataType = ElementFieldDataType;
-  elementItemsSortField = "name";
+  elementItemsSortField = "allRoundsIncome";
   errorMessage: string = "";
   ratingMode = RatingMode;
   project: Project = null;
@@ -59,6 +59,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   // count current items
   elementItemCount = 0;
   paused: boolean = false;
+
+  // income compare set
+  incomeCompareSet: Object = {'before': {}, 'after': {}};
 
   // Timer schedule
   timerDelay = 1000;
@@ -460,7 +463,42 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
 
     this.project.increaseRounds();
+
+    /* income compare */
+    this.project.ElementSet.forEach((element) => {
+      element.ElementItemSet.forEach((elementItem, xI) => {
+        var before = this.incomeCompareSet['before'][elementItem.Id];
+        var after = this.incomeCompareSet['after'][elementItem.Id];
+
+        if (before === undefined) {
+          this.incomeCompareSet['before'][elementItem.Id] = elementItem.income();
+          this.incomeCompareSet['after'][elementItem.Id] = elementItem.income();
+        }
+
+        // if elementItem income is change then ?
+        if (after !== elementItem.income()) {
+          this.incomeCompareSet['before'][elementItem.Id] = this.incomeCompareSet['after'][elementItem.Id];
+          this.incomeCompareSet['after'][elementItem.Id] = elementItem.income();
+        }
+        // Sort for allRoundsIncome
+        this.selectedElement.getElementItemSet("allRoundsIncome");
+      });
+    });
+
   };
+
+  getIncomeCompareStatus(elementItem: number): string {
+    var before = this.incomeCompareSet['before'][elementItem];
+    var after = this.incomeCompareSet['after'][elementItem];
+
+    if (before < after) {
+      return "fa fa-caret-up pull-right text-success";
+    } else if (before > after) {
+      return "fa fa-caret-down pull-right text-danger";
+    } else {
+      return "fa fa-arrows-h pull-right text-dark" ;
+    }
+  }
 
   ngOnDestroy(): void {
     this.timerSubscription.unsubscribe();
