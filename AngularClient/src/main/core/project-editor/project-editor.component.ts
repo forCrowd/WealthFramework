@@ -61,7 +61,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   paused: boolean = false;
 
   // income compare set
-  incomeCompareSet: Object = {'before': {}, 'after': {}};
+  incomeCompareSet: Object = {'before': {}, 'after': {}, 'round': {}};
 
   // Timer schedule
   timerDelay = 1000;
@@ -101,6 +101,163 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   increaseRating(field: ElementField) {
     this.projectService.updateElementFieldRating(field, "increase");
     this.saveStream.next();
+  }
+
+  resetRating(field: ElementField) {
+    this.projectService.updateElementFieldRating(field, "reset");
+    this.saveStream.next();
+  }
+
+  // Get project list of current user
+  getProjectSet(): void {
+
+    this.projectService.getProjectSet(this.currentUser.UserName).pipe(
+      finalize(() => {
+
+        //TODO: Do something ?
+        // Delete after ?
+        this.projectDataSet.forEach((p, i) => {
+          console.log("Project Name:", p.Name, p.Id);
+        });
+
+      }))
+      .subscribe(results => {
+        this.projectDataSet = results;
+      });
+  }
+
+  changeProject(): void {
+    this.router.navigate(["/project", this.loadProjectId]);
+  }
+
+  // Pause-play Timer
+  startStop(): void {
+    this.paused = !this.paused;
+  }
+
+  /**
+  * Reset Timer
+  * - Timer delay set 1 seconds (by defaul)
+  */
+  resetTimer(): void {
+
+    this.project.resetRounds();
+
+    this.timerDelay = 1000;
+    this.timerSubscription.unsubscribe();
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
+      this.refreshPage();
+    });
+
+    console.log(`Reset: Timer delay time set to 1 second..`);
+  }
+
+  // Increase: Timer delay duration has been doubled
+  decreaseSpeed(): void {
+    if (this.timerDelay * 2 > 4000) return;
+    this.timerDelay *= 2;
+    this.timerSubscription.unsubscribe();
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
+      this.refreshPage();
+    });
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
+  }
+
+  // Decrease: Timer delay duration has been halved
+  increaseSpeed(): void {
+    if (this.timerDelay / 2 < 250) return;
+    this.timerDelay /= 2;
+    this.timerSubscription.unsubscribe();
+    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
+      this.refreshPage();
+    });
+    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
+  }
+
+  incomeCompareSetInit(): void {
+    this.project.ElementSet.forEach((element) => {
+      element.ElementItemSet.forEach((elementItem) => {
+        this.incomeCompareSet['before'][elementItem.Id] = {'sort': 0, 'income': 0};
+        this.incomeCompareSet['after'][elementItem.Id] = {'sort': 0, 'income': 0};
+        this.incomeCompareSet['before'][elementItem.Id]['income'] = elementItem.income();
+        this.incomeCompareSet['after'][elementItem.Id]['income'] = elementItem.income();
+        this.incomeCompareSet['before'][elementItem.Id]['sort'] = 0;
+        this.incomeCompareSet['after'][elementItem.Id]['sort'] = 0;
+      });
+    });
+
+    this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
+      this.incomeCompareSet['before'][item.Id]['sort'] = sortOrder;
+      this.incomeCompareSet['after'][item.Id]['sort'] = sortOrder;
+    });
+  }
+
+  // Timer refresh income
+  refreshPage(): void {
+
+    if (this.paused) {
+      return;
+    }
+
+    this.project.increaseRounds();
+
+    /* income compare */
+
+    var mainElement = this.project.ElementSet[0];
+    this.project.ElementSet.forEach((element) => {
+      element.ElementItemSet.forEach((elementItem) => {
+        var before = this.incomeCompareSet['before'][elementItem.Id]['income'];
+        var after = this.incomeCompareSet['after'][elementItem.Id]['income'];
+
+        // if elementItem income is change then ?
+        if (after !== elementItem.income()) {
+          this.incomeCompareSet['before'][elementItem.Id]['income'] = this.incomeCompareSet['after'][elementItem.Id]['income'];
+          this.incomeCompareSet['after'][elementItem.Id]['income'] = elementItem.income();
+          this.incomeCompareSet['round'][elementItem.Id] = 0;
+        }
+
+        if (before < after) {
+          this.incomeCompareSet['round'][elementItem.Id] = this.incomeCompareSet['round'][elementItem.Id] + 1;
+        } else if (before > after) {
+          this.incomeCompareSet['round'][elementItem.Id] = this.incomeCompareSet['round'][elementItem.Id] + 1;
+        } else {
+          this.incomeCompareSet['round'][elementItem.Id] = 0;
+        }
+
+        this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
+          if (this.incomeCompareSet['before'][item.Id]['sort'] !== sortOrder) {
+            this.incomeCompareSet['before'][item.Id]['sort'] = this.incomeCompareSet['after'][item.Id]['sort'];
+            this.incomeCompareSet['after'][item.Id]['sort'] = sortOrder;
+            this.incomeCompareSet['round'][item.Id] = 0;
+            console.log(`${item.Name}'s sort order has been change!`);
+          }
+        });
+
+        // Sort for allRoundsIncome (only for the main)
+        if (this.selectedElement.Id === mainElement.Id){
+          this.selectedElement.getElementItemSet("allRoundsIncome");
+        }
+      });
+    });
+
+  };
+
+  getIncomeCompareStatus(elementItem: number): string {
+    if (this.project.rounds === 0) this.incomeCompareSetInit();
+
+    var before = this.incomeCompareSet['before'][elementItem]['income'];
+    var after = this.incomeCompareSet['after'][elementItem]['income'];
+    var round = this.incomeCompareSet['round'][elementItem];
+
+    // Arrows only remain five times!
+    if (before < after) {
+      return round < 5 ? "fa fa-caret-up pull-right text-success" : "fa fa-arrows-h pull-right text-dark";
+    } else if (before > after) {
+      return round < 5 ? "fa fa-caret-down pull-right text-danger" : "fa fa-arrows-h pull-right text-dark";
+    } else {
+      return "fa fa-arrows-h pull-right text-dark" ;
+    }
+
   }
 
   initialize(projectId: number, user: User) {
@@ -389,117 +546,6 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   }
 
-  // Get project list of current user
-  getProjectSet(): void {
-
-    this.projectService.getProjectSet(this.currentUser.UserName).pipe(
-      finalize(() => {
-
-        //TODO: Do something ?
-        // Delete after ?
-        this.projectDataSet.forEach((p, i) => {
-          console.log("Project Name:", p.Name, p.Id);
-        });
-
-      }))
-      .subscribe(results => {
-        this.projectDataSet = results;
-      });
-  }
-
-  changeProject(): void {
-    this.router.navigate(["/project", this.loadProjectId]);
-  }
-
-  // Pause-play Timer
-  startStop(): void {
-    this.paused = !this.paused;
-  }
-
-  /**
-  * Reset Timer
-  * - Timer delay set 1 seconds (by defaul)
-  */
-  resetTimer(): void {
-
-    this.project.resetRounds();
-
-    this.timerDelay = 1000;
-    this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage();
-    });
-
-    console.log(`Reset: Timer delay time set to 1 second..`);
-  }
-
-  // Increase: Timer delay duration has been doubled
-  decreaseSpeed(): void {
-    if (this.timerDelay * 2 > 4000) return;
-    this.timerDelay *= 2;
-    this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage();
-    });
-    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
-  }
-
-  // Decrease: Timer delay duration has been halved
-  increaseSpeed(): void {
-    if (this.timerDelay / 2 < 250) return;
-    this.timerDelay /= 2;
-    this.timerSubscription.unsubscribe();
-    this.timerSubscription = observableTimer(1000, this.timerDelay).subscribe(() => {
-      this.refreshPage();
-    });
-    console.log(`Timer delay time set to ${this.timerDelay / 1000} s.`);
-  }
-
-  // Timer refresh income
-  refreshPage(): void {
-
-    if (this.paused) {
-      return;
-    }
-
-    this.project.increaseRounds();
-
-    /* income compare */
-    this.project.ElementSet.forEach((element) => {
-      element.ElementItemSet.forEach((elementItem, xI) => {
-        var before = this.incomeCompareSet['before'][elementItem.Id];
-        var after = this.incomeCompareSet['after'][elementItem.Id];
-
-        if (before === undefined) {
-          this.incomeCompareSet['before'][elementItem.Id] = elementItem.income();
-          this.incomeCompareSet['after'][elementItem.Id] = elementItem.income();
-        }
-
-        // if elementItem income is change then ?
-        if (after !== elementItem.income()) {
-          this.incomeCompareSet['before'][elementItem.Id] = this.incomeCompareSet['after'][elementItem.Id];
-          this.incomeCompareSet['after'][elementItem.Id] = elementItem.income();
-        }
-        // Sort for allRoundsIncome
-        this.selectedElement.getElementItemSet("allRoundsIncome");
-      });
-    });
-
-  };
-
-  getIncomeCompareStatus(elementItem: number): string {
-    var before = this.incomeCompareSet['before'][elementItem];
-    var after = this.incomeCompareSet['after'][elementItem];
-
-    if (before < after) {
-      return "fa fa-caret-up pull-right text-success";
-    } else if (before > after) {
-      return "fa fa-caret-down pull-right text-danger";
-    } else {
-      return "fa fa-arrows-h pull-right text-dark" ;
-    }
-  }
-
   ngOnDestroy(): void {
     this.timerSubscription.unsubscribe();
     for (let i = 0; i < this.subscriptions.length; i++) {
@@ -526,11 +572,6 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // Fetch data: Get project list of current user
     //this.getProjectSet();
-  }
-
-  resetRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "reset");
-    this.saveStream.next();
   }
 
   toggleDescription() {

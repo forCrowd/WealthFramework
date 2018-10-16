@@ -110,3 +110,7 @@
   padding-right: .4em;
   color: red !important;
 }
+
+.text-dark {
+  color: black !important;
+}
