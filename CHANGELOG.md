@@ -1,8 +1,13 @@
 ### Changelog
 
+**0.87.2**
+
+* Project Editor - refreshPage() updated
+  - ElementItem income compare status - Arrows has been set to display only five times
+
 **0.87.1**
 
-* Project Editor - Sorting ElementItems by using "allRoundsIncome" after timer rounds  
+* Project Editor - Sorting ElementItems by using "allRoundsIncome" after timer rounds
 * Project Editor - ElementItem income compare status has been added
 
 **0.87.0**
