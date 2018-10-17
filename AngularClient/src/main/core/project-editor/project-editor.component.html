@@ -122,7 +122,7 @@
                             <div [hidden]="project.RatingMode === ratingMode.AllUsers">
 
                               <!--<span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> --->
-                              <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
+                              <!-- <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span> -->
 
                               <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
