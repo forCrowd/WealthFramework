@@ -61,7 +61,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   paused: boolean = false;
 
   // income compare set
-  incomeCompareSet: Object = {'before': {}, 'after': {}, 'round': {}};
+  incomeCompareSet: Object = {"before": {}, "after": {}, "round": {}};
 
   // Timer schedule
   timerDelay = 1000;
@@ -177,18 +177,18 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   incomeCompareSetInit(): void {
     this.project.ElementSet.forEach((element) => {
       element.ElementItemSet.forEach((elementItem) => {
-        this.incomeCompareSet['before'][elementItem.Id] = {'sort': 0, 'income': 0};
-        this.incomeCompareSet['after'][elementItem.Id] = {'sort': 0, 'income': 0};
-        this.incomeCompareSet['before'][elementItem.Id]['income'] = elementItem.income();
-        this.incomeCompareSet['after'][elementItem.Id]['income'] = elementItem.income();
-        this.incomeCompareSet['before'][elementItem.Id]['sort'] = 0;
-        this.incomeCompareSet['after'][elementItem.Id]['sort'] = 0;
+        this.incomeCompareSet["before"][elementItem.Id] = {"sort": 0, "income": 0};
+        this.incomeCompareSet["after"][elementItem.Id] = {"sort": 0, "income": 0};
+        this.incomeCompareSet["before"][elementItem.Id]["income"] = elementItem.income();
+        this.incomeCompareSet["after"][elementItem.Id]["income"] = elementItem.income();
+        this.incomeCompareSet["before"][elementItem.Id]["sort"] = 0;
+        this.incomeCompareSet["after"][elementItem.Id]["sort"] = 0;
       });
     });
 
     this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
-      this.incomeCompareSet['before'][item.Id]['sort'] = sortOrder;
-      this.incomeCompareSet['after'][item.Id]['sort'] = sortOrder;
+      this.incomeCompareSet["before"][item.Id]["sort"] = sortOrder;
+      this.incomeCompareSet["after"][item.Id]["sort"] = sortOrder;
     });
   }
 
@@ -206,30 +206,30 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     var mainElement = this.project.ElementSet[0];
     this.project.ElementSet.forEach((element) => {
       element.ElementItemSet.forEach((elementItem) => {
-        var before = this.incomeCompareSet['before'][elementItem.Id]['income'];
-        var after = this.incomeCompareSet['after'][elementItem.Id]['income'];
+        var before = this.incomeCompareSet["before"][elementItem.Id]["income"];
+        var after = this.incomeCompareSet["after"][elementItem.Id]["income"];
 
         // if elementItem income is change then ?
         if (after !== elementItem.income()) {
-          this.incomeCompareSet['before'][elementItem.Id]['income'] = this.incomeCompareSet['after'][elementItem.Id]['income'];
-          this.incomeCompareSet['after'][elementItem.Id]['income'] = elementItem.income();
-          this.incomeCompareSet['round'][elementItem.Id] = 0;
+          this.incomeCompareSet["before"][elementItem.Id]["income"] = this.incomeCompareSet["after"][elementItem.Id]["income"];
+          this.incomeCompareSet["after"][elementItem.Id]["income"] = elementItem.income();
+          this.incomeCompareSet["round"][elementItem.Id] = 0;
         }
 
         if (before < after) {
-          this.incomeCompareSet['round'][elementItem.Id] = this.incomeCompareSet['round'][elementItem.Id] + 1;
+          this.incomeCompareSet["round"][elementItem.Id] = this.incomeCompareSet["round"][elementItem.Id] + 1;
         } else if (before > after) {
-          this.incomeCompareSet['round'][elementItem.Id] = this.incomeCompareSet['round'][elementItem.Id] + 1;
+          this.incomeCompareSet["round"][elementItem.Id] = this.incomeCompareSet["round"][elementItem.Id] + 1;
         } else {
-          this.incomeCompareSet['round'][elementItem.Id] = 0;
+          this.incomeCompareSet["round"][elementItem.Id] = 0;
         }
 
         this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
-          if (this.incomeCompareSet['before'][item.Id]['sort'] !== sortOrder) {
-            this.incomeCompareSet['before'][item.Id]['sort'] = this.incomeCompareSet['after'][item.Id]['sort'];
-            this.incomeCompareSet['after'][item.Id]['sort'] = sortOrder;
-            this.incomeCompareSet['round'][item.Id] = 0;
-            console.log(`${item.Name}'s sort order has been change!`);
+          if (this.incomeCompareSet["before"][item.Id]["sort"] !== sortOrder) {
+            this.incomeCompareSet["before"][item.Id]["sort"] = this.incomeCompareSet["after"][item.Id]["sort"];
+            this.incomeCompareSet["after"][item.Id]["sort"] = sortOrder;
+            this.incomeCompareSet["round"][item.Id] = 0;
+            console.log(`${item.Name}'s sort order has been changed!`);
           }
         });
 
@@ -242,12 +242,30 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   };
 
+  isStarFull(value: number, compare: number): boolean {
+    return value >= compare ? true : false;
+  }
+
+  mouseEnter(itemId: number, v: number): void {
+    for(var i = 1; i < 6; i++) {
+      var star = document.getElementById(`${itemId}-${i}`);
+      i > v ? star.className = "star fa fa-star-o" : star.className = "star fa fa-star";
+    }
+  }
+
+  mouseLeave(itemId: number, v: number) {
+    for(var i = 1; i < 6; i++) {
+      var star = document.getElementById(`${itemId}-${i}`);
+      i > v ? star.className = "star fa fa-star-o" : star.className = "star fa fa-star";
+    }
+  }
+
   getIncomeCompareStatus(elementItem: number): string {
     if (this.project.rounds === 0) this.incomeCompareSetInit();
 
-    var before = this.incomeCompareSet['before'][elementItem]['income'];
-    var after = this.incomeCompareSet['after'][elementItem]['income'];
-    var round = this.incomeCompareSet['round'][elementItem];
+    var before = this.incomeCompareSet["before"][elementItem]["income"];
+    var after = this.incomeCompareSet["after"][elementItem]["income"];
+    var round = this.incomeCompareSet["round"][elementItem];
 
     // Arrows only remain five times!
     if (before < after) {
@@ -393,9 +411,14 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     const mainElement = this.project.ElementSet[0];
     var isSelectedElementItem = false;
     mainElement.ElementItemSet.forEach(item => {
-      item.ElementCellSet.forEach(cell => {
-        if (cell.SelectedElementItem.Id === elementItem.Id) isSelectedElementItem = true;
-      });
+      // if ElementCellSet.lenght is equal to 1, then it can't be SelectedElementItem!
+      if (item.ElementCellSet.length > 1) {
+        item.ElementCellSet.forEach(cell => {
+          if (cell.SelectedElementItem.Id === elementItem.Id) isSelectedElementItem = true;
+        });
+      } else {
+        isSelectedElementItem = true;
+      }
     });
     return isSelectedElementItem;
   }
