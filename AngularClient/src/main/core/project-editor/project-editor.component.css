@@ -114,3 +114,8 @@
 .text-dark {
   color: black !important;
 }
+
+.star {
+  font-size: 1.4em;
+  padding: 1px;
+}

@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.87.3**
+
+* Project Editor - Rating button has been become star icons
+* Project Editor - isSelectedElementItem() Minor fix
+
 **0.87.2**
 
 * Project Editor - refreshPage() updated

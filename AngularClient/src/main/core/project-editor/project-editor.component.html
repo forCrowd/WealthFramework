@@ -122,14 +122,49 @@
                             <div [hidden]="project.RatingMode === ratingMode.AllUsers">
 
                               <!--<span title="selected value">s: {{ elementCell.selectedDecimalValue }}</span> --->
-                              <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span>
+                              <!-- <span title="decimal value" class="g-mr-5">d: {{ elementCell.decimalValue() | number : '1.2' }}</span> -->
 
                               <div class="btn-group" role="group">
-                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
-                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 25, 'btn-default': elementCell.decimalValue() !== 25 }">1</button>
-                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 50, 'btn-default': elementCell.decimalValue() !== 50 }">2</button>
-                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 75, 'btn-default': elementCell.decimalValue() !== 75 }">3</button>
-                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy || !isSelectedElementItem(elementItem)" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">4</button>
+                                <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
+                                  <i [attr.id]="elementItem.Id + '-1'"
+                                    class="star fa"
+                                    (mouseenter)="mouseEnter(elementItem.Id, 1)"
+                                    (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
+                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 0) }">
+                                  </i>
+                                </button>
+                                <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
+                                    <i class="star fa"
+                                      [attr.id]="elementItem.Id + '-2'"
+                                      (mouseenter)="mouseEnter(elementItem.Id, 2)"
+                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
+                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 25) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 25) == false }">
+                                    </i>
+                                </button>
+                                <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
+                                    <i class="star fa"
+                                      [attr.id]="elementItem.Id + '-3'"
+                                      (mouseenter)="mouseEnter(elementItem.Id, 3)"
+                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
+                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 50) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 50) == false }">
+                                    </i>
+                                </button>
+                                <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
+                                    <i class="star fa"
+                                      [attr.id]="elementItem.Id + '-4'"
+                                      (mouseenter)="mouseEnter(elementItem.Id, 4)"
+                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
+                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 75) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 75) == false }">
+                                    </i>
+                                </button>
+                                <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
+                                    <i class="star fa"
+                                      [attr.id]="elementItem.Id + '-5'"
+                                      (mouseenter)="mouseEnter(elementItem.Id, 5)"
+                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
+                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 100) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 100) == false }">
+                                    </i>
+                                </button>
                               </div>
                             </div>
                           </div>
