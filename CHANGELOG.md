@@ -4,6 +4,7 @@
 
 * Project Editor - Add/Remove item and Field has been started to save 
 * Project Editor - Minor fixes
+* AngularClient - Contributors page - Augustpi
 
 **0.87.3**
 
