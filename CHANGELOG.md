@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.87.5**
+
+* Project Editor - Add/Remove item and Field buttons moved to top of page 
+
 **0.87.4**
 
 * Project Editor - Add/Remove item and Field has been started to save 

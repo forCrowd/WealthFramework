@@ -22,6 +22,24 @@
               <br />
               <small>Last modified on {{ project.ModifiedOn | date: 'medium' }}</small>
             </p>
+            <div class="btn-group pull-right" role="group" aria-label="Timer Options">
+              <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2">
+                <i class="fa fa-refresh"></i>
+              </button>
+              <button [disabled]="paused || timerDelay === 4000" class="btn btn-md btn-default ml-2" (click)="decreaseSpeed()">
+                <i class="fa fa-backward"></i>
+              </button>
+              <button title="Timer {{ paused ? 'Start' : 'Paused' }}" class="btn btn-md btn-default ml-2" [ngClass]="{'btn-warning': paused, 'btn-primary': !paused}" (click)="startStop()">
+                <i [attr.class]="paused ? 'fa fa-play' : 'fa fa-pause'"></i>
+              </button>
+              <button [disabled]="paused || timerDelay === 250" class="btn btn-md btn-default ml-2" (click)="increaseSpeed()">
+                <i class="fa fa-forward"></i>
+              </button>
+              <button class="btn btn-md btn-default">
+                <i class="fa fa-clock-o"></i>
+                {{ timerDelay / 1000 }}s.
+              </button>
+            </div>
           </div>
           <hr />
           <div class="settings">
@@ -32,6 +50,12 @@
               <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === ratingMode.AllUsers }">
                 All Users
                 <span class="g-ml-10 badge">{{ project.RatingCount }}</span>
+              </button>
+              <button *ngIf="project.User.Id === currentUser.Id" (click)="addNewElementField()" class="btn btn-md btn-default ml-2">
+                Add field
+              </button>
+              <button *ngIf="project.User.Id === currentUser.Id" (click)="addElementItem()" class="btn btn-md btn-default ml-2">
+                Add item
               </button>
             </div>
           </div>
@@ -213,26 +237,8 @@
                   <!-- Functions -->
                   <tr>
                     <!-- Name -->
-                    <td class="noborder" colspan="selectedElement.getElementFieldSetSorted().length + 1">
-                      <button *ngIf="project.User.Id === currentUser.Id" (click)="addNewElementField()" class="btn btn-md btn-success ml-2">
-                        <i class="fa fa-plus"></i> Field
-                      </button>
-                      <button *ngIf="project.User.Id === currentUser.Id" (click)="addElementItem()" class="btn btn-md btn-success ml-2">
-                        <i class="fa fa-plus"></i> Item
-                      </button>
-                      <button title="Reset Timer" (click)="resetTimer()" class="btn btn-md btn-default ml-2">
-                        <i class="fa fa-refresh"></i>
-                      </button>
-                      <button [disabled]="paused || timerDelay === 4000" class="btn btn-md btn-default ml-2" (click)="decreaseSpeed()">
-                        <i class="fa fa-backward"></i>
-                      </button>
-                      <button title="Timer {{ paused ? 'Start' : 'Paused' }}" class="btn btn-md btn-default ml-2" [ngClass]="{'btn-warning': paused, 'btn-primary': !paused}" (click)="startStop()">
-                        <i [attr.class]="paused ? 'fa fa-play' : 'fa fa-pause'"></i>
-                      </button>
-                      <button [disabled]="paused || timerDelay === 250" class="btn btn-md btn-default ml-2" (click)="increaseSpeed()">
-                        <i class="fa fa-forward"></i>
-                      </button>
-                      Timer delay {{ timerDelay / 1000 }}s.
+                    <td class="noborder">
+
                     </td>
                     <!-- Fields -->
                     <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
