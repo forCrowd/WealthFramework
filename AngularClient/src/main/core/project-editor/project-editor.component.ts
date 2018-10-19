@@ -178,14 +178,13 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.project.ElementSet.forEach((element) => {
       element.ElementItemSet.forEach((elementItem) => {
 
-          if (this.incomeCompareSet["before"][elementItem.Id] == undefined)  {
+          if (this.incomeCompareSet["before"][elementItem.Id] === undefined)  {
             this.incomeCompareSet["before"][elementItem.Id] = {"sort": 0, "income": 0};
             this.incomeCompareSet["after"][elementItem.Id] = {"sort": 0, "income": 0};
             this.incomeCompareSet["before"][elementItem.Id]["income"] = elementItem.income();
             this.incomeCompareSet["after"][elementItem.Id]["income"] = elementItem.income();
             this.incomeCompareSet["before"][elementItem.Id]["sort"] = 0;
             this.incomeCompareSet["after"][elementItem.Id]["sort"] = 0;
-            console.log("incomeCompareSetInit");
           }
 
         });
@@ -254,7 +253,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     if (this.project.rounds === 0) this.incomeCompareSetInit();
 
     // for new item
-    if (this.incomeCompareSet["before"][elementItem] == undefined)  {
+    if (this.incomeCompareSet["before"][elementItem] === undefined)  {
       this.incomeCompareSet["before"][elementItem] = {"sort": 0, "income": 0};
       this.incomeCompareSet["after"][elementItem] = {"sort": 0, "income": 0};
       this.incomeCompareSet["before"][elementItem]["income"] = 0;
@@ -511,7 +510,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   addNewElementField(): void {
     const mainElement = this.project.ElementSet[0];
 
-    this.elementItemCount == 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
+    this.elementItemCount === 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
 
     // New Element
     const newElement = this.projectService.createElement({
