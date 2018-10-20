@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.87.6**
+
+* Project Editor - Minor fix on the rating buttons
+
 **0.87.5**
 
 * Project Editor - Add/Remove item and Field buttons moved to top of page 

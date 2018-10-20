@@ -63,6 +63,10 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   // income compare set
   incomeCompareSet: Object = {"before": {}, "after": {}, "round": {}};
 
+  // Using for star buttons
+  starValue: number = 0;
+  elementItemOfStarButton: ElementItem = null;
+
   // Timer schedule
   timerDelay = 1000;
   timerSubscription = observableTimer(1500, this.timerDelay).subscribe(() => {
@@ -278,22 +282,26 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   /* for Rating buttons */
-  isStarFull(value: number, compare: number): boolean {
-    return value >= compare ? true : false;
-  }
-
-  mouseEnter(itemId: number, v: number): void {
-    for(var i = 1; i < 6; i++) {
-      var star = document.getElementById(`${itemId}-${i}`);
-      i > v ? star.className = "star fa fa-star-o" : star.className = "star fa fa-star";
+  isStarFull(value: number, compare: number, elementItem?: ElementItem): boolean {
+    if (elementItem === this.elementItemOfStarButton) {
+      return value >= compare ? this.starValue * 25 <= compare ? false : true : false;
+    } else {
+      return value >= compare ? true : false;
     }
   }
 
-  mouseLeave(itemId: number, v: number) {
-    for(var i = 1; i < 6; i++) {
-      var star = document.getElementById(`${itemId}-${i}`);
-      i > v ? star.className = "star fa fa-star-o" : star.className = "star fa fa-star";
-    }
+  navigationOverStars(value: number, elementItem: ElementItem): boolean {
+    return this.starValue >= value && this.elementItemOfStarButton === elementItem ? true : false;
+  }
+
+  mouseEnter(value: number, elementItem: ElementItem): void {
+    this.starValue = value;
+    this.elementItemOfStarButton = elementItem;
+  }
+
+  mouseLeave(value: number, elementItem: ElementItem): void {
+    this.starValue = value;
+    this.elementItemOfStarButton = elementItem;
   }
 
   initialize(projectId: number, user: User) {

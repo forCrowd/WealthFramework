@@ -150,44 +150,39 @@
 
                               <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
-                                  <i [attr.id]="elementItem.Id + '-1'"
-                                    class="star fa"
-                                    (mouseenter)="mouseEnter(elementItem.Id, 1)"
-                                    (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
-                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 0) }">
+                                  <i class="star fa"
+                                    (mouseenter)="mouseEnter(1, elementItem)"
+                                    (mouseleave)="mouseLeave(elementCell.decimalValue() / 25 + 1, elementItem)"
+                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 0) || navigationOverStars(1, elementItem), 'fa-star-o': !isStarFull(elementCell.decimalValue(), 0, elementItem) && !navigationOverStars(1, elementItem) }">
                                   </i>
                                 </button>
                                 <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 25)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
-                                    <i class="star fa"
-                                      [attr.id]="elementItem.Id + '-2'"
-                                      (mouseenter)="mouseEnter(elementItem.Id, 2)"
-                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
-                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 25) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 25) == false }">
-                                    </i>
+                                  <i class="star fa"
+                                    (mouseenter)="mouseEnter(2, elementItem)"
+                                    (mouseleave)="mouseLeave(elementCell.decimalValue() / 25 + 1, elementItem)"
+                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 25) || navigationOverStars(2, elementItem), 'fa-star-o': !isStarFull(elementCell.decimalValue(), 25, elementItem) && !navigationOverStars(2, elementItem) }">
+                                  </i>
                                 </button>
                                 <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 50)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
-                                    <i class="star fa"
-                                      [attr.id]="elementItem.Id + '-3'"
-                                      (mouseenter)="mouseEnter(elementItem.Id, 3)"
-                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
-                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 50) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 50) == false }">
-                                    </i>
+                                  <i class="star fa"
+                                    (mouseenter)="mouseEnter(3, elementItem)"
+                                    (mouseleave)="mouseLeave(elementCell.decimalValue() / 25 + 1, elementItem)"
+                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 50) || navigationOverStars(3, elementItem), 'fa-star-o': !isStarFull(elementCell.decimalValue(), 50, elementItem) && !navigationOverStars(3, elementItem) }">
+                                  </i>
                                 </button>
                                 <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 75)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
-                                    <i class="star fa"
-                                      [attr.id]="elementItem.Id + '-4'"
-                                      (mouseenter)="mouseEnter(elementItem.Id, 4)"
-                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
-                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 75) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 75) == false }">
-                                    </i>
+                                  <i class="star fa"
+                                    (mouseenter)="mouseEnter(4, elementItem)"
+                                    (mouseleave)="mouseLeave(elementCell.decimalValue() / 25 + 1, elementItem)"
+                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 75) || navigationOverStars(4, elementItem), 'fa-star-o': !isStarFull(elementCell.decimalValue(), 75, elementItem) && !navigationOverStars(4, elementItem) }">
+                                  </i>
                                 </button>
                                 <button type="button" class="btn btn-link" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy || !isSelectedElementItem(elementItem)">
-                                    <i class="star fa"
-                                      [attr.id]="elementItem.Id + '-5'"
-                                      (mouseenter)="mouseEnter(elementItem.Id, 5)"
-                                      (mouseleave)="mouseLeave(elementItem.Id, elementCell.decimalValue() / 25 + 1)"
-                                      [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 100) == true, 'fa-star-o': isStarFull(elementCell.decimalValue(), 100) == false }">
-                                    </i>
+                                  <i class="star fa"
+                                    (mouseenter)="mouseEnter(5, elementItem)"
+                                    (mouseleave)="mouseLeave(elementCell.decimalValue() / 25 + 1, elementItem)"
+                                    [ngClass]="{ 'fa-star': isStarFull(elementCell.decimalValue(), 100) || navigationOverStars(5, elementItem), 'fa-star-o': !isStarFull(elementCell.decimalValue(), 100, elementItem) && !navigationOverStars(5, elementItem) }">
+                                  </i>
                                 </button>
                               </div>
                             </div>
