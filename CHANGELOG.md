@@ -3,6 +3,7 @@
 **0.87.6**
 
 * Project Editor - Minor fix on the rating buttons
+* Project Editor - Random selected item change feature for decreased parant item income 
 
 **0.87.5**
 
