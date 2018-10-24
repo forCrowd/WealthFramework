@@ -1,6 +1,7 @@
+
+import {throwError as observableThrowError,  forkJoin, Observable, of as observableOf, Subscription, timer } from 'rxjs';
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { forkJoin, Observable, of as observableOf, Subscription, timer } from "rxjs";
 import { map, mergeMap, share } from "rxjs/operators";
 import { SourceMapConsumer } from "../../libraries/source-map";
 
@@ -71,7 +72,7 @@ export class AppErrorHandler implements ErrorHandler {
               return new SourceMapConsumer(response);
             }));
         } else {
-          return Observable.throw("no 'sourceMappingURL' regex match");
+          return observableThrowError("no 'sourceMappingURL' regex match");
         }
       })).pipe(share());
 

@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.88.0**
+
+* Upgrade to Angular 7.x
+  * "angular2moment" library replaced with "ngx-moment" library
+
 **0.87.6**
 
 * Project Editor - Minor fix on the rating buttons
