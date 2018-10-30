@@ -3,7 +3,7 @@ import { Title } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { MomentModule } from "angular2-moment";
+import { MomentModule } from "ngx-moment";
 import { ToasterModule } from "angular2-toaster";
 
 // Breeze
@@ -96,7 +96,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     SharedModule,
     AppHttpClientModule,
     RouterModule.forChild(coreRoutes),
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
+    Angulartics2Module.forRoot(),
     BreezeBridgeHttpClientModule,
     ProjectEditorModule,
     ProjectViewerModule,

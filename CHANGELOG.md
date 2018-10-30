@@ -1,5 +1,15 @@
 ### Changelog
 
+**0.88.0**
+
+* Upgrade to Angular 7.x
+  * "angular2moment" library replaced with "ngx-moment" library
+
+**0.87.6**
+
+* Project Editor - Minor fix on the rating buttons
+* Project Editor - Random selected item change feature for decreased parant item income 
+
 **0.87.5**
 
 * Project Editor - Add/Remove item and Field buttons moved to top of page 

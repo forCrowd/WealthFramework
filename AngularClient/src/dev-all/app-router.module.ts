@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+
 // Components
 import { MiscComponent } from "./misc.component";
 import { ProjectTesterComponent } from "./project-tester.component";
@@ -33,7 +34,7 @@ export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
   ],
   imports: [
     RouterModule.forRoot(routes),
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
+    Angulartics2Module.forRoot()
   ],
   providers: [
     // Application initializer
