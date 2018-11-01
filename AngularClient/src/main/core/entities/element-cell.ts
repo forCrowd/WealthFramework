@@ -75,13 +75,9 @@ export class ElementCell extends EntityBase {
 
     // Event handlers
     this.ElementField.Element.Project.ratingModeUpdated.subscribe(() => {
-      //this.setDecimalValue();
-      console.log(this.ElementField.Element.Project.RatingMode.toString());
-
       this.ElementField.Element.Project.RatingMode == RatingMode.CurrentUser
         ? this.currentUserDecimalValue()
         : this.allUsersDecimalValue();
-
     });
 
     return true;

@@ -4,16 +4,16 @@ import { timer as observableTimer, Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime, finalize } from "rxjs/operators";
 import { Options } from "highcharts";
 
+import { Logger } from "../../logger/logger.module";
+import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
+import { AuthService } from "../auth.service";
 import { Element } from "../entities/element";
 import { ElementCell } from "../entities/element-cell";
 import { ElementField, ElementFieldDataType } from "../entities/element-field";
+import { ElementItem } from "../entities/element-item";
 import { RatingMode, Project } from "../entities/project";
 import { User } from "../entities/user";
-import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
-import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
-import { ElementItem } from "../entities/element-item";
-import { Logger } from "src/main/logger/logger.module";
 
 export interface IProjectEditorConfig {
   initialValue?: number,
@@ -35,16 +35,17 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   @Input()
   config: IProjectEditorConfig = { projectId: 0 };
+
   chartConfig: ChartConfig = null;
   currentUser: User = null;
-  displayChart: boolean = false;
-  displayDescription: boolean = false;
+  displayChart = false;
+  displayDescription = false;
   displayIndexDetails = false;
   elementFieldDataType = ElementFieldDataType;
   elementItemsSortField = "allRoundsIncome";
-  errorMessage: string = "";
+  errorMessage = "";
   ratingMode = RatingMode;
-  project: Project = null;
+  project: Project;
   projectId = 0;
   saveStream = new Subject();
   subscriptions: Subscription[] = [];
@@ -54,20 +55,20 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   decreasedItems: ElementItem[] = [];
 
   // User Project Array
-  projectDataSet = Array<Project>();
+  projectDataSet: Project[] = [];
 
   // User project list - selected project Id
-  loadProjectId: number = 0;
+  loadProjectId = 0;
 
   // count current items
   elementItemCount = 0;
-  paused: boolean = false;
+  paused = false;
 
   // income compare set
-  incomeCompareSet: Object = {"before": {}, "after": {}, "round": {}};
+  incomeCompareSet: Object = { "before": {}, "after": {}, "round": {} };
 
   // Using for star buttons
-  starValue: number = 0;
+  starValue = 0;
   elementItemOfStarButton: ElementItem = null;
 
   // Timer schedule
@@ -189,16 +190,16 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.project.ElementSet.forEach((element) => {
       element.ElementItemSet.forEach((elementItem) => {
 
-          if (this.incomeCompareSet["before"][elementItem.Id] === undefined)  {
-            this.incomeCompareSet["before"][elementItem.Id] = {"sort": 0, "income": 0};
-            this.incomeCompareSet["after"][elementItem.Id] = {"sort": 0, "income": 0};
-            this.incomeCompareSet["before"][elementItem.Id]["income"] = elementItem.income();
-            this.incomeCompareSet["after"][elementItem.Id]["income"] = elementItem.income();
-            this.incomeCompareSet["before"][elementItem.Id]["sort"] = 0;
-            this.incomeCompareSet["after"][elementItem.Id]["sort"] = 0;
-          }
+        if (this.incomeCompareSet["before"][elementItem.Id] === undefined) {
+          this.incomeCompareSet["before"][elementItem.Id] = { "sort": 0, "income": 0 };
+          this.incomeCompareSet["after"][elementItem.Id] = { "sort": 0, "income": 0 };
+          this.incomeCompareSet["before"][elementItem.Id]["income"] = elementItem.income();
+          this.incomeCompareSet["after"][elementItem.Id]["income"] = elementItem.income();
+          this.incomeCompareSet["before"][elementItem.Id]["sort"] = 0;
+          this.incomeCompareSet["after"][elementItem.Id]["sort"] = 0;
+        }
 
-        });
+      });
     });
 
     this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
@@ -235,7 +236,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
           this.incomeCompareSet["round"][elementItem.Id] = this.incomeCompareSet["round"][elementItem.Id] + 1;
         } else if (before > after) { // decreased
           this.incomeCompareSet["round"][elementItem.Id] = this.incomeCompareSet["round"][elementItem.Id] + 1;
-        } else { // avarage
+        } else { // average
           this.incomeCompareSet["round"][elementItem.Id] = 0;
         }
 
@@ -275,22 +276,27 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
           if (element === this.project.ElementSet[0]) {
             if (this.decreasedItems.indexOf(elementItem) > -1)
               this.decreasedItems.splice(this.decreasedItems.indexOf(elementItem), 1);
-            }
+          }
 
-          } else if (before > after) { // decrease
+        } else if (before > after) { // decrease
 
           // Item decreases when i try to change item selectedItemElement (only for the main)
           if (element === this.project.ElementSet[0]) {
             if (this.decreasedItems.indexOf(elementItem) === -1)
               this.decreasedItems.push(elementItem);
           }
-
         }
       });
     });
 
-    // When item income decreases tried to change the status
-    if (this.decreasedItems.length > 0) this.chanceSelectedElementItem();
+    // Check for transformation, only if there are more than one element (there must be a child element)
+    // TODO Even this is not a good check / coni2k - 1 Nov. '18
+    if (this.project.ElementSet.length > 1) {
+
+      // When item income decreases tried to change the status
+      if (this.decreasedItems.length > 0)
+        this.chanceSelectedElementItem();
+    }
   }
 
   // Change parent element selected item
@@ -310,9 +316,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       if (elementSet.length > 0) {
 
         if (elementCellSet.length > 0) {
-          for(var i = 0; i < elementCellSet.length; i++) {
+          for (var i = 0; i < elementCellSet.length; i++) {
             var selectedItem = item.ElementCellSet[i].SelectedElementItem;
-            console.log("Selected Item: ",selectedItem.Name);
+            console.log("Selected Item: ", selectedItem.Name);
             item.ElementCellSet[i].SelectedElementItem = this.randomItem(selectedItem.Element.ElementItemSet, selectedItem);
             console.log("new Selected Item: ", item.ElementCellSet[i].SelectedElementItem.Name);
           }
@@ -326,7 +332,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Generate random item form ElementItem array but exclude current selectedElementItem!
-  randomItem(elementItemSet:ElementItem[], item: ElementItem): ElementItem {
+  randomItem(elementItemSet: ElementItem[], item: ElementItem): ElementItem {
     var rand = Math.floor(Math.random() * elementItemSet.length);
     if (elementItemSet[rand] === item) {
       return this.randomItem(elementItemSet, item);
@@ -339,9 +345,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     if (this.project.rounds === 0) this.incomeCompareSetInit();
 
     // for new item
-    if (this.incomeCompareSet["before"][elementItem] === undefined)  {
-      this.incomeCompareSet["before"][elementItem] = {"sort": 0, "income": 0};
-      this.incomeCompareSet["after"][elementItem] = {"sort": 0, "income": 0};
+    if (this.incomeCompareSet["before"][elementItem] === undefined) {
+      this.incomeCompareSet["before"][elementItem] = { "sort": 0, "income": 0 };
+      this.incomeCompareSet["after"][elementItem] = { "sort": 0, "income": 0 };
       this.incomeCompareSet["before"][elementItem]["income"] = 0;
       this.incomeCompareSet["after"][elementItem]["income"] = 0;
       this.incomeCompareSet["before"][elementItem]["sort"] = 0;
@@ -358,7 +364,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     } else if (before > after) {
       return round < 5 ? "fa fa-caret-down pull-right text-danger" : "fa fa-arrows-h pull-right text-dark";
     } else {
-      return "fa fa-arrows-h pull-right text-dark" ;
+      return "fa fa-arrows-h pull-right text-dark";
     }
 
   }
@@ -522,7 +528,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
         if (item.ElementCellSet.length > 0) {
           item.ElementCellSet.forEach(cell => {
-            if(cell.ElementField.DataType === 6) {
+            if (cell.ElementField.DataType === 6) {
               if (cell.SelectedElementItem.Id === elementItem.Id) isSelectedElementItem = true;
             }
           });
@@ -600,6 +606,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   addNewElementField(): void {
+
     const mainElement = this.project.ElementSet[0];
 
     this.elementItemCount === 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;

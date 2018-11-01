@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.88.1**
+
+* Project Editor - Single element transformation attempt fix
+
 **0.88.0**
 
 * Upgrade to Angular 7.x
@@ -8,7 +12,7 @@
 **0.87.6**
 
 * Project Editor - Minor fix on the rating buttons
-* Project Editor - Random selected item change feature for decreased parant item income 
+* Project Editor - Random selected item change feature for decreased parent item income 
 
 **0.87.5**
 
