@@ -10,7 +10,6 @@ import { MomentModule } from "ngx-moment";
 import { environment } from "../../app-settings/environments/environment-settings";
 
 // Internal modules
-//import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { ProjectEditorModule } from "./project-editor/project-editor.module";
 import { ProjectViewerModule } from "./project-viewer/project-viewer.module";
 import { SharedModule } from "../shared/shared.module";
@@ -35,7 +34,6 @@ import { PrologueComponent } from "./components/prologue.component";
 
 // Services
 import { AppEntityManager } from "./app-entity-manager.service";
-//import { AppErrorHandler } from "./app-error-handler.service";
 import { AuthGuard } from "./auth-guard.service";
 import { AuthService } from "./auth.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
@@ -45,6 +43,7 @@ import { ProjectService } from "./project.service";
 
 export { Angulartics2GoogleAnalytics, AppEntityManager, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
+// Routes
 const coreRoutes: Routes = [
   { path: "", component: HomeComponent, data: { title: "Home" } },
   { path: "app/home", redirectTo: "", pathMatch: "full" }, // Alternative
@@ -53,7 +52,7 @@ const coreRoutes: Routes = [
   { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
 ];
 
-// Core settings
+// Settings
 const coreSettings: ISettings = {
   environment: environment.name,
   serviceApiUrl: `${environment.serviceAppUrl}/api/v1`,

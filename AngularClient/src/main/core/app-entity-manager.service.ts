@@ -1,4 +1,5 @@
-import { ErrorHandler, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { Token } from "@forcrowd/backbone-client-core";
 import { throwError as observableThrowError, of as observableOf, from as observableFrom, Observable } from "rxjs";
 import { map, finalize, catchError } from "rxjs/operators";
 
@@ -23,7 +24,6 @@ import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 import { UserRole } from "./entities/user-role";
 import { Logger } from "../logger/logger.module";
-import { Token } from "./token";
 
 export interface IQueryResult<T> {
   count: number;
