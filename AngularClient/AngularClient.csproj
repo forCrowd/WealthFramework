@@ -82,7 +82,6 @@
     <TypeScriptCompile Include="src\main\ng-chart\ng-chart.component.ts" />
     <TypeScriptCompile Include="src\main\ng-chart\ng-chart.module.ts" />
     <TypeScriptCompile Include="src\main\shared\shared.module.ts" />
-    <TypeScriptCompile Include="src\main\shared\utils.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
     <TypeScriptCompile Include="src\sanity.spec.ts" />
     <TypeScriptCompile Include="src\test.ts" />

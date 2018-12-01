@@ -3,7 +3,6 @@ import { Project } from "./project";
 import { UserElementCell } from "./user-element-cell";
 import { UserElementField } from "./user-element-field";
 import { UserRole } from "./user-role";
-import { stripInvalidChars } from "../../shared/utils";
 
 export class User extends EntityBase {
 

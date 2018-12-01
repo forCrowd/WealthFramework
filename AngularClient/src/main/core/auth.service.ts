@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AppHttpClient, Token } from "@forcrowd/backbone-client-core";
+import { AppHttpClient, getUniqueUserName, Token } from "@forcrowd/backbone-client-core";
 import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
 import { throwError as observableThrowError, of as observableOf, Observable, Subject } from "rxjs";
 import { catchError, mergeMap, map } from "rxjs/operators";
@@ -11,7 +11,6 @@ import { User } from "./entities/user";
 import { UserRole } from "./entities/user-role";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { Logger } from "../logger/logger.module";
-import { getUniqueUserName } from "../shared/utils";
 
 @Injectable()
 export class AuthService {
