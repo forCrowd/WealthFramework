@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppHttpClient } from "@forcrowd/backbone-client-core";
 import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
 import { throwError as observableThrowError, of as observableOf, Observable, Subject } from "rxjs";
 import { catchError, mergeMap, map } from "rxjs/operators";
@@ -8,7 +9,6 @@ import { AppSettings } from "../../app-settings/app-settings";
 import { Role } from "./entities/role";
 import { User } from "./entities/user";
 import { UserRole } from "./entities/user-role";
-import { AppHttpClient } from "./app-http-client/app-http-client.module";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { Logger } from "../logger/logger.module";
 import { Token } from "./token";

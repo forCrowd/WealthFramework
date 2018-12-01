@@ -1,17 +1,16 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
+import { BackboneClientCoreModule, ISettings, ProjectService as CoreProjectService } from "@forcrowd/backbone-client-core";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { MomentModule } from "ngx-moment";
 import { ToasterModule } from "angular2-toaster";
+import { MomentModule } from "ngx-moment";
 
-// Breeze
-import "./breeze-client-odata-fix";
-import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
+import { environment } from "../../app-settings/environments/environment-settings";
 
 // Internal modules
-import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
+//import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { ProjectEditorModule } from "./project-editor/project-editor.module";
 import { ProjectViewerModule } from "./project-viewer/project-viewer.module";
 import { SharedModule } from "../shared/shared.module";
@@ -36,7 +35,7 @@ import { PrologueComponent } from "./components/prologue.component";
 
 // Services
 import { AppEntityManager } from "./app-entity-manager.service";
-import { AppErrorHandler } from "./app-error-handler.service";
+//import { AppErrorHandler } from "./app-error-handler.service";
 import { AuthGuard } from "./auth-guard.service";
 import { AuthService } from "./auth.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
@@ -44,7 +43,7 @@ import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
 
-export { Angulartics2GoogleAnalytics, AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
+export { Angulartics2GoogleAnalytics, AppEntityManager, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
 const coreRoutes: Routes = [
   { path: "", component: HomeComponent, data: { title: "Home" } },
@@ -53,6 +52,14 @@ const coreRoutes: Routes = [
   { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
   { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
 ];
+
+// Core settings
+const coreSettings: ISettings = {
+  environment: environment.name,
+  serviceApiUrl: `${environment.serviceAppUrl}/api/v1`,
+  serviceODataUrl: `${environment.serviceAppUrl}/odata/v1`,
+  sourceMapMappingsUrl: "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm"
+}
 
 export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
 
@@ -92,12 +99,12 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   imports: [
     ToasterModule.forRoot(),
     MomentModule,
+    BackboneClientCoreModule.configure(coreSettings),
 
     SharedModule,
-    AppHttpClientModule,
+    //AppHttpClientModule,
     RouterModule.forChild(coreRoutes),
     Angulartics2Module.forRoot(),
-    BreezeBridgeHttpClientModule,
     ProjectEditorModule,
     ProjectViewerModule,
   ],
@@ -108,11 +115,6 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
       multi: true,
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
-    },
-    // Error handler
-    {
-      provide: ErrorHandler,
-      useClass: AppErrorHandler
     },
     AppEntityManager,
     AuthGuard,

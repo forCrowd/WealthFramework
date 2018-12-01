@@ -22,7 +22,6 @@ import { User } from "./entities/user";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 import { UserRole } from "./entities/user-role";
-import { AppErrorHandler } from "./app-error-handler.service";
 import { Logger } from "../logger/logger.module";
 import { Token } from "./token";
 
@@ -34,18 +33,15 @@ export interface IQueryResult<T> {
 @Injectable()
 export class AppEntityManager extends EntityManager {
 
-  appErrorHandler: AppErrorHandler;
   isBusy: boolean = false;
   metadata: Object = null;
   queryCache: string[] = [];
 
-  constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule, errorHandler: ErrorHandler, private logger: Logger) {
+  constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule, private logger: Logger) {
 
     super({
       serviceName: AppSettings.serviceODataUrl
     });
-
-    this.appErrorHandler = errorHandler as AppErrorHandler;
 
     config.initializeAdapterInstance("uriBuilder", "odata");
 

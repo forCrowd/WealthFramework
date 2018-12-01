@@ -32,15 +32,8 @@
     <TypeScriptCompile Include="src\main\app\app.component.ts" />
     <TypeScriptCompile Include="src\main\app\app.module.ts" />
     <TypeScriptCompile Include="src\main\core\app-entity-manager.service.ts" />
-    <TypeScriptCompile Include="src\main\core\app-error-handler.service.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http-client\app-http-client.module.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http-client\app-http-client.service.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http-client\auth-interceptor.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http-client\busy-interceptor.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth.service.ts" />
-    <TypeScriptCompile Include="src\main\core\breeze-client-odata-fix.ts" />
     <TypeScriptCompile Include="src\main\core\components\project-viewer.component.ts" />
     <TypeScriptCompile Include="src\main\core\project-editor\project-editor.component.ts" />
     <TypeScriptCompile Include="src\main\core\project-editor\project-editor.module.ts" />

@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppHttpClient } from "@forcrowd/backbone-client-core";
 import { EntityQuery, Predicate } from "breeze-client";
 import { Observable, Subject } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppHttpClient } from "./app-http-client/app-http-client.module";
 import { Element } from "./entities/element";
 import { ElementCell } from "./entities/element-cell";
 import { ElementField, ElementFieldDataType } from "./entities/element-field";
