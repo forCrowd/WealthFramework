@@ -1,4 +1,6 @@
-import { ElementFieldDataType } from "./element-field";
+import { ElementFieldDataType } from "@forcrowd/backbone-client-core";
+
+import { Project } from "./project";
 import { TestHelpers } from "./test-helpers";
 
 // TODO: Check all these tests below one more time
@@ -11,7 +13,7 @@ describe("main/core/entities/element", () => {
     var parent = TestHelpers.createElement();
 
     // Child element
-    var child = TestHelpers.createElement(parent.Project);
+    var child = TestHelpers.createElement(parent.Project as Project);
 
     // Parent's field
     var field = TestHelpers.createElementField(parent);
@@ -30,10 +32,10 @@ describe("main/core/entities/element", () => {
     var grandParent = TestHelpers.createElement();
 
     // Parent
-    var parent = TestHelpers.createElement(grandParent.Project);
+    var parent = TestHelpers.createElement(grandParent.Project as Project);
 
     // Child element
-    var child = TestHelpers.createElement(grandParent.Project);
+    var child = TestHelpers.createElement(grandParent.Project as Project);
 
     // Grand parent's field
     var grandParentField = TestHelpers.createElementField(grandParent);
@@ -59,10 +61,10 @@ describe("main/core/entities/element", () => {
     var grandParent = TestHelpers.createElement();
 
     // Parent
-    var parent = TestHelpers.createElement(grandParent.Project);
+    var parent = TestHelpers.createElement(grandParent.Project as Project);
 
     // Child element
-    var child = TestHelpers.createElement(grandParent.Project);
+    var child = TestHelpers.createElement(grandParent.Project as Project);
 
     // Grand parent's field
     var grandParentField = TestHelpers.createElementField(grandParent);
@@ -128,7 +130,7 @@ describe("main/core/entities/element", () => {
     expect(element.income()).toBe(0);
 
     // Case 2: Set initial value, add the fields, first item and the cell
-    element.Project.initialValue = 275;
+    (element.Project as Project).initialValue = 275;
 
     var item1 = TestHelpers.createElementItem(element);
 

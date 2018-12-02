@@ -1,6 +1,8 @@
-import { ElementFieldDataType } from "./element-field";
-import { TestHelpers } from "./test-helpers";
+import { ElementFieldDataType } from "@forcrowd/backbone-client-core";
 
+import { Element } from "./element";
+import { Project } from "./project";
+import { TestHelpers } from "./test-helpers";
 // TODO: Check all these tests below one more time
 
 describe("main/core/entities/element-field", () => {
@@ -48,7 +50,7 @@ describe("main/core/entities/element-field", () => {
 
     // Case 1: Initial
     const decimalField1 = TestHelpers.createElementField(null, ElementFieldDataType.Decimal);
-    decimalField1.Element.Project.initialValue = 50;
+    (decimalField1.Element.Project as Project).initialValue = 50;
     decimalField1.setIncome();
 
     expect(decimalField1.income()).toBe(50);
@@ -59,7 +61,7 @@ describe("main/core/entities/element-field", () => {
     expect(decimalField1.income()).toBe(50);
 
     // Case 3: Second rating field
-    const decimalField2 = TestHelpers.createElementField(decimalField1.Element, ElementFieldDataType.Decimal);
+    const decimalField2 = TestHelpers.createElementField(decimalField1.Element as Element, ElementFieldDataType.Decimal);
 
     TestHelpers.createUserElementField(decimalField2, 75);
 
@@ -96,7 +98,7 @@ describe("main/core/entities/element-field", () => {
     expect(decimalField.rating()).toBe(decimalField.currentUserRating());
 
     // Toggle (switch to All Users')
-    decimalField.Element.Project.toggleRatingMode();
+    (decimalField.Element.Project as Project).toggleRatingMode();
 
     expect(decimalField.rating()).toBe(decimalField.ratingAverage());
   });
@@ -109,7 +111,7 @@ describe("main/core/entities/element-field", () => {
     expect(decimalField1.ratingPercentage()).toBe(1);
 
     // Case 2: Two rating fields
-    const decimalField2 = TestHelpers.createElementField(decimalField1.Element, ElementFieldDataType.Decimal, null, null, 75);
+    const decimalField2 = TestHelpers.createElementField(decimalField1.Element as Element, ElementFieldDataType.Decimal, null, null, 75);
 
     expect(decimalField1.ratingPercentage()).toBe(0.25);
     expect(decimalField2.ratingPercentage()).toBe(0.75);
@@ -123,14 +125,14 @@ describe("main/core/entities/element-field", () => {
     expect(decimalField.decimalValue()).toBe(0);
 
     // Case 2: Add fields
-    const item1 = TestHelpers.createElementItem(decimalField.Element);
+    const item1 = TestHelpers.createElementItem(decimalField.Element as Element);
 
     TestHelpers.createElementCell(decimalField, item1, null, null, 5);
 
     expect(decimalField.decimalValue()).toBe(5);
 
     // Case 3: Add the second item
-    const item2 = TestHelpers.createElementItem(decimalField.Element);
+    const item2 = TestHelpers.createElementItem(decimalField.Element as Element);
 
     TestHelpers.createElementCell(decimalField, item2, null, null, 10);
 
