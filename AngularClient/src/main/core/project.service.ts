@@ -21,7 +21,7 @@ export class ProjectService extends CoreProjectService {
 
     if (!userElementCell) { // If there is no item, create it
 
-      this.createUserElementCellX(elementCell, value);
+      this.createOrReuseUserCell(elementCell, value);
 
     } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
 
@@ -44,7 +44,7 @@ export class ProjectService extends CoreProjectService {
         if (!userElementField) {
 
           const rating = updateType === "increase" ? 55 : 45;
-          this.createUserElementFieldX(elementField, rating);
+          this.createOrReuseUserField(elementField, rating);
 
         } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
 
@@ -66,7 +66,7 @@ export class ProjectService extends CoreProjectService {
     }
   }
 
-  private createUserElementCellX(elementCell: ElementCell, value: any) {
+  private createOrReuseUserCell(elementCell: ElementCell, value: any) {
 
     // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
     const existingKey = [(this as any).authService.currentUser.Id, elementCell.Id];
@@ -104,7 +104,7 @@ export class ProjectService extends CoreProjectService {
     return userElementCell;
   }
 
-  private createUserElementFieldX(elementField: ElementField, rating: number = 50) {
+  private createOrReuseUserField(elementField: ElementField, rating: number = 50) {
 
     // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
     const existingKey = [(this as any).authService.currentUser.Id, elementField.Id];
