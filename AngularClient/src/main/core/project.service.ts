@@ -1,21 +1,18 @@
 import { Injectable } from "@angular/core";
-import { ElementFieldDataType } from "@forcrowd/backbone-client-core";
+import { ElementFieldDataType, ProjectService as CoreProjectService } from "@forcrowd/backbone-client-core";
 import { Subject } from "rxjs";
 
-import { Element } from "./entities/element";
 import { ElementCell } from "./entities/element-cell";
 import { ElementField } from "./entities/element-field";
-import { ElementItem } from "./entities/element-item";
-import { Project } from "./entities/project";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 
 @Injectable()
-export class ProjectService {
+export class ProjectService extends CoreProjectService {
 
   elementCellDecimalValueUpdated = new Subject<ElementCell>();
 
-  createElementCell(initialValues: {}) {
+  createElementCellX(initialValues: {}) {
 
     const elementCell = (this as any).appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
 
@@ -37,7 +34,94 @@ export class ProjectService {
     return elementCell;
   }
 
-  createUserElementCell(elementCell: ElementCell, value: any) {
+  createElementFieldX(initialValues: {}, rating: number = 50) {
+
+    const elementField = (this as any).appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+
+    // If RatingEnabled, also create "User element field"
+    if (elementField.RatingEnabled) {
+
+      elementField.RatingTotal = 0; // Computed field
+      elementField.RatingCount = 1; // Computed field
+
+      const userElementFieldInitial = {
+        User: (this as any).authService.currentUser,
+        ElementField: elementField,
+        Rating: rating
+      };
+
+      (this as any).appEntityManager.createEntity("UserElementField", userElementFieldInitial);
+    }
+
+    return elementField;
+  }
+
+  removeElementCellX(elementCell: ElementCell): void {
+
+    // User element cell
+    if (elementCell.UserElementCellSet[0]) {
+      elementCell.UserElementCellSet[0].entityAspect.setDeleted();
+    }
+
+    // Cell
+    elementCell.entityAspect.setDeleted();
+  }
+
+  // These "updateX" functions were defined in their related entities (user.js).
+  // Only because they had to use createEntity() on dataService, it was moved to this service.
+  // Try do handle them in a better way, maybe by using broadcast?
+  updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
+
+    const userElementCell = elementCell.UserElementCellSet[0];
+
+    if (!userElementCell) { // If there is no item, create it
+
+      this.createUserElementCellX(elementCell, value);
+
+    } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
+
+      userElementCell.DecimalValue = value;
+
+    }
+
+    this.elementCellDecimalValueUpdated.next(elementCell);
+  }
+
+  updateElementFieldRating(elementField: ElementField, updateType: string) {
+
+    switch (updateType) {
+      case "increase":
+      case "decrease": {
+
+        const userElementField = elementField.UserElementFieldSet[0];
+
+        // If there is no item, create it
+        if (!userElementField) {
+
+          const rating = updateType === "increase" ? 55 : 45;
+          this.createUserElementFieldX(elementField, rating);
+
+        } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
+
+          userElementField.Rating = updateType === "increase" ?
+            userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5 :
+            userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
+        }
+
+        break;
+      }
+      case "reset": {
+
+        if (elementField.UserElementFieldSet[0]) {
+          elementField.UserElementFieldSet[0].Rating = 50;
+        }
+
+        break;
+      }
+    }
+  }
+
+  private createUserElementCellX(elementCell: ElementCell, value: any) {
 
     // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
     const existingKey = [(this as any).authService.currentUser.Id, elementCell.Id];
@@ -51,9 +135,9 @@ export class ProjectService {
       }
 
       switch (elementCell.ElementField.DataType) {
-        case ElementFieldDataType.String: { break; }
-        case ElementFieldDataType.Decimal: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
-        case ElementFieldDataType.Element: { break; }
+      case ElementFieldDataType.String: { break; }
+      case ElementFieldDataType.Decimal: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
+      case ElementFieldDataType.Element: { break; }
       }
 
     } else {
@@ -64,9 +148,9 @@ export class ProjectService {
       } as any;
 
       switch (elementCell.ElementField.DataType) {
-        case ElementFieldDataType.String: { break; }
-        case ElementFieldDataType.Decimal: { userElementCellInitial.DecimalValue = value !== null ? value : 50; break; }
-        case ElementFieldDataType.Element: { break; }
+      case ElementFieldDataType.String: { break; }
+      case ElementFieldDataType.Decimal: { userElementCellInitial.DecimalValue = value !== null ? value : 50; break; }
+      case ElementFieldDataType.Element: { break; }
       }
 
       userElementCell = (this as any).appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
@@ -75,7 +159,7 @@ export class ProjectService {
     return userElementCell;
   }
 
-  createUserElementField(elementField: ElementField, rating: number = 50) {
+  private createUserElementFieldX(elementField: ElementField, rating: number = 50) {
 
     // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
     const existingKey = [(this as any).authService.currentUser.Id, elementField.Id];
@@ -102,81 +186,5 @@ export class ProjectService {
     }
 
     return userElementField;
-  }
-
-  createElementField(initialValues: {}, rating: number = 50) {
-
-    const elementField = (this as any).appEntityManager.createEntity("ElementField", initialValues) as ElementField;
-
-    // If RatingEnabled, also create "User element field"
-    if (elementField.RatingEnabled) {
-
-      elementField.RatingTotal = 0; // Computed field
-      elementField.RatingCount = 1; // Computed field
-
-      const userElementFieldInitial = {
-        User: (this as any).authService.currentUser,
-        ElementField: elementField,
-        Rating: rating
-      };
-
-      (this as any).appEntityManager.createEntity("UserElementField", userElementFieldInitial);
-    }
-
-    return elementField;
-  }
-
-  // These "updateX" functions were defined in their related entities (user.js).
-  // Only because they had to use createEntity() on dataService, it was moved to this service.
-  // Try do handle them in a better way, maybe by using broadcast?
-  updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
-
-    const userElementCell = elementCell.UserElementCellSet[0];
-
-    if (!userElementCell) { // If there is no item, create it
-
-      this.createUserElementCell(elementCell, value);
-
-    } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
-
-      userElementCell.DecimalValue = value;
-
-    }
-
-    this.elementCellDecimalValueUpdated.next(elementCell);
-  }
-
-  updateElementFieldRating(elementField: ElementField, updateType: string) {
-
-    switch (updateType) {
-      case "increase":
-      case "decrease": {
-
-        const userElementField = elementField.UserElementFieldSet[0];
-
-        // If there is no item, create it
-        if (!userElementField) {
-
-          const rating = updateType === "increase" ? 55 : 45;
-          this.createUserElementField(elementField, rating);
-
-        } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
-
-          userElementField.Rating = updateType === "increase" ?
-            userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5 :
-            userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
-        }
-
-        break;
-      }
-      case "reset": {
-
-        if (elementField.UserElementFieldSet[0]) {
-          elementField.UserElementFieldSet[0].Rating = 50;
-        }
-
-        break;
-      }
-    }
   }
 }

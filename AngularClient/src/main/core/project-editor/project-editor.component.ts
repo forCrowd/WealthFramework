@@ -549,7 +549,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     // is this a selected item of parent element?
     if (!this.isSelectedElementItem(elementItem)) {
       const elementCellSet = elementItem.ElementCellSet.slice();
-      elementCellSet.forEach(elementCell => {
+      elementCellSet.forEach((elementCell: ElementCell) => {
         this.projectService.removeElementCellX(elementCell);
       });
 

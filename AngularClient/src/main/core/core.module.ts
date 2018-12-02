@@ -140,7 +140,11 @@ export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
     CanDeactivateGuard,
     DynamicTitleResolve,
     GoogleAnalyticsService,
-    ProjectService,
+    // Project service
+    {
+      provide: ProjectService,
+      useClass: ProjectService
+    },
     Title
   ]
 })
