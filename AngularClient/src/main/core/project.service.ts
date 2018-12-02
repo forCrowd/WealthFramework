@@ -21,19 +21,26 @@ export class ProjectService {
 
   elementCellDecimalValueUpdated = new Subject<ElementCell>();
 
-  get isBusy(): boolean {
-    return this.appEntityManager.isBusy || this.appHttpClient.isBusy || this.isBusyLocal;
-  }
+  createElementCell(initialValues: Object) {
 
-  private readonly appHttpClient: AppHttpClient;
-  private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
-  private projectExpandedObservable: Observable<Project> = null;
+    const elementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
 
-  constructor(private appEntityManager: AppEntityManager,
-    private authService: AuthService,
-    private httpClient: HttpClient) {
+    // If DataType is decimal, also create "User element cell"
+    if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
 
-    this.appHttpClient = httpClient as AppHttpClient;
+      elementCell.DecimalValueTotal = 0; // Computed field
+      elementCell.DecimalValueCount = 1; // Computed field
+
+      const userElementCellInitial = {
+        User: this.authService.currentUser,
+        ElementCell: elementCell,
+        DecimalValue: 0,
+      } as any;
+
+      this.appEntityManager.createEntity("UserElementCell", userElementCellInitial);
+    }
+
+    return elementCell;
   }
 
   createUserElementCell(elementCell: ElementCell, value: any) {
@@ -103,28 +110,6 @@ export class ProjectService {
     return userElementField;
   }
 
-  createElementCell(initialValues: Object) {
-
-    const elementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
-
-    // If DataType is decimal, also create "User element cell"
-    if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
-
-      elementCell.DecimalValueTotal = 0; // Computed field
-      elementCell.DecimalValueCount = 1; // Computed field
-
-      const userElementCellInitial = {
-        User: this.authService.currentUser,
-        ElementCell: elementCell,
-        DecimalValue: 0,
-      } as any;
-
-      this.appEntityManager.createEntity("UserElementCell", userElementCellInitial);
-    }
-
-    return elementCell;
-  }
-
   createElementField(initialValues: Object, rating: number = 50) {
 
     const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
@@ -145,90 +130,6 @@ export class ProjectService {
     }
 
     return elementField;
-  }
-
-  createElementItem(initialValues: Object): ElementItem {
-    return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
-  }
-
-  createElement(initialValues: Object) {
-    return this.appEntityManager.createEntity("Element", initialValues);
-  }
-
-  saveElementField(elementField: ElementField): Observable<void> {
-
-    // Related cells
-    if (elementField.ElementCellSet.length === 0) {
-      elementField.Element.ElementItemSet.forEach(elementItem => {
-        this.createElementCell({
-          ElementField: elementField,
-          ElementItem: elementItem
-        });
-      });
-    }
-
-    return this.saveChanges();
-  }
-
-  removeElementCell(elementCell: ElementCell): void {
-
-    // User element cell
-    if (elementCell.UserElementCellSet[0]) {
-      elementCell.UserElementCellSet[0].entityAspect.setDeleted();
-    }
-
-    // Cell
-    elementCell.entityAspect.setDeleted();
-  }
-
-  getProjectExpanded(projectId: number, forceRefresh = false) {
-
-    // Prepare the query
-    let query = EntityQuery.from("Project").where("Id", "eq", projectId);
-
-    // Is authorized? No, then get only the public data, yes, then get include user's own records
-    query = this.authService.currentUser.isAuthenticated()
-      ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
-      : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
-
-    return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh).pipe(
-      map(response => {
-        return response.results[0] || null;
-      }));
-  }
-
-  getProjectSet(searchKey: string = "") {
-
-    let query = EntityQuery
-      .from("Project")
-      .expand(["User"])
-      .orderBy("Name");
-
-    if (searchKey !== "") {
-      const projectNamePredicate = new Predicate("Name", "contains", searchKey);
-      const userNamePredicate = new Predicate("User.UserName", "contains", searchKey);
-      query = query.where(projectNamePredicate.or(userNamePredicate));
-    }
-
-    return this.appEntityManager.executeQueryObservable<Project>(query).pipe(
-      map(response => {
-        return response.results;
-      }));
-  }
-
-  hasChanges(): boolean {
-    return this.appEntityManager.hasChanges();
-  }
-
-  saveChanges(): Observable<void> {
-    this.isBusyLocal = true;
-    return this.authService.ensureAuthenticatedUser().pipe(
-      mergeMap(() => {
-        return this.appEntityManager.saveChangesObservable();
-      }),
-      finalize(() => {
-        this.isBusyLocal = false;
-      }));
   }
 
   // These "updateX" functions were defined in their related entities (user.js).
