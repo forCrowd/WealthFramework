@@ -1,29 +1,23 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { AppHttpClient } from "@forcrowd/backbone-client-core";
-import { EntityQuery, Predicate } from "breeze-client";
-import { Observable, Subject } from "rxjs";
-import { mergeMap, finalize, map } from "rxjs/operators";
+import { ElementFieldDataType } from "@forcrowd/backbone-client-core";
+import { Subject } from "rxjs";
 
-import { AppSettings } from "../../app-settings/app-settings";
 import { Element } from "./entities/element";
 import { ElementCell } from "./entities/element-cell";
-import { ElementField, ElementFieldDataType } from "./entities/element-field";
+import { ElementField } from "./entities/element-field";
 import { ElementItem } from "./entities/element-item";
 import { Project } from "./entities/project";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
-import { AppEntityManager } from "./app-entity-manager.service";
-import { AuthService } from "./auth.service";
 
 @Injectable()
 export class ProjectService {
 
   elementCellDecimalValueUpdated = new Subject<ElementCell>();
 
-  createElementCell(initialValues: Object) {
+  createElementCell(initialValues: {}) {
 
-    const elementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
+    const elementCell = (this as any).appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
 
     // If DataType is decimal, also create "User element cell"
     if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
@@ -32,12 +26,12 @@ export class ProjectService {
       elementCell.DecimalValueCount = 1; // Computed field
 
       const userElementCellInitial = {
-        User: this.authService.currentUser,
+        User: (this as any).authService.currentUser,
         ElementCell: elementCell,
         DecimalValue: 0,
       } as any;
 
-      this.appEntityManager.createEntity("UserElementCell", userElementCellInitial);
+      (this as any).appEntityManager.createEntity("UserElementCell", userElementCellInitial);
     }
 
     return elementCell;
@@ -46,8 +40,8 @@ export class ProjectService {
   createUserElementCell(elementCell: ElementCell, value: any) {
 
     // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-    const existingKey = [this.authService.currentUser.Id, elementCell.Id];
-    let userElementCell = this.appEntityManager.getEntityByKey("UserElementCell", existingKey) as UserElementCell;
+    const existingKey = [(this as any).authService.currentUser.Id, elementCell.Id];
+    let userElementCell = (this as any).appEntityManager.getEntityByKey("UserElementCell", existingKey) as UserElementCell;
 
     if (userElementCell) {
 
@@ -65,7 +59,7 @@ export class ProjectService {
     } else {
 
       const userElementCellInitial = {
-        User: this.authService.currentUser,
+        User: (this as any).authService.currentUser,
         ElementCell: elementCell
       } as any;
 
@@ -75,7 +69,7 @@ export class ProjectService {
         case ElementFieldDataType.Element: { break; }
       }
 
-      userElementCell = this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
+      userElementCell = (this as any).appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
     }
 
     return userElementCell;
@@ -84,8 +78,8 @@ export class ProjectService {
   createUserElementField(elementField: ElementField, rating: number = 50) {
 
     // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-    const existingKey = [this.authService.currentUser.Id, elementField.Id];
-    let userElementField = this.appEntityManager.getEntityByKey("UserElementField", existingKey) as UserElementField;
+    const existingKey = [(this as any).authService.currentUser.Id, elementField.Id];
+    let userElementField = (this as any).appEntityManager.getEntityByKey("UserElementField", existingKey) as UserElementField;
 
     if (userElementField) {
 
@@ -99,20 +93,20 @@ export class ProjectService {
     } else {
 
       const userElementFieldInitial = {
-        User: this.authService.currentUser,
+        User: (this as any).authService.currentUser,
         ElementField: elementField,
         Rating: rating
       };
 
-      userElementField = this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
+      userElementField = (this as any).appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
     }
 
     return userElementField;
   }
 
-  createElementField(initialValues: Object, rating: number = 50) {
+  createElementField(initialValues: {}, rating: number = 50) {
 
-    const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+    const elementField = (this as any).appEntityManager.createEntity("ElementField", initialValues) as ElementField;
 
     // If RatingEnabled, also create "User element field"
     if (elementField.RatingEnabled) {
@@ -121,12 +115,12 @@ export class ProjectService {
       elementField.RatingCount = 1; // Computed field
 
       const userElementFieldInitial = {
-        User: this.authService.currentUser,
+        User: (this as any).authService.currentUser,
         ElementField: elementField,
         Rating: rating
       };
 
-      this.appEntityManager.createEntity("UserElementField", userElementFieldInitial);
+      (this as any).appEntityManager.createEntity("UserElementField", userElementFieldInitial);
     }
 
     return elementField;
