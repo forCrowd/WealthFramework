@@ -570,10 +570,19 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // Cells
     this.selectedElement.ElementFieldSet.forEach(field => {
-      var elementCell = this.projectService.createElementCellX({
+      var elementCell = this.projectService.createElementCell({
         ElementField: field,
-        ElementItem: newElementItem,
+        ElementItem: newElementItem
       });
+
+      // If DataType is decimal, also create "User element cell"
+      if (field.DataType === ElementFieldDataType.Decimal) {
+
+        elementCell.DecimalValueTotal = 0; // Computed field
+        elementCell.DecimalValueCount = 1; // Computed field
+
+        this.projectService.createUserElementCell(elementCell, 0);
+      }
 
       switch (field.DataType) {
         case ElementFieldDataType.String: { break; }
@@ -637,16 +646,27 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       Name: `Element ${this.project.ElementSet.length} item 2`
     }) as ElementItem;
 
-    // Element Cells
-    this.projectService.createElementCellX({
+    // Element cell 1
+    const newCell1 = this.projectService.createElementCell({
       ElementField: newElementField,
       ElementItem: newElementItem1,
+      DecimalValueTotal: 0,
+      DecimalValueCount: 1
     });
 
-    this.projectService.createElementCellX({
+    // User element cell 1
+    this.projectService.createUserElementCell(newCell1, 0);
+
+    // Element cell 2
+    const newCell2 = this.projectService.createElementCell({
       ElementField: newElementField,
       ElementItem: newElementItem2,
+      DecimalValueTotal: 0,
+      DecimalValueCount: 1
     });
+
+    // User element cell 2
+    this.projectService.createUserElementCell(newCell2, 0);
 
     /* --- */
 
@@ -662,7 +682,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // Cells
     newField.Element.ElementItemSet.forEach((elementItem, i) => {
-      this.projectService.createElementCellX({
+      this.projectService.createElementCell({
         ElementField: newField,
         ElementItem: elementItem
       });

@@ -12,28 +12,6 @@ export class ProjectService extends CoreProjectService {
 
   elementCellDecimalValueUpdated = new Subject<ElementCell>();
 
-  createElementCellX(initialValues: {}) {
-
-    const elementCell = (this as any).appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
-
-    // If DataType is decimal, also create "User element cell"
-    if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
-
-      elementCell.DecimalValueTotal = 0; // Computed field
-      elementCell.DecimalValueCount = 1; // Computed field
-
-      const userElementCellInitial = {
-        User: (this as any).authService.currentUser,
-        ElementCell: elementCell,
-        DecimalValue: 0,
-      } as any;
-
-      (this as any).appEntityManager.createEntity("UserElementCell", userElementCellInitial);
-    }
-
-    return elementCell;
-  }
-
   // These "updateX" functions were defined in their related entities (user.js).
   // Only because they had to use createEntity() on dataService, it was moved to this service.
   // Try do handle them in a better way, maybe by using broadcast?
