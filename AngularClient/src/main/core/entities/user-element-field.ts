@@ -4,7 +4,7 @@ import { ElementField } from "./element-field";
 
 export class UserElementField extends CoreUserElementField {
 
-  get Rating(): number {
+  get Rating() {
     return this._rating;
   }
   set Rating(value: number) {

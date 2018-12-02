@@ -23,7 +23,7 @@ export class UserElementCell extends CoreUserElementCell {
     decimalValue: number | null
   } = {
     decimalValue: null
-  }
+  };
 
   initialize() {
     if (this.initialized) return;
