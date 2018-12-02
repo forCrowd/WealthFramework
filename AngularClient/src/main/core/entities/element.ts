@@ -18,7 +18,7 @@ export class Element extends CoreElement {
     };
 
   elementFieldSet(ratingEnabledFilter: boolean = true): ElementField[] {
-    return this.getElementFieldSet2(this, ratingEnabledFilter);
+    return this.getElementFieldSetWithFilter(this, ratingEnabledFilter);
   }
 
   familyTree() {
@@ -142,7 +142,7 @@ export class Element extends CoreElement {
     }
   }
 
-  private getElementFieldSet2(element: Element, ratingEnabledFilter: boolean = true) {
+  private getElementFieldSetWithFilter(element: Element, ratingEnabledFilter: boolean = true) {
 
     const sortedElementFieldSet = element.getElementFieldSetSorted();
     var fieldSet: ElementField[] = [];
@@ -154,7 +154,7 @@ export class Element extends CoreElement {
       }
 
       if (field.DataType === ElementFieldDataType.Element && field.SelectedElement !== null) {
-        const childFieldSet = this.getElementFieldSet2(field.SelectedElement as Element, ratingEnabledFilter);
+        const childFieldSet = this.getElementFieldSetWithFilter(field.SelectedElement as Element, ratingEnabledFilter);
 
         childFieldSet.forEach(childField => {
           fieldSet.push(childField);
