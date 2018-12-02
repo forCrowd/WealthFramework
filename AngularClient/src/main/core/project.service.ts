@@ -56,17 +56,6 @@ export class ProjectService extends CoreProjectService {
     return elementField;
   }
 
-  removeElementCellX(elementCell: ElementCell): void {
-
-    // User element cell
-    if (elementCell.UserElementCellSet[0]) {
-      elementCell.UserElementCellSet[0].entityAspect.setDeleted();
-    }
-
-    // Cell
-    elementCell.entityAspect.setDeleted();
-  }
-
   // These "updateX" functions were defined in their related entities (user.js).
   // Only because they had to use createEntity() on dataService, it was moved to this service.
   // Try do handle them in a better way, maybe by using broadcast?

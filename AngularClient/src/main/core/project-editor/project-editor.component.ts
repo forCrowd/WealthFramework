@@ -548,14 +548,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // is this a selected item of parent element?
     if (!this.isSelectedElementItem(elementItem)) {
-      const elementCellSet = elementItem.ElementCellSet.slice();
-      elementCellSet.forEach((elementCell: ElementCell) => {
-        this.projectService.removeElementCellX(elementCell);
-      });
-
-      elementItem.entityAspect.setDeleted();
+      this.projectService.removeElementItem(elementItem);
       this.saveStream.next();
-
     } else {
       this.logger.logError("This item is parent element selected item, should not be remove");
     }
