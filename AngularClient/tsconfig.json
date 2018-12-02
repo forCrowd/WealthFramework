@@ -16,6 +16,14 @@
       "es2017",
       "dom"
     ],
-    "importHelpers": true
+    "importHelpers": true,
+    "paths": {
+      "@forcrowd/backbone-client-core": [
+        "dist/backbone-client-core"
+      ],
+      "@forcrowd/backbone-client-core/*": [
+        "dist/backbone-client-core/*"
+      ]
+    }
   }
 }
