@@ -1,13 +1,27 @@
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
-import { BackboneClientCoreModule, ISettings, ProjectService as CoreProjectService } from "@forcrowd/backbone-client-core";
+import { CoreConfig as BackboneConfig, CoreModule as BackboneModule, EntityManagerConfig as BackboneEntityManagerConfig, ProjectService as CoreProjectService } from "@forcrowd/backbone-client-core";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { ToasterModule } from "angular2-toaster";
 import { MomentModule } from "ngx-moment";
 
 import { environment } from "../../app-settings/environments/environment-settings";
+
+import { Element,
+  ElementCell,
+  ElementField,
+  ElementItem,
+  Project,
+  // Role,
+  // User,
+  // UserClaim,
+  UserElementCell,
+  UserElementField,
+  // UserLogin,
+  // UserRole
+  } from "./entities";
 
 // Internal modules
 import { ProjectEditorModule } from "./project-editor/project-editor.module";
@@ -33,15 +47,13 @@ import { PrologueComponent } from "./components/prologue.component";
 //import { TotalCostIndexComponent } from "./components/total-cost-index.component";
 
 // Services
-import { AppEntityManager } from "./app-entity-manager.service";
 import { AuthGuard } from "./auth-guard.service";
-import { AuthService } from "./auth.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
 
-export { Angulartics2GoogleAnalytics, AppEntityManager, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
+export { Angulartics2GoogleAnalytics, AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
 // Routes
 const coreRoutes: Routes = [
@@ -52,15 +64,27 @@ const coreRoutes: Routes = [
   { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
 ];
 
-// Settings
-const coreSettings: ISettings = {
-  environment: environment.name,
-  serviceApiUrl: `${environment.serviceAppUrl}/api/v1`,
-  serviceODataUrl: `${environment.serviceAppUrl}/odata/v1`,
-  sourceMapMappingsUrl: "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm"
-}
+// Backbone config
+const backboneConfig = new BackboneConfig(
+  environment.name,
+  `${environment.serviceAppUrl}/api/v1`,
+  `${environment.serviceAppUrl}/odata/v1`,
+  new BackboneEntityManagerConfig(Element,
+    ElementCell,
+    ElementField,
+    ElementItem,
+    Project,
+    null, // Role
+    null, // User,
+    null, // UserClaim
+    UserElementCell,
+    UserElementField,
+    null, // UserLogin,
+    null // UserRole
+));
 
-export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
+// export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
+export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
 
   // Do initing of services that is required before app loads
   // NOTE: this factory needs to return a function (that then returns a promise)
@@ -68,8 +92,6 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
 
   return () => {
     googleAnalyticsService.configureTrackingCode(); // Setup google analytics
-
-    return authService.init().toPromise();
   };
 }
 
@@ -98,10 +120,9 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   imports: [
     ToasterModule.forRoot(),
     MomentModule,
-    BackboneClientCoreModule.configure(coreSettings),
+    BackboneModule.configure(backboneConfig),
 
     SharedModule,
-    //AppHttpClientModule,
     RouterModule.forChild(coreRoutes),
     Angulartics2Module.forRoot(),
     ProjectEditorModule,
@@ -110,14 +131,12 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   providers: [
     // Application initializer
     {
-      deps: [AuthService, GoogleAnalyticsService],
+      deps: [GoogleAnalyticsService],
       multi: true,
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
     },
-    AppEntityManager,
     AuthGuard,
-    AuthService,
     CanDeactivateGuard,
     DynamicTitleResolve,
     GoogleAnalyticsService,

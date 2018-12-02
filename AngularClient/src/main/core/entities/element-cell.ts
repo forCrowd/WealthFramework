@@ -1,22 +1,11 @@
+import { ElementCell as CoreElementCell, ElementFieldDataType } from "@forcrowd/backbone-client-core";
 import { Subject } from "rxjs";
 
-import { EntityBase } from "./entity-base";
-import { ElementField, ElementFieldDataType } from "./element-field";
+import { ElementField } from "./element-field";
 import { ElementItem } from "./element-item";
-import { RatingMode } from "./project";
-import { UserElementCell } from "./user-element-cell";
+import { Project, RatingMode } from "./project";
 
-export class ElementCell extends EntityBase {
-
-  // Public - Server-side
-  Id = 0;
-  ElementField: ElementField;
-  ElementItem: ElementItem;
-  DecimalValueTotal = 0;
-  DecimalValueCount = 0;
-  SelectedElementItem: ElementItem;
-  StringValue = "";
-  UserElementCellSet: UserElementCell[];
+export class ElementCell extends CoreElementCell {
 
   // Client
   otherUsersDecimalValueTotal = 0;
@@ -53,7 +42,9 @@ export class ElementCell extends EntityBase {
   }
 
   initialize() {
-    if (!super.initialize()) return false;
+    if (this.initialized) return true;
+
+    super.initialize();
 
     // Other users'
     this.otherUsersDecimalValueTotal = this.DecimalValueTotal;
@@ -74,8 +65,8 @@ export class ElementCell extends EntityBase {
     this.setCurrentUserDecimalValue();
 
     // Event handlers
-    this.ElementField.Element.Project.ratingModeUpdated.subscribe(() => {
-      this.ElementField.Element.Project.RatingMode == RatingMode.CurrentUser
+    (this.ElementField.Element.Project as Project).ratingModeUpdated.subscribe(() => {
+      (this.ElementField.Element.Project as Project).RatingMode === RatingMode.CurrentUser
         ? this.currentUserDecimalValue()
         : this.allUsersDecimalValue();
     });
@@ -131,10 +122,10 @@ export class ElementCell extends EntityBase {
     if (this.ElementField.DataType === ElementFieldDataType.Element && this.SelectedElementItem !== null) {
       // item's index income / how many times this item has been selected (used) by higher items
       // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
-      value = this.SelectedElementItem.income() / this.SelectedElementItem.ParentCellSet.length;
+      value = (this.SelectedElementItem as ElementItem).income() / this.SelectedElementItem.ParentCellSet.length;
     } else {
       if (this.ElementField.RatingEnabled) {
-        value = this.ElementField.income() * this.decimalValuePercentage();
+        value = (this.ElementField as ElementField).income() * this.decimalValuePercentage();
       }
     }
 
@@ -142,7 +133,7 @@ export class ElementCell extends EntityBase {
       this.fields.income = value;
 
       // Update related
-      this.ElementItem.setIncome();
+      (this.ElementItem as ElementItem).setIncome();
     }
   }
 
@@ -153,7 +144,7 @@ export class ElementCell extends EntityBase {
 
       // Update related
       //this.setDecimalValuePercentage(); - No need to call this one since field is going to update it anyway! / coni2k - 05 Nov. '17
-      this.ElementField.setDecimalValue();
+      (this.ElementField as ElementField).setDecimalValue();
 
       // Event
       this.decimalValueUpdated.next(this.fields.decimalValue);
@@ -168,7 +159,7 @@ export class ElementCell extends EntityBase {
       this.fields.decimalValue = this.decimalValueAverage();
 
       // Update related
-      this.ElementField.setDecimalValue();
+      (this.ElementField as ElementField).setDecimalValue();
 
       // Event
       this.decimalValueUpdated.next(this.fields.decimalValue);
@@ -177,7 +168,9 @@ export class ElementCell extends EntityBase {
 
   setDecimalValuePercentage() {
 
-    const value = this.ElementField.decimalValue() === 0 ? 0 : this.decimalValue() / this.ElementField.decimalValue();
+    const value = (this.ElementField as ElementField).decimalValue() === 0
+      ? 0
+      : this.decimalValue() / (this.ElementField as ElementField).decimalValue();
 
     if (this.fields.decimalValuePercentage !== value) {
       this.fields.decimalValuePercentage = value;
