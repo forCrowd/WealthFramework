@@ -602,7 +602,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     const mainElement = this.project.ElementSet[0];
 
-    this.elementItemCount === 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
+    this.elementItemCount === 0
+      ? this.elementItemCount = this.selectedElement.ElementItemSet.length
+      : this.elementItemCount += 1;
 
     // New Element
     const newElement = this.projectService.createElement({
@@ -611,14 +613,18 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }) as Element;
 
     // Element Fields
-    const newElementField = this.projectService.createElementFieldX({
-      Element: newElement,
+    const newElementField = this.projectService.createElementField({
+      Element: this.selectedElement,
       Name: "New Field",
       DataType: ElementFieldDataType.Decimal,
       UseFixedValue: false,
       RatingEnabled: true,
-      SortOrder: newElement.ElementFieldSet.length + 1
+      SortOrder: newElement.ElementFieldSet.length + 1,
+      RatingTotal: 0, // Computed field
+      RatingCount: 1 // Computed field
     });
+
+    this.projectService.createUserElementField(newElementField, 50);
 
     // Element Items
     const newElementItem1 = this.projectService.createElementItem({
@@ -645,7 +651,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     /* --- */
 
     // Main Element New Field
-    const newField = this.projectService.createElementFieldX({
+    const newField = this.projectService.createElementField({
       Element: mainElement,
       Name: newElement.Name, // Element name: Same as NewElement Name
       DataType: ElementFieldDataType.Element,

@@ -34,28 +34,6 @@ export class ProjectService extends CoreProjectService {
     return elementCell;
   }
 
-  createElementFieldX(initialValues: {}, rating: number = 50) {
-
-    const elementField = (this as any).appEntityManager.createEntity("ElementField", initialValues) as ElementField;
-
-    // If RatingEnabled, also create "User element field"
-    if (elementField.RatingEnabled) {
-
-      elementField.RatingTotal = 0; // Computed field
-      elementField.RatingCount = 1; // Computed field
-
-      const userElementFieldInitial = {
-        User: (this as any).authService.currentUser,
-        ElementField: elementField,
-        Rating: rating
-      };
-
-      (this as any).appEntityManager.createEntity("UserElementField", userElementFieldInitial);
-    }
-
-    return elementField;
-  }
-
   // These "updateX" functions were defined in their related entities (user.js).
   // Only because they had to use createEntity() on dataService, it was moved to this service.
   // Try do handle them in a better way, maybe by using broadcast?
