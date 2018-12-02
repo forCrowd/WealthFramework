@@ -1,9 +1,8 @@
-
-import { timer as observableTimer } from "rxjs";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService } from "@forcrowd/backbone-client-core";
+import { timer as observableTimer } from "rxjs";
 
-import { AuthService } from "../core/core.module";
 import { Logger } from "../logger/logger.module";
 
 @Component({

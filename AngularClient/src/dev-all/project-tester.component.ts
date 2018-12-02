@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { RatingMode, Project } from "../main/core/entities/project";
+import { Project, RatingMode } from "../main/core/entities/project";
 import { ProjectService } from "../main/core/core.module";
 
 @Component({
@@ -18,7 +18,7 @@ export class ProjectTesterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.projectService.getProjectExpanded(16)
+    this.projectService.getProjectExpanded<Project>(16)
       .subscribe(project => {
         this.project = project;
       });

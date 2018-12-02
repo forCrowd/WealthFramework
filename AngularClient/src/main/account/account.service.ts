@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { AppHttpClient } from "@forcrowd/backbone-client-core";
+import { AuthService, User } from "@forcrowd/backbone-client-core";
 import { map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { User } from "../core/entities/user";
-import { AuthService } from "../core/core.module";
 
 @Injectable()
 export class AccountService {

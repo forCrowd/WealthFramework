@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
+import { AuthService } from "@forcrowd/backbone-client-core";
 import { of as observableOf, Observable } from "rxjs";
 
-import { AuthService } from "./auth.service";
 import { ProjectService } from "./project.service";
 
 @Injectable()
