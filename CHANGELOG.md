@@ -1,8 +1,8 @@
 ### Changelog
 
-**0.88.2**
+**0.89.0**
 
-* @forcrowd/backbone-client/core package
+* @forcrowd/backbone-client-core package
 
 **0.88.1**
 
