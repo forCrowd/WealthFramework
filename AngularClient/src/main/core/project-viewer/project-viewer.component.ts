@@ -1,15 +1,15 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { AuthService, ElementFieldDataType, ProjectService, User } from "@forcrowd/backbone-client-core";
+import { Options } from "highcharts";
 import { Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime } from "rxjs/operators";
-import { Options } from "highcharts";
 
 import { Element } from "../entities/element";
 import { ElementCell } from "../entities/element-cell";
-import { ElementField, ElementFieldDataType } from "../entities/element-field";
+import { ElementField } from "../entities/element-field";
+import { ElementItem } from "../entities/element-item";
 import { RatingMode, Project } from "../entities/project";
-import { User } from "../entities/user";
-import { AuthService } from "../auth.service";
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 
 export interface IConfig {
@@ -25,7 +25,7 @@ export interface IConfig {
 export class ProjectViewerComponent implements OnDestroy, OnInit {
 
   constructor(private authService: AuthService,
-    private projectService: ProjectService) {
+    private projectService: AppProjectService) {
   }
 
   @Input()
@@ -96,7 +96,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
     }
 
     // Get project
-    this.projectService.getProjectExpanded(this.config.projectId)
+    this.projectService.getProjectExpanded<Project>(this.config.projectId)
       .subscribe(project => {
 
         if (!project) {
@@ -112,7 +112,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         // Set Initial value + setIncome()
         this.project.initialValue = this.config.initialValue || 100;
         this.project.ElementSet.forEach(element => {
-          element.ElementFieldSet.forEach(field => {
+          element.ElementFieldSet.forEach((field: ElementField) => {
             field.setIncome();
           });
         });
@@ -122,7 +122,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         this.project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
 
         // Selected element
-        this.selectedElement = this.project.ElementSet[0];
+        this.selectedElement = this.project.ElementSet[0] as Element;
 
         this.loadChartData();
       });
@@ -156,7 +156,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         }
         const data: ChartDataItem[] = [];
 
-        element.ElementItemSet.forEach(elementItem => {
+        element.ElementItemSet.forEach((elementItem: ElementItem) => {
           data.push(new ChartDataItem(elementItem.Name,
             elementItem.income(),
             elementItem.incomeUpdated));
@@ -173,7 +173,7 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
         const data: ChartDataItem[] = [];
 
         element.ElementItemSet.forEach(elementItem => {
-          elementItem.ElementCellSet.forEach(elementCell => {
+          elementItem.ElementCellSet.forEach((elementCell: ElementCell) => {
             if (elementCell.ElementField.RatingEnabled) {
               data.push(new ChartDataItem(elementCell.ElementItem.Name,
                 +elementCell.decimalValue().toFixed(2),

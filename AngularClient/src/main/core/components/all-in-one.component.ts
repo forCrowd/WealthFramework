@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
+import { ProjectService } from "@forcrowd/backbone-client-core";
 
 import { AppSettings } from "../../../app-settings/app-settings";
 import { ElementCell } from "../entities/element-cell";
 import { IProjectViewerConfig } from "../project-viewer/project-viewer.module";
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 
 @Component({
   selector: "all-in-one",
@@ -14,7 +15,7 @@ export class AllInOneComponent {
   allInOneConfig: IProjectViewerConfig = { projectId: AppSettings.content.allInOneProjectId };
   syncFlag = true;
 
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: AppProjectService) {
 
     // Event handlers
     // Todo ?

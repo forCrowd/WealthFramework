@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthService, User } from "@forcrowd/backbone-client-core";
 
-import { User } from "../main/core/entities/user";
-import { AuthService } from "../main/core/core.module";
 import { Logger, ToasterConfig } from "../main/logger/logger.module";
 
 @Component({
@@ -29,6 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout().subscribe();
+    this.authService.logout();
+    this.authService.init().subscribe();
   }
 }

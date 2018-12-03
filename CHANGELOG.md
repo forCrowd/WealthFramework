@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.89.0**
+
+* @forcrowd/backbone-client-core package
+
 **0.88.1**
 
 * Project Editor - Single element transformation attempt fix

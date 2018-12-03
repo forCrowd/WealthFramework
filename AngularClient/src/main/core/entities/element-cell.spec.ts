@@ -1,4 +1,6 @@
-import { RatingMode } from "./project";
+import { Element } from "./element";
+import { ElementField } from "./element-field";
+import { Project, RatingMode } from "./project";
 import { TestHelpers } from "./test-helpers";
 
 // TODO: Check all these tests below one more time
@@ -49,11 +51,11 @@ describe("main/core/entities/element-cell", () => {
 
     var field = cell1.ElementField;
 
-    var item2 = TestHelpers.createElementItem(field.Element);
-    var cell2 = TestHelpers.createElementCell(field, item2, null, null, 45);
+    var item2 = TestHelpers.createElementItem(field.Element as Element);
+    var cell2 = TestHelpers.createElementCell(field as ElementField, item2, null, null, 45);
 
-    expect(cell1.income()).toBe(field.income() * cell1.decimalValuePercentage());
-    expect(cell2.income()).toBe(field.income() * cell2.decimalValuePercentage());
+    expect(cell1.income()).toBe((field as ElementField).income() * cell1.decimalValuePercentage());
+    expect(cell2.income()).toBe((field as ElementField).income() * cell2.decimalValuePercentage());
   });
 
   it("decimalValueTotal - Initial", () => {
@@ -132,7 +134,7 @@ describe("main/core/entities/element-cell", () => {
     expect(cell.decimalValue()).toBe(cell.currentUserDecimalValue());
 
     // Act -  Cast 2: RatingMode 'All Users' & also cache case
-    cell.ElementField.Element.Project.RatingMode = RatingMode.AllUsers;
+    (cell.ElementField.Element.Project as Project).RatingMode = RatingMode.AllUsers;
 
     // Assert
     expect(cell.decimalValue()).toBe(cell.decimalValueAverage());
@@ -151,8 +153,8 @@ describe("main/core/entities/element-cell", () => {
 
     var field = cell1.ElementField;
 
-    var item2 = TestHelpers.createElementItem(field.Element);
-    var cell2 = TestHelpers.createElementCell(field, item2, null, null, 45);
+    var item2 = TestHelpers.createElementItem(field.Element as Element);
+    var cell2 = TestHelpers.createElementCell(field as ElementField, item2, null, null, 45);
 
     expect(cell1.decimalValuePercentage()).toBe(55 / (45 + 55));
     expect(cell2.decimalValuePercentage()).toBe(45 / (45 + 55));

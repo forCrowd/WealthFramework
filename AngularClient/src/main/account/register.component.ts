@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "@forcrowd/backbone-client-core";
+import { AuthService } from "@forcrowd/backbone-client-core";
 import { Subscription } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AuthService } from "../core/core.module";
 import { Logger } from "../logger/logger.module";
-import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "../shared/utils";
 
 @Component({
   selector: "register",

@@ -1,41 +1,11 @@
+import { ElementField as CoreElementField, ElementFieldDataType } from "@forcrowd/backbone-client-core";
 import { Subject } from "rxjs";
 
-import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
-import { RatingMode } from "./project";
-import { UserElementField } from "./user-element-field";
+import { Project, RatingMode } from "./project";
 
-export enum ElementFieldDataType {
-
-  // A field that holds string value.
-  // Use StringValue property to set its value on ElementItem level.
-  String = 1,
-
-  // A field that holds decimal value.
-  // Use DecimalValue property to set its value on ElementItem level.
-  Decimal = 4,
-
-  // A field that holds another defined Element object within the project.
-  // Use SelectedElementItem property to set its value on ElementItem level.
-  Element = 6,
-}
-
-export class ElementField extends EntityBase {
-
-  // Server-side
-  Id = 0;
-  Element: Element;
-  Name = "";
-  DataType = ElementFieldDataType.String;
-  SelectedElement: Element;
-  UseFixedValue = false;
-  RatingEnabled = false;
-  SortOrder = 0;
-  RatingTotal = 0;
-  RatingCount = 0;
-  ElementCellSet: ElementCell[];
-  UserElementFieldSet: UserElementField[];
+export class ElementField extends CoreElementField {
 
   // Client-side
   get DataTypeText(): string {
@@ -98,8 +68,10 @@ export class ElementField extends EntityBase {
     return this.otherUsersRatingTotal + this.currentUserRating();
   }
 
-  initialize(): boolean {
-    if (!super.initialize()) return false;
+  initialize() {
+    if (this.initialized) return;
+
+    super.initialize();
 
     // Cells
     this.ElementCellSet.forEach(cell => {
@@ -125,11 +97,9 @@ export class ElementField extends EntityBase {
     this.setCurrentUserRating();
 
     // Event handlers
-    this.Element.Project.ratingModeUpdated.subscribe(() => {
+    (this.Element.Project as Project).ratingModeUpdated.subscribe(() => {
       this.setRating();
     });
-
-    return true;
   }
 
   decimalValue() {
@@ -154,13 +124,13 @@ export class ElementField extends EntityBase {
 
   setIncome() {
 
-    const value = this.Element.familyTree()[0].Project.initialValue * this.ratingPercentage();
+    const value = ((this.Element as Element).familyTree()[0].Project as Project).initialValue * this.ratingPercentage();
 
     if (this.fields.income !== value) {
       this.fields.income = value;
 
       // Update related
-      this.ElementCellSet.forEach(cell => {
+      this.ElementCellSet.forEach((cell: ElementCell) => {
         cell.setIncome();
       });
     }
@@ -170,7 +140,7 @@ export class ElementField extends EntityBase {
 
     let value = 0; // Default value
 
-    switch (this.Element.Project.RatingMode) {
+    switch ((this.Element.Project as Project).RatingMode) {
       case RatingMode.CurrentUser: { value = this.currentUserRating(); break; }
       case RatingMode.AllUsers: { value = this.ratingAverage(); break; }
     }
@@ -180,7 +150,7 @@ export class ElementField extends EntityBase {
 
       // Update related
       //this.ratingPercentage(); - No need to call this one since element is going to update it anyway! / coni2k - 05 Nov. '17 
-      this.Element.familyTree()[0].setRating();
+      (this.Element as Element).familyTree()[0].setRating();
 
       this.ratingUpdated.next(this.fields.rating);
     }
@@ -188,7 +158,7 @@ export class ElementField extends EntityBase {
 
   setRatingPercentage() {
 
-    const elementRating = this.Element.familyTree()[0].rating();
+    const elementRating = (this.Element as Element).familyTree()[0].rating();
 
     const value = elementRating === 0 ? 0 : this.rating() / elementRating;
 
@@ -204,7 +174,7 @@ export class ElementField extends EntityBase {
 
     var value = 0;
 
-    this.ElementCellSet.forEach(cell => {
+    this.ElementCellSet.forEach((cell: ElementCell) => {
       value += cell.decimalValue();
     });
 
@@ -212,7 +182,7 @@ export class ElementField extends EntityBase {
       this.fields.decimalValue = value;
 
       // Update related
-      this.ElementCellSet.forEach(cell => {
+      this.ElementCellSet.forEach((cell: ElementCell) => {
         cell.setDecimalValuePercentage();
       });
     }

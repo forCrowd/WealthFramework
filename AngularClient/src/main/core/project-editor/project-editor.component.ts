@@ -1,19 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { AuthService, ElementFieldDataType, ElementField as CoreElementField, ElementItem as CoreElementItem, User } from "@forcrowd/backbone-client-core";
 import { timer as observableTimer, Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime, finalize } from "rxjs/operators";
 import { Options } from "highcharts";
 
 import { Logger } from "../../logger/logger.module";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
-import { AuthService } from "../auth.service";
 import { Element } from "../entities/element";
 import { ElementCell } from "../entities/element-cell";
-import { ElementField, ElementFieldDataType } from "../entities/element-field";
+import { ElementField } from "../entities/element-field";
 import { ElementItem } from "../entities/element-item";
 import { RatingMode, Project } from "../entities/project";
-import { User } from "../entities/user";
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 
 export interface IProjectEditorConfig {
   initialValue?: number,
@@ -29,7 +28,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   constructor(
     private authService: AuthService,
-    private projectService: ProjectService,
+    private projectService: AppProjectService,
     private router: Router,
     private logger: Logger) { }
 
@@ -52,7 +51,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   username = "";
 
   // When items income decreased then push to array for each rounds
-  decreasedItems: ElementItem[] = [];
+  decreasedItems: CoreElementItem[] = [];
 
   // User Project Array
   projectDataSet: Project[] = [];
@@ -120,7 +119,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   // Get project list of current user
   getProjectSet(): void {
 
-    this.projectService.getProjectSet(this.currentUser.UserName).pipe(
+    this.projectService.getProjectSet<Project>(this.currentUser.UserName).pipe(
       finalize(() => {
 
         //TODO: Do something ?
@@ -188,7 +187,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   incomeCompareSetInit(): void {
     this.project.ElementSet.forEach((element) => {
-      element.ElementItemSet.forEach((elementItem) => {
+      element.ElementItemSet.forEach((elementItem: ElementItem) => {
 
         if (this.incomeCompareSet["before"][elementItem.Id] === undefined) {
           this.incomeCompareSet["before"][elementItem.Id] = { "sort": 0, "income": 0 };
@@ -202,7 +201,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       });
     });
 
-    this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
+    (this.project.ElementSet[0] as Element).getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
       this.incomeCompareSet["before"][item.Id]["sort"] = sortOrder;
       this.incomeCompareSet["after"][item.Id]["sort"] = sortOrder;
     });
@@ -221,7 +220,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.incomeCompareSetInit();
     var mainElement = this.project.ElementSet[0];
     this.project.ElementSet.forEach((element) => {
-      element.ElementItemSet.forEach((elementItem) => {
+      element.ElementItemSet.forEach((elementItem: ElementItem) => {
         var before = this.incomeCompareSet["before"][elementItem.Id]["income"];
         var after = this.incomeCompareSet["after"][elementItem.Id]["income"];
 
@@ -240,7 +239,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
           this.incomeCompareSet["round"][elementItem.Id] = 0;
         }
 
-        this.project.ElementSet[0].getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
+        (this.project.ElementSet[0] as Element).getElementItemSet(this.elementItemsSortField).forEach((item, sortOrder) => {
           if (this.incomeCompareSet["before"][item.Id]["sort"] !== sortOrder) {
             this.incomeCompareSet["before"][item.Id]["sort"] = this.incomeCompareSet["after"][item.Id]["sort"];
             this.incomeCompareSet["after"][item.Id]["sort"] = sortOrder;
@@ -309,7 +308,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     if (random > 7) {
       var item = this.decreasedItems[r];
-      var elementSet = this.project.ElementSet
+      var elementSet = this.project.ElementSet;
       var elementCellSet = item.ElementCellSet;
 
       console.log(" -- Parent Element:", item.Name);
@@ -332,7 +331,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
   }
 
   // Generate random item form ElementItem array but exclude current selectedElementItem!
-  randomItem(elementItemSet: ElementItem[], item: ElementItem): ElementItem {
+  randomItem(elementItemSet: CoreElementItem[], item: CoreElementItem) {
     var rand = Math.floor(Math.random() * elementItemSet.length);
     if (elementItemSet[rand] === item) {
       return this.randomItem(elementItemSet, item);
@@ -412,7 +411,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
 
     // Get project
-    this.projectService.getProjectExpanded(this.config.projectId)
+    this.projectService.getProjectExpanded<Project>(this.config.projectId)
       .subscribe(project => {
 
         if (!project) {
@@ -420,12 +419,12 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
           return;
         }
 
-        this.project = project;
+        this.project = project as Project;
 
         // Set Initial value + setIncome()
         this.project.initialValue = this.config.initialValue || 100;
         this.project.ElementSet.forEach(element => {
-          element.ElementFieldSet.forEach(field => {
+          element.ElementFieldSet.forEach((field: ElementField) => {
             field.setIncome();
           });
         });
@@ -435,7 +434,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
         this.project.ratingModeUpdated.subscribe(() => this.updateElementItemsSortField());
 
         // Selected element
-        this.selectedElement = this.project.ElementSet[0];
+        this.selectedElement = this.project.ElementSet[0] as Element;
 
         this.loadChartData();
       });
@@ -469,7 +468,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
         }
         const data: ChartDataItem[] = [];
 
-        element.ElementItemSet.forEach(elementItem => {
+        element.ElementItemSet.forEach((elementItem: ElementItem) => {
           data.push(new ChartDataItem(elementItem.Name,
             elementItem.allRoundsIncome(),
             elementItem.allRoundsIncomeUpdated));
@@ -486,7 +485,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
         const data: ChartDataItem[] = [];
 
         element.ElementItemSet.forEach(elementItem => {
-          elementItem.ElementCellSet.forEach(elementCell => {
+          elementItem.ElementCellSet.forEach((elementCell: ElementCell) => {
             if (elementCell.ElementField.RatingEnabled) {
               data.push(new ChartDataItem(elementCell.ElementItem.Name,
                 +elementCell.decimalValue().toFixed(2),
@@ -549,14 +548,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // is this a selected item of parent element?
     if (!this.isSelectedElementItem(elementItem)) {
-      const elementCellSet = elementItem.ElementCellSet.slice();
-      elementCellSet.forEach(elementCell => {
-        this.projectService.removeElementCell(elementCell);
-      });
-
-      elementItem.entityAspect.setDeleted();
+      this.projectService.removeElementItem(elementItem);
       this.saveStream.next();
-
     } else {
       this.logger.logError("This item is parent element selected item, should not be remove");
     }
@@ -579,8 +572,17 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.selectedElement.ElementFieldSet.forEach(field => {
       var elementCell = this.projectService.createElementCell({
         ElementField: field,
-        ElementItem: newElementItem,
+        ElementItem: newElementItem
       });
+
+      // If DataType is decimal, also create "User element cell"
+      if (field.DataType === ElementFieldDataType.Decimal) {
+
+        elementCell.DecimalValueTotal = 0; // Computed field
+        elementCell.DecimalValueCount = 1; // Computed field
+
+        this.projectService.createUserElementCell(elementCell, 0);
+      }
 
       switch (field.DataType) {
         case ElementFieldDataType.String: { break; }
@@ -596,7 +598,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // Set Income
     this.project.ElementSet.forEach(element => {
-      element.ElementFieldSet.forEach((field, i) => {
+      element.ElementFieldSet.forEach((field: ElementField, i) => {
         field.setIncome();
       });
     });
@@ -609,7 +611,9 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     const mainElement = this.project.ElementSet[0];
 
-    this.elementItemCount === 0 ? this.elementItemCount = this.selectedElement.ElementItemSet.length : this.elementItemCount += 1;
+    this.elementItemCount === 0
+      ? this.elementItemCount = this.selectedElement.ElementItemSet.length
+      : this.elementItemCount += 1;
 
     // New Element
     const newElement = this.projectService.createElement({
@@ -619,13 +623,17 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
     // Element Fields
     const newElementField = this.projectService.createElementField({
-      Element: newElement,
+      Element: this.selectedElement,
       Name: "New Field",
       DataType: ElementFieldDataType.Decimal,
       UseFixedValue: false,
       RatingEnabled: true,
-      SortOrder: newElement.ElementFieldSet.length + 1
+      SortOrder: newElement.ElementFieldSet.length + 1,
+      RatingTotal: 0, // Computed field
+      RatingCount: 1 // Computed field
     });
+
+    this.projectService.createUserElementField(newElementField, 50);
 
     // Element Items
     const newElementItem1 = this.projectService.createElementItem({
@@ -638,16 +646,27 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       Name: `Element ${this.project.ElementSet.length} item 2`
     }) as ElementItem;
 
-    // Element Cells
-    this.projectService.createElementCell({
+    // Element cell 1
+    const newCell1 = this.projectService.createElementCell({
       ElementField: newElementField,
       ElementItem: newElementItem1,
+      DecimalValueTotal: 0,
+      DecimalValueCount: 1
     });
 
-    this.projectService.createElementCell({
+    // User element cell 1
+    this.projectService.createUserElementCell(newCell1, 0);
+
+    // Element cell 2
+    const newCell2 = this.projectService.createElementCell({
       ElementField: newElementField,
       ElementItem: newElementItem2,
+      DecimalValueTotal: 0,
+      DecimalValueCount: 1
     });
+
+    // User element cell 2
+    this.projectService.createUserElementCell(newCell2, 0);
 
     /* --- */
 
@@ -686,8 +705,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.saveStream.next();
 
     this.project.ElementSet.forEach(element => {
-      element.ElementFieldSet.forEach((field, i) => {
-        field.Element.setFamilyTree();
+      element.ElementFieldSet.forEach((field: ElementField, i) => {
+        (field.Element as Element).setFamilyTree();
         field.setIncome();
         field.ElementCellSet.forEach((cell, c) => {
         });

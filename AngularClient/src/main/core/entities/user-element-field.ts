@@ -1,37 +1,31 @@
-import { EntityBase } from "./entity-base";
+import { UserElementField as CoreUserElementField } from "@forcrowd/backbone-client-core";
+
 import { ElementField } from "./element-field";
-import { User } from "./user";
 
-export class UserElementField extends EntityBase {
+export class UserElementField extends CoreUserElementField {
 
-  // Server-side
-  User: User;
-  ElementField: ElementField;
-  get Rating(): number {
-    return this.fields.rating;
+  get Rating() {
+    return this._rating;
   }
   set Rating(value: number) {
-    if (this.fields.rating !== value) {
-      this.fields.rating = value;
+
+    if (this._rating !== value) {
+      this._rating = value;
 
       // Update related
       if (this.initialized) {
-        this.ElementField.setCurrentUserRating();
+        (this.ElementField as ElementField).setCurrentUserRating();
       }
     }
   }
 
-  private fields: {
-    rating: number,
-  } = {
-      rating: 0,
-    }
+  private _rating = 0;
 
-  initialize(): boolean {
-    if (!super.initialize()) return false;
+  initialize() {
+    if (this.initialized) return;
 
-    this.ElementField.setCurrentUserRating();
+    super.initialize();
 
-    return true;
+    (this.ElementField as ElementField).setCurrentUserRating();
   }
 }

@@ -1,23 +1,15 @@
+import { Project as CoreProject } from "@forcrowd/backbone-client-core";
 import { Subject } from "rxjs";
 
-import { Element } from "./element";
-import { EntityBase } from "./entity-base";
-import { User } from "./user";
+import { ElementCell } from "./element-cell";
+import { ElementItem } from "./element-item";
 
 export enum RatingMode {
   CurrentUser = 1,
   AllUsers = 2
 }
 
-export class Project extends EntityBase {
-
-  // Server-side
-  Id = 0;
-  User: User;
-  Name = "";
-  Description: string = null;
-  RatingCount = 0;
-  ElementSet: Element[];
+export class Project extends CoreProject {
 
   // Client-side
   initialValue = 100;
@@ -41,8 +33,8 @@ export class Project extends EntityBase {
     this.fields.rounds++;
 
     this.ElementSet.forEach(element => {
-      element.ElementItemSet.forEach(elementItem => {
-        elementItem.ElementCellSet.forEach(elementCell => {
+      element.ElementItemSet.forEach((elementItem: ElementItem) => {
+        elementItem.ElementCellSet.forEach((elementCell: ElementCell) => {
           elementCell.setIncome();
           elementCell.increaseAllRoundsIncome();
         });
@@ -56,8 +48,8 @@ export class Project extends EntityBase {
     this.fields.rounds = 0;
 
     this.ElementSet.forEach(element => {
-      element.ElementItemSet.forEach(elementItem => {
-        elementItem.ElementCellSet.forEach(elementCell => {
+      element.ElementItemSet.forEach((elementItem: ElementItem) => {
+        elementItem.ElementCellSet.forEach((elementCell: ElementCell) => {
           elementCell.resetAllRoundsIncome();
         });
 
@@ -76,8 +68,10 @@ export class Project extends EntityBase {
       rounds: 0,
     };
 
-  initialize(): boolean {
-    if (!super.initialize()) return false;
+  initialize() {
+    if (this.initialized) return;
+
+    super.initialize();
 
     // Elements sort order
     this.ElementSet = this.ElementSet.sort((a, b) => a.SortOrder - b.SortOrder);
@@ -85,8 +79,6 @@ export class Project extends EntityBase {
     this.ElementSet.forEach(element => {
       element.initialize();
     });
-
-    return true;
   }
 
   toggleRatingMode() {

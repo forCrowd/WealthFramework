@@ -1,6 +1,8 @@
+import { ElementFieldDataType, ElementField as CoreElementField, ElementItem as CoreElementItem, User } from "@forcrowd/backbone-client-core";
+
 import { Project } from "./project";
 import { Element } from "./element";
-import { ElementField, ElementFieldDataType } from "./element-field";
+import { ElementField } from "./element-field";
 import { UserElementField } from "./user-element-field";
 import { ElementItem } from "./element-item";
 import { ElementCell } from "./element-cell";
@@ -32,12 +34,12 @@ export class TestHelpers {
   static createElementCell(elementField?: ElementField, elementItem?: ElementItem, decimalValueTotal?: number, decimalValueCount?: number, userCellDecimalValue?: number): ElementCell {
 
     if (!elementField) {
-      const element = elementItem ? elementItem.Element : null;
+      const element = elementItem ? elementItem.Element as Element : null;
       elementField = TestHelpers.createElementField(element);
     }
 
     if (!elementItem) {
-      elementItem = TestHelpers.createElementItem(elementField.Element);
+      elementItem = TestHelpers.createElementItem(elementField.Element as Element);
     }
 
     // Element cell

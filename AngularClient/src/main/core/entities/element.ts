@@ -1,18 +1,9 @@
-import { EntityBase } from "./entity-base";
-import { Project } from "./project";
-import { ElementField, ElementFieldDataType } from "./element-field";
+import { Element as CoreElement, ElementFieldDataType } from "@forcrowd/backbone-client-core";
+
+import { ElementField } from "./element-field";
 import { ElementItem } from "./element-item";
 
-export class Element extends EntityBase {
-
-  // Public - Server-side
-  Id = 0;
-  Project: Project;
-  Name = "";
-  SortOrder = 0;
-  ElementFieldSet: ElementField[];
-  ElementItemSet: ElementItem[];
-  ParentFieldSet: ElementField[];
+export class Element extends CoreElement {
 
   private fields: {
     parent: Element,
@@ -27,7 +18,7 @@ export class Element extends EntityBase {
     };
 
   elementFieldSet(ratingEnabledFilter: boolean = true): ElementField[] {
-    return this.getElementFieldSet(this, ratingEnabledFilter);
+    return this.getElementFieldSetWithFilter(this, ratingEnabledFilter);
   }
 
   familyTree() {
@@ -40,13 +31,13 @@ export class Element extends EntityBase {
     return this.fields.familyTree;
   }
 
-  getElementFieldSetSorted(): ElementField[] {
+  getElementFieldSetSorted() {
     return this.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
   }
 
-  getElementItemSet(sort: string = "name"): ElementItem[] {
+  getElementItemSet(sort: string = "name") {
 
-    return this.ElementItemSet.sort((a, b) => {
+    return this.ElementItemSet.sort((a: ElementItem, b: ElementItem) => {
 
       switch (sort) {
         case "income":
@@ -75,8 +66,10 @@ export class Element extends EntityBase {
     return this.fields.rating;
   }
 
-  initialize(): boolean {
-    if (!super.initialize()) return false;
+  initialize() {
+    if (this.initialized) return;
+
+    super.initialize();
 
     // Fields
     this.ElementFieldSet.forEach(field => {
@@ -87,8 +80,6 @@ export class Element extends EntityBase {
     this.ElementItemSet.forEach(item => {
       item.initialize();
     });
-
-    return true;
   }
 
   parent() {
@@ -117,7 +108,7 @@ export class Element extends EntityBase {
   setIncome() {
 
     var value = 0;
-    this.ElementItemSet.forEach(item => {
+    this.ElementItemSet.forEach((item: ElementItem) => {
       value += item.income();
     });
 
@@ -128,7 +119,7 @@ export class Element extends EntityBase {
 
   setParent() {
     if (this.ParentFieldSet.length > 0) {
-      this.fields.parent = this.ParentFieldSet[0].Element;
+      this.fields.parent = this.ParentFieldSet[0].Element as Element;
     }
   }
 
@@ -151,7 +142,7 @@ export class Element extends EntityBase {
     }
   }
 
-  private getElementFieldSet(element: Element, ratingEnabledFilter: boolean = true) {
+  private getElementFieldSetWithFilter(element: Element, ratingEnabledFilter: boolean = true) {
 
     const sortedElementFieldSet = element.getElementFieldSetSorted();
     var fieldSet: ElementField[] = [];
@@ -159,11 +150,11 @@ export class Element extends EntityBase {
     // Validate
     sortedElementFieldSet.forEach(field => {
       if (!ratingEnabledFilter || (ratingEnabledFilter && field.RatingEnabled)) {
-        fieldSet.push(field);
+        fieldSet.push(field as ElementField);
       }
 
       if (field.DataType === ElementFieldDataType.Element && field.SelectedElement !== null) {
-        const childFieldSet = this.getElementFieldSet(field.SelectedElement, ratingEnabledFilter);
+        const childFieldSet = this.getElementFieldSetWithFilter(field.SelectedElement as Element, ratingEnabledFilter);
 
         childFieldSet.forEach(childField => {
           fieldSet.push(childField);

@@ -1,13 +1,10 @@
-import { EntityBase } from "./entity-base";
+import { UserElementCell as CoreUserElementCell } from "@forcrowd/backbone-client-core";
+
 import { ElementCell } from "./element-cell";
-import { User } from "./user";
 
-export class UserElementCell extends EntityBase {
+export class UserElementCell extends CoreUserElementCell {
 
-  // Server-side
-  User: User;
-  ElementCell: ElementCell;
-  get DecimalValue(): number | null {
+  get DecimalValue() {
     return this.fields.decimalValue;
   }
   set DecimalValue(value: number | null) {
@@ -17,7 +14,7 @@ export class UserElementCell extends EntityBase {
 
       // Update related
       if (this.initialized) {
-        this.ElementCell.setCurrentUserDecimalValue();
+        (this.ElementCell as ElementCell).setCurrentUserDecimalValue();
       }
     }
   }
@@ -25,14 +22,14 @@ export class UserElementCell extends EntityBase {
   private fields: {
     decimalValue: number | null
   } = {
-      decimalValue: null,
-    }
+    decimalValue: null
+  };
 
-  initialize(): boolean {
-    if (!super.initialize()) return false;
+  initialize() {
+    if (this.initialized) return;
 
-    this.ElementCell.setCurrentUserDecimalValue();
+    super.initialize();
 
-    return true;
+    (this.ElementCell as ElementCell).setCurrentUserDecimalValue();
   }
 }

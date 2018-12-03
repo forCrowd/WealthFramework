@@ -1,18 +1,10 @@
+import { ElementFieldDataType, ElementItem as CoreElementItem } from "@forcrowd/backbone-client-core";
 import { Subject } from "rxjs";
 
-import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
-import { ElementFieldDataType } from "./element-field";
 
-export class ElementItem extends EntityBase {
-
-  // Server-side
-  Id = 0;
-  Element: Element;
-  Name = "";
-  ElementCellSet: ElementCell[];
-  ParentCellSet: ElementCell[];
+export class ElementItem extends CoreElementItem {
 
   allRoundsIncomeUpdated = new Subject<number>();
   incomeUpdated = new Subject<number>();
@@ -35,7 +27,7 @@ export class ElementItem extends EntityBase {
     let cell: ElementCell = null;
 
     for (let elementCellIndex = 0; elementCellIndex < this.ElementCellSet.length; elementCellIndex++) {
-      cell = this.ElementCellSet[elementCellIndex];
+      cell = this.ElementCellSet[elementCellIndex] as ElementCell;
 
       if (cell.ElementField.Name === fieldName) {
         break;
@@ -45,7 +37,7 @@ export class ElementItem extends EntityBase {
     return cell;
   }
 
-  getElementCellSetSorted(): ElementCell[] {
+  getElementCellSetSorted() {
     return this.ElementCellSet.sort((a, b) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
   }
 
@@ -58,7 +50,7 @@ export class ElementItem extends EntityBase {
     var value = 0; // for element allRoundsIncome;
     var notSelected = 0; // if item isn't selectedElementItem then increase
 
-    this.Element.ElementItemSet.forEach(item => {
+    this.Element.ElementItemSet.forEach((item: ElementItem) => {
       if (item.ParentCellSet.length === 0) notSelected++;
         value += item.allRoundsIncome();
     });
@@ -83,15 +75,15 @@ export class ElementItem extends EntityBase {
     this.allRoundsIncomeUpdated.next(this.fields.allRoundsIncome);
   }
 
-  initialize(): boolean {
-    if (!super.initialize()) return false;
+  initialize() {
+    if (this.initialized) return;
+
+    super.initialize();
 
     // Cells
     this.ElementCellSet.forEach(cell => {
       cell.initialize();
     });
-
-    return true;
   }
 
   ratingCells() {
@@ -107,7 +99,7 @@ export class ElementItem extends EntityBase {
   setIncome(): void {
     var value = 0;
 
-    this.ElementCellSet.forEach(cell => {
+    this.ElementCellSet.forEach((cell: ElementCell) => {
       value += cell.income();
     });
 
@@ -116,11 +108,11 @@ export class ElementItem extends EntityBase {
 
       // Update related
       // TODO Is this correct? It looks like it didn't affect anything?
-      this.ParentCellSet.forEach(parentCell => {
+      this.ParentCellSet.forEach((parentCell: ElementCell) => {
         parentCell.setIncome();
       });
 
-      this.Element.setIncome();
+      (this.Element as Element).setIncome();
 
       this.incomeUpdated.next(this.fields.income);
     }
@@ -134,14 +126,14 @@ export class ElementItem extends EntityBase {
     sortedElementCellSet.forEach(cell => {
 
       if (cell.ElementField.RatingEnabled) {
-        ratingCells.push(cell);
+        ratingCells.push(cell as ElementCell);
       }
 
       if (cell.ElementField.DataType === ElementFieldDataType.Element && cell.SelectedElementItem !== null) {
-        const childRatingCells = this.getRatingCells(cell.SelectedElementItem);
+        const childRatingCells = this.getRatingCells(cell.SelectedElementItem as ElementItem);
 
         if (childRatingCells.length > 0) {
-          ratingCells.push(cell);
+          ratingCells.push(cell as ElementCell);
         }
       }
     });

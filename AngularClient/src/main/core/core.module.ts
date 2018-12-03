@@ -1,17 +1,29 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
+import { CoreModule as BackboneModule, ICoreConfig as IBackboneConfig } from "@forcrowd/backbone-client-core";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { MomentModule } from "ngx-moment";
 import { ToasterModule } from "angular2-toaster";
+import { MomentModule } from "ngx-moment";
 
-// Breeze
-import "./breeze-client-odata-fix";
-import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
+import { environment } from "../../app-settings/environments/environment-settings";
+
+import { Element,
+  ElementCell,
+  ElementField,
+  ElementItem,
+  Project,
+  // Role,
+  // User,
+  // UserClaim,
+  UserElementCell,
+  UserElementField,
+  // UserLogin,
+  // UserRole
+  } from "./entities";
 
 // Internal modules
-import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { ProjectEditorModule } from "./project-editor/project-editor.module";
 import { ProjectViewerModule } from "./project-viewer/project-viewer.module";
 import { SharedModule } from "../shared/shared.module";
@@ -35,17 +47,15 @@ import { PrologueComponent } from "./components/prologue.component";
 //import { TotalCostIndexComponent } from "./components/total-cost-index.component";
 
 // Services
-import { AppEntityManager } from "./app-entity-manager.service";
-import { AppErrorHandler } from "./app-error-handler.service";
+import { AppProjectService } from "./app-project.service";
 import { AuthGuard } from "./auth-guard.service";
-import { AuthService } from "./auth.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
-import { ProjectService } from "./project.service";
 
-export { Angulartics2GoogleAnalytics, AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
+export { Angulartics2GoogleAnalytics, AppProjectService, AuthGuard, CanDeactivateGuard, DynamicTitleResolve }
 
+// Routes
 const coreRoutes: Routes = [
   { path: "", component: HomeComponent, data: { title: "Home" } },
   { path: "app/home", redirectTo: "", pathMatch: "full" }, // Alternative
@@ -54,7 +64,28 @@ const coreRoutes: Routes = [
   { path: "project/:project-id", component: ProjectViewerComponent, data: { title: "Project" } },
 ];
 
-export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
+// Backbone config
+const backboneConfig: IBackboneConfig = {
+  environment: environment.name,
+  serviceApiUrl: `${environment.serviceAppUrl}/api/v1`,
+  serviceODataUrl: `${environment.serviceAppUrl}/odata/v1`,
+  entityManagerConfig: {
+    elementType: Element,
+    elementCellType: ElementCell,
+    elementFieldType: ElementField,
+    elementItemType: ElementItem,
+    projectType: Project,
+    roleType: null,
+    userType: null,
+    userClaimType: null,
+    userElementCellType: UserElementCell,
+    userElementFieldType: UserElementField,
+    userLoginType: null,
+    userRoleType: null
+  }
+}
+
+export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
 
   // Do initing of services that is required before app loads
   // NOTE: this factory needs to return a function (that then returns a promise)
@@ -62,8 +93,6 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
 
   return () => {
     googleAnalyticsService.configureTrackingCode(); // Setup google analytics
-
-    return authService.init().toPromise();
   };
 }
 
@@ -92,35 +121,27 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   imports: [
     ToasterModule.forRoot(),
     MomentModule,
+    BackboneModule.configure(backboneConfig),
 
     SharedModule,
-    AppHttpClientModule,
     RouterModule.forChild(coreRoutes),
     Angulartics2Module.forRoot(),
-    BreezeBridgeHttpClientModule,
     ProjectEditorModule,
     ProjectViewerModule,
   ],
   providers: [
     // Application initializer
     {
-      deps: [AuthService, GoogleAnalyticsService],
+      deps: [GoogleAnalyticsService],
       multi: true,
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
     },
-    // Error handler
-    {
-      provide: ErrorHandler,
-      useClass: AppErrorHandler
-    },
-    AppEntityManager,
+    AppProjectService,
     AuthGuard,
-    AuthService,
     CanDeactivateGuard,
     DynamicTitleResolve,
     GoogleAnalyticsService,
-    ProjectService,
     Title
   ]
 })

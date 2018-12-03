@@ -1,12 +1,11 @@
-
-import { mergeMap, map, filter } from "rxjs/operators";
-import { Subscription } from "rxjs";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
+import { AuthService, User } from "@forcrowd/backbone-client-core";
+import { Subscription } from "rxjs";
+import { mergeMap, map, filter } from "rxjs/operators";
 
-import { User } from "../core/entities/user";
-import { Angulartics2GoogleAnalytics, AuthService } from "../core/core.module";
+import { Angulartics2GoogleAnalytics } from "../core/core.module";
 
 import { Logger, ToasterConfig } from "../logger/logger.module";
 import { AppSettings } from "../../app-settings/app-settings";
@@ -42,7 +41,8 @@ export class AppComponent implements OnDestroy, OnInit {
   }
 
   logout(): void {
-    this.authService.logout()
+    this.authService.logout();
+    this.authService.init()
       .subscribe(() => {
         this.router.navigate([""]);
       });

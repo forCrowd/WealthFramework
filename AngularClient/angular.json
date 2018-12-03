@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/wealth-client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -26,13 +26,13 @@
             ],
             "styles": [
               "src/styles.css",
-              "./node_modules/angular2-toaster/toaster.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.slim.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
+              "node_modules/jquery/dist/jquery.slim.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {
@@ -105,7 +105,7 @@
               "node_modules/respond.js/dest/respond.src.js"
             ],
             "styles": [
-              "src/styles/styles.scss",
+              "src/styles.css",
               "node_modules/font-awesome/css/font-awesome.css"
             ],
             "assets": [
@@ -142,7 +142,7 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ng607:serve:production"
+              "devServerTarget": "angular:serve:production"
             }
           }
         },

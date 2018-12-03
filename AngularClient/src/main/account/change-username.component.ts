@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { getUniqueUserName, stripInvalidChars } from "@forcrowd/backbone-client-core";
+import { AuthService } from "@forcrowd/backbone-client-core";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
-import { AuthService } from "../core/core.module";
 import { Logger } from "../logger/logger.module";
-import { getUniqueUserName, stripInvalidChars } from "../shared/utils";
 
 @Component({
   selector: "change-username",
