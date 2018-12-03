@@ -12,7 +12,7 @@ import { ElementCell } from "../entities/element-cell";
 import { ElementField } from "../entities/element-field";
 import { ElementItem } from "../entities/element-item";
 import { RatingMode, Project } from "../entities/project";
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 
 export interface IProjectEditorConfig {
   initialValue?: number,
@@ -28,7 +28,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
 
   constructor(
     private authService: AuthService,
-    private projectService: ProjectService,
+    private projectService: AppProjectService,
     private router: Router,
     private logger: Logger) { }
 
@@ -411,7 +411,7 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     }
 
     // Get project
-    this.projectService.getProjectExpanded(this.config.projectId)
+    this.projectService.getProjectExpanded<Project>(this.config.projectId)
       .subscribe(project => {
 
         if (!project) {

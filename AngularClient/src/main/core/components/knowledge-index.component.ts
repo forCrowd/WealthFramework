@@ -5,7 +5,7 @@ import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { AppSettings } from "../../../app-settings/app-settings";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 import { IProjectViewerConfig } from "../project-viewer/project-viewer.module";
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 
 @Component({
   selector: "knowledge-index",
@@ -56,7 +56,7 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
   };
   subscriptions: Subscription[] = [];
 
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: AppProjectService) {
   }
 
   ngOnDestroy(): void {

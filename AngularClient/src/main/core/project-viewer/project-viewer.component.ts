@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { AuthService, ElementFieldDataType, User } from "@forcrowd/backbone-client-core";
+import { AuthService, ElementFieldDataType, ProjectService, User } from "@forcrowd/backbone-client-core";
 import { Options } from "highcharts";
 import { Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime } from "rxjs/operators";
@@ -9,7 +9,7 @@ import { ElementCell } from "../entities/element-cell";
 import { ElementField } from "../entities/element-field";
 import { ElementItem } from "../entities/element-item";
 import { RatingMode, Project } from "../entities/project";
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 import { ChartConfig, ChartDataItem } from "../../ng-chart/ng-chart.module";
 
 export interface IConfig {
@@ -25,7 +25,7 @@ export interface IConfig {
 export class ProjectViewerComponent implements OnDestroy, OnInit {
 
   constructor(private authService: AuthService,
-    private projectService: ProjectService) {
+    private projectService: AppProjectService) {
   }
 
   @Input()

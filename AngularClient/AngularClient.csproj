@@ -69,7 +69,7 @@
     <TypeScriptCompile Include="src\main\core\google-analytics.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\home.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-found.component.ts" />
-    <TypeScriptCompile Include="src\main\core\project.service.ts" />
+    <TypeScriptCompile Include="src\main\core\app-project.service.ts" />
     <TypeScriptCompile Include="src\main\logger\logger.module.ts" />
     <TypeScriptCompile Include="src\main\logger\logger.service.ts" />
     <TypeScriptCompile Include="src\main\ng-chart\chart-config.ts" />

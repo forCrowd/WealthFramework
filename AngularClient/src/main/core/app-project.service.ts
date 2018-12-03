@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ElementFieldDataType, ProjectService as CoreProjectService } from "@forcrowd/backbone-client-core";
+import { ElementFieldDataType, ProjectService } from "@forcrowd/backbone-client-core";
 import { Subject } from "rxjs";
 
 import { ElementCell } from "./entities/element-cell";
@@ -8,7 +8,7 @@ import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 
 @Injectable()
-export class ProjectService extends CoreProjectService {
+export class AppProjectService extends ProjectService {
 
   elementCellDecimalValueUpdated = new Subject<ElementCell>();
 

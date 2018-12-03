@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
-import { CoreConfig as BackboneConfig, CoreModule as BackboneModule, EntityManagerConfig as BackboneEntityManagerConfig, ProjectService as CoreProjectService } from "@forcrowd/backbone-client-core";
+import { CoreModule as BackboneModule, ICoreConfig as IBackboneConfig } from "@forcrowd/backbone-client-core";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { ToasterModule } from "angular2-toaster";
@@ -47,13 +47,13 @@ import { PrologueComponent } from "./components/prologue.component";
 //import { TotalCostIndexComponent } from "./components/total-cost-index.component";
 
 // Services
+import { AppProjectService } from "./app-project.service";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
-import { ProjectService } from "./project.service";
 
-export { Angulartics2GoogleAnalytics, AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
+export { Angulartics2GoogleAnalytics, AppProjectService, AuthGuard, CanDeactivateGuard, DynamicTitleResolve }
 
 // Routes
 const coreRoutes: Routes = [
@@ -65,25 +65,26 @@ const coreRoutes: Routes = [
 ];
 
 // Backbone config
-const backboneConfig = new BackboneConfig(
-  environment.name,
-  `${environment.serviceAppUrl}/api/v1`,
-  `${environment.serviceAppUrl}/odata/v1`,
-  new BackboneEntityManagerConfig(Element,
-    ElementCell,
-    ElementField,
-    ElementItem,
-    Project,
-    null, // Role
-    null, // User,
-    null, // UserClaim
-    UserElementCell,
-    UserElementField,
-    null, // UserLogin,
-    null // UserRole
-));
+const backboneConfig: IBackboneConfig = {
+  environment: environment.name,
+  serviceApiUrl: `${environment.serviceAppUrl}/api/v1`,
+  serviceODataUrl: `${environment.serviceAppUrl}/odata/v1`,
+  entityManagerConfig: {
+    elementType: Element,
+    elementCellType: ElementCell,
+    elementFieldType: ElementField,
+    elementItemType: ElementItem,
+    projectType: Project,
+    roleType: null,
+    userType: null,
+    userClaimType: null,
+    userElementCellType: UserElementCell,
+    userElementFieldType: UserElementField,
+    userLoginType: null,
+    userRoleType: null
+  }
+}
 
-// export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
 export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
 
   // Do initing of services that is required before app loads
@@ -136,15 +137,11 @@ export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
     },
+    AppProjectService,
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
     GoogleAnalyticsService,
-    // Project service
-    {
-      provide: ProjectService,
-      useClass: ProjectService
-    },
     Title
   ]
 })
