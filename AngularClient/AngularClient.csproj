@@ -66,7 +66,6 @@
     <TypeScriptCompile Include="src\main\core\entities\test-helpers.ts" />
     <TypeScriptCompile Include="src\main\core\entities\user-element-cell.ts" />
     <TypeScriptCompile Include="src\main\core\entities\user-element-field.ts" />
-    <TypeScriptCompile Include="src\main\core\google-analytics.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\home.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-found.component.ts" />
     <TypeScriptCompile Include="src\main\core\app-project.service.ts" />
@@ -95,6 +94,8 @@
     <Content Include="src\dev-all\app.component.css" />
     <Content Include="src\dev-all\navigation.component.html" />
     <Content Include="src\dev-all\misc.component.html" />
+    <Content Include="src\index-test.html" />
+    <Content Include="src\index-prod.html" />
     <Content Include="src\karma.conf.js" />
     <Content Include="src\main\core\components\project-viewer.component.html" />
     <Content Include="src\main\core\project-editor\project-editor.component.css" />

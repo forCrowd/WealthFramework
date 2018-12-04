@@ -33,7 +33,7 @@
     "@forcrowd/backbone-client-core": "0.2.2",
     "angular2-highcharts": "0.5.5",
     "angular2-toaster": "6.1.0",
-    "angulartics2": "7.0.2",
+    "angulartics2": "7.2.2",
     "angularx-qrcode": "1.2.4",
     "bootstrap": "3.3.7",
     "core-js": "2.5.7",
