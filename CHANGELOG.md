@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.89.1**
+
+* Angulartics fix
+
 **0.89.0**
 
 * @forcrowd/backbone-client-core package

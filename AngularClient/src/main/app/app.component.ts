@@ -2,10 +2,9 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { AuthService, User } from "@forcrowd/backbone-client-core";
+import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
-
-import { Angulartics2GoogleAnalytics } from "../core/core.module";
 
 import { Logger, ToasterConfig } from "../logger/logger.module";
 import { AppSettings } from "../../app-settings/app-settings";
@@ -23,11 +22,12 @@ export class AppComponent implements OnDestroy, OnInit {
   toasterConfig: ToasterConfig = null;
 
   constructor(private activatedRoute: ActivatedRoute,
-    angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
+    private angulartics: Angulartics2GoogleGlobalSiteTag,
     private authService: AuthService,
     private logger: Logger,
     private titleService: Title,
     private router: Router) {
+    this.angulartics.startTracking();
     this.currentUser = this.authService.currentUser;
   }
 

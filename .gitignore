@@ -23,7 +23,8 @@ Thumbs.db
 AngularClient/dist
 AngularClient/out-tsc
 
+AngularClient/src/index-*.html
+
 AngularClient/src/app-settings/environments/*
 !AngularClient/src/app-settings/environments/environment-settings.ts
 !AngularClient/src/app-settings/environments/Readme.md
-
