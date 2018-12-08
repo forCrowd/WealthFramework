@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.89.2**
+
+* Refactoring
+
 **0.89.1**
 
 * Angulartics fix

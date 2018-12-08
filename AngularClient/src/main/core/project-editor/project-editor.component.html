@@ -243,9 +243,11 @@
                     <ng-template [ngIf]="displayIndexDetails">
                       <td *ngFor="let field of selectedElement.elementFieldSet()" class="noborder text-right">
                         <div class="btn-group" role="group">
-                          <button title="Increase {{ field.Name }}" type="button" (click)="increaseRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">+</button>
-                          <button title="Decrease {{ field.Name }}" type="button" (click)="decreaseRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">-</button>
-                          <button title="Reset {{ field.Name }}" type="button" (click)="resetRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">0</button>
+                          <button type="button" class="btn btn-default btn-xs" (click)="updateElementFieldRating(field, 0)" [disabled]="isBusy">0</button>
+                          <button type="button" class="btn btn-default btn-xs" (click)="updateElementFieldRating(field, 25)" [disabled]="isBusy">1</button>
+                          <button type="button" class="btn btn-default btn-xs" (click)="updateElementFieldRating(field, 50)" [disabled]="isBusy">2</button>
+                          <button type="button" class="btn btn-default btn-xs" (click)="updateElementFieldRating(field, 75)" [disabled]="isBusy">3</button>
+                          <button type="button" class="btn btn-default btn-xs" (click)="updateElementFieldRating(field, 100)" [disabled]="isBusy">4</button>
                         </div>
                       </td>
                     </ng-template>

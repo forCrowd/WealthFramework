@@ -101,21 +101,6 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
       selectedElement: null,
     }
 
-  decreaseRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "decrease");
-    this.saveStream.next();
-  }
-
-  increaseRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "increase");
-    this.saveStream.next();
-  }
-
-  resetRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "reset");
-    this.saveStream.next();
-  }
-
   // Get project list of current user
   getProjectSet(): void {
 
@@ -754,8 +739,13 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
     this.loadChartData();
   }
 
-  updateElementCellDecimalValue(cell: ElementCell, selectedValue: number) {
-    this.projectService.updateElementCellDecimalValue(cell, selectedValue);
+  updateElementCellDecimalValue(cell: ElementCell, value: number) {
+    this.projectService.updateElementCellDecimalValue(cell, value);
+    this.saveStream.next();
+  }
+
+  updateElementFieldRating(elementField: ElementField, rating: number) {
+    this.projectService.updateElementFieldRating(elementField, rating);
     this.saveStream.next();
   }
 
