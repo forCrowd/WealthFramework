@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { AuthService, ElementFieldDataType, ProjectService, User } from "@forcrowd/backbone-client-core";
+import { AuthService, ElementFieldDataType, User } from "@forcrowd/backbone-client-core";
 import { Options } from "highcharts";
 import { Subject, Subscription } from "rxjs";
 import { mergeMap, debounceTime } from "rxjs/operators";
@@ -35,10 +35,10 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
   displayChart: boolean = false;
   displayDescription: boolean = false;
   displayIndexDetails = false;
-  ElementFieldDataType = ElementFieldDataType;
+  elementFieldDataType = ElementFieldDataType;
   elementItemsSortField = "name";
   errorMessage: string = "";
-  RatingMode = RatingMode;
+  ratingMode = RatingMode;
   project: Project = null;
   projectId = 0;
   saveStream = new Subject();
@@ -65,16 +65,6 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
   } = {
       selectedElement: null,
     }
-
-  decreaseRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "decrease");
-    this.saveStream.next();
-  }
-
-  increaseRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "increase");
-    this.saveStream.next();
-  }
 
   initialize(projectId: number, user: User) {
 
@@ -228,11 +218,6 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
     this.initialize(projectId, this.authService.currentUser);
   }
 
-  resetRating(field: ElementField) {
-    this.projectService.updateElementFieldRating(field, "reset");
-    this.saveStream.next();
-  }
-
   toggleDescription() {
     this.displayDescription = !this.displayDescription;
   }
@@ -243,8 +228,13 @@ export class ProjectViewerComponent implements OnDestroy, OnInit {
     this.loadChartData();
   }
 
-  updateElementCellDecimalValue(cell: ElementCell, value: number) {
+  updateCellDecimalValue(cell: ElementCell, value: number) {
     this.projectService.updateElementCellDecimalValue(cell, value);
+    this.saveStream.next();
+  }
+
+  updateElementFieldRating(elementField: ElementField, rating: number) {
+    this.projectService.updateElementFieldRating(elementField, rating);
     this.saveStream.next();
   }
 

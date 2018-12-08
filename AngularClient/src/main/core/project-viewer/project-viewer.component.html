@@ -23,10 +23,10 @@
           <hr />
           <div class="settings">
             <div class="btn-group" role="group" aria-label="Rating Options">
-              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.CurrentUser }">
+              <button (click)="project.toggleratingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.ratingMode === ratingMode.CurrentUser }">
                 Your Ratings
               </button>
-              <button (click)="project.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.RatingMode === RatingMode.AllUsers }">
+              <button (click)="project.toggleratingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': project.ratingMode === ratingMode.AllUsers }">
                 All Users
                 <span class="g-ml-10 badge">{{ project.RatingCount }}</span>
               </button>
@@ -73,11 +73,11 @@
                       {{ selectedElement.Name }}
                     </th>
                     <!-- Fields -->
-                    <th *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
-                      <div *ngIf="field.DataType !== ElementFieldDataType.Element">
+                    <th *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
+                      <div *ngIf="field.DataType !== elementFieldDataType.Element">
                         {{ field.Name }}<span *ngIf="field.RatingEnabled" title="Index" class="infoText">(I)</span>
                       </div>
-                      <span *ngIf="field.DataType === ElementFieldDataType.Element">
+                      <span *ngIf="field.DataType === elementFieldDataType.Element">
                         <button (click)="selectedElement = field.SelectedElement" type="button" class="btn-link" title="Switch to {{ field.Name }} view">{{ field.Name }}</button>
                       </span>
                     </th>
@@ -102,25 +102,24 @@
                       {{ elementItem.Name }}
                     </td>
                     <!-- Cells -->
-                    <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === ElementFieldDataType.Decimal }">
-                      <span *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.String">{{ elementCell.StringValue }}</span>
-                      <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Decimal">
+                    <td *ngFor="let elementCell of elementItem.getElementCellSetSorted()" [ngClass]="{ 'text-right': elementCell.ElementField.DataType === elementFieldDataType.Decimal }">
+                      <span *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String">{{ elementCell.StringValue }}</span>
+                      <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Decimal">
                         <div *ngIf="elementCell.ElementField.UseFixedValue">
                           {{ elementCell.decimalValue() | symbolic }}
                         </div>
                         <div *ngIf="!elementCell.ElementField.UseFixedValue">
                           <div *ngIf="elementCell.ElementField.RatingEnabled">
-                            <div [hidden]="project.RatingMode === RatingMode.CurrentUser">
+                            <div [hidden]="project.ratingMode === ratingMode.CurrentUser">
                               {{ elementCell.decimalValuePercentage() | percent }}
                             </div>
-                            <div [hidden]="project.RatingMode === RatingMode.AllUsers">
+                            <div [hidden]="project.ratingMode === ratingMode.AllUsers">
                               <div class="btn-group" role="group">
-                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
-                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 20)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 20, 'btn-default': elementCell.decimalValue() !== 20 }">1</button>
-                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 40)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 40, 'btn-default': elementCell.decimalValue() !== 40 }">2</button>
-                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 60)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 60, 'btn-default': elementCell.decimalValue() !== 60 }">3</button>
-                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 80)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 80, 'btn-default': elementCell.decimalValue() !== 80 }">4</button>
-                                <button title="5" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">5</button>
+                                <button title="0" type="button" (click)="updateCellDecimalValue(elementCell, 0)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 0, 'btn-default': elementCell.decimalValue() !== 0 }">0</button>
+                                <button title="1" type="button" (click)="updateCellDecimalValue(elementCell, 25)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 25, 'btn-default': elementCell.decimalValue() !== 25 }">1</button>
+                                <button title="2" type="button" (click)="updateCellDecimalValue(elementCell, 50)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 50, 'btn-default': elementCell.decimalValue() !== 50 }">2</button>
+                                <button title="3" type="button" (click)="updateCellDecimalValue(elementCell, 75)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 75, 'btn-default': elementCell.decimalValue() !== 75 }">3</button>
+                                <button title="4" type="button" (click)="updateCellDecimalValue(elementCell, 100)" [disabled]="isBusy" class="btn btn-xs" [ngClass]="{ 'btn-primary': elementCell.decimalValue() === 100, 'btn-default': elementCell.decimalValue() !== 100 }">4</button>
                               </div>
                             </div>
                           </div>
@@ -129,7 +128,7 @@
                           </div>
                         </div>
                       </div>
-                      <div *ngIf="elementCell.ElementField.DataType === ElementFieldDataType.Element">
+                      <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Element">
                         {{ elementCell.SelectedElementItem !== null ? elementCell.SelectedElementItem.Name : "N/A" }}
                       </div>
                     </td>
@@ -151,7 +150,7 @@
                       &nbsp;
                     </td>
                     <!-- Fields -->
-                    <td *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                    <td *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
                       &nbsp;
                     </td>
                     <!-- Total Income & Details -->
@@ -171,16 +170,20 @@
                       &nbsp;
                     </td>
                     <!-- Fields -->
-                    <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === ElementFieldDataType.Decimal }">
+                    <td class="noborder" *ngFor="let field of selectedElement.getElementFieldSetSorted()" [ngClass]="{ 'text-right': field.DataType === elementFieldDataType.Decimal }">
                       &nbsp;
                     </td>
                     <!-- Total Income & Details -->
                     <ng-template [ngIf]="displayIndexDetails">
                       <td *ngFor="let field of selectedElement.elementFieldSet()" class="noborder text-right">
                         <div class="btn-group" role="group">
-                          <button title="Increase {{ field.Name }}" type="button" (click)="increaseRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">+</button>
-                          <button title="Decrease {{ field.Name }}" type="button" (click)="decreaseRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">-</button>
-                          <button title="Reset {{ field.Name }}" type="button" (click)="resetRating(field)" [disabled]="isBusy" class="btn btn-default btn-xs">0</button>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-xs" (click)="updateElementFieldRating(field, 0)" [disabled]="isBusy" [ngClass]="{ 'btn-primary': field.rating() === 0, 'btn-default': field.rating() !== 0 }">0</button>
+                            <button type="button" class="btn btn-xs" (click)="updateElementFieldRating(field, 25)" [disabled]="isBusy" [ngClass]="{ 'btn-primary': field.rating() === 25, 'btn-default': field.rating() !== 25 }">1</button>
+                            <button type="button" class="btn btn-xs" (click)="updateElementFieldRating(field, 50)" [disabled]="isBusy" [ngClass]="{ 'btn-primary': field.rating() === 50, 'btn-default': field.rating() !== 50 }">2</button>
+                            <button type="button" class="btn btn-xs" (click)="updateElementFieldRating(field, 75)" [disabled]="isBusy" [ngClass]="{ 'btn-primary': field.rating() === 75, 'btn-default': field.rating() !== 75 }">3</button>
+                            <button type="button" class="btn btn-xs" (click)="updateElementFieldRating(field, 100)" [disabled]="isBusy" [ngClass]="{ 'btn-primary': field.rating() === 100, 'btn-default': field.rating() !== 100 }">4</button>
+                          </div>
                         </div>
                       </td>
                     </ng-template>
