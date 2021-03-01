@@ -2,7 +2,7 @@
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
 
-Experimental ideas on increasing sustainability and productivity
+Crowd controlled public fund experiment
 
 ## Current Stack
 

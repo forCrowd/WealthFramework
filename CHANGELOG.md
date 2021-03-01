@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.89.3**
+
+* Minor text updates
+
 **0.89.2**
 
 * Refactoring
